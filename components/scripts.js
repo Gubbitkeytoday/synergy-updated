@@ -167,17 +167,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const homeHref = (hash = '') => {
     if (isWordPress) {
+      if (window.location.pathname.endsWith('.php') || window.location.pathname.includes('.php/')) {
+        return `index.php${hash}`;
+      }
       return `/${hash}`;
     }
     if (isHomePage) return hash || '#top';
-    return `${rootPrefix}index.html${hash}`;
+    return `${rootPrefix}index.php${hash}`;
   };
 
   const pageHref = (file) => {
+    const cleanFile = file.replace('.html', '').replace('.php', '');
     if (isWordPress) {
-      const slug = file.replace('.html', '');
-      if (slug === 'index') return '/';
-      return `/${slug}/`;
+      if (cleanFile === 'index') return '/';
+      if (window.location.pathname.endsWith('.php') || window.location.pathname.includes('.php/')) {
+        return `${rootPrefix}${cleanFile}.php`;
+      }
+      return `/${cleanFile}`;
     }
     return `${rootPrefix}${file}`;
   };

@@ -1,65 +1,3 @@
-<?php
-/* Template Name: About Us */
-if (isset($_SERVER['REQUEST_URI']) && preg_match('/\.php\/+$/i', $_SERVER['REQUEST_URI'])) {
-    $clean_uri = preg_replace('/\.php\/+$/i', '.php', $_SERVER['REQUEST_URI']);
-    header("Location: " . $clean_uri, true, 301);
-    exit();
-}
-if (!function_exists('get_template_directory_uri')) {
-    function get_template_directory_uri() { return '.'; }
-}
-if (!function_exists('get_stylesheet_directory_uri')) {
-    function get_stylesheet_directory_uri() { return '.'; }
-}
-if (!function_exists('get_template_directory')) {
-    function get_template_directory() { return __DIR__; }
-}
-if (!function_exists('get_stylesheet_directory')) {
-    function get_stylesheet_directory() { return __DIR__; }
-}
-if (!function_exists('get_stylesheet_uri')) {
-    function get_stylesheet_uri() { return './style.css'; }
-}
-if (!function_exists('home_url')) {
-    function home_url($path = '/') { return '.' . $path; }
-}
-if (!function_exists('body_class')) {
-    function body_class($class = '') {
-        $c = is_array($class) ? implode(' ', $class) : $class;
-        echo 'class="' . htmlspecialchars($c) . '"';
-    }
-}
-if (!function_exists('wp_head')) {
-    function wp_head() {}
-}
-if (!function_exists('wp_footer')) {
-    function wp_footer() {}
-}
-if (!function_exists('wp_enqueue_style')) {
-    function wp_enqueue_style() {}
-}
-if (!function_exists('add_action')) {
-    function add_action() {}
-}
-if (!function_exists('add_theme_support')) {
-    function add_theme_support() {}
-}
-if (!function_exists('language_attributes')) {
-    function language_attributes() { echo 'lang="th"'; }
-}
-if (!function_exists('bloginfo')) {
-    function bloginfo($show = '') { echo ''; }
-}
-if (!function_exists('is_front_page')) {
-    function is_front_page() { return false; }
-}
-if (!function_exists('is_home')) {
-    function is_home() { return false; }
-}
-if (file_exists(__DIR__ . '/functions.php')) {
-    require_once __DIR__ . '/functions.php';
-}
-?>
 <!DOCTYPE html>
 <html lang="th">
 
@@ -69,23 +7,23 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <title>About Us · Engineering Intelligence Since 2008 | Synergy Group</title>
   <meta name="description" content="For more than 18 years, Synergy Group has evolved into an Engineering Intelligence Company — integrating hardware, embedded systems, AI, and digital platforms to build intelligent solutions with lasting business impact.">
   
-  <link rel="canonical" href="<?php echo home_url('/about/'); ?>">
+  <link rel="canonical" href="./about.html">
   <meta name="robots" content="index,follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Synergy Technology">
   <meta property="og:title" content="About Us · Engineering Intelligence Since 2008 | Synergy Group">
   <meta property="og:description" content="For more than 18 years, Synergy Group has evolved into an Engineering Intelligence Company — integrating hardware, embedded systems, AI, and digital platforms.">
-  <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/image/about-hero-bg.png">
-  <meta property="og:url" content="<?php echo home_url('/about/'); ?>">
+  <meta property="og:image" content="./image/about-hero-bg.png">
+  <meta property="og:url" content="./about.html">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="About Us · Engineering Intelligence Since 2008 | Synergy Group">
   <meta name="twitter:description" content="18+ years from electronics engineering to the SynExta Intelligence Engine.">
-  <meta name="twitter:image" content="<?php echo get_template_directory_uri(); ?>/image/about-hero-bg.png">
+  <meta name="twitter:image" content="./image/about-hero-bg.png">
 
   <!-- Browser Tab Icon (Favicon) -->
-  <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
-  <link rel="shortcut icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
-  <link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
+  <link rel="icon" type="image/png" href="./image/s-logo.png">
+  <link rel="shortcut icon" type="image/png" href="./image/s-logo.png">
+  <link rel="apple-touch-icon" href="./image/s-logo.png">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -148,13 +86,13 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </style>
 
   <script>
-    window.wpThemeUrl = "<?php echo get_template_directory_uri(); ?>/";
-    window.wpThemeUri = "<?php echo get_template_directory_uri(); ?>/";
+    window.wpThemeUrl = "./";
+    window.wpThemeUri = "./";
   </script>
-  <?php wp_head(); ?>
+  
 </head>
 
-<body id="top" <?php body_class("bg-white text-body antialiased"); ?>>
+<body id="top" class="bg-white text-body antialiased">
   <!-- NAVBAR CONTAINER -->
   <div id="navbar-container"></div>
 
@@ -162,7 +100,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <section id="about-hero" class="relative pt-20 pb-12 lg:pt-24 lg:pb-14 text-white overflow-hidden bg-slate-950">
     <!-- Background Image Layer (พื้นหลังabout.png - 100% Bright, Full Color, No Dark Filters) -->
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      <img loading="lazy" decoding="async" class="w-full h-full object-cover object-center scale-100" src="<?php echo get_template_directory_uri(); ?>/image/about-hero-bg.png" alt="Engineering Intelligence Ecosystem Background">
+      <img loading="lazy" decoding="async" class="w-full h-full object-cover object-center scale-100" src="./image/about-hero-bg.png" alt="Engineering Intelligence Ecosystem Background">
     </div>
 
     <!-- Grid Overlay Effect -->
@@ -187,12 +125,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
           <!-- Buttons Row -->
           <div class="flex flex-wrap items-center gap-4 pt-2">
-            <a href="<?php echo home_url('/'); ?>#solutions" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-brand-bright/20 hover:-translate-y-0.5">
+            <a href="./index.html#solutions" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-brand-bright/20 hover:-translate-y-0.5">
               <span class="lang-th">สำรวจโซลูชันของเรา</span>
               <span class="lang-en">Explore Our Solutions</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
-            <a href="<?php echo home_url('/'); ?>#contact" class="inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5">
+            <a href="./index.html#contact" class="inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5">
               <i class="fa-regular fa-bookmark text-xs text-gold-bright"></i>
               <span class="lang-th">ปรึกษาทีมวิศวกร</span>
               <span class="lang-en">Talk to Our Experts</span>
@@ -236,7 +174,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </p>
           </div>
           <div class="relative h-52 mt-4 overflow-hidden border-t border-slate-100">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="<?php echo get_template_directory_uri(); ?>/image/about-robotic-arm.png" alt="Innovative Engineering">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="./image/about-robotic-arm.png" alt="Innovative Engineering">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
           </div>
         </article>
@@ -255,7 +193,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </p>
           </div>
           <div class="relative h-52 mt-4 overflow-hidden border-t border-slate-100">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="<?php echo get_template_directory_uri(); ?>/image/about-pcb-assembly.png" alt="Trusted Quality">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="./image/about-pcb-assembly.png" alt="Trusted Quality">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
           </div>
         </article>
@@ -274,7 +212,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </p>
           </div>
           <div class="relative h-52 mt-4 overflow-hidden border-t border-slate-100">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="<?php echo get_template_directory_uri(); ?>/image/about-smart-dashboard.png" alt="Business Impact">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="./image/about-smart-dashboard.png" alt="Business Impact">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
           </div>
         </article>
@@ -427,7 +365,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
       }
     </style>
 
-    <img class="journey-wave" src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-wave.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+    <img class="journey-wave" src="./image/journey/journey-wave.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
     <div class="max-w-[1240px] mx-auto px-4 sm:px-6 journey-timeline-wrap">
       <p class="eyebrow">
@@ -451,7 +389,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
         <!-- 1 -->
         <div class="step">
-          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-2008.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="badge"><img src="./image/journey/journey-2008.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
           <div class="card">
             <p class="year">2008</p>
             <p class="name">
@@ -467,7 +405,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
         <!-- 2 -->
         <div class="step">
-          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-2012.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="badge"><img src="./image/journey/journey-2012.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
           <div class="card">
             <p class="year">2012</p>
             <p class="name">
@@ -483,7 +421,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
         <!-- 3 -->
         <div class="step">
-          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-2016.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="badge"><img src="./image/journey/journey-2016.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
           <div class="card">
             <p class="year">2016</p>
             <p class="name">
@@ -499,7 +437,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
         <!-- 4 -->
         <div class="step">
-          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-2022.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="badge"><img src="./image/journey/journey-2022.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
           <div class="card">
             <p class="year">2022</p>
             <p class="name">
@@ -515,7 +453,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
         <!-- 5 — Today -->
         <div class="step is-now">
-          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-today.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="badge"><img src="./image/journey/journey-today.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
           <div class="card">
             <p class="year">Today</p>
             <p class="name">
@@ -531,7 +469,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
         <!-- 6 -->
         <div class="step">
-          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-tomorrow.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="badge"><img src="./image/journey/journey-tomorrow.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
           <div class="card">
             <p class="year">Tomorrow</p>
             <p class="name">
@@ -667,7 +605,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <span class="lang-th">SynExta เปลี่ยนผ่านงานวิศวกรรมสู่โซลูชันธุรกิจอัจฉริยะแบบครบวงจร</span>
             <span class="lang-en">SynExta transforms engineering into intelligent business solutions.</span>
           </p>
-          <a class="synexta-btn" href="<?php echo home_url('/'); ?>#solutions">
+          <a class="synexta-btn" href="./index.html#solutions">
             <span class="lang-th">เรียนรู้เพิ่มเติมเกี่ยวกับ SynExta</span>
             <span class="lang-en">Learn More About SynExta</span>
             <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
@@ -948,7 +886,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/ind_industrial_new.jpg" alt="Smart Factory">
+                <img loading="lazy" decoding="async" src="./image/ind_industrial_new.jpg" alt="Smart Factory">
               </div>
               <span class="badge"><i class="fa-solid fa-industry" aria-hidden="true"></i></span>
             </div>
@@ -961,7 +899,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/ind_energy_new.jpg" alt="Smart Energy">
+                <img loading="lazy" decoding="async" src="./image/ind_energy_new.jpg" alt="Smart Energy">
               </div>
               <span class="badge"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
             </div>
@@ -974,7 +912,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/ind_agriculture_new.png" alt="Smart Agriculture">
+                <img loading="lazy" decoding="async" src="./image/ind_agriculture_new.png" alt="Smart Agriculture">
               </div>
               <span class="badge"><i class="fa-solid fa-seedling" aria-hidden="true"></i></span>
             </div>
@@ -987,7 +925,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/smt-assembly-production.png" alt="PCB &amp; PCB Assembly">
+                <img loading="lazy" decoding="async" src="./image/smt-assembly-production.png" alt="PCB &amp; PCB Assembly">
               </div>
               <span class="badge"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
             </div>
@@ -1000,7 +938,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/pcb-design-prototyping.png" alt="Custom Engineering">
+                <img loading="lazy" decoding="async" src="./image/pcb-design-prototyping.png" alt="Custom Engineering">
               </div>
               <span class="badge"><i class="fa-solid fa-microchip" aria-hidden="true"></i></span>
             </div>
@@ -1242,35 +1180,35 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 1. BOI Thailand -->
         <div class="trust-cell c-lockup">
           <span class="trust-logo">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/boi-lockup.png" alt="BOI Thailand" loading="lazy" decoding="async">
+            <img src="./image/trust/boi-lockup.png" alt="BOI Thailand" loading="lazy" decoding="async">
           </span>
         </div>
 
         <!-- 2. ISO 9001:2015 -->
         <div class="trust-cell c-lockup">
           <span class="trust-logo">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/iso-9001.png" alt="ISO 9001:2015" loading="lazy" decoding="async">
+            <img src="./image/trust/iso-9001.png" alt="ISO 9001:2015" loading="lazy" decoding="async">
           </span>
         </div>
 
         <!-- 3. ISO 14001:2015 -->
         <div class="trust-cell c-lockup">
           <span class="trust-logo">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/iso-14001.png" alt="ISO 14001:2015" loading="lazy" decoding="async">
+            <img src="./image/trust/iso-14001.png" alt="ISO 14001:2015" loading="lazy" decoding="async">
           </span>
         </div>
 
         <!-- 4. ISO 45001:2018 -->
         <div class="trust-cell c-lockup">
           <span class="trust-logo">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/iso-45001.png" alt="ISO 45001:2018" loading="lazy" decoding="async">
+            <img src="./image/trust/iso-45001.png" alt="ISO 45001:2018" loading="lazy" decoding="async">
           </span>
         </div>
 
         <!-- 5. Microsoft Solutions Partner -->
         <div class="trust-cell c-ms">
           <span class="trust-logo">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/microsoft.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <img src="./image/trust/microsoft.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
             <span class="trust-name">Microsoft</span>
           </span>
           <span class="trust-cap">Solutions Partner</span>
@@ -1280,7 +1218,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="trust-cell c-aws">
           <span class="trust-logo">
             <span class="trust-name">aws</span>
-            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/aws.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <img src="./image/trust/aws.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
           </span>
           <span class="trust-cap">Partner Network</span>
         </div>
@@ -1288,7 +1226,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 7. NIA -->
         <div class="trust-cell c-nia">
           <span class="trust-logo">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/nia.png" alt="NIA" loading="lazy" decoding="async">
+            <img src="./image/trust/nia.png" alt="NIA" loading="lazy" decoding="async">
           </span>
           <span class="trust-cap">National Innovation<br>Agency Thailand</span>
         </div>
@@ -1304,7 +1242,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 9. Industry Awards -->
         <div class="trust-cell c-award">
           <span class="trust-logo">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/award.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <img src="./image/trust/award.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
           </span>
           <span class="trust-cap">Industry Awards</span>
         </div>
@@ -1318,7 +1256,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
   <!-- Scripts -->
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
-  <?php wp_footer(); ?>
+  
 </body>
 
 </html>
