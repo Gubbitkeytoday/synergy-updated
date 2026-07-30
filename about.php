@@ -1,0 +1,1319 @@
+<?php
+/* Template Name: About Us */
+if (!function_exists('get_template_directory_uri')) {
+    function get_template_directory_uri() { return '.'; }
+}
+if (!function_exists('get_stylesheet_directory_uri')) {
+    function get_stylesheet_directory_uri() { return '.'; }
+}
+if (!function_exists('get_template_directory')) {
+    function get_template_directory() { return __DIR__; }
+}
+if (!function_exists('get_stylesheet_directory')) {
+    function get_stylesheet_directory() { return __DIR__; }
+}
+if (!function_exists('get_stylesheet_uri')) {
+    function get_stylesheet_uri() { return './style.css'; }
+}
+if (!function_exists('home_url')) {
+    function home_url($path = '/') { return '.' . $path; }
+}
+if (!function_exists('body_class')) {
+    function body_class($class = '') {
+        $c = is_array($class) ? implode(' ', $class) : $class;
+        echo 'class="' . htmlspecialchars($c) . '"';
+    }
+}
+if (!function_exists('wp_head')) {
+    function wp_head() {}
+}
+if (!function_exists('wp_footer')) {
+    function wp_footer() {}
+}
+if (!function_exists('wp_enqueue_style')) {
+    function wp_enqueue_style() {}
+}
+if (!function_exists('add_action')) {
+    function add_action() {}
+}
+if (!function_exists('add_theme_support')) {
+    function add_theme_support() {}
+}
+if (!function_exists('language_attributes')) {
+    function language_attributes() { echo 'lang="th"'; }
+}
+if (!function_exists('bloginfo')) {
+    function bloginfo($show = '') { echo ''; }
+}
+if (!function_exists('is_front_page')) {
+    function is_front_page() { return false; }
+}
+if (!function_exists('is_home')) {
+    function is_home() { return false; }
+}
+if (file_exists(__DIR__ . '/functions.php')) {
+    require_once __DIR__ . '/functions.php';
+}
+?>
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us · Engineering Intelligence Since 2008 | Synergy Group</title>
+  <meta name="description" content="For more than 18 years, Synergy Group has evolved into an Engineering Intelligence Company — integrating hardware, embedded systems, AI, and digital platforms to build intelligent solutions with lasting business impact.">
+  
+  <link rel="canonical" href="<?php echo home_url('/about/'); ?>">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Synergy Technology">
+  <meta property="og:title" content="About Us · Engineering Intelligence Since 2008 | Synergy Group">
+  <meta property="og:description" content="For more than 18 years, Synergy Group has evolved into an Engineering Intelligence Company — integrating hardware, embedded systems, AI, and digital platforms.">
+  <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/image/about-hero-bg.png">
+  <meta property="og:url" content="<?php echo home_url('/about/'); ?>">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Us · Engineering Intelligence Since 2008 | Synergy Group">
+  <meta name="twitter:description" content="18+ years from electronics engineering to the SynExta Intelligence Engine.">
+  <meta name="twitter:image" content="<?php echo get_template_directory_uri(); ?>/image/about-hero-bg.png">
+
+  <!-- Browser Tab Icon (Favicon) -->
+  <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
+  <link rel="shortcut icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
+  <link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#0B1F16",
+            brand: "#1F6B43",
+            "brand-bright": "#23862D",
+            "brand-deep": "#165031",
+            "brand-light": "#EAF3ED",
+            surface: "#F8FAF9",
+            body: "#2A3831",
+            muted: "#5C6E65",
+            "gold-bright": "#F2C72E",
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Google Fonts & FontAwesome CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="<?php echo function_exists('synergy_asset') ? synergy_asset('components/style.css') : './components/style.css'; ?>">
+
+  <style>
+    body {
+      font-family: 'SukhumvitSet', 'Inter', 'Sarabun', sans-serif;
+      scroll-behavior: smooth;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    h1, h2, h3, h4, h5, h6, .font-display {
+      font-family: 'Space Grotesk', 'SukhumvitSet', sans-serif;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    p, span, a {
+      overflow-wrap: break-word;
+    }
+    /* Glow Animations */
+    @keyframes pulse-glow {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 25px rgba(35, 134, 45, 0.8)); }
+    }
+    .animate-pulse-glow {
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .animate-pulse-glow { animation: none; }
+      #synexta-engine svg animate,
+      #synexta-engine svg animateMotion,
+      #synexta-engine svg animateTransform { display: none; }
+    }
+  </style>
+
+  <script>
+    window.wpThemeUrl = "<?php echo get_template_directory_uri(); ?>/";
+    window.wpThemeUri = "<?php echo get_template_directory_uri(); ?>/";
+  </script>
+  <?php wp_head(); ?>
+</head>
+
+<body id="top" <?php body_class("bg-white text-body antialiased"); ?>>
+  <!-- NAVBAR CONTAINER -->
+  <div id="navbar-container"></div>
+
+  <!-- HERO SECTION: About SynTech / Engineering Intelligence Since 2008 -->
+  <section id="about-hero" class="relative pt-20 pb-12 lg:pt-24 lg:pb-14 text-white overflow-hidden bg-slate-950">
+    <!-- Background Image Layer (พื้นหลังabout.png - 100% Bright, Full Color, No Dark Filters) -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <img loading="lazy" decoding="async" class="w-full h-full object-cover object-center scale-100" src="<?php echo get_template_directory_uri(); ?>/image/about-hero-bg.png" alt="Engineering Intelligence Ecosystem Background">
+    </div>
+
+    <!-- Grid Overlay Effect -->
+    <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#23862D_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none z-0"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+
+        <!-- Left Column: Copy & Actions -->
+        <div class="lg:col-span-6 space-y-6">
+
+          <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] text-white">
+            <span class="lang-th">วิศวกรรมอัจฉริยะ</span><span class="lang-en">Engineering</span><br>
+            <span class="lang-th">ระดับอนาคต</span><span class="lang-en">Intelligence</span><br>
+            <span class="text-brand-bright drop-shadow-[0_2px_15px_rgba(35,134,45,0.4)]">Since 2008</span>
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-300 font-light leading-relaxed max-w-xl">
+            <span class="lang-th">กว่า 18 ปีที่เราได้พัฒนาจากงานวิศวกรรมอิเล็กทรอนิกส์ สู่บริษัทผู้นำด้าน Engineering Intelligence — ผสานฮาร์ดแวร์, ระบบสมองกลฝังตัว, AI และดิจิทัลแพลตฟอร์ม เพื่อสร้างสรรค์โซลูชันอัจฉริยะที่ส่งมอบผลลัพธ์ทางธุรกิจที่ยั่งยืน</span>
+            <span class="lang-en">For more than 18 years, we've evolved from electronics engineering into an Engineering Intelligence Company — integrating hardware, embedded systems, AI, and digital platforms to build intelligent solutions with lasting business impact.</span>
+          </p>
+
+          <!-- Buttons Row -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="<?php echo home_url('/'); ?>#solutions" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-brand-bright/20 hover:-translate-y-0.5">
+              <span class="lang-th">สำรวจโซลูชันของเรา</span>
+              <span class="lang-en">Explore Our Solutions</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+            <a href="<?php echo home_url('/'); ?>#contact" class="inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5">
+              <i class="fa-regular fa-bookmark text-xs text-gold-bright"></i>
+              <span class="lang-th">ปรึกษาทีมวิศวกร</span>
+              <span class="lang-en">Talk to Our Experts</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: OUR DNA (The Principles That Drive Every Solution) -->
+  <section id="dna" class="py-10 sm:py-14 bg-white relative" style="scroll-margin-top: 96px;">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-xs font-extrabold text-brand-bright uppercase tracking-widest block mb-2">OUR DNA</span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-ink leading-tight">
+          <span class="lang-th">หลักการที่อยู่เบื้องหลังทุกโซลูชันของเรา</span>
+          <span class="lang-en">The Principles That Drive Every Solution</span>
+        </h2>
+        <p class="text-sm sm:text-base text-muted font-light mt-3 leading-relaxed">
+          <span class="lang-th">สามคำมั่นสัญญาที่กำหนดวิธีที่เราออกแบบ พัฒนา และส่งมอบงาน ตั้งแต่แบบวงจรแรกจนถึงระบบอัจฉริยะที่ใช้งานจริง</span>
+          <span class="lang-en">Three commitments that shape how we design, build, and deliver — from the first schematic to the intelligence running in production.</span>
+        </p>
+      </div>
+
+      <!-- 3 DNA Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+
+        <!-- Card 1: INNOVATIVE -->
+        <article class="bg-surface border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-bright/30 transition-all duration-300 flex flex-col justify-between group">
+          <div class="p-8">
+            <div class="w-14 h-14 rounded-2xl bg-brand/10 text-brand-bright flex items-center justify-center mb-6 group-hover:bg-brand-bright group-hover:text-white transition-all duration-300 shadow-sm">
+              <i class="fa-regular fa-lightbulb text-2xl"></i>
+            </div>
+            <span class="text-xs font-extrabold text-brand-bright uppercase tracking-wider block mb-1">INNOVATIVE</span>
+            <h3 class="font-display font-extrabold text-xl text-ink mb-3 leading-snug"><span class="lang-th">เราไม่เคยหยุดสร้างสรรค์</span><span class="lang-en">We Never Stop Innovating</span></h3>
+            <p class="text-sm text-body font-light leading-relaxed">
+              <span class="lang-th">จากงานวิศวกรรมอิเล็กทรอนิกส์สู่แพลตฟอร์ม AI อัจฉริยะ เรามุ่งมั่นสร้างสรรค์เทคโนโลยีที่ตอบโจทย์ความท้าทายแห่งอนาคตอย่างต่อเนื่อง</span>
+              <span class="lang-en">From electronics engineering to AI-powered platforms, we continuously create technologies that solve tomorrow's challenges.</span>
+            </p>
+          </div>
+          <div class="relative h-52 mt-4 overflow-hidden border-t border-slate-100">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="<?php echo get_template_directory_uri(); ?>/image/about-robotic-arm.png" alt="Innovative Engineering">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
+          </div>
+        </article>
+
+        <!-- Card 2: TRUSTED -->
+        <article class="bg-surface border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-bright/30 transition-all duration-300 flex flex-col justify-between group">
+          <div class="p-8">
+            <div class="w-14 h-14 rounded-2xl bg-brand/10 text-brand-bright flex items-center justify-center mb-6 group-hover:bg-brand-bright group-hover:text-white transition-all duration-300 shadow-sm">
+              <i class="fa-solid fa-shield-halved text-2xl"></i>
+            </div>
+            <span class="text-xs font-extrabold text-brand-bright uppercase tracking-wider block mb-1">TRUSTED</span>
+            <h3 class="font-display font-extrabold text-xl text-ink mb-3 leading-snug"><span class="lang-th">สร้างบนความเป็นเลิศด้านวิศวกรรม</span><span class="lang-en">Built on Engineering Excellence</span></h3>
+            <p class="text-sm text-body font-light leading-relaxed">
+              <span class="lang-th">ลูกค้าไว้วางใจเราเพราะทุกโซลูชันขับเคลื่อนด้วยวิศวกรรมที่ผ่านการพิสูจน์ คุณภาพมาตรฐานอุตสาหกรรม และความมุ่งมั่นเคียงข้างระยะยาว</span>
+              <span class="lang-en">Our customers trust us because every solution is backed by proven engineering, quality, and long-term commitment.</span>
+            </p>
+          </div>
+          <div class="relative h-52 mt-4 overflow-hidden border-t border-slate-100">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="<?php echo get_template_directory_uri(); ?>/image/about-pcb-assembly.png" alt="Trusted Quality">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
+          </div>
+        </article>
+
+        <!-- Card 3: IMPACTFUL -->
+        <article class="bg-surface border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-brand-bright/30 transition-all duration-300 flex flex-col justify-between group">
+          <div class="p-8">
+            <div class="w-14 h-14 rounded-2xl bg-brand/10 text-brand-bright flex items-center justify-center mb-6 group-hover:bg-brand-bright group-hover:text-white transition-all duration-300 shadow-sm">
+              <i class="fa-solid fa-chart-line text-2xl"></i>
+            </div>
+            <span class="text-xs font-extrabold text-brand-bright uppercase tracking-wider block mb-1">IMPACTFUL</span>
+            <h3 class="font-display font-extrabold text-xl text-ink mb-3 leading-snug"><span class="lang-th">เทคโนโลยีที่สร้างผลลัพธ์ทางธุรกิจ</span><span class="lang-en">Technology That Creates Business Impact</span></h3>
+            <p class="text-sm text-body font-light leading-relaxed">
+              <span class="lang-th">เราไม่ได้สร้างเทคโนโลยีเพียงเพื่อความล้ำสมัย แต่เราออกแบบโซลูชันเพื่อเพิ่มประสิทธิภาพ ลดต้นทุน และขับเคลื่อนการเติบโตที่ยั่งยืน</span>
+              <span class="lang-en">We don't build technology for technology's sake. We engineer solutions that improve productivity, reduce costs, and enable sustainable growth.</span>
+            </p>
+          </div>
+          <div class="relative h-52 mt-4 overflow-hidden border-t border-slate-100">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="<?php echo get_template_directory_uri(); ?>/image/about-smart-dashboard.png" alt="Business Impact">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent"></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: OUR JOURNEY (rebuilt to match the SynExta Canva reference: glow cards + overlapping badge icons) -->
+  <section id="journey" class="py-10 sm:py-14 bg-white relative overflow-hidden" style="scroll-margin-top: 96px;">
+    <style>
+      .journey-timeline-wrap{
+        --green:#187b4a;
+        --green-dark:#146237;
+        --green-line:#4f9d70;
+        --ink:#0b2127;
+        --body:#6b7280;
+        --bub:clamp(72px,7vw,104px);   /* badge size; the rail position and card padding derive from it */
+        position:relative;z-index:2;
+      }
+      .journey-timeline-wrap .eyebrow{
+        text-align:center;margin:0 0 14px;
+        font-size:clamp(12.5px,1.1vw,15px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--green);
+      }
+      .journey-timeline-wrap h2{
+        text-align:center;margin:0 0 22px;
+        font-size:clamp(26px,4.6vw,58px);font-weight:800;letter-spacing:-.02em;line-height:1.12;color:var(--ink);
+      }
+      /* Heading ornament: two rails fading outward, each capped with a dot */
+      .journey-timeline-wrap .head-rail{
+        display:flex;align-items:center;justify-content:center;
+        margin:0 0 clamp(50px,5.4vw,84px);
+      }
+      .journey-timeline-wrap .head-rail i{display:block;height:2px;width:min(33%,428px);border-radius:2px}
+      .journey-timeline-wrap .head-rail i:first-of-type{background:linear-gradient(90deg,rgba(24,123,74,0),var(--green))}
+      .journey-timeline-wrap .head-rail i:last-of-type{background:linear-gradient(270deg,rgba(24,123,74,0),var(--green))}
+      .journey-timeline-wrap .head-rail b{width:9px;height:9px;border-radius:50%;background:var(--green);flex:none}
+      .journey-timeline-wrap .head-rail s{display:block;width:clamp(80px,12vw,165px);flex:none}
+
+      .journey-timeline-wrap .timeline{
+        display:grid;
+        grid-template-columns:repeat(6,1fr);
+        gap:clamp(10px,1.5vw,22px);
+        align-items:stretch;
+        position:relative;
+      }
+      /* Dashed rail sits at badge-centre height; the opaque badges cover its ends */
+      .journey-timeline-wrap .rail{
+        position:absolute;left:0;right:0;top:calc(var(--bub) / 2);height:0;
+        pointer-events:none;z-index:1;
+      }
+      .journey-timeline-wrap .rail::before{
+        content:"";position:absolute;left:8.333%;right:8.333%;top:-1px;height:2px;
+        background:repeating-linear-gradient(90deg,var(--green-line) 0 5px,transparent 5px 10px);
+        opacity:.9;
+      }
+      .journey-timeline-wrap .rail .dot{
+        position:absolute;top:0;width:9px;height:9px;border-radius:50%;
+        background:var(--green);transform:translate(-50%,-50%);
+      }
+
+      .journey-timeline-wrap .step{position:relative;z-index:2;padding-top:calc(var(--bub) / 2)}
+      .journey-timeline-wrap .card{
+        height:100%;text-align:center;background:#fff;
+        border:1px solid rgba(24,123,74,.10);
+        border-radius:clamp(16px,1.7vw,24px);
+        box-shadow:0 10px 34px rgba(24,123,74,.13), 0 2px 8px rgba(11,33,39,.05);
+        padding:calc(var(--bub) / 2 + 16px) clamp(9px,1.1vw,17px) clamp(20px,2.2vw,30px);
+        transition:transform .25s, box-shadow .25s;
+      }
+      .journey-timeline-wrap .step:hover .card{
+        transform:translateY(-5px);
+        box-shadow:0 16px 44px rgba(24,123,74,.20), 0 3px 10px rgba(11,33,39,.06);
+      }
+      .journey-timeline-wrap .badge{
+        position:absolute;top:0;left:50%;transform:translateX(-50%);
+        width:var(--bub);height:var(--bub);border-radius:50%;
+        background:#fff;border:1px solid rgba(24,123,74,.12);
+        box-shadow:0 6px 18px rgba(11,33,39,.10);
+        display:flex;align-items:center;justify-content:center;
+        z-index:3;transition:transform .25s;
+      }
+      .journey-timeline-wrap .badge::after{
+        content:"";position:absolute;inset:7px;border-radius:50%;
+        border:1.5px solid rgba(79,157,112,.30);
+      }
+      .journey-timeline-wrap .badge img{width:52%;height:52%;object-fit:contain;display:block;position:relative;z-index:1}
+      .journey-timeline-wrap .step:hover .badge{transform:translateX(-50%) translateY(-4px)}
+
+      /* highlighted "Today" node */
+      .journey-timeline-wrap .step.is-now .card{
+        border-color:rgba(24,123,74,.20);
+        box-shadow:0 16px 44px rgba(24,123,74,.22), 0 3px 10px rgba(11,33,39,.06);
+      }
+      .journey-timeline-wrap .step.is-now .badge{
+        background:linear-gradient(160deg,#2f9560 0%,#12673c 100%);
+        border:5px solid #fff;
+        box-shadow:0 8px 24px rgba(20,98,55,.34);
+      }
+      .journey-timeline-wrap .step.is-now .badge::after{inset:4px;border-color:rgba(255,255,255,.30)}
+      .journey-timeline-wrap .step.is-now .year{color:var(--green-dark)}
+
+      /* !important is required: components/style.css sets `p{font-size:1.075rem!important}`
+         globally, which otherwise flattens year/name/desc to one identical size. */
+      .journey-timeline-wrap .year{
+        font-size:clamp(17px,1.9vw,26px) !important;line-height:1.2 !important;
+        font-weight:700;color:var(--green);margin:0 0 6px;letter-spacing:.01em;
+      }
+      .journey-timeline-wrap .name{
+        font-size:clamp(15.5px,1.65vw,22px) !important;line-height:1.3 !important;
+        font-weight:600;margin:0 0 12px;color:var(--ink);
+      }
+      .journey-timeline-wrap .desc{
+        font-size:clamp(13px,1.15vw,16.5px) !important;line-height:1.55 !important;
+        color:var(--body);margin:0;
+      }
+
+      /* soft green wave along the bottom of the section */
+      .journey-wave{
+        position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;
+        pointer-events:none;z-index:1;opacity:.9;
+      }
+
+      /* 6 across only while a column can still hold the text; then 3 / 2 / 1.
+         The rail only makes sense while all six sit on one row.
+         Type is re-stated per breakpoint on purpose: fewer columns means WIDER
+         columns, so a viewport-based clamp would shrink the text exactly when
+         there is more room for it. */
+      @media(max-width:1180px){
+        .journey-timeline-wrap .timeline{grid-template-columns:repeat(3,1fr);row-gap:calc(var(--bub) / 2 + 26px)}
+        .journey-timeline-wrap .rail{display:none}
+        .journey-timeline-wrap .year{font-size:23px !important}
+        .journey-timeline-wrap .name{font-size:19.5px !important}
+        .journey-timeline-wrap .desc{font-size:15.5px !important}
+      }
+      @media(max-width:900px){
+        .journey-timeline-wrap .timeline{grid-template-columns:repeat(2,1fr)}
+        .journey-timeline-wrap .year{font-size:22px !important}
+        .journey-timeline-wrap .name{font-size:18.5px !important}
+        .journey-timeline-wrap .desc{font-size:15px !important}
+      }
+      @media(max-width:560px){
+        .journey-timeline-wrap .timeline{grid-template-columns:1fr}
+        .journey-timeline-wrap .head-rail s{width:56px}
+        .journey-timeline-wrap .year{font-size:21px !important}
+        .journey-timeline-wrap .name{font-size:18px !important}
+        .journey-timeline-wrap .desc{font-size:14.5px !important}
+        .journey-timeline-wrap .card{padding-left:18px;padding-right:18px}
+      }
+    </style>
+
+    <img class="journey-wave" src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-wave.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 journey-timeline-wrap">
+      <p class="eyebrow">
+        <span class="lang-th">เส้นทางความสำเร็จของเรา</span>
+        <span class="lang-en">Our Journey</span>
+      </p>
+      <h2 class="font-display">
+        <span class="lang-th">จากงานวิศวกรรมสู่ปัญญาประดิษฐ์วิศวกรรม</span>
+        <span class="lang-en">From Engineering to Engineering Intelligence</span>
+      </h2>
+      <div class="head-rail" aria-hidden="true"><i></i><b></b><s></s><b></b><i></i></div>
+
+      <div class="timeline">
+        <div class="rail" aria-hidden="true">
+          <span class="dot" style="left:16.667%"></span>
+          <span class="dot" style="left:33.333%"></span>
+          <span class="dot" style="left:50%"></span>
+          <span class="dot" style="left:66.667%"></span>
+          <span class="dot" style="left:83.333%"></span>
+        </div>
+
+        <!-- 1 -->
+        <div class="step">
+          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-2008.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <p class="year">2008</p>
+            <p class="name">
+              <span class="lang-th">จุดเริ่มต้นวิศวกรรม</span>
+              <span class="lang-en">Engineering<br>Foundation</span>
+            </p>
+            <p class="desc">
+              <span class="lang-th">เริ่มต้นด้วยบริการออกแบบวงจร PCB และการผลิตประกอบชิ้นส่วนอิเล็กทรอนิกส์</span>
+              <span class="lang-en">Started with electronics engineering, PCB design, and assembly services.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="step">
+          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-2012.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <p class="year">2012</p>
+            <p class="name">
+              <span class="lang-th">สมองกลฝังตัว</span>
+              <span class="lang-en">Embedded<br>Intelligence</span>
+            </p>
+            <p class="desc">
+              <span class="lang-th">ขยายสู่ระบบสมองกลฝังตัวและการพัฒนาเฟิร์มแวร์เฉพาะทาง</span>
+              <span class="lang-en">Expanded to embedded systems and firmware development.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="step">
+          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-2016.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <p class="year">2016</p>
+            <p class="name">
+              <span class="lang-th">ไอโอทีอุตสาหกรรม</span>
+              <span class="lang-en">Connected<br>Intelligence</span>
+            </p>
+            <p class="desc">
+              <span class="lang-th">เชื่อมต่ออุปกรณ์และเครื่องจักรผ่านโครงข่ายไอโอทีอุตสาหกรรม (Industrial IoT)</span>
+              <span class="lang-en">Connected devices and machines through Industrial IoT.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="step">
+          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-2022.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <p class="year">2022</p>
+            <p class="name">
+              <span class="lang-th">โซลูชันอุตสาหกรรม</span>
+              <span class="lang-en">Industry<br>Solutions</span>
+            </p>
+            <p class="desc">
+              <span class="lang-th">ส่งมอบโซลูชันสำหรับ Smart Factory, Smart Energy และเกษตรอัจฉริยะ</span>
+              <span class="lang-en">Delivered solutions for Smart Factory, Smart Energy, Smart Agriculture and more.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 5 — Today -->
+        <div class="step is-now">
+          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-today.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <p class="year">Today</p>
+            <p class="name">
+              <span class="lang-th">SynExta Engine</span>
+              <span class="lang-en">SynExta<br>Intelligence Engine</span>
+            </p>
+            <p class="desc">
+              <span class="lang-th">แพลตฟอร์ม SynExta รวมข้อมูล อุปกรณ์ และ AI เพื่อเร่งโซลูชันอัจฉริยะ</span>
+              <span class="lang-en">SynExta unifies data, devices, and AI to accelerate intelligent solutions.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="step">
+          <div class="badge"><img src="<?php echo get_template_directory_uri(); ?>/image/journey/journey-tomorrow.png" alt="" aria-hidden="true" loading="lazy" decoding="async"></div>
+          <div class="card">
+            <p class="year">Tomorrow</p>
+            <p class="name">
+              <span class="lang-th">วิศวกรรมปัญญาประดิษฐ์</span>
+              <span class="lang-en">Engineering<br>Intelligence</span>
+            </p>
+            <p class="desc">
+              <span class="lang-th">มุ่งสู่ระบบปัญญาประดิษฐ์วิศวกรรมอัตโนมัติ เพื่ออนาคตยั่งยืน</span>
+              <span class="lang-en">Toward autonomous intelligence for a sustainable future.</span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE INTELLIGENCE ENGINE (Interactive Animated SVG Circuit Diagram - 100% Full Viewport Width) -->
+  <section id="synexta-engine" class="w-full py-10 sm:py-14 text-white relative overflow-hidden" style="scroll-margin-top: 96px; background: radial-gradient(65% 100% at 50% 50%, rgba(20, 100, 60, 0.65) 0%, rgba(10, 45, 28, 0.90) 60%, #071710 100%), linear-gradient(180deg, #0a2419 0%, #06160f 100%);">
+    <style>
+      #synexta-engine{
+        --bg0:#050b09;
+        --bg1:#08150f;
+        --ink:#ffffff;
+        --ink-dim:#b9c9c0;
+        --neon:#4ef08e;
+        --neon-lime:#8ef060;
+        --card:#1a231f;
+        --stroke:rgba(140,220,175,.16);
+        --wire:#5fd45f;
+      }
+      .synexta-full-grid{
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        display: grid;
+        grid-template-columns: minmax(260px, 24%) 1fr;
+        align-items: center;
+        gap: 24px;
+        padding: 0 44px;
+      }
+      .synexta-copy .eyebrow{
+        font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+        color:var(--neon);margin:0 0 16px;
+      }
+      .synexta-copy h2{
+        font-size:clamp(26px, 2.8vw, 44px);line-height:1.12;margin:0 0 18px;
+        font-weight:800;letter-spacing:-.02em;color:#fff;
+      }
+      .synexta-copy .lede{
+        font-size:clamp(13px, 1.1vw, 17px);line-height:1.6;color:var(--ink-dim);
+        margin:0 0 28px;max-width:36ch;
+      }
+      .synexta-btn{
+        display:inline-flex;align-items:center;gap:12px;
+        padding:13px 24px;border-radius:12px;
+        border:1.5px solid rgba(120,240,170,.55);
+        color:#eafff3;text-decoration:none;font-weight:600;font-size:14px;
+        background:rgba(30,90,60,.22);
+        transition:.25s;
+      }
+      .synexta-btn:hover{
+        background:rgba(60,200,130,.28);border-color:var(--neon);
+        box-shadow:0 0 26px rgba(78,240,142,.35);
+      }
+      .synexta-btn svg{transition:transform .25s}
+      .synexta-btn:hover svg{transform:translateX(5px)}
+
+      .synexta-diagram{width:100%; overflow:hidden;}
+      .synexta-diagram svg{display:block;width:100%;height:auto; max-height: 720px;}
+      .synexta-diagram text{fill:var(--ink);font-family:inherit}
+      /* 24 not 19: the 1560-unit viewBox is scaled down to fit, so in-SVG type shrinks
+         with it (at a 1440px window the diagram renders at ~0.63x). */
+      .synexta-diagram .lbl{font-size:24px;font-weight:500;dominant-baseline:middle}
+      .synexta-diagram .card{fill:url(#sxCardG);stroke:var(--stroke);stroke-width:1.4}
+      .synexta-diagram g.item{cursor:default}
+      .synexta-diagram g.item:hover .card{stroke:rgba(78,240,142,.7); fill:#24332b;}
+      .synexta-diagram .ico, .synexta-diagram use{fill:none !important; stroke:#4ef08e !important; stroke-width:1.8 !important;}
+      .synexta-diagram g.item:hover .ico{stroke:#ffffff !important; filter:drop-shadow(0 0 6px #4ef08e);}
+      .synexta-diagram .wire{fill:none;stroke:var(--wire);stroke-width:1.8;stroke-dasharray:6 6;opacity:.95;filter:url(#sxGs)}
+      /* A perfectly horizontal path has a zero-height bounding box, which makes the
+         objectBoundingBox filter region collapse and the path disappear entirely.
+         Flat wires therefore render without the glow filter. */
+      .synexta-diagram .wire.flat{filter:none}
+      .synexta-diagram .nd{fill:#8bf07a;filter:url(#sxGs)}
+      .synexta-diagram .brand{font-size:46px;font-weight:800;text-anchor:middle;letter-spacing:.03em}
+      .synexta-diagram .sub{font-size:26px;font-weight:600;text-anchor:middle;fill:#f0fff6}
+
+      /* ---- Small-screen fallback: real HTML text instead of the scaled-down SVG ---- */
+      .synexta-stack{display:none}
+      .synexta-stack .grp + .grp{margin-top:26px}
+      .synexta-stack .grp-title{
+        display:flex;align-items:center;gap:10px;margin:0 0 12px;
+        font-size:12px !important;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--neon);
+      }
+      .synexta-stack .grp-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(78,240,142,.45),transparent)}
+      .synexta-stack .chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:10px}
+      .synexta-stack .chip{
+        display:flex;align-items:center;gap:10px;
+        background:linear-gradient(180deg,#1e2a24,#121b17);
+        border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;
+      }
+      .synexta-stack .chip svg{width:22px;height:22px;flex:none}
+      .synexta-stack .chip use{fill:none !important;stroke:#4ef08e !important;stroke-width:1.8 !important}
+      .synexta-stack .chip span{font-size:14.5px !important;line-height:1.35 !important;font-weight:500;color:var(--ink)}
+      .synexta-stack .hub{
+        display:flex;flex-direction:column;align-items:center;gap:2px;
+        margin:22px auto;padding:16px 22px;border-radius:16px;text-align:center;
+        background:radial-gradient(120% 120% at 50% 0,rgba(60,200,130,.22),rgba(10,45,28,.5));
+        border:1px solid rgba(78,240,142,.35);
+      }
+      .synexta-stack .hub b{font-size:22px !important;font-weight:800;letter-spacing:.03em;color:#fff}
+      .synexta-stack .hub i{font-size:12.5px !important;font-style:normal;font-weight:600;color:#bff5d6}
+
+      @media(max-width:1180px){
+        .synexta-diagram{display:none}
+        .synexta-stack{display:block}
+      }
+
+      @media(max-width:1180px){
+        .synexta-full-grid{grid-template-columns:1fr;padding:0 clamp(18px,4vw,44px);gap:24px}
+        .synexta-copy .lede{max-width:none}
+      }
+    </style>
+
+    <div class="synexta-full-grid">
+
+        <!-- ============ LEFT COPY ============ -->
+        <div class="synexta-copy">
+          <p class="eyebrow">The Intelligence Engine</p>
+          <h2 class="font-display"><span class="lang-th">หนึ่งเอนจิน<br>ความเป็นไปได้ไม่สิ้นสุด</span><span class="lang-en">One Engine.<br>Endless Possibilities.</span></h2>
+          <p class="lede">
+            <span class="lang-th">SynExta เปลี่ยนผ่านงานวิศวกรรมสู่โซลูชันธุรกิจอัจฉริยะแบบครบวงจร</span>
+            <span class="lang-en">SynExta transforms engineering into intelligent business solutions.</span>
+          </p>
+          <a class="synexta-btn" href="<?php echo home_url('/'); ?>#solutions">
+            <span class="lang-th">เรียนรู้เพิ่มเติมเกี่ยวกับ SynExta</span>
+            <span class="lang-en">Learn More About SynExta</span>
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+              <path d="M1 6h15M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- ============ DIAGRAM ============ -->
+        <div class="synexta-diagram">
+          <svg viewBox="0 0 1560 640" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sxCardG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1e2a24"/><stop offset="1" stop-color="#121b17"/>
+            </linearGradient>
+            <linearGradient id="sxBrandG" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#ffffff"/><stop offset=".46" stop-color="#ffffff"/>
+              <stop offset=".52" stop-color="#8ef060"/><stop offset="1" stop-color="#3fe58f"/>
+            </linearGradient>
+            <linearGradient id="sxSlabTop" x1=".1" y1="0" x2=".9" y2="1">
+              <stop offset="0" stop-color="#2fe08c"/><stop offset=".55" stop-color="#124d36"/><stop offset="1" stop-color="#0b3325"/>
+            </linearGradient>
+            <linearGradient id="sxSlabSide" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#175539"/><stop offset="1" stop-color="#06180f"/>
+            </linearGradient>
+            <linearGradient id="sxEdgeL" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#a6ffcd"/><stop offset="1" stop-color="#33ea8c"/>
+            </linearGradient>
+            <filter id="sxGs" x="-400%" y="-400%" width="900%" height="900%">
+              <feGaussianBlur stdDeviation="2.4" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="sxGl" x="-200%" y="-200%" width="500%" height="500%">
+              <feGaussianBlur stdDeviation="10" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="sxBb" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="26"/>
+            </filter>
+
+            <!-- 24x24 icon glyphs (explicit fill="none" and stroke="#4ef08e") -->
+            <g id="ic-chip"><rect fill="none" stroke="#4ef08e" stroke-width="1.8" x="4" y="4" width="16" height="16" rx="3"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="12" cy="12" r="4"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M8 1v3M16 1v3M8 20v3M16 20v3M1 8h3M1 16h3M20 8h3M20 16h3"/></g>
+            <g id="ic-board"><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="12" cy="12" r="4.2"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M12 2v5.5M12 16.5V22M2 12h5.5M16.5 12H22M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="12" cy="2" r="1.5"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="12" cy="22" r="1.5"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="2" cy="12" r="1.5"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="22" cy="12" r="1.5"/></g>
+            <g id="ic-iot"><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M12 3c4.6 2.7 7 6.4 7 10.4 0 3.7-3.1 6.6-7 6.6s-7-2.9-7-6.6C5 9.4 7.4 5.7 12 3z"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M8.4 10.5c1.6 1.5 5.6 1.5 7.2 0M9.8 15.6c1.1 1 3.3 1 4.4 0"/></g>
+            <g id="ic-fw"><rect fill="none" stroke="#4ef08e" stroke-width="1.8" x="2.5" y="4" width="19" height="16" rx="3"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M9 9.5L6 12l3 2.5M15 9.5L18 12l-3 2.5"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="12" cy="12" r="1.2"/></g>
+            <g id="ic-sensor"><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M12 2.5c4.2 3.2 6.8 6.9 6.8 10.5A6.8 6.8 0 0 1 5.2 13C5.2 9.4 7.8 5.7 12 2.5z"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M12 7v9M12 11.5l3.4-2.4M12 14.6L8.6 12.2"/></g>
+            <g id="ic-machine"><rect fill="none" stroke="#4ef08e" stroke-width="1.8" x="1.5" y="11" width="11" height="8" rx="1.6"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M12.5 15h4l4.5-7M16.5 8h5v5"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="5" cy="20.5" r="2"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="10.5" cy="20.5" r="2"/></g>
+            <g id="ic-factory"><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M2 21V11l6 4V11l6 4V6.5h8V21z"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M17 10h2M17 14h2M6 17h3M12 17h3M20 6.5V3h-2"/></g>
+            <g id="ic-energy"><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M6.5 21V8.5M6.5 8.5l-3 3M6.5 8.5l3 3M3.5 21h6"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M16 21V6M13 9l3-3 3 3M12.5 21h7"/><circle fill="none" stroke="#4ef08e" stroke-width="1.8" cx="16" cy="3" r="1.6"/></g>
+            <g id="ic-agri"><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M2 21h20M4 21V11h16v10"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M3 11L12 4l9 7"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M8 21v-6h3v6M13 15h3v6"/></g>
+            <g id="ic-health"><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M12 2l8.5 3v7c0 6-4.5 9.5-8.5 11-4-1.5-8.5-5-8.5-11V5z"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M12 7.5v8M8 11.5h8"/></g>
+            <g id="ic-ai"><rect fill="none" stroke="#4ef08e" stroke-width="1.8" x="5.5" y="5.5" width="13" height="13" rx="3"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M10 10h4v4h-4z"/><path fill="none" stroke="#4ef08e" stroke-width="1.8" stroke-linecap="round" d="M9 1.5v4M15 1.5v4M9 18.5v4M15 18.5v4M1.5 9h4M1.5 15h4M18.5 9h4M18.5 15h4"/></g>
+          </defs>
+
+          <!-- ambient glow -->
+          <ellipse cx="800" cy="470" rx="400" ry="150" fill="rgba(40,215,125,.28)" filter="url(#sxBb)"/>
+          <ellipse cx="800" cy="290" rx="210" ry="210" fill="rgba(30,175,105,.14)" filter="url(#sxBb)"/>
+
+          <g id="sx-wires"></g>
+          <g id="sx-flows"></g>
+
+          <!-- ===== CENTER ===== -->
+          <g>
+            <!-- halo -->
+            <circle cx="800" cy="272" r="150" fill="none" stroke="rgba(78,240,142,.30)" stroke-width="18"
+                    stroke-dasharray="760 943" transform="rotate(102 800 272)" filter="url(#sxBb)"/>
+            <!-- soft white bloom (closed, so the ring glows evenly all the way round) -->
+            <circle cx="800" cy="272" r="150" fill="none" stroke="rgba(235,255,245,.55)" stroke-width="9"
+                    filter="url(#sxGl)"/>
+            <!-- crisp white ring (closed circle - the glow layers above provide the falloff) -->
+            <circle cx="800" cy="272" r="150" fill="none" stroke="#ffffff" stroke-width="3.4"/>
+            <circle cx="800" cy="272" r="165" fill="none" stroke="rgba(120,255,175,.35)" stroke-width="2"
+                    stroke-dasharray="34 900" stroke-linecap="round" filter="url(#sxGs)">
+              <animateTransform attributeName="transform" type="rotate" from="0 800 272" to="360 800 272" dur="8s" repeatCount="indefinite"/>
+            </circle>
+
+            <text class="brand" x="800" y="255" fill="url(#sxBrandG)" filter="url(#sxGs)">SYNEXTA</text>
+            <text class="sub" x="800" y="292">Intelligence Engine</text>
+
+            <!-- platform -->
+            <g transform="translate(800,400)">
+              <path d="M0 84 L-200 22 L0 -40 L200 22 Z" fill="url(#sxSlabTop)" opacity=".55"/>
+              <path d="M-200 22 v24 L0 108 v-24 Z" fill="url(#sxSlabSide)"/>
+              <path d="M200 22 v24 L0 108 v-24 Z" fill="url(#sxSlabSide)" opacity=".85"/>
+              <path d="M0 84 L-200 22 M0 84 L200 22" stroke="url(#sxEdgeL)" stroke-width="3" fill="none" filter="url(#sxGl)"/>
+              <g stroke="rgba(150,255,200,.3)" stroke-width="1.3" fill="none">
+                <path d="M-104 40 l34 10 l22-7"/><path d="M66 54 l34-10 l28 8"/>
+                <rect x="-142" y="52" width="20" height="9" transform="skewY(17)"/>
+                <rect x="100" y="16" width="20" height="9" transform="skewY(-17)"/>
+              </g>
+
+              <path d="M0 32 L-138 -10 L0 -52 L138 -10 Z" fill="url(#sxSlabTop)" opacity=".8"/>
+              <path d="M-138 -10 v15 L0 47 v-15 Z" fill="url(#sxSlabSide)"/>
+              <path d="M138 -10 v15 L0 47 v-15 Z" fill="url(#sxSlabSide)" opacity=".85"/>
+              <path d="M0 32 L-138 -10 M0 32 L138 -10" stroke="url(#sxEdgeL)" stroke-width="2.4" fill="none" filter="url(#sxGs)"/>
+
+              <path d="M0 -8 L-82 -32 L0 -56 L82 -32 Z" fill="#0e2b21" stroke="rgba(165,255,212,.75)" stroke-width="1.5"/>
+              <path d="M-82 -32 v11 L0 3 v-11 Z" fill="#0a1f18" stroke="rgba(120,220,170,.45)" stroke-width="1.2"/>
+              <path d="M82 -32 v11 L0 3 v-11 Z" fill="#08180f" stroke="rgba(120,220,170,.45)" stroke-width="1.2"/>
+              <path d="M0 -16 L-50 -32 L0 -48 L50 -32 Z" fill="none" stroke="rgba(120,240,180,.4)" stroke-width="1.2"/>
+
+              <g filter="url(#sxGl)">
+                <circle cx="0" cy="-32" r="3.6" fill="#e2ffee"/>
+                <path d="M-24 -32h48M0 -44v24" stroke="#bfffdb" stroke-width="1.6" opacity=".85"/>
+              </g>
+              <ellipse cx="0" cy="-32" rx="0" ry="0" fill="none" stroke="#7dffbb" stroke-width="2">
+                <animate attributeName="rx" values="6;190" dur="3.4s" repeatCount="indefinite"/>
+                <animate attributeName="ry" values="2;58" dur="3.4s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values=".7;0" dur="3.4s" repeatCount="indefinite"/>
+              </ellipse>
+            </g>
+          </g>
+
+          <g id="sx-left"></g>
+          <g id="sx-right"></g>
+          </svg>
+        </div>
+
+        <!-- Small-screen equivalent of the diagram; filled by the same script -->
+        <div class="synexta-stack" id="sx-stack"></div>
+
+    </div>
+
+    <script>
+    (function(){
+      const NS="http://www.w3.org/2000/svg";
+      const el=(n,a={})=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+      const LEFT=[["Hardware","ic-chip"],["Embedded\nSystems","ic-board"],["IoT Devices","ic-iot"],
+                  ["Firmware","ic-fw"],["Sensors","ic-sensor"],["Machines","ic-machine"]];
+      const RIGHT=[["Smart Factory","ic-factory"],["Smart Energy","ic-energy"],["Smart Agriculture","ic-agri"],
+                   ["Smart Healthcare","ic-health"],["Custom AI\nSolutions","ic-ai"]];
+
+      /* Cards are 290 wide (not 254) so the larger 24px labels still fit inside them.
+         Right column starts at 1250 to keep its 290px card inside the 1560 viewBox. */
+      const L={x:20,w:290,h:62,y0:22,gap:12};
+      const R={x:1250,w:290,h:70,y0:24,gap:16};
+      const HUBL=650, HUBR=950;
+
+      const gL=document.getElementById("sx-left"),gR=document.getElementById("sx-right"),
+            gW=document.getElementById("sx-wires"),gF=document.getElementById("sx-flows");
+
+      if(!gL || !gR || !gW || !gF) return;
+
+      function label(g,text,x,y,size){
+        const lines=text.split("\n");
+        const t=el("text",{class:"lbl",x,y:y-(lines.length-1)*(size*.58),style:`font-size:${size}px`});
+        lines.forEach((ln,i)=>{const s=el("tspan",{x,dy:i?size*1.15:0});s.textContent=ln;t.appendChild(s);});
+        g.appendChild(t);
+      }
+      function card(parent,{x,y,w,h,text,icon,sc=1.05}){
+        const g=el("g",{class:"item"});
+        g.appendChild(el("rect",{class:"card",x,y,width:w,height:h,rx:11}));
+        g.appendChild(el("rect",{x:x+.8,y:y+.8,width:w-1.6,height:h/2,rx:10.5,fill:"rgba(255,255,255,.03)"}));
+        g.appendChild(el("use",{href:"#"+icon,transform:`translate(${x+16},${y+h/2-12*sc}) scale(${sc})`}));
+        label(g,text,x+56,y+h/2,24);
+        parent.appendChild(g);
+      }
+      function node(x,y){gW.appendChild(el("circle",{class:"nd",cx:x,cy:y,r:4}));}
+      function wire(d,flat){
+        gW.appendChild(el("path",{class:flat?"wire flat":"wire",d}));
+        const dot=el("circle",{r:3.5,fill:"#e6fff1",filter:"url(#sxGs)"});
+        dot.appendChild(el("animateMotion",{dur:(2.6+Math.random()*1.8).toFixed(2)+"s",
+          repeatCount:"indefinite",path:d,begin:(Math.random()*2.5).toFixed(2)+"s"}));
+        gF.appendChild(dot);
+      }
+      const isFlat=(y1,y2)=>Math.abs(y2-y1)<4;
+      function smoothWire(x1,y1,x2,y2){
+        if(isFlat(y1,y2)) return `M${x1},${y1} H${x2}`;
+        const midX=(x1+x2)/2;
+        return `M${x1},${y1} C${midX},${y1} ${midX},${y2} ${x2},${y2}`;
+      }
+
+      const LT=[135, 190, 245, 275, 335, 390];
+      LEFT.forEach(([t,ic],i)=>{
+        const y=L.y0+i*(L.h+L.gap), cy=y+L.h/2;
+        const x1=L.x+L.w;
+        card(gL,{x:L.x,y,w:L.w,h:L.h,text:t,icon:ic});
+        node(x1, cy);
+        node(HUBL, LT[i]);
+        wire(smoothWire(x1, cy, HUBL, LT[i]), isFlat(cy, LT[i]));
+      });
+
+      const RT=[140, 200, 260, 317, 380];
+      RIGHT.forEach(([t,ic],i)=>{
+        const y=R.y0+i*(R.h+R.gap), cy=y+R.h/2;
+        const x2=R.x;
+        card(gR,{x:R.x,y,w:R.w,h:R.h,text:t,icon:ic,sc:1.15});
+        node(HUBR, RT[i]);
+        node(x2, cy);
+        wire(smoothWire(HUBR, RT[i], x2, cy), isFlat(RT[i], cy));
+      });
+
+      /* ---- Small-screen fallback ----
+         Same LEFT/RIGHT data as the diagram, rendered as real HTML text so it stays
+         readable at any width. Icons reuse the <defs> glyphs already in the document. */
+      const stack=document.getElementById("sx-stack");
+      if(stack){
+        const chips=items=>items.map(([t,ic])=>
+          `<div class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#${ic}"></use></svg>`+
+          `<span>${t.replace(/\n/g," ")}</span></div>`).join("");
+        stack.innerHTML=
+          `<div class="grp"><p class="grp-title">Inputs</p><div class="chips">${chips(LEFT)}</div></div>`+
+          `<div class="hub"><b>SYNEXTA</b><i>Intelligence Engine</i></div>`+
+          `<div class="grp"><p class="grp-title">Outcomes</p><div class="chips">${chips(RIGHT)}</div></div>`;
+      }
+    })();
+    </script>
+  </section>
+
+  <!-- SECTION 4A: WHAT WE BUILD (own full-width block)
+       Was the left half of a lg:grid-cols-2 pair, which squeezed four image cards into
+       half the page. Now a section of its own, four across, with the icon badge tucked
+       into the corner of each image. -->
+  <section id="what-we-build" class="py-12 sm:py-16 bg-white relative" style="scroll-margin-top: 96px;">
+    <style>
+      .build-wrap{
+        --bd:#e8ecea;
+        --ink:#0b2127;
+        --muted:#6b7280;
+      }
+      .build-card{background:#fff;border-radius:18px;overflow:hidden}
+      /* no frame: the reference puts the content straight on the page background */
+      .build-shell{background:transparent;border:0;border-radius:0;padding:0;box-shadow:none}
+      .build-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(14px,1.7vw,26px)}
+      /* .media does NOT clip - it only provides the positioning context, so the badge
+         can hang past the image edge. Only .shot clips, to round the photo corners. */
+      .build-item .media{position:relative}
+      .build-item .shot{
+        border-radius:18px;overflow:hidden;
+        aspect-ratio:16/11;background:#eef1ef;
+      }
+      .build-item .shot img{width:100%;height:100%;object-fit:cover;display:block}
+      .build-item .badge{
+        position:absolute;left:14px;bottom:-20px;z-index:2;
+        width:clamp(38px,3.2vw,46px);height:clamp(38px,3.2vw,46px);border-radius:50%;
+        background:var(--brand-green,#1e7a45);
+        display:flex;align-items:center;justify-content:center;
+        box-shadow:0 6px 18px rgba(11,33,39,.18);border:3px solid #fff;
+      }
+      .build-item .badge i{color:#fff;font-size:clamp(15px,1.3vw,19px)}
+      .build-item .cap{padding-top:30px}
+      .build-item h3{
+        font-size:clamp(16px,1.35vw,20px) !important;font-weight:800;color:var(--ink);
+        margin:0 0 6px;line-height:1.3 !important;
+      }
+      .build-item p{
+        font-size:clamp(13px,1.02vw,15px) !important;line-height:1.6 !important;
+        color:var(--muted);margin:0;font-weight:400;
+      }
+      @media(max-width:1180px){
+        .build-grid{grid-template-columns:repeat(3,1fr)}
+      }
+      @media(max-width:820px){
+        .build-grid{grid-template-columns:repeat(2,1fr)}
+      }
+      @media(max-width:560px){
+        .build-grid{grid-template-columns:1fr}
+      }
+    </style>
+
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 build-wrap">
+      <div class="build-shell">
+        <span class="text-xs font-extrabold text-brand-bright uppercase tracking-widest block mb-2">
+          <span class="lang-th">สิ่งที่เราสร้าง</span><span class="lang-en">What We Build</span>
+        </span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-ink mb-3">
+          <span class="lang-th">โซลูชันอัจฉริยะสำหรับทุกอุตสาหกรรม</span>
+          <span class="lang-en">Intelligent Solutions for Every Industry</span>
+        </h2>
+        <p class="text-sm sm:text-base text-muted font-light mb-8 sm:mb-10 max-w-3xl">
+          <span class="lang-th">เทคโนโลยีที่ออกแบบมาเพื่อเพิ่มประสิทธิภาพ ลดต้นทุน และสร้างคุณค่าที่ยั่งยืนให้กับธุรกิจของคุณ</span>
+          <span class="lang-en">Technology built to raise efficiency, cut cost, and create lasting value for your business.</span>
+        </p>
+
+        <div class="build-grid">
+
+          <div class="build-item">
+            <div class="media">
+              <div class="shot">
+                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/ind_industrial_new.jpg" alt="Smart Factory">
+              </div>
+              <span class="badge"><i class="fa-solid fa-industry" aria-hidden="true"></i></span>
+            </div>
+            <div class="cap">
+              <h3><span class="lang-th">โรงงานอัจฉริยะ</span><span class="lang-en">Smart Factory</span></h3>
+              <p><span class="lang-th">ยกระดับสายการผลิตด้วยข้อมูลอัจฉริยะ เพิ่มประสิทธิภาพและผลผลิต</span><span class="lang-en">Manufacturing intelligence for efficiency and productivity.</span></p>
+            </div>
+          </div>
+
+          <div class="build-item">
+            <div class="media">
+              <div class="shot">
+                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/ind_energy_new.jpg" alt="Smart Energy">
+              </div>
+              <span class="badge"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
+            </div>
+            <div class="cap">
+              <h3><span class="lang-th">พลังงานอัจฉริยะ</span><span class="lang-en">Smart Energy</span></h3>
+              <p><span class="lang-th">ระบบติดตามและควบคุมพลังงานอัตโนมัติ เพื่ออนาคตที่ยั่งยืน</span><span class="lang-en">Energy monitoring and automation for a sustainable future.</span></p>
+            </div>
+          </div>
+
+          <div class="build-item">
+            <div class="media">
+              <div class="shot">
+                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/ind_agriculture_new.png" alt="Smart Agriculture">
+              </div>
+              <span class="badge"><i class="fa-solid fa-seedling" aria-hidden="true"></i></span>
+            </div>
+            <div class="cap">
+              <h3><span class="lang-th">เกษตรอัจฉริยะ</span><span class="lang-en">Smart Agriculture</span></h3>
+              <p><span class="lang-th">เกษตรแม่นยำและการติดตามสภาพแวดล้อม เพื่อผลผลิตที่ดีขึ้น</span><span class="lang-en">Precision agriculture and environmental monitoring for better yield.</span></p>
+            </div>
+          </div>
+
+          <div class="build-item">
+            <div class="media">
+              <div class="shot">
+                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/smt-assembly-production.png" alt="PCB &amp; PCB Assembly">
+              </div>
+              <span class="badge"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
+            </div>
+            <div class="cap">
+              <h3><span class="lang-th">แผงวงจรและการประกอบ</span><span class="lang-en">PCB &amp; PCB Assembly</span></h3>
+              <p><span class="lang-th">ออกแบบวงจรและลาย PCB ผลิตและประกอบแผงวงจร SMT/THT พร้อมทดสอบคุณภาพ</span><span class="lang-en">Circuit and PCB layout design, SMT/THT assembly, and in-house quality testing.</span></p>
+            </div>
+          </div>
+
+          <div class="build-item">
+            <div class="media">
+              <div class="shot">
+                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/pcb-design-prototyping.png" alt="Custom Engineering">
+              </div>
+              <span class="badge"><i class="fa-solid fa-microchip" aria-hidden="true"></i></span>
+            </div>
+            <div class="cap">
+              <h3><span class="lang-th">วิศวกรรมตามสั่ง</span><span class="lang-en">Custom Engineering</span></h3>
+              <p><span class="lang-th">พัฒนาฮาร์ดแวร์ สมองกลฝังตัว AI และแพลตฟอร์ม ตามความต้องการเฉพาะของคุณ</span><span class="lang-en">Hardware, embedded, AI, and platform development tailored to your needs.</span></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4B: WHY BUSINESSES TRUST SYNERGY (own full-width block)
+       Six reasons on one row, separated by hairlines, on its own tinted panel. -->
+  <section id="why-trust" class="py-12 sm:py-16 bg-[#f6f8f7] border-t border-slate-100 relative" style="scroll-margin-top: 96px;">
+    <style>
+      .trust6-wrap{--bd:#dde5e0;--ink:#0b2127;--muted:#6b7280}
+      /* no frame here either - separation comes from the section background alone */
+      .trust6-shell{background:transparent;border:0;border-radius:0;padding:0}
+      .trust6-grid{
+        display:grid;grid-template-columns:repeat(6,1fr);
+        margin-top:clamp(22px,3vw,40px);
+      }
+      .trust6-item{
+        display:flex;flex-direction:column;align-items:center;text-align:center;
+        padding:0 clamp(8px,1vw,18px);min-width:0;
+      }
+      .trust6-item .ic{
+        width:clamp(52px,4.6vw,66px);height:clamp(52px,4.6vw,66px);border-radius:50%;
+        background:#fff;display:flex;align-items:center;justify-content:center;
+        margin-bottom:clamp(12px,1.4vw,18px);flex:none;
+        box-shadow:0 3px 12px rgba(11,33,39,.07);
+      }
+      .trust6-item .ic i{color:var(--brand-green,#1e7a45);font-size:clamp(20px,1.9vw,27px)}
+      .trust6-item h4{
+        font-size:clamp(14px,1.15vw,17px) !important;font-weight:800;color:var(--ink);
+        margin:0 0 6px;line-height:1.3 !important;
+      }
+      .trust6-item p{
+        font-size:clamp(12px,.95vw,14px) !important;line-height:1.55 !important;
+        color:var(--muted);margin:0;font-weight:400;
+        overflow-wrap:normal;word-break:keep-all;hyphens:none;
+      }
+      /* hairlines only while all six share one row */
+      @media(min-width:1181px){
+        .trust6-item + .trust6-item{border-left:1px solid var(--bd)}
+      }
+      @media(max-width:1180px){
+        .trust6-grid{grid-template-columns:repeat(3,1fr);gap:clamp(22px,3vw,34px) 12px}
+      }
+      @media(max-width:640px){
+        .trust6-grid{grid-template-columns:repeat(2,1fr)}
+      }
+    </style>
+
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 trust6-wrap">
+      <div class="trust6-shell">
+        <div class="text-center max-w-3xl mx-auto">
+          <span class="text-xs font-extrabold text-brand-bright uppercase tracking-widest block mb-2">
+            <span class="lang-th">ทำไมธุรกิจถึงไว้วางใจ SYNERGY</span><span class="lang-en">Why Businesses Trust Synergy</span>
+          </span>
+          <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-ink mb-3">
+            <span class="lang-th">วิศวกรรมที่เป็นเลิศ ผลลัพธ์ที่ยั่งยืน</span>
+            <span class="lang-en">Engineering Excellence. Lasting Impact.</span>
+          </h2>
+          <p class="text-sm sm:text-base text-muted font-light">
+            <span class="lang-th">เราผสานนวัตกรรม เทคโนโลยี และประสบการณ์ เพื่อขับเคลื่อนธุรกิจของคุณไปข้างหน้า</span>
+            <span class="lang-en">We combine innovation, technology, and experience to move your business forward.</span>
+          </p>
+        </div>
+
+        <div class="trust6-grid">
+
+          <div class="trust6-item">
+            <span class="ic"><i class="fa-solid fa-compass-drafting" aria-hidden="true"></i></span>
+            <h4><span class="lang-th">วิศวกรรมมาก่อน</span><span class="lang-en">Engineering First</span></h4>
+            <p><span class="lang-th">เราแก้โจทย์ทางวิศวกรรมให้ชัดเจนก่อนลงมือสร้างโซลูชัน</span><span class="lang-en">We solve engineering challenges before building solutions.</span></p>
+          </div>
+
+          <div class="trust6-item">
+            <span class="ic"><i class="fa-solid fa-gears" aria-hidden="true"></i></span>
+            <h4><span class="lang-th">พัฒนาครบวงจร</span><span class="lang-en">End-to-End Development</span></h4>
+            <p><span class="lang-th">ตั้งแต่ฮาร์ดแวร์ ซอฟต์แวร์ จนถึงแพลตฟอร์ม AI และการติดตั้งใช้งานจริง</span><span class="lang-en">From hardware design to AI platform and deployment.</span></p>
+          </div>
+
+          <div class="trust6-item">
+            <span class="ic"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i></span>
+            <h4><span class="lang-th">นวัตกรรมเฉพาะทาง</span><span class="lang-en">Custom Innovation</span></h4>
+            <p><span class="lang-th">ออกแบบและพัฒนาโซลูชันตอบความต้องการเฉพาะของธุรกิจคุณ</span><span class="lang-en">We design and develop solutions around your unique business needs.</span></p>
+          </div>
+
+          <div class="trust6-item">
+            <span class="ic"><i class="fa-solid fa-microchip" aria-hidden="true"></i></span>
+            <h4><span class="lang-th">ความเชี่ยวชาญด้านการผลิต</span><span class="lang-en">Manufacturing Expertise</span></h4>
+            <p><span class="lang-th">สายการประกอบ PCB ทดสอบ และควบคุมคุณภาพภายในองค์กร</span><span class="lang-en">In-house PCB assembly, testing, and quality control.</span></p>
+          </div>
+
+          <div class="trust6-item">
+            <span class="ic"><i class="fa-solid fa-brain" aria-hidden="true"></i></span>
+            <h4><span class="lang-th">ขับเคลื่อนด้วย AI</span><span class="lang-en">AI-Driven Intelligence</span></h4>
+            <p><span class="lang-th">AI และการวิเคราะห์ข้อมูล เปลี่ยนข้อมูลดิบให้เป็นการตัดสินใจที่ทำได้จริง</span><span class="lang-en">AI and analytics turn data into actionable insights.</span></p>
+          </div>
+
+          <div class="trust6-item">
+            <span class="ic"><i class="fa-solid fa-handshake" aria-hidden="true"></i></span>
+            <h4><span class="lang-th">พันธมิตรระยะยาว</span><span class="lang-en">Long-term Partnership</span></h4>
+            <p><span class="lang-th">เราอยู่เคียงข้างคุณ เพื่อความสำเร็จที่ต่อเนื่อง</span><span class="lang-en">We stay with you to ensure continuous success.</span></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- SECTION 6: TRUST & RECOGNITION
+       Same nine credentials and the same rule-flanked heading as the Canva reference, but
+       laid out on a uniform grid instead of copying the reference's raw pixel sizes.
+       The reference mixes wordmark sizes from 27px to 73px and column widths from 120 to
+       229 units, which reads as unbalanced once the theme font (wider than Canva's) is
+       applied - and it forced mid-word breaks like "partn/er netw/ork".
+       Here every cell is one of nine equal columns and every logo is driven by three
+       shared variables, so the row stays even at any width with nothing to hand-tune. -->
+  <section id="certifications" class="py-16 sm:py-20 bg-white border-t border-slate-100 relative">
+    <style>
+      .trust-wrap{
+        --tr-green:#006633;
+        --tr-blue:#004aad;
+        --tr-rule:#e3e8e5;
+        container-type:inline-size;
+      }
+      /* Heading: green rule fading outward with a dot at the inner end, both sides */
+      .trust-head{display:flex;align-items:center;justify-content:center;margin:0 0 clamp(26px,3vw,42px)}
+      .trust-head .ln{flex:0 1 auto;width:28.75cqw;min-width:0;max-width:427px;height:2px;border-radius:2px}
+      .trust-head .ln.l{background:linear-gradient(90deg,rgba(0,102,51,0),var(--tr-green))}
+      .trust-head .ln.r{background:linear-gradient(270deg,rgba(0,102,51,0),var(--tr-green))}
+      .trust-head .dt{width:9px;height:9px;border-radius:50%;background:var(--tr-green);flex:none}
+      .trust-head .tt{
+        flex:none;padding:0 clamp(14px,1.9vw,28px);text-align:center;white-space:nowrap;
+        font-size:clamp(15px,2.361cqw,34px);font-weight:700;letter-spacing:.06em;
+        text-transform:uppercase;color:var(--tr-green);line-height:1.2;
+      }
+
+      .trust-strip{
+        container-type:inline-size;
+        max-width:1440px;margin:0 auto;
+        display:grid;
+        grid-template-columns:repeat(9,1fr);   /* equal columns - this is what makes it read as one row */
+        align-items:stretch;
+        /* the three sizes every cell derives from */
+        /* One shared logo box for every cell. 80px is the ceiling a 152px column allows:
+           the BOI lockup (1.606:1) tops out at 84px wide-limited, NIA (2.213:1) at 61px,
+           and max-width:100% shrinks anything wider on its own - nothing to hand-tune. */
+        --box:clamp(54px,5.7cqw,80px);         /* height of the logo box in every cell */
+        --name:clamp(16px,2cqw,28px);          /* brand wordmark */
+        --cap:clamp(9px,.95cqw,13px);          /* caption under the logo */
+      }
+      .trust-cell{
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        gap:.55cqw;min-width:0;padding:4px clamp(5px,.7cqw,12px);
+        text-align:center;transition:transform .25s;
+      }
+      .trust-cell:hover{transform:translateY(-3px)}
+      @media(min-width:1181px){
+        .trust-cell + .trust-cell{border-left:1px solid var(--tr-rule)}
+      }
+
+      /* A fixed-height logo box keeps every mark optically the same size, whatever the
+         source file's aspect ratio is. */
+      .trust-logo{
+        height:var(--box);
+        display:flex;align-items:center;justify-content:center;gap:.45cqw;
+      }
+      .trust-logo img{display:block;max-height:100%;width:auto;max-width:100%;object-fit:contain}
+      .trust-name{font-size:var(--name);font-weight:600;line-height:1;white-space:nowrap;color:#000}
+      .trust-cap{
+        font-size:var(--cap);font-weight:600;line-height:1.3;color:var(--tr-blue);
+        /* never split a word: the captions are short, they wrap at spaces only */
+        overflow-wrap:normal;word-break:keep-all;hyphens:none;
+      }
+
+      /* Microsoft and aws stack their mark and wordmark: side by side, the wordmark had to
+         share 136px with the mark and could not grow past ~20px. */
+      .c-ms .trust-logo,.c-aws .trust-logo{flex-direction:column;gap:.15cqw}
+      .c-ms .trust-logo img{max-height:47%}
+      .c-aws .trust-logo img{max-height:20%}
+      .c-aws .trust-name{font-size:calc(var(--name) * 1.2)}
+
+      .c-depa .trust-name{font-size:calc(var(--name) * 1.35);font-weight:700;color:var(--tr-blue);text-transform:uppercase}
+      .c-ms .trust-name{font-weight:500}
+      .c-ms .trust-cap{color:#3b4148}
+      .c-aws .trust-cap{color:#3b4148}
+
+      /* ================= reflow: cards ================= */
+      @media(max-width:1180px){
+        .trust-strip{
+          grid-template-columns:repeat(5,1fr);gap:12px;
+          /* every row as tall as the tallest card, so a two-line caption in one row
+             does not make the next row look shorter */
+          grid-auto-rows:1fr;
+          --box:64px;--name:21px;--cap:11.5px;
+        }
+        .trust-cell{
+          gap:7px;padding:14px 8px;min-height:124px;
+          border:1px solid var(--tr-rule);border-radius:14px;background:#fff;
+          box-shadow:0 2px 10px rgba(11,33,39,.04);
+        }
+        .trust-cell:hover{box-shadow:0 8px 22px rgba(11,33,39,.09)}
+        .trust-logo{gap:6px}
+        .c-aws .trust-logo{gap:2px}
+      }
+      @media(max-width:820px){
+        .trust-strip{grid-template-columns:repeat(3,1fr)}
+      }
+      @media(max-width:520px){
+        .trust-strip{grid-template-columns:repeat(2,1fr);--box:56px;--name:19px;--cap:11px}
+        .trust-cell{min-height:112px;padding:12px 6px}
+        .trust-head .tt{letter-spacing:.04em;white-space:normal}
+      }
+    </style>
+
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 trust-wrap">
+      <div class="trust-head">
+        <span class="ln l" aria-hidden="true"></span>
+        <span class="dt" aria-hidden="true"></span>
+        <span class="tt">
+          <span class="lang-th">มาตรฐานและการรับรอง</span>
+          <span class="lang-en">Trust &amp; Recognition</span>
+        </span>
+        <span class="dt" aria-hidden="true"></span>
+        <span class="ln r" aria-hidden="true"></span>
+      </div>
+
+      <div class="trust-strip">
+
+        <!-- 1. BOI Thailand -->
+        <div class="trust-cell c-lockup">
+          <span class="trust-logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/boi-lockup.png" alt="BOI Thailand" loading="lazy" decoding="async">
+          </span>
+        </div>
+
+        <!-- 2. ISO 9001:2015 -->
+        <div class="trust-cell c-lockup">
+          <span class="trust-logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/iso-9001.png" alt="ISO 9001:2015" loading="lazy" decoding="async">
+          </span>
+        </div>
+
+        <!-- 3. ISO 14001:2015 -->
+        <div class="trust-cell c-lockup">
+          <span class="trust-logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/iso-14001.png" alt="ISO 14001:2015" loading="lazy" decoding="async">
+          </span>
+        </div>
+
+        <!-- 4. ISO 45001:2018 -->
+        <div class="trust-cell c-lockup">
+          <span class="trust-logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/iso-45001.png" alt="ISO 45001:2018" loading="lazy" decoding="async">
+          </span>
+        </div>
+
+        <!-- 5. Microsoft Solutions Partner -->
+        <div class="trust-cell c-ms">
+          <span class="trust-logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/microsoft.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <span class="trust-name">Microsoft</span>
+          </span>
+          <span class="trust-cap">Solutions Partner</span>
+        </div>
+
+        <!-- 6. AWS Partner Network -->
+        <div class="trust-cell c-aws">
+          <span class="trust-logo">
+            <span class="trust-name">aws</span>
+            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/aws.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          </span>
+          <span class="trust-cap">Partner Network</span>
+        </div>
+
+        <!-- 7. NIA -->
+        <div class="trust-cell c-nia">
+          <span class="trust-logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/nia.png" alt="NIA" loading="lazy" decoding="async">
+          </span>
+          <span class="trust-cap">National Innovation<br>Agency Thailand</span>
+        </div>
+
+        <!-- 8. DEPA -->
+        <div class="trust-cell c-depa">
+          <span class="trust-logo">
+            <span class="trust-name">depa</span>
+          </span>
+          <span class="trust-cap">Digital Economy<br>Promotion Agency</span>
+        </div>
+
+        <!-- 9. Industry Awards -->
+        <div class="trust-cell c-award">
+          <span class="trust-logo">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/trust/award.png" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          </span>
+          <span class="trust-cap">Industry Awards</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER CONTAINER -->
+  <div id="footer-container" class="bg-ink w-full block"></div>
+
+  <!-- Scripts -->
+  <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
+  <?php wp_footer(); ?>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+/*
+Theme Name: Synergy Updated Theme
+Theme URI: https://www.syntechnology.com
+Author: Synergy Group
+Description: Updated Theme for Synergy Group with Admin Bar Overlap Fix
+Version: 3.1.0
+*/
+
+/* WordPress Admin Bar Compatibility Fix */
+body.admin-bar nav.fixed,
+.admin-bar nav.fixed,
+#wpadminbar ~ nav.fixed {
+  top: 32px !important;
+}
+@media screen and (max-width: 782px) {
+  body.admin-bar nav.fixed,
+  .admin-bar nav.fixed,
+  #wpadminbar ~ nav.fixed {
+    top: 46px !important;
+  }
+}
