@@ -232,12 +232,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- NAVBAR CONTAINER -->
 <div id="navbar-container"></div>
 
-<main id="main" class="overflow-x-hidden">
-
 <!-- ==========================================================================
      HERO SECTION (Exact two-column split layout, matching design image perfectly)
      ========================================================================== -->
-<section id="services-hero" class="relative min-h-[calc(100vh-80px)] flex flex-col justify-center text-slate-900 bg-white overflow-hidden">
+<section id="services-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 bg-white overflow-hidden">
   <!-- Dot Grid Overlay Effect for depth -->
   <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
@@ -704,7 +702,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </div>
 </section>
 
-</main>
+
 
 <!-- FOOTER CONTAINER -->
 <div id="footer-container" class="bg-ink w-full block"></div>
