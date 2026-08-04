@@ -344,18 +344,20 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- ==========================================================================
      HERO SECTION — Matching Reference Design Image 100%
      ========================================================================== -->
-<section id="services-hero" class="relative bg-white overflow-hidden bg-cover bg-center bg-no-repeat pt-6 pb-24" style="min-height: 580px; background-image: url('<?php echo esc_url(get_template_directory_uri() . '/image/service-hero-bg.png'); ?>');">
+<section id="services-hero" class="relative bg-white overflow-hidden bg-cover bg-center bg-no-repeat pt-6 pb-28" style="min-height: 600px; background-image: url('<?php echo esc_url(get_template_directory_uri() . '/image/service-hero-bg.png'); ?>');">
 
-  <!-- White Curved Shape Mask on Left (Exact curve from reference image) -->
-  <div class="hidden lg:block absolute inset-y-0 left-0 w-[46%] xl:w-[43%] bg-white z-0 pointer-events-none" style="border-top-right-radius: 70% 100%; border-bottom-right-radius: 70% 100%;"></div>
+  <!-- SVG Organic S-Curve & Yellow Accent Wave (Matching Reference Image 100%) -->
+  <svg class="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1440 680" preserveAspectRatio="none">
+    <!-- Smooth Organic White S-Curve (Wider to cover description text comfortably) -->
+    <path fill="#ffffff" d="M 0,0 L 640,0 C 750,0 720,270 590,400 C 480,510 720,600 1440,600 L 1440,680 L 0,680 Z"/>
+    <!-- Yellow/Orange Accent Wave (Bottom Right) -->
+    <path fill="#F5B800" d="M 1180,680 C 1280,520 1440,500 1440,680 Z"/>
+  </svg>
 
   <!-- Mobile/Tablet gradient fallback overlay -->
-  <div class="block lg:hidden absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/30 pointer-events-none z-0"></div>
+  <div class="block lg:hidden absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30 pointer-events-none z-0"></div>
 
-  <!-- Yellow/Orange Wave Accent (Bottom Right) -->
-  <div class="absolute bottom-0 right-0 w-64 h-36 bg-amber-400 rounded-tl-full opacity-90 pointer-events-none z-0"></div>
-
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-center py-8 lg:py-12">
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-center py-8 lg:py-14">
 
     <!-- Text Content Wrapper -->
     <div class="max-w-xl lg:max-w-2xl">
