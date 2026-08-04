@@ -68,7 +68,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <title>Services — End-to-End Product Development | พัฒนาผลิตภัณฑ์ครบวงจร</title>
 
 <meta name="description" content="Syntech is your trusted engineering partner for end-to-end product development — from design and prototyping to manufacturing, certification and after-sales support. พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด">
-<meta name="theme-color" content="#004d3a">
+<meta name="theme-color" content="#1F6B43">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="<?php echo home_url('/service/'); ?>">
@@ -93,7 +93,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <link rel="shortcut icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
 <link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
 
-<!-- Tailwind CSS CDN (For Header/Footer and Global Styles compatibility) -->
+<!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
     tailwind.config = {
@@ -115,37 +115,48 @@ if (file_exists(__DIR__ . '/functions.php')) {
     }
 </script>
 
-<!-- Fonts: IBM Plex Sans Thai carries both Thai + Latin; Jakarta for display. -->
+<!-- Google Fonts & FontAwesome CDN -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- Original stylesheet from wise-bohr for exact visual match -->
-<link rel="stylesheet" href="<?php echo function_exists('synergy_asset') ? synergy_asset('components/wise-bohr-style.css') : './components/wise-bohr-style.css'; ?>">
-
-<!-- Global Theme Overrides -->
+<!-- Global Theme Stylesheet -->
 <link rel="stylesheet" href="<?php echo function_exists('synergy_asset') ? synergy_asset('components/style.css') : './components/style.css'; ?>">
 
 <style>
-    /* Specific adjustments to ensure wise-bohr styles do not clash with tailwind navbar/footer */
-    nav, nav *, footer, footer * {
-      box-sizing: border-box !important;
+    body {
+      font-family: 'SukhumvitSet', 'Inter', 'Sarabun', sans-serif;
+      scroll-behavior: smooth;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    h1, h2, h3, h4, h5, h6, .font-display {
+      font-family: 'Space Grotesk', 'SukhumvitSet', sans-serif;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    p, span, a {
+      overflow-wrap: break-word;
     }
     
-    /* Ensure the padding matches standard layout spacing under the fixed header */
-    .hero {
-      padding-top: 130px !important;
+    /* Animation helper for the scroll-reveal */
+    .js-reveal [data-reveal] {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    @media (max-width: 1024px) {
-      .hero {
-        padding-top: 100px !important;
-      }
+    .js-reveal [data-reveal].is-revealed {
+      opacity: 1;
+      transform: translateY(0);
     }
+    
+    [style*="--reveal-delay:60ms"] { transition-delay: 60ms; }
+    [style*="--reveal-delay:120ms"] { transition-delay: 120ms; }
+    [style*="--reveal-delay:180ms"] { transition-delay: 180ms; }
+    [style*="--reveal-delay:240ms"] { transition-delay: 240ms; }
 </style>
 
-<!-- Opt into scroll-reveal only when scripting is live, before first paint. -->
-<script>document.documentElement.classList.add('js-reveal');</script>
 <script>
     window.wpThemeUrl = "<?php echo get_template_directory_uri(); ?>/";
     window.wpThemeUri = "<?php echo get_template_directory_uri(); ?>/";
@@ -154,448 +165,476 @@ if (file_exists(__DIR__ . '/functions.php')) {
 </head>
 <body <?php body_class("bg-white text-body antialiased"); ?>>
 
-<a class="skip-link" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
+<a class="skip-link fixed top-3 left-3 z-[99999] bg-brand text-white px-5 py-2.5 rounded-full font-bold text-sm -translate-y-24 focus:translate-y-0 transition duration-200" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
 
 <!-- NAVBAR CONTAINER -->
 <div id="navbar-container"></div>
 
-<!-- ==========================================================================
-     Icon sprite — inline so the page needs no external icon font/CDN
-     ========================================================================== -->
-<svg width="0" height="0" hidden aria-hidden="true" focusable="false" style="position:absolute">
-  <defs>
-    <symbol id="ic-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
-    <symbol id="ic-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5"/><path d="m6 11 6-6 6 6"/></symbol>
-    <symbol id="ic-send" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></symbol>
-    <symbol id="ic-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H8l-5 3 1.4-4.5A8 8 0 1 1 21 12z"/></symbol>
-    <symbol id="ic-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-5"/></symbol>
-    <symbol id="ic-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.4v.2"/></symbol>
-    <symbol id="ic-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
-    <symbol id="ic-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
-    <symbol id="ic-trending" viewBox="0 0 24 24"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><path d="M16 7h6v6"/></symbol>
-    <symbol id="ic-layers" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></symbol>
-    <symbol id="ic-factory" viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M4 20V10l5 3V10l5 3V7l6 4v9"/><path d="M8 20v-4h3v4"/></symbol>
-    <symbol id="ic-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></symbol>
-    <symbol id="ic-partners" viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="5"/><circle cx="15.5" cy="12" r="5"/></symbol>
-    <symbol id="ic-bulb" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21.5h4"/><path d="M12 2a7 7 0 0 0-4 12.7V18h8v-3.3A7 7 0 0 0 12 2z"/></symbol>
-    <symbol id="ic-ruler" viewBox="0 0 24 24"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7.5 11.5 2 2"/><path d="m11.5 7.5 2 2"/></symbol>
-    <symbol id="ic-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
-    <symbol id="ic-clipboard" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
-    <symbol id="ic-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="10" y="10" width="4" height="4"/><path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></symbol>
-    <symbol id="ic-package" viewBox="0 0 24 24"><path d="m12 2.5 9 5v9l-9 5-9-5v-9z"/><path d="m3 7.5 9 5 9-5"/><path d="M12 12.5v9"/></symbol>
-    <symbol id="ic-headset" viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></symbol>
-    <symbol id="ic-beaker" viewBox="0 0 24 24"><path d="M9 2.5h6"/><path d="M10 2.5v6L5.2 19a2 2 0 0 0 1.8 2.9h10a2 2 0 0 0 1.8-2.9L14 8.5v-6"/><path d="M7.2 15h9.6"/></symbol>
-    <symbol id="ic-sliders" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="18" r="2"/></symbol>
-    <symbol id="ic-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="m8.6 14-1.6 8 5-3 5 3-1.6-8"/></symbol>
-    <symbol id="ic-listcheck" viewBox="0 0 24 24"><path d="M11 6h10M11 12h10M11 18h10"/><path d="m3 6 1.5 1.5L7.5 4.5"/><path d="m3 12 1.5 1.5L7.5 10.5"/><path d="m3 18 1.5 1.5L7.5 16.5"/></symbol>
-    <symbol id="ic-truck" viewBox="0 0 24 24"><rect x="1.5" y="7" width="13.5" height="9" rx="1.5"/><path d="M15 10h4l3 3.2V16h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
-    <symbol id="ic-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></symbol>
-    <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3 1.8"/></symbol>
-    <symbol id="ic-car" viewBox="0 0 24 24"><path d="M5 13l1.6-4.5A2 2 0 0 1 8.5 7h7a2 2 0 0 1 1.9 1.5L19 13"/><path d="M4 13h16a1 1 0 0 1 1 1v3H3v-3a1 1 0 0 1 1-1z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></symbol>
-    <symbol id="ic-leaf" viewBox="0 0 24 24"><path d="M11 20.5A7.5 7.5 0 0 1 3.5 13C3.5 7 10.5 3.5 20.5 3.5c0 10-3.5 17-9.5 17z"/><path d="M4 21c4-8.5 8.5-11.5 13.5-13.5"/></symbol>
-  </defs>
-</svg>
-
-<main id="main">
+<main id="main" class="overflow-x-hidden pt-20">
 
 <!-- ==========================================================================
-     Hero
+     Hero Section
      ========================================================================== -->
-<section class="hero" id="services" aria-labelledby="hero-title">
-  <div class="shell">
-    <div class="hero__grid">
+<section id="services-hero" class="relative py-14 sm:py-20 lg:py-28 text-slate-900 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      
+      <!-- Text details -->
+      <div class="space-y-6 lg:col-span-7">
+        <!-- Eyebrow -->
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-100 uppercase" data-reveal>
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-bright animate-pulse"></span>
+          Our Service
+        </span>
 
-      <div class="hero__intro">
-        <p class="eyebrow" data-reveal>Our Service</p>
-
-        <h1 class="hero__title" id="hero-title" lang="en" data-reveal style="--reveal-delay:60ms">
-          End-to-End<span class="br"> </span>Product Development
+        <h1 class="font-display font-extrabold text-3xl sm:text-5xl lg:text-[54px] tracking-tight leading-[1.1] text-brand" data-reveal style="--reveal-delay:60ms">
+          End-to-End<br>Product Development
         </h1>
 
-        <p class="hero__lede" data-reveal style="--reveal-delay:120ms">
+        <p class="text-base sm:text-xl font-bold text-brand-bright leading-relaxed" data-reveal style="--reveal-delay:120ms">
           พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
         </p>
 
-        <p class="hero__copy" lang="en" data-reveal style="--reveal-delay:180ms">
-          We are your trusted engineering partner. From product design and prototyping
-          to manufacturing and after-sales support, we deliver innovative, reliable,
-          and market-ready solutions.
+        <p class="text-slate-500 text-sm sm:text-base leading-relaxed max-w-xl" data-reveal style="--reveal-delay:180ms">
+          We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.
         </p>
 
-        <ul class="props" data-reveal style="--reveal-delay:240ms">
-          <li class="prop">
-            <span class="prop__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-users"></use></svg></span>
-            <b lang="en">One Partner</b>
-            <p>ดูแลครบทุกขั้นตอน ในที่เดียว</p>
-          </li>
-          <li class="prop">
-            <span class="prop__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-check-circle"></use></svg></span>
-            <b lang="en">Faster to Market</b>
-            <p>ลดเวลาในการพัฒนา และเปิดตัวสินค้า</p>
-          </li>
-          <li class="prop">
-            <span class="prop__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-target"></use></svg></span>
-            <b lang="en">Quality &amp; Compliance</b>
-            <p>มาตรฐานสากล เชื่อถือได้</p>
-          </li>
-          <li class="prop">
-            <span class="prop__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-trending"></use></svg></span>
-            <b lang="en">Business Impact</b>
-            <p>สร้างคุณค่าและความได้เปรียบ ในการแข่งขัน</p>
-          </li>
-        </ul>
+        <!-- Props -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4" data-reveal style="--reveal-delay:240ms">
+          <div class="flex flex-col items-start text-left space-y-1.5">
+            <span class="text-brand text-2xl">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">One Partner</b>
+            <p class="text-[10px] text-slate-500 leading-tight">ดูแลครบทุกขั้นตอน ในที่เดียว</p>
+          </div>
+          <div class="flex flex-col items-start text-left space-y-1.5">
+            <span class="text-brand text-2xl">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
+            </span>
+            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Faster to Market</b>
+            <p class="text-[10px] text-slate-500 leading-tight">ลดเวลาในการพัฒนา และเปิดตัวสินค้า</p>
+          </div>
+          <div class="flex flex-col items-start text-left space-y-1.5">
+            <span class="text-brand text-2xl">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.2"></circle></svg>
+            </span>
+            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Quality &amp; Compliance</b>
+            <p class="text-[10px] text-slate-500 leading-tight">มาตรฐานสากล เชื่อถือได้</p>
+          </div>
+          <div class="flex flex-col items-start text-left space-y-1.5">
+            <span class="text-brand text-2xl">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"></path></svg>
+            </span>
+            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Business Impact</b>
+            <p class="text-[10px] text-slate-500 leading-tight">สร้างคุณค่าและความได้เปรียบ ในการแข่งขัน</p>
+          </div>
+        </div>
       </div>
 
-      <div class="hero__media" data-reveal style="--reveal-delay:120ms">
+      <!-- Hero image -->
+      <div class="flex justify-center items-center w-full lg:col-span-5" data-reveal style="--reveal-delay:120ms">
         <img src="<?php echo get_template_directory_uri(); ?>/Home.png" alt="ภาพรวมบริการพัฒนาผลิตภัณฑ์ครบวงจรของ Syntech"
-             class="hero__img" width="611" height="480"
-             fetchpriority="high" decoding="async">
+             class="w-full h-auto max-h-[500px] object-contain">
       </div>
 
     </div>
   </div>
 </section>
 
-
 <!-- ==========================================================================
-     Why choose Syntech
+     Why Choose Section
      ========================================================================== -->
-<section class="section" id="why-us" aria-labelledby="why-title">
-  <div class="shell">
-    <div class="why__box" data-reveal>
-      <div class="why__intro">
-        <h2 class="why__title" id="why-title" lang="en">
-          Why Choose Syntech<span class="br"> </span>for Your Product Development?
+<section id="why-us" class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="bg-[#f4f8f6] border border-[#e1eee9] rounded-3xl p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-[1.2fr_2.5fr] gap-8 items-center" data-reveal>
+      
+      <div class="lg:pr-8 lg:border-r lg:border-[#004d3a]/10">
+        <h2 class="font-display font-extrabold text-brand text-2xl lg:text-3xl leading-tight">
+          Why Choose Syntech for Your Product Development?
         </h2>
       </div>
 
-      <ul class="why__features">
-        <li class="why-feat">
-          <span class="why-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-users"></use></svg></span>
-          <b lang="en">Engineering Excellence</b>
-          <p>ทีมวิศวกรผู้เชี่ยวชาญ และมีประสบการณ์</p>
-        </li>
-        <li class="why-feat">
-          <span class="why-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-layers"></use></svg></span>
-          <b lang="en">End-to-End Solutions</b>
-          <p>ครบทุกขั้นตอนตั้งแต่ ออกแบบจนส่งมอบ</p>
-        </li>
-        <li class="why-feat">
-          <span class="why-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-factory"></use></svg></span>
-          <b lang="en">Scalable Production</b>
-          <p>รองรับการผลิตตั้งแต่ ต้นแบบถึงจำนวนมาก</p>
-        </li>
-        <li class="why-feat">
-          <span class="why-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-globe"></use></svg></span>
-          <b lang="en">Global Standards</b>
-          <p>มาตรฐานการผลิตและ คุณภาพระดับสากล</p>
-        </li>
-        <li class="why-feat">
-          <span class="why-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-partners"></use></svg></span>
-          <b lang="en">Long-term Partnership</b>
-          <p>เป็นพาร์ทเนอร์ระยะยาว ที่ธุรกิจไว้วางใจ</p>
-        </li>
-      </ul>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-6">
+        <div class="flex flex-col items-center text-center space-y-2">
+          <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </span>
+          <b class="text-brand text-xs sm:text-sm font-extrabold">Engineering Excellence</b>
+          <p class="text-[10px] text-slate-500 leading-tight">ทีมวิศวกรผู้เชี่ยวชาญ และมีประสบการณ์</p>
+        </div>
+        <div class="flex flex-col items-center text-center space-y-2">
+          <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10l9-5 9 5-9 5-9-5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M3 14l9 5 9-5"></path><path stroke-linecap="round" stroke-linejoin="round" d="M3 18l9 5 9-5"></path></svg>
+          </span>
+          <b class="text-brand text-xs sm:text-sm font-extrabold">End-to-End Solutions</b>
+          <p class="text-[10px] text-slate-500 leading-tight">ครบทุกขั้นตอนตั้งแต่ ออกแบบจนส่งมอบ</p>
+        </div>
+        <div class="flex flex-col items-center text-center space-y-2">
+          <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"></path></svg>
+          </span>
+          <b class="text-brand text-xs sm:text-sm font-extrabold">Scalable Production</b>
+          <p class="text-[10px] text-slate-500 leading-tight">รองรับการผลิตตั้งแต่ ต้นแบบถึงจำนวนมาก</p>
+        </div>
+        <div class="flex flex-col items-center text-center space-y-2">
+          <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-4-8a15.3 15.3 0 0 1 4 8 15.3 15.3 0 0 1-4 8 15.3 15.3 0 0 1-4-8 15.3 15.3 0 0 1 4-8z"></path></svg>
+          </span>
+          <b class="text-brand text-xs sm:text-sm font-extrabold">Global Standards</b>
+          <p class="text-[10px] text-slate-500 leading-tight">มาตรฐานการผลิตและ คุณภาพระดับสากล</p>
+        </div>
+        <div class="flex flex-col items-center text-center space-y-2">
+          <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="5"></circle><circle cx="15.5" cy="12" r="5"></circle></svg>
+          </span>
+          <b class="text-brand text-xs sm:text-sm font-extrabold">Long-term Partnership</b>
+          <p class="text-[10px] text-slate-500 leading-tight">เป็นพาร์ทเนอร์ระยะยาว ที่ธุรกิจไว้วางใจ</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-
 <!-- ==========================================================================
-     Process — an ordered list, because the order carries meaning
+     Process Section
      ========================================================================== -->
-<section class="section" id="process" aria-labelledby="process-title">
-  <div class="shell">
-
-    <div class="section-head section-head--center">
-      <h2 class="section-title" id="process-title" lang="en" data-reveal>
+<section id="process" class="py-16 bg-white relative">
+  <div class="max-w-7xl mx-auto px-6 relative">
+    
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="font-display font-extrabold text-brand text-3xl tracking-tight" data-reveal>
         Our End-to-End Process
       </h2>
-      <div class="title-bar" data-reveal aria-hidden="true"></div>
+      <div class="w-12 h-0.5 bg-brand mx-auto mt-4" data-reveal style="--reveal-delay:60ms"></div>
     </div>
 
-    <ol class="process__steps" data-reveal>
-      <li class="p-step">
-        <span class="p-step__badge" aria-hidden="true">1</span>
-        <span class="p-step__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-bulb"></use></svg></span>
-        <h3 class="p-step__title" lang="en">Concept &amp;<span class="br"> </span>Requirement</h3>
-        <ul class="p-step__list">
+    <!-- Dashed Rail (Large screens) -->
+    <div class="hidden lg:block absolute top-[182px] left-[6%] right-[6%] border-t-2 border-dashed border-[#b5d8cc] z-0"></div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 relative z-10" data-reveal style="--reveal-delay:120ms">
+      
+      <!-- Step 1 -->
+      <div class="flex flex-col items-center text-center">
+        <span class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs mb-2">1</span>
+        <span class="w-12 h-12 rounded-full bg-[#e6f3ee] border border-[#d0e7de] text-brand flex items-center justify-center text-xl mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+        </span>
+        <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Concept &amp;<br>Requirement</h3>
+        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
           <li>วิเคราะห์ความต้องการ</li>
           <li>ศึกษาความเป็นไปได้</li>
           <li>วางแผนโครงการ</li>
         </ul>
-      </li>
+      </div>
 
-      <li class="p-step">
-        <span class="p-step__badge" aria-hidden="true">2</span>
-        <span class="p-step__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-ruler"></use></svg></span>
-        <h3 class="p-step__title" lang="en">Product Design<span class="br"> </span>&amp; Engineering</h3>
-        <ul class="p-step__list">
+      <!-- Step 2 -->
+      <div class="flex flex-col items-center text-center">
+        <span class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs mb-2">2</span>
+        <span class="w-12 h-12 rounded-full bg-[#e6f3ee] border border-[#d0e7de] text-brand flex items-center justify-center text-xl mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+        </span>
+        <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Product Design<br>&amp; Engineering</h3>
+        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
           <li>ออกแบบฮาร์ดแวร์/ซอฟต์แวร์</li>
-          <li lang="en">PCB &amp; Mechanical Design</li>
-          <li lang="en">Simulation &amp; Review</li>
+          <li>PCB &amp; Mechanical Design</li>
+          <li>Simulation &amp; Review</li>
         </ul>
-      </li>
+      </div>
 
-      <li class="p-step">
-        <span class="p-step__badge" aria-hidden="true">3</span>
-        <span class="p-step__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-code"></use></svg></span>
-        <h3 class="p-step__title" lang="en">Prototype<span class="br"> </span>Development</h3>
-        <ul class="p-step__list">
+      <!-- Step 3 -->
+      <div class="flex flex-col items-center text-center">
+        <span class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs mb-2">3</span>
+        <span class="w-12 h-12 rounded-full bg-[#e6f3ee] border border-[#d0e7de] text-brand flex items-center justify-center text-xl mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+        </span>
+        <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Prototype<br>Development</h3>
+        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
           <li>สร้างต้นแบบ</li>
           <li>ทดสอบการทำงาน</li>
           <li>ปรับปรุงและยืนยันแบบ</li>
         </ul>
-      </li>
+      </div>
 
-      <li class="p-step">
-        <span class="p-step__badge" aria-hidden="true">4</span>
-        <span class="p-step__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-clipboard"></use></svg></span>
-        <h3 class="p-step__title" lang="en">Verification &amp;<span class="br"> </span>Validation</h3>
-        <ul class="p-step__list">
+      <!-- Step 4 -->
+      <div class="flex flex-col items-center text-center">
+        <span class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs mb-2">4</span>
+        <span class="w-12 h-12 rounded-full bg-[#e6f3ee] border border-[#d0e7de] text-brand flex items-center justify-center text-xl mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
+        </span>
+        <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Verification &amp;<br>Validation</h3>
+        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
           <li>ทดสอบตามมาตรฐาน</li>
           <li>ตรวจสอบความปลอดภัย</li>
           <li>รับรองประสิทธิภาพ</li>
         </ul>
-      </li>
+      </div>
 
-      <li class="p-step">
-        <span class="p-step__badge" aria-hidden="true">5</span>
-        <span class="p-step__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-factory"></use></svg></span>
-        <h3 class="p-step__title" lang="en">Manufacturing<span class="br"> </span>(NPI)</h3>
-        <ul class="p-step__list">
+      <!-- Step 5 -->
+      <div class="flex flex-col items-center text-center">
+        <span class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs mb-2">5</span>
+        <span class="w-12 h-12 rounded-full bg-[#e6f3ee] border border-[#d0e7de] text-brand flex items-center justify-center text-xl mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 20h20M4 20V10l5 3V10l5 3V7l6 4v9M8 20v-4h3v4"></path></svg>
+        </span>
+        <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Manufacturing<br>(NPI)</h3>
+        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
           <li>วางแผนการผลิต (NPI)</li>
           <li>จัดหาและควบคุมคุณภาพ</li>
           <li>เตรียมสายการผลิต</li>
         </ul>
-      </li>
+      </div>
 
-      <li class="p-step">
-        <span class="p-step__badge" aria-hidden="true">6</span>
-        <span class="p-step__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-cpu"></use></svg></span>
-        <h3 class="p-step__title" lang="en">Mass<span class="br"> </span>Production</h3>
-        <ul class="p-step__list">
+      <!-- Step 6 -->
+      <div class="flex flex-col items-center text-center">
+        <span class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs mb-2">6</span>
+        <span class="w-12 h-12 rounded-full bg-[#e6f3ee] border border-[#d0e7de] text-brand flex items-center justify-center text-xl mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"></path></svg>
+        </span>
+        <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Mass<br>Production</h3>
+        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
           <li>ผลิตด้วยมาตรฐานสากล</li>
           <li>ควบคุมคุณภาพทุกขั้นตอน</li>
           <li>ตรวจสอบย้อนกลับได้</li>
         </ul>
-      </li>
+      </div>
 
-      <li class="p-step">
-        <span class="p-step__badge" aria-hidden="true">7</span>
-        <span class="p-step__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-package"></use></svg></span>
-        <h3 class="p-step__title" lang="en">Delivery &amp;<span class="br"> </span>Deployment</h3>
-        <ul class="p-step__list">
+      <!-- Step 7 -->
+      <div class="flex flex-col items-center text-center">
+        <span class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs mb-2">7</span>
+        <span class="w-12 h-12 rounded-full bg-[#e6f3ee] border border-[#d0e7de] text-brand flex items-center justify-center text-xl mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14v4m0 0L4 7m8 4v10M4 7v10l8 4"></path></svg>
+        </span>
+        <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Delivery &amp;<br>Deployment</h3>
+        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
           <li>จัดส่งตรงเวลา</li>
           <li>สนับสนุนการติดตั้ง</li>
           <li>เอกสารและการรับรอง</li>
         </ul>
-      </li>
+      </div>
 
-      <li class="p-step">
-        <span class="p-step__badge" aria-hidden="true">8</span>
-        <span class="p-step__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-headset"></use></svg></span>
-        <h3 class="p-step__title" lang="en">After-sales<span class="br"> </span>Support</h3>
-        <ul class="p-step__list">
+      <!-- Step 8 -->
+      <div class="flex flex-col items-center text-center">
+        <span class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs mb-2">8</span>
+        <span class="w-12 h-12 rounded-full bg-[#e6f3ee] border border-[#d0e7de] text-brand flex items-center justify-center text-xl mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 0 0 2-2V9a6 6 0 1 0-12 0v10a2 2 0 0 0 2 2z"></path></svg>
+        </span>
+        <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">After-sales<br>Support</h3>
+        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
           <li>บริการหลังการขาย</li>
           <li>บำรุงรักษาและซ่อมบำรุง</li>
           <li>อัปเดตและพัฒนาต่อเนื่อง</li>
         </ul>
-      </li>
-    </ol>
-
-  </div>
-</section>
-
-
-<!-- ==========================================================================
-     Capabilities
-     ========================================================================== -->
-<section class="section" id="capabilities" aria-labelledby="cap-title">
-  <div class="shell">
-
-    <div class="cap__grid">
-
-      <div class="cap__left" data-reveal>
-        <h2 class="cap__title" id="cap-title" lang="en">Our Capabilities</h2>
-        <div class="title-bar" aria-hidden="true"></div>
-
-        <ul class="cap__items">
-          <li class="cap-item">
-            <span class="cap-item__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-beaker"></use></svg></span>
-            <div class="cap-item__content">
-              <b lang="en">R&amp;D and Product Innovation</b>
-              <p>วิจัยและพัฒนาผลิตภัณฑ์ นวัตกรรม</p>
-            </div>
-          </li>
-
-          <li class="cap-item">
-            <span class="cap-item__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-ruler"></use></svg></span>
-            <div class="cap-item__content">
-              <b lang="en">Mechanical Design &amp; Simulation</b>
-              <p>ออกแบบโครงสร้างและจำลองการทำงาน</p>
-            </div>
-          </li>
-
-          <li class="cap-item">
-            <span class="cap-item__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-code"></use></svg></span>
-            <div class="cap-item__content">
-              <b lang="en">Hardware &amp; Software Development</b>
-              <p>พัฒนาฮาร์ดแวร์และซอฟต์แวร์</p>
-            </div>
-          </li>
-
-          <li class="cap-item">
-            <span class="cap-item__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-sliders"></use></svg></span>
-            <div class="cap-item__content">
-              <b lang="en">Box Build &amp; System Integration</b>
-              <p>ประกอบและรวมระบบ</p>
-            </div>
-          </li>
-
-          <li class="cap-item">
-            <span class="cap-item__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-cpu"></use></svg></span>
-            <div class="cap-item__content">
-              <b lang="en">PCB Design &amp; PCBA Manufacturing</b>
-              <p>ออกแบบและผลิตแผงวงจรอิเล็กทรอนิกส์</p>
-            </div>
-          </li>
-
-          <li class="cap-item">
-            <span class="cap-item__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-award"></use></svg></span>
-            <div class="cap-item__content">
-              <b lang="en">Certification &amp; Compliance</b>
-              <p>มาตรฐานและการรับรองผลิตภัณฑ์</p>
-            </div>
-          </li>
-
-          <li class="cap-item">
-            <span class="cap-item__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-listcheck"></use></svg></span>
-            <div class="cap-item__content">
-              <b lang="en">Testing &amp; Quality Assurance</b>
-              <p>ทดสอบและควบคุมคุณภาพ</p>
-            </div>
-          </li>
-
-          <li class="cap-item">
-            <span class="cap-item__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-truck"></use></svg></span>
-            <div class="cap-item__content">
-              <b lang="en">Supply Chain Management</b>
-              <p>บริหารจัดการซัพพลายเชน</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="cap__right" data-reveal style="--reveal-delay:120ms">
-        <figure class="cap-banner">
-          <img src="<?php echo get_template_directory_uri(); ?>/images/capabilities-image.png"
-               alt="การตรวจสอบและทดสอบคุณภาพในสายการผลิตของ Syntech"
-               class="cap-banner__img" width="721" height="428"
-               loading="lazy" decoding="async">
-
-          <figcaption class="cap-banner__overlay">
-            <ul class="cap-certs">
-              <li class="cap-cert">
-                <span class="cap-cert__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-check-circle"></use></svg></span>
-                <span class="cap-cert__text">
-                  <b lang="en">ISO 9001</b>
-                  <span lang="en">Quality Management</span>
-                </span>
-              </li>
-
-              <li class="cap-cert">
-                <span class="cap-cert__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-car"></use></svg></span>
-                <span class="cap-cert__text">
-                  <b lang="en">IATF 16949</b>
-                  <span lang="en">Automotive Quality</span>
-                </span>
-              </li>
-
-              <li class="cap-cert">
-                <span class="cap-cert__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-cpu"></use></svg></span>
-                <span class="cap-cert__text">
-                  <b lang="en">IPC-A-610</b>
-                  <span lang="en">Acceptability of Electronic Assemblies</span>
-                </span>
-              </li>
-
-              <li class="cap-cert">
-                <span class="cap-cert__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-leaf"></use></svg></span>
-                <span class="cap-cert__text">
-                  <b lang="en">RoHS / REACH</b>
-                  <span lang="en">Compliance</span>
-                </span>
-              </li>
-            </ul>
-          </figcaption>
-        </figure>
       </div>
 
     </div>
-
   </div>
 </section>
 
-
 <!-- ==========================================================================
-     CTA
+     Capabilities Section
      ========================================================================== -->
-<section class="cta" id="contact" aria-labelledby="cta-title">
-  <div class="shell">
-    <div class="cta__box">
-      <div class="cta__grid">
+<section id="capabilities" class="py-16 bg-[#f8faf9]">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="bg-white rounded-3xl border border-slate-100 shadow-md p-8 lg:p-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+        
+        <div class="flex flex-col justify-center" data-reveal>
+          <h2 class="font-display font-extrabold text-brand text-3xl">Our Capabilities</h2>
+          <div class="w-12 h-0.5 bg-brand mt-3 mb-8"></div>
 
-        <div class="cta__left">
-          <h2 class="cta__title" id="cta-title" lang="en" data-reveal>
-            Let's Build Your Next<span class="br"> </span>
-            <span class="cta__title-row"><span class="cta__accent">Successful Product</span> Together</span>
-          </h2>
-          <p class="cta__sub" data-reveal style="--reveal-delay:80ms">
-            ให้เราเป็นพาร์ทเนอร์ในการพัฒนาผลิตภัณฑ์ของคุณ<span class="br"> </span>
-            ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
-          </p>
-          <div class="cta__actions" data-reveal style="--reveal-delay:160ms">
-            <a href="<?php echo home_url('/'); ?>#contact" class="btn btn--gold">
-              <svg class="i" aria-hidden="true" focusable="false"><use href="#ic-chat"></use></svg>
-              <span lang="en">Talk to Our Experts</span>
-            </a>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="flex items-start gap-3">
+              <span class="text-brand text-2xl mt-1">
+                <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 0 0-1.022-.547l-2.387-.477a6 6 0 0 0-3.86.517l-.318.158a6 6 0 0 1-3.86.517L6.05 15.23a2 2 0 0 0-1.806.547M8 4h8l-1 1v5.242a2 2 0 0 0 .586 1.414l3.828 3.828A2 2 0 0 1 18.005 20H5.995a2 2 0 0 1-1.414-3.414l3.828-3.828A2 2 0 0 0 9 11.342V5L8 4z"></path></svg>
+              </span>
+              <div>
+                <b class="text-brand text-sm sm:text-base font-extrabold">R&amp;D and Product Innovation</b>
+                <p class="text-xs text-slate-500 mt-1">วิจัยและพัฒนาผลิตภัณฑ์ นวัตกรรม</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-brand text-2xl mt-1">
+                <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+              </span>
+              <div>
+                <b class="text-brand text-sm sm:text-base font-extrabold">Mechanical Design &amp; Simulation</b>
+                <p class="text-xs text-slate-500 mt-1">ออกแบบโครงสร้างและจำลองการทำงาน</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-brand text-2xl mt-1">
+                <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+              </span>
+              <div>
+                <b class="text-brand text-sm sm:text-base font-extrabold">Hardware &amp; Software Development</b>
+                <p class="text-xs text-slate-500 mt-1">พัฒนาฮาร์ดแวร์และซอฟต์แวร์</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-brand text-2xl mt-1">
+                <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v10m-6-6v-6m0 6a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v4m12-4v-10m0 10a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v4"></path></svg>
+              </span>
+              <div>
+                <b class="text-brand text-sm sm:text-base font-extrabold">Box Build &amp; System Integration</b>
+                <p class="text-xs text-slate-500 mt-1">ประกอบและรวมระบบ</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-brand text-2xl mt-1">
+                <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"></path></svg>
+              </span>
+              <div>
+                <b class="text-brand text-sm sm:text-base font-extrabold">PCB Design &amp; PCBA Manufacturing</b>
+                <p class="text-xs text-slate-500 mt-1">ออกแบบและผลิตแผจวงจรอิเล็กทรอนิกส์</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-brand text-2xl mt-1">
+                <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4"></path></svg>
+              </span>
+              <div>
+                <b class="text-brand text-sm sm:text-base font-extrabold">Certification &amp; Compliance</b>
+                <p class="text-xs text-slate-500 mt-1">มาตรฐานและการรับรองผลิตภัณฑ์</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-brand text-2xl mt-1">
+                <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+              </span>
+              <div>
+                <b class="text-brand text-sm sm:text-base font-extrabold">Testing &amp; Quality Assurance</b>
+                <p class="text-xs text-slate-500 mt-1">ทดสอบและควบคุมคุณภาพ</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-brand text-2xl mt-1">
+                <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM19 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10M13 16h6m-6 0H9m10 0v-4a1 1 0 0 0-1-1h-3M19 16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1h-2v9"></path></svg>
+              </span>
+              <div>
+                <b class="text-brand text-sm sm:text-base font-extrabold">Supply Chain Management</b>
+                <p class="text-xs text-slate-500 mt-1">บริหารจัดการซัพพลายเชน</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="cta__right">
-          <ul class="cta__features">
-            <li class="cta-feat" data-reveal>
-              <span class="cta-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-users"></use></svg></span>
-              <div class="cta-feat__content">
-                <b lang="en">Expert Team</b>
-                <p>ทีมวิศวกรและผู้เชี่ยวชาญ พร้อมดูแลคุณ</p>
+        <!-- Right image + cert overlays -->
+        <div class="relative overflow-hidden rounded-3xl shadow-xl min-h-[380px]" data-reveal style="--reveal-delay:120ms">
+          <img src="<?php echo get_template_directory_uri(); ?>/images/capabilities-image.png"
+               alt="การตรวจสอบและทดสอบคุณภาพในสายการผลิตของ Syntech"
+               class="absolute inset-0 w-full h-full object-cover">
+          
+          <!-- Overlay panel -->
+          <div class="absolute inset-0 p-8 flex items-center bg-gradient-to-t lg:bg-gradient-to-r from-transparent via-[#0d3026]/90 to-[#09261e]/98 text-white lg:justify-end">
+            <div class="space-y-6 w-full lg:max-w-[50%]">
+              <div class="flex items-center gap-3">
+                <span class="w-10 h-10 rounded-full border border-white/20 bg-white/10 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
+                </span>
+                <div>
+                  <b class="block text-sm font-extrabold">ISO 9001</b>
+                  <span class="text-[10px] text-white/70">Quality Management</span>
+                </div>
               </div>
-            </li>
-            <li class="cta-feat" data-reveal style="--reveal-delay:80ms">
-              <span class="cta-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-target"></use></svg></span>
-              <div class="cta-feat__content">
-                <b lang="en">Tailored Solutions</b>
-                <p>ออกแบบโซลูชันที่เหมาะสม กับความต้องการของคุณ</p>
+              <div class="flex items-center gap-3">
+                <span class="w-10 h-10 rounded-full border border-white/20 bg-white/10 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l1.6-4.5A2 2 0 0 1 8.5 7h7a2 2 0 0 1 1.9 1.5L19 13M4 13h16a1 1 0 0 1 1 1v3H3v-3a1 1 0 0 1 1-1z"></path><circle cx="7" cy="17.5" r="1.5"></circle><circle cx="17" cy="17.5" r="1.5"></circle></svg>
+                </span>
+                <div>
+                  <b class="block text-sm font-extrabold">IATF 16949</b>
+                  <span class="text-[10px] text-white/70">Automotive Quality</span>
+                </div>
               </div>
-            </li>
-            <li class="cta-feat" data-reveal style="--reveal-delay:160ms">
-              <span class="cta-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-clock"></use></svg></span>
-              <div class="cta-feat__content">
-                <b lang="en">On-time Delivery</b>
-                <p>ส่งมอบตรงเวลา ตามเป้าหมาย</p>
+              <div class="flex items-center gap-3">
+                <span class="w-10 h-10 rounded-full border border-white/20 bg-white/10 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"></path></svg>
+                </span>
+                <div>
+                  <b class="block text-sm font-extrabold">IPC-A-610</b>
+                  <span class="text-[10px] text-white/70">Acceptability of Electronic Assemblies</span>
+                </div>
               </div>
-            </li>
-            <li class="cta-feat" data-reveal style="--reveal-delay:240ms">
-              <span class="cta-feat__icon"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-shield"></use></svg></span>
-              <div class="cta-feat__content">
-                <b lang="en">Trusted Partner</b>
-                <p>พาร์ทเนอร์ธุรกิจ ที่ไว้วางใจ</p>
+              <div class="flex items-center gap-3">
+                <span class="w-10 h-10 rounded-full border border-white/20 bg-white/10 flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 20.5A7.5 7.5 0 0 1 3.5 13C3.5 7 10.5 3.5 20.5 3.5c0 10-3.5 17-9.5 17z"></path></svg>
+                </span>
+                <div>
+                  <b class="block text-sm font-extrabold">RoHS / REACH</b>
+                  <span class="text-[10px] text-white/70">Compliance</span>
+                </div>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     CTA Section
+     ========================================================================== -->
+<section id="contact" class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#093427] via-[#0d4636] to-[#06261c] p-8 lg:p-12 text-white shadow-2xl" data-reveal>
+      <!-- Circuit Grid Texture Overlay -->
+      <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
+
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7">
+          <h2 class="font-display font-extrabold text-2xl lg:text-4xl leading-tight">
+            Let's Build Your Next<br>
+            <span class="text-gold-bright font-extrabold">Successful Product</span> Together
+          </h2>
+          <p class="text-sm lg:text-base text-slate-200 mt-4 max-w-lg leading-relaxed">
+            ให้เราเป็นพาร์ทเนอร์ในการพัฒนาผลิตภัณฑ์ของคุณ ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
+          </p>
+          <a href="<?php echo home_url('/'); ?>#contact" class="bg-gold-bright hover:bg-[#C99700] active:scale-95 text-slate-900 font-extrabold text-sm uppercase px-8 py-3.5 rounded-xl shadow-lg shadow-gold-bright/20 inline-flex items-center gap-2 mt-8 transition duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 0 1-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            Talk to Our Experts
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:col-span-5">
+          <div class="flex gap-3">
+            <span class="text-gold-bright text-xl mt-1">
+              <svg class="w-6 h-6 text-gold-bright" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <div>
+              <b class="block text-sm font-extrabold">Expert Team</b>
+              <p class="text-xs text-slate-300 mt-1">ทีมวิศวกรผู้เชี่ยวชาญพร้อมเคียงข้างคุณ</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <span class="text-gold-bright text-xl mt-1">
+              <svg class="w-6 h-6 text-gold-bright" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v10m-6-6v-6m0 6a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v4m12-4v-10m0 10a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v4"></path></svg>
+            </span>
+            <div>
+              <b class="block text-sm font-extrabold">Tailored Solutions</b>
+              <p class="text-xs text-slate-300 mt-1">ออกแบบโซลูชันตรงเป้าหมายของคุณ</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <span class="text-gold-bright text-xl mt-1">
+              <svg class="w-6 h-6 text-gold-bright" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
+            </span>
+            <div>
+              <b class="block text-sm font-extrabold">On-time Delivery</b>
+              <p class="text-xs text-slate-300 mt-1">ผลิตและส่งมอบตรงเวลาตามกำหนด</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <span class="text-gold-bright text-xl mt-1">
+              <svg class="w-6 h-6 text-gold-bright" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </span>
+            <div>
+              <b class="block text-sm font-extrabold">Trusted Partner</b>
+              <p class="text-xs text-slate-300 mt-1">ธุรกิจไว้วางใจได้ยาวนาน</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -603,8 +642,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
 </main>
 
-<button class="to-top" type="button" id="toTop" aria-label="กลับไปด้านบนของหน้า">
-  <svg class="i" aria-hidden="true" focusable="false"><use href="#ic-arrow-up"></use></svg>
+<button class="to-top fixed bottom-6 right-6 z-[9999] opacity-0 translate-y-12 transition-all duration-300 w-11 h-11 rounded-full bg-brand text-white flex items-center justify-center shadow-lg hover:bg-brand-deep" type="button" id="toTop" aria-label="กลับไปด้านบนของหน้า">
+  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7 7 7M12 3v18"></path></svg>
 </button>
 
 <!-- FOOTER CONTAINER -->
@@ -612,8 +651,49 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
 <!-- Scripts -->
 <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
-<script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/wise-bohr-script.js') : './components/wise-bohr-script.js'; ?>" defer></script>
 <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/live-editor.js') : './components/live-editor.js'; ?>"></script>
+
+<script>
+    /* Injected native script directly to handle scroll-reveal and back-to-top so no extra file is needed */
+    (() => {
+      'use strict';
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+      
+      // Scroll Reveal
+      const revealables = $$('[data-reveal]');
+      if (revealables.length) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        
+        revealables.forEach(el => observer.observe(el));
+      }
+      
+      // Back to Top Button
+      const toTop = $('#toTop');
+      if (toTop) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 400) {
+            toTop.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+            toTop.classList.add('opacity-100', 'translate-y-0');
+          } else {
+            toTop.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none');
+            toTop.classList.remove('opacity-100', 'translate-y-0');
+          }
+        }, { passive: true });
+        
+        toTop.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+</script>
 
 <?php wp_footer(); ?>
 </body>
