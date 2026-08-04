@@ -252,7 +252,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- Eyebrow pill -->
       <span class="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full border border-brand/30 bg-brand/5 text-brand text-[11px] font-extrabold tracking-[0.18em] uppercase mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-brand flex-none"></span>
-        Our Service
+        Smart Energy
       </span>
 
       <!-- Main title -->
