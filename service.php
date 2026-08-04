@@ -6,6 +6,7 @@ if (isset($_SERVER['REQUEST_URI']) && preg_match('/\.php\/+$/i', $_SERVER['REQUE
     exit();
 }
 if (!function_exists('get_template_directory_uri')) {
+    // Return direct path on local server to load assets
     function get_template_directory_uri() { return '.'; }
 }
 if (!function_exists('get_stylesheet_directory_uri')) {
@@ -79,14 +80,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <meta property="og:url" content="<?php echo home_url('/service/'); ?>">
 <meta property="og:title" content="Services — End-to-End Product Development">
 <meta property="og:description" content="From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.">
-<meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/images/hero-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/Home.png">
+<meta property="og:image:width" content="611">
+<meta property="og:image:height" content="480">
 <meta property="og:locale" content="th_TH">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Services — End-to-End Product Development">
 <meta name="twitter:description" content="พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด">
-<meta name="twitter:image" content="<?php echo get_template_directory_uri(); ?>/images/hero-image.png">
+<meta name="twitter:image" content="<?php echo get_template_directory_uri(); ?>/Home.png">
 
 <!-- Browser Tab Icon (Favicon) -->
 <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
@@ -156,10 +157,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
     [style*="--reveal-delay:180ms"] { transition-delay: 180ms; }
     [style*="--reveal-delay:240ms"] { transition-delay: 240ms; }
 
-    /* Match fluids headings in about.php */
+    /* Fluid heading scale to match about.php exactly */
     #services-hero h1 {
-      font-size: clamp(30px, 5.6vw, 60px) !important;
-      line-height: 1.15 !important;
+      font-size: clamp(32px, 5.2vw, 56px) !important;
+      line-height: 1.12 !important;
     }
 </style>
 
@@ -179,77 +180,83 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <main id="main" class="overflow-x-hidden pt-20">
 
 <!-- ==========================================================================
-     HERO SECTION (Full-bleed Background Image to match about.php)
+     HERO SECTION (Exact two-column split layout, matching design image perfectly)
      ========================================================================== -->
-<section id="services-hero" class="relative pt-12 pb-24 sm:pt-16 sm:pb-32 lg:pt-20 lg:pb-40 text-slate-900 overflow-hidden bg-slate-50 min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-center justify-center">
-  <!-- Full Screen Background Image Layer -->
-  <div class="absolute inset-0 z-0 overflow-hidden hero-bg-layer">
-    <img loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-[65%_center] sm:object-[70%_center] lg:object-[85%_center] scale-100 transition-transform duration-700" src="<?php echo get_template_directory_uri(); ?>/images/hero-image.png" alt="Engineering Product Development Background">
-  </div>
-
-  <!-- Legibility Gradient overlay (Solid on left, transparent on right) -->
-  <div class="absolute inset-0 z-[1] pointer-events-none bg-gradient-to-b from-white/95 via-white/85 to-white/30 lg:bg-gradient-to-r lg:from-white/98 lg:via-white/90 lg:to-transparent"></div>
-
-  <!-- Dot Grid Overlay Effect -->
-  <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#23862D_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none z-0"></div>
+<section id="services-hero" class="relative py-14 sm:py-20 lg:py-24 text-slate-900 bg-white">
+  <!-- Dot Grid Overlay Effect for depth -->
+  <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
   <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
-    <div class="max-w-3xl space-y-6">
-      <!-- Eyebrow -->
-      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-100 uppercase" data-reveal>
-        <span class="w-1.5 h-1.5 rounded-full bg-brand-bright animate-pulse"></span>
-        Our Service
-      </span>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      
+      <!-- Left side details (7 columns) -->
+      <div class="space-y-6 lg:col-span-7">
+        <!-- Eyebrow Pill -->
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f0f9f5] text-brand text-xs font-bold border border-[#d7efe6] uppercase" data-reveal>
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-bright animate-pulse"></span>
+          Our Service
+        </span>
 
-      <h1 class="font-display font-extrabold text-brand tracking-tight" data-reveal style="--reveal-delay:60ms">
-        End-to-End<br>Product Development
-      </h1>
+        <!-- Title -->
+        <h1 class="font-display font-extrabold text-brand tracking-tight" data-reveal style="--reveal-delay:60ms">
+          End-to-End<br>Product Development
+        </h1>
 
-      <p class="text-base sm:text-xl font-bold text-brand-bright leading-relaxed" data-reveal style="--reveal-delay:120ms">
-        พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
-      </p>
+        <!-- Subtitle (Thai lede) -->
+        <p class="text-base sm:text-xl font-bold text-brand leading-relaxed" data-reveal style="--reveal-delay:120ms">
+          พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
+        </p>
 
-      <p class="text-slate-700 text-sm sm:text-base leading-relaxed max-w-xl font-medium" data-reveal style="--reveal-delay:180ms">
-        We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.
-      </p>
+        <!-- Description (English copy) -->
+        <p class="text-slate-500 text-sm sm:text-base leading-relaxed max-w-xl font-normal" data-reveal style="--reveal-delay:180ms">
+          We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.
+        </p>
 
-      <!-- Props -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4" data-reveal style="--reveal-delay:240ms">
-        <div class="flex flex-col items-start text-left space-y-1.5">
-          <span class="text-brand text-2xl">
-            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          </span>
-          <b class="text-brand-deep text-xs sm:text-sm font-extrabold">One Partner</b>
-          <p class="text-[10px] text-slate-500 leading-tight">ดูแลครบทุกขั้นตอน ในที่เดียว</p>
-        </div>
-        <div class="flex flex-col items-start text-left space-y-1.5">
-          <span class="text-brand text-2xl">
-            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
-          </span>
-          <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Faster to Market</b>
-          <p class="text-[10px] text-slate-500 leading-tight">ลดเวลาในการพัฒนา และเปิดตัวสินค้า</p>
-        </div>
-        <div class="flex flex-col items-start text-left space-y-1.5">
-          <span class="text-brand text-2xl">
-            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.2"></circle></svg>
-          </span>
-          <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Quality &amp; Compliance</b>
-          <p class="text-[10px] text-slate-500 leading-tight">มาตรฐานสากล เชื่อถือได้</p>
-        </div>
-        <div class="flex flex-col items-start text-left space-y-1.5">
-          <span class="text-brand text-2xl">
-            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"></path></svg>
-          </span>
-          <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Business Impact</b>
-          <p class="text-[10px] text-slate-500 leading-tight">สร้างคุณค่าและความได้เปรียบ ในการแข่งขัน</p>
+        <!-- Props Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4" data-reveal style="--reveal-delay:240ms">
+          <div class="flex flex-col items-start text-left space-y-1.5">
+            <span class="text-brand text-2xl">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </span>
+            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">One Partner</b>
+            <p class="text-[10px] text-slate-500 leading-tight">ดูแลครบทุกขั้นตอน ในที่เดียว</p>
+          </div>
+          <div class="flex flex-col items-start text-left space-y-1.5">
+            <span class="text-brand text-2xl">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
+            </span>
+            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Faster to Market</b>
+            <p class="text-[10px] text-slate-500 leading-tight">ลดเวลาในการพัฒนา และเปิดตัวสินค้า</p>
+          </div>
+          <div class="flex flex-col items-start text-left space-y-1.5">
+            <span class="text-brand text-2xl">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.2"></circle></svg>
+            </span>
+            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Quality &amp; Compliance</b>
+            <p class="text-[10px] text-slate-500 leading-tight">มาตรฐานสากล เชื่อถือได้</p>
+          </div>
+          <div class="flex flex-col items-start text-left space-y-1.5">
+            <span class="text-brand text-2xl">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"></path></svg>
+            </span>
+            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Business Impact</b>
+            <p class="text-[10px] text-slate-500 leading-tight">สร้างคุณค่าและความได้เปรียบ ในการแข่งขัน</p>
+          </div>
         </div>
       </div>
+
+      <!-- Right side media (5 columns) -->
+      <div class="flex justify-center items-center w-full lg:col-span-5" data-reveal style="--reveal-delay:120ms">
+        <img src="<?php echo get_template_directory_uri(); ?>/Home.png" alt="ภาพรวมบริการพัฒนาผลิตภัณฑ์ครบวงจรของ Syntech"
+             class="w-full h-auto max-h-[500px] object-contain">
+      </div>
+
     </div>
   </div>
 </section>
 
 <!-- ==========================================================================
-     WHY CHOOSE SECTION (No outer cards, flat structure matching about.php templates)
+     WHY CHOOSE SECTION (No outer card wrappers, clean fluid grid)
      ========================================================================== -->
 <section id="why-us" class="py-16 bg-[#f8faf9] border-b border-slate-100 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 relative z-10">
