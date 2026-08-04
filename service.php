@@ -182,13 +182,18 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- ==========================================================================
      HERO SECTION (Exact two-column split layout, matching design image perfectly)
      ========================================================================== -->
-<section id="services-hero" class="relative pt-24 pb-14 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24 text-slate-900 bg-white">
+<!-- Top padding is intentionally small: components/scripts.js already applies
+     body{padding-top:80px} on every page to clear the fixed navbar. The pt-24/32/36
+     that used to be here stacked a SECOND clearance on top of it (lg:pt-36 = 9rem =
+     166px at this page's 18.5px root), which is where the empty band above the
+     eyebrow came from. -->
+<section id="services-hero" class="relative pt-6 pb-14 sm:pt-8 sm:pb-20 lg:pt-10 lg:pb-24 text-slate-900 bg-white overflow-x-hidden">
   <!-- Dot Grid Overlay Effect for depth -->
   <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
   <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-      
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
       <!-- Left side details (7 columns) -->
       <div class="space-y-6 lg:col-span-7">
         <!-- Eyebrow Pill -->
@@ -245,10 +250,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
       </div>
 
-      <!-- Right side media (5 columns) -->
-      <div class="flex justify-center items-center w-full lg:col-span-5" data-reveal style="--reveal-delay:120ms">
+      <!-- Right side media (5 columns) — now simply fills its track, since the bleed is
+           handled once by .hero-bleed on the row instead of per item. -->
+      <div class="flex justify-center lg:justify-end items-center w-full lg:col-span-5" data-reveal style="--reveal-delay:120ms">
         <img src="<?php echo get_template_directory_uri(); ?>/Home.png" alt="ภาพรวมบริการพัฒนาผลิตภัณฑ์ครบวงจรของ Syntech"
-             class="w-full h-auto max-h-[500px] object-contain">
+             loading="eager" fetchpriority="high" decoding="async"
+             class="w-full h-auto max-h-[400px] sm:max-h-[500px] xl:max-h-[600px] object-contain">
       </div>
 
     </div>

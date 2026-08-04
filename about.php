@@ -1309,7 +1309,7 @@ foreach ($sx_outcomes as $sx) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img data-editable-img="build_img4" loading="lazy" decoding="async" src="<?php echo synergy_content('build_img4_img', get_template_directory_uri() . '/image/about/smart-factory.png', 'about'); ?>" alt="Smart Factory">
+                <img data-editable-img="build_img4" loading="lazy" decoding="async" src="<?php echo synergy_content('build_img4_img', get_template_directory_uri() . '/image/about/smart-factory.jpg', 'about'); ?>" alt="Smart Factory">
               </div>
               <span class="badge"><i class="fa-solid fa-industry" aria-hidden="true"></i></span>
             </div>
