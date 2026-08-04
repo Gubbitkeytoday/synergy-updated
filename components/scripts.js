@@ -192,6 +192,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── NAV STRUCTURE ───────────────────────────────────────────
   const navItems = [
     { label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
+    {
+      label: '<span class="lang-th">โซลูชัน</span><span class="lang-en">Solutions</span>',
+      href: homeHref('#solutions'),
+      page: 'index.html',
+      section: 'solutions',
+      megaCol: [
+        {
+          heading: 'Solutions & Engineering',
+          icon: 'fa-solid fa-layer-group',
+          items: [
+            { label: '<span class="lang-th">1. Smart Factory</span><span class="lang-en">1. Smart Factory</span>', href: homeHref('#solutions'), desc: 'ระบบโรงงานอัจฉริยะและการเชื่อมต่อเครื่องจักร' },
+            { label: '<span class="lang-th">2. Smart Agriculture</span><span class="lang-en">2. Smart Agriculture</span>', href: homeHref('#solutions'), desc: 'เกษตรอัจฉริยะ ไอโอทีและเซ็นเซอร์วัดผล' },
+            { label: '<span class="lang-th">3. Custom IoT & Hardware</span><span class="lang-en">3. Custom IoT & Hardware</span>', href: homeHref('#solutions'), desc: 'ออกแบบพัฒนาฮาร์ดแวร์และซอฟต์แวร์เฉพาะทาง' },
+            { label: '<span class="lang-th">4. Smart Energy Solution ⚡</span><span class="lang-en">4. Smart Energy Solution ⚡</span>', href: pageHref('smart-energy.php'), desc: 'ระบบบริหารจัดการพลังงาน โซลาร์เซลล์ & EV Charger' }
+          ]
+        }
+      ]
+    },
+    { label: '<span class="lang-th">Smart Energy</span><span class="lang-en">Smart Energy</span>', href: pageHref('smart-energy.php'), page: 'smart-energy.php' },
     { label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' },
     { label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>', href: pageHref('service.php'), page: 'service.php' },
     { label: '<span class="lang-th">เกี่ยวกับเรา</span><span class="lang-en">About Us</span>', href: pageHref('about.php'), page: 'about.php' }
