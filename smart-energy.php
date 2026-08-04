@@ -1123,7 +1123,20 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <div class="sea-link" aria-hidden="true"></div>
+          <!-- 2 Vertical Dashed Arrows connecting Gateway up to Energy Engine -->
+          <div class="h-8 relative my-1 hidden sm:block">
+            <div class="absolute left-[16.66%] top-0 bottom-0 border-l-2 border-dashed border-[#1F6B43]">
+              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
+            </div>
+            <div class="absolute left-[83.33%] top-0 bottom-0 border-l-2 border-dashed border-[#1F6B43]">
+              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
+            </div>
+          </div>
+          <div class="h-6 relative my-1 block sm:hidden">
+            <div class="absolute left-1/2 top-0 bottom-0 border-l-2 border-dashed border-[#1F6B43]">
+              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
+            </div>
+          </div>
 
           <!-- Tier 3 — Energy Gateway -->
           <div class="sea-tier">
@@ -1131,19 +1144,57 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <span class="lang-th">เกตเวย์พลังงาน</span>
               <span class="lang-en">Energy Gateway</span>
             </div>
-            <div class="sea-gw">
-              <div class="sea-gw-cell"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-1.png" alt="Energy Gateway รวบรวมข้อมูลจากอุปกรณ์ในไซต์งาน"></div>
-              <div class="sea-gw-cell"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-2.png" alt="Energy Gateway เชื่อมต่ออุปกรณ์หลายโปรโตคอล"></div>
-              <div class="sea-gw-cell"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-3.png" alt="Energy Gateway ส่งข้อมูลขึ้นแพลตฟอร์ม SynExta"></div>
+            <div class="sea-gw flex items-center justify-between gap-2 sm:gap-4">
+              <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-1.png" alt="Energy Gateway 1"></div>
+              
+              <!-- Dashed Arrow 1 to 2 -->
+              <div class="flex-none flex items-center justify-center w-10 sm:w-16">
+                <div class="w-full border-t-2 border-dashed border-[#1F6B43] relative">
+                  <span class="absolute -right-1.5 -top-[7px] text-[#1F6B43] text-[10px] leading-none">►</span>
+                </div>
+              </div>
+
+              <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-2.png" alt="Energy Gateway 2"></div>
+              
+              <!-- Dashed Arrow 2 to 3 -->
+              <div class="flex-none flex items-center justify-center w-10 sm:w-16">
+                <div class="w-full border-t-2 border-dashed border-[#1F6B43] relative">
+                  <span class="absolute -right-1.5 -top-[7px] text-[#1F6B43] text-[10px] leading-none">►</span>
+                </div>
+              </div>
+
+              <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-3.png" alt="Energy Gateway 3"></div>
             </div>
           </div>
 
-          <!-- The gateway<->device junction: a stub under each device feeding a shared
-               horizontal run, then one arrow up into the gateway tier. -->
-          <div class="sea-bus" aria-hidden="true">
-            <div class="sea-bus-cell"></div><div class="sea-bus-cell"></div><div class="sea-bus-cell"></div>
-            <div class="sea-bus-cell"></div><div class="sea-bus-cell"></div><div class="sea-bus-cell"></div>
-            <div class="sea-bus-riser"></div>
+          <!-- Gateway <-> Device Junction Bus with 3 Risers pointing UP -->
+          <div class="h-9 relative my-1 hidden sm:block">
+            <!-- Horizontal Bus Line -->
+            <div class="absolute top-[50%] left-[8.33%] right-[8.33%] border-t-2 border-dashed border-[#1F6B43]"></div>
+            
+            <!-- 6 Device Stubs from bottom to bus -->
+            <div class="absolute bottom-0 top-[50%] left-[8.33%] border-l-2 border-dashed border-[#1F6B43]"></div>
+            <div class="absolute bottom-0 top-[50%] left-[25%] border-l-2 border-dashed border-[#1F6B43]"></div>
+            <div class="absolute bottom-0 top-[50%] left-[41.66%] border-l-2 border-dashed border-[#1F6B43]"></div>
+            <div class="absolute bottom-0 top-[50%] left-[58.33%] border-l-2 border-dashed border-[#1F6B43]"></div>
+            <div class="absolute bottom-0 top-[50%] left-[75%] border-l-2 border-dashed border-[#1F6B43]"></div>
+            <div class="absolute bottom-0 top-[50%] left-[91.66%] border-l-2 border-dashed border-[#1F6B43]"></div>
+
+            <!-- 3 Gateway Risers pointing UP into Gateway 1, 2, 3 -->
+            <div class="absolute top-0 bottom-[50%] left-[16.66%] border-l-2 border-dashed border-[#1F6B43]">
+              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
+            </div>
+            <div class="absolute top-0 bottom-[50%] left-[50%] border-l-2 border-dashed border-[#1F6B43]">
+              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
+            </div>
+            <div class="absolute top-0 bottom-[50%] left-[83.33%] border-l-2 border-dashed border-[#1F6B43]">
+              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
+            </div>
+          </div>
+          <div class="h-6 relative my-1 block sm:hidden">
+            <div class="absolute left-1/2 top-0 bottom-0 border-l-2 border-dashed border-[#1F6B43]">
+              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
+            </div>
           </div>
 
           <!-- Tier 4 — field devices -->
