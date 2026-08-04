@@ -232,45 +232,142 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <div id="navbar-container"></div>
 
 <!-- ==========================================================================
-     HERO SECTION (Exact two-column split layout, matching design image perfectly)
+     HERO SECTION — Two-column layout matching design reference exactly
      ========================================================================== -->
-<!-- HERO SECTION: Services / End-to-End Product Development (Matching About Hero layout) -->
-<section id="services-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 overflow-hidden bg-slate-50 min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-start justify-center">
-  <!-- Background Image Layer (about-hero-bg.png) - No dark filter overlay -->
-  <div class="absolute inset-0 z-0 overflow-hidden hero-bg-layer">
-    <img id="services-hero-bg-img" data-editable-img="service_hero_bg" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-[30%_center] sm:object-[55%_center] lg:object-[92%_center] scale-100 transition-transform duration-700" src="<?php echo esc_url(synergy_content('service_hero_bg_img', get_template_directory_uri() . '/image/about-hero-bg.png', 'service')); ?>" alt="Engineering Intelligence Services Background">
-  </div>
+<section id="services-hero" class="relative bg-white overflow-hidden" style="min-height:calc(100vh - 80px)">
 
-  <!-- Legibility scrim (below lg only) -->
-  <div class="absolute inset-0 z-[1] pointer-events-none lg:hidden bg-gradient-to-b from-white/85 via-white/65 to-white/15"></div>
+  <!-- Dot grid overlay -->
+  <div class="absolute inset-0 opacity-[0.06] bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
-  <!-- Grid Overlay Effect -->
-  <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#23862D_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none z-0"></div>
+  <!-- Faint green glow top-left -->
+  <div class="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-brand/5 blur-3xl pointer-events-none z-0"></div>
 
-  <div class="max-w-7xl mx-auto px-6 relative z-10 w-full text-center">
-    <div class="max-w-6xl mx-auto space-y-4 flex flex-col items-center justify-center">
+  <div class="relative z-10 flex flex-col lg:flex-row w-full" style="min-height:calc(100vh - 80px)">
 
-      <h1 data-editable="service-hero-title" <?php echo synergy_style('service-hero-title', 'service'); ?> class="font-display font-extrabold text-2xl sm:text-4xl lg:text-[44px] tracking-tight leading-none text-[#F2C72E] drop-shadow-[0_2px_10px_rgba(0,0,0,0.15)] text-center sm:whitespace-nowrap w-full mx-auto">
-        <?php echo synergy_content('service-hero-title', 'End-to-End <span class="text-brand-bright drop-shadow-[0_2px_15px_rgba(35,134,45,0.4)]">Product Development</span>', 'service'); ?>
+    <!-- ═══════════════════════════════════════════════════
+         LEFT: Text Content (~55%)
+    ═══════════════════════════════════════════════════ -->
+    <div class="flex-none w-full lg:w-[56%] flex flex-col justify-center px-8 sm:px-14 lg:px-16 xl:px-20 py-14 lg:py-0">
+
+      <!-- Eyebrow pill -->
+      <span class="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full border border-brand/30 bg-brand/5 text-brand text-[11px] font-extrabold tracking-[0.18em] uppercase mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand flex-none"></span>
+        Our Service
+      </span>
+
+      <!-- Main title -->
+      <h1 class="font-display font-extrabold text-ink leading-[1.06] tracking-tight mb-4" style="font-size:clamp(38px,4.8vw,68px)">
+        <?php echo synergy_content('svc-hero-title',
+          'End-to-End<br><span style="color:#1F6B43">Product Development</span>',
+          'service'); ?>
       </h1>
 
-      <p data-editable="service-hero-desc" <?php echo synergy_style('service-hero-desc', 'service'); ?> class="text-sm sm:text-base text-slate-900 font-medium leading-relaxed max-w-4xl text-center mx-auto">
-        <?php echo synergy_content('service-hero-desc', '<span class="lang-th">บริการพัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิด การออกแบบ พัฒนาต้นแบบ (NPI) การผลิต จนถึงบริการหลังการขาย<br>ส่งมอบโซลูชันวิศวกรรมอัจฉริยะ Smart Electronics และ AIoT ที่เชื่อถือได้และตอบโจทย์ธุรกิจอย่างยั่งยืน</span><span class="lang-en">We are your trusted end-to-end engineering partner. From concept design and NPI prototyping<br>to manufacturing and after-sales support, we deliver reliable Smart Electronics &amp; AIoT solutions.</span>', 'service'); ?>
+      <!-- Thai subtitle -->
+      <p class="font-bold mb-4" style="color:#1F6B43;font-size:clamp(14px,1.4vw,18px)">
+        <?php echo synergy_content('svc-hero-subtitle-th',
+          'พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมสู่ตลาด',
+          'service'); ?>
       </p>
 
-      <!-- Buttons Row (Placed further down near bottom center) -->
-      <div class="flex flex-wrap items-center justify-center gap-4 pt-24 sm:pt-36 lg:pt-48 w-full">
-        <a data-editable="service-hero-btn1" <?php echo synergy_style('service-hero-btn1', 'service'); ?> href="#why-us" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
-          <?php echo synergy_content('service-hero-btn1', '<span class="lang-th">สำรวจบริการของเรา</span><span class="lang-en">Explore Our Services</span><i class="fa-solid fa-arrow-right text-xs ml-1"></i>', 'service'); ?>
-        </a>
-        <a data-editable="service-hero-btn2" <?php echo synergy_style('service-hero-btn2', 'service'); ?> href="<?php echo home_url('/'); ?>#contact" class="inline-flex items-center gap-2.5 bg-slate-900 hover:bg-slate-800 text-white border border-slate-900 px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider transition-all duration-200 hover:-translate-y-0.5 shadow-md">
-          <?php echo synergy_content('service-hero-btn2', '<i class="fa-regular fa-bookmark text-xs text-gold-bright mr-1"></i><span class="lang-th">พูดคุยกับทีมผู้เชี่ยวชาญ</span><span class="lang-en">Talk to Our Experts</span>', 'service'); ?>
-        </a>
+      <!-- English description -->
+      <p class="text-slate-500 font-medium leading-relaxed mb-10" style="font-size:clamp(13px,1.1vw,15.5px);max-width:520px">
+        <?php echo synergy_content('svc-hero-desc',
+          'We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.',
+          'service'); ?>
+      </p>
+
+      <!-- ── 4 Props Row ── -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-6 pt-7 border-t border-slate-100/80">
+
+        <!-- 1. One Partner -->
+        <div class="flex flex-col gap-1.5">
+          <span class="w-9 h-9 flex items-center justify-center text-brand">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20H7m10 0a5 5 0 10-10 0m10 0V8a5 5 0 00-5-5H7a5 5 0 00-5 5v12"/>
+              <circle cx="12" cy="8" r="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <b class="text-[13px] text-ink font-extrabold leading-snug">One Partner</b>
+          <span class="text-[11.5px] text-slate-400 leading-snug">ดูแลครบทุกขั้นตอน<br>ในที่เดียว</span>
+        </div>
+
+        <!-- 2. Faster to Market -->
+        <div class="flex flex-col gap-1.5">
+          <span class="w-9 h-9 flex items-center justify-center text-brand">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+              <circle cx="12" cy="12" r="9" stroke-linecap="round"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 3"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5l1 2M7.5 3.5l-1 2"/>
+            </svg>
+          </span>
+          <b class="text-[13px] text-ink font-extrabold leading-snug">Faster to Market</b>
+          <span class="text-[11.5px] text-slate-400 leading-snug">ลดเวลาในการพัฒนา<br>และเปิดตัวสินค้า</span>
+        </div>
+
+        <!-- 3. Quality & Compliance -->
+        <div class="flex flex-col gap-1.5">
+          <span class="w-9 h-9 flex items-center justify-center text-brand">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 4v5c0 4.5-3.5 8.5-8 10C7.5 20.5 4 16.5 4 12V7l8-4z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+            </svg>
+          </span>
+          <b class="text-[13px] text-ink font-extrabold leading-snug">Quality &amp; Compliance</b>
+          <span class="text-[11.5px] text-slate-400 leading-snug">มาตรฐานสากล<br>เชื่อถือได้</span>
+        </div>
+
+        <!-- 4. Business Impact -->
+        <div class="flex flex-col gap-1.5">
+          <span class="w-9 h-9 flex items-center justify-center text-brand">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 17l4-5 4 3 4-6 4-3"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18"/>
+            </svg>
+          </span>
+          <b class="text-[13px] text-ink font-extrabold leading-snug">Business Impact</b>
+          <span class="text-[11.5px] text-slate-400 leading-snug">สร้างคุณค่าและความ<br>ได้เปรียบในการแข่งขัน</span>
+        </div>
+
+      </div><!-- /4 Props -->
+    </div><!-- /LEFT -->
+
+    <!-- ═══════════════════════════════════════════════════
+         RIGHT: Image Composition (~45%)
+    ═══════════════════════════════════════════════════ -->
+    <div class="flex-none w-full lg:w-[44%] relative flex items-center justify-center overflow-hidden min-h-[380px] lg:min-h-0">
+
+      <!-- Large light green circle ring (background decoration) -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] rounded-full border-[2px] border-brand/15 pointer-events-none"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[360px] rounded-full border border-brand/10 pointer-events-none"></div>
+
+      <!-- Main circular PCB image (top-center) -->
+      <div class="absolute top-[8%] left-1/2 -translate-x-1/2 w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] lg:w-[52%] lg:h-auto lg:aspect-square rounded-full overflow-hidden ring-[6px] ring-white shadow-2xl shadow-slate-300/50 z-10">
+        <img
+          src="<?php echo esc_url(get_template_directory_uri() . '/image/about/pcb-design-prototyping.png'); ?>"
+          alt="PCB Design & Prototyping Engineering"
+          class="w-full h-full object-cover object-center scale-110"
+          loading="eager"
+        >
       </div>
 
-    </div>
-  </div>
+      <!-- Floating product/device image (bottom-right) -->
+      <div class="absolute bottom-[5%] right-[2%] w-[130px] sm:w-[160px] lg:w-[28%] z-20 drop-shadow-2xl">
+        <img
+          src="<?php echo esc_url(get_template_directory_uri() . '/image/solutions/energy-sensmini-a4.png'); ?>"
+          alt="Syntech SensMini A4 IoT Device"
+          class="w-full h-auto object-contain"
+          loading="eager"
+        >
+      </div>
+
+      <!-- Accent dot bottom-left -->
+      <div class="absolute bottom-[18%] left-[8%] w-3 h-3 rounded-full bg-brand/40 z-10"></div>
+      <div class="absolute bottom-[22%] left-[13%] w-2 h-2 rounded-full bg-brand/20 z-10"></div>
+
+    </div><!-- /RIGHT -->
+  </div><!-- /flex row -->
 </section>
+
 
 <!-- ==========================================================================
      WHY CHOOSE SECTION
