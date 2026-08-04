@@ -1,0 +1,87 @@
+{
+    "hero-title": "Engineering Intelligence <span class=\"text-brand-bright drop-shadow-[0_2px_15px_rgba(35,134,45,0.4)]\">Since 2008<\/span>",
+    "hero-title_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "hero-desc": "<span class=\"lang-th\">กว่า 18 ปีที่เราพัฒนาจากงานวิศวกรรมอิเล็กทรอนิกส์ สู่บริษัทด้าน Engineering Intelligence<br>ผสานฮาร์ดแวร์ ระบบสมองกลฝังตัว AI และดิจิทัลแพลตฟอร์ม เพื่อสร้างโซลูชันอัจฉริยะที่ส่งมอบผลลัพธ์ยั่งยืน<\/span><span class=\"lang-en\">For more than 18 years, we've evolved from electronics engineering into an Engineering Intelligence Company<br>integrating hardware, embedded systems, AI, and digital platforms to build intelligent solutions.<\/span>",
+    "hero-desc_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "hero-btn1": "<span class=\"lang-th\">สำรวจโซลูชันของเรา<\/span><span class=\"lang-en\">Explore Our Solutions<\/span><i class=\"fa-solid fa-arrow-right text-xs ml-1\"><\/i>",
+    "hero-btn1_pos": {
+        "x": 0,
+        "y": 174
+    },
+    "hero-btn2": "<i class=\"fa-regular fa-bookmark text-xs text-gold-bright mr-1\"><\/i><span class=\"lang-th\">พูดคุยกับทีมผู้เชี่ยวชาญ<\/span><span class=\"lang-en\">Talk to Our Experts<\/span>",
+    "hero-btn2_pos": {
+        "x": 0,
+        "y": 174
+    },
+    "build-title": "What We Build",
+    "build-tag1": "<span class=\"dot\"><\/span>INNOVATIVE",
+    "build-item-title1": "Custom Engineering",
+    "build-item-desc1": "<span class=\"lang-th\">พัฒนา Hardware, Embedded, AI และ Platform ตามความต้องการของธุรกิจ<\/span><span class=\"lang-en\">Hardware, embedded, AI, and platform development tailored to your business needs.<\/span>",
+    "build-tag2": "<span class=\"dot\"><\/span>INNOVATIVE",
+    "build-item-title2": "Smart Agriculture",
+    "build-item-desc2": "<span class=\"lang-th\">บริหารจัดการการเกษตรด้วยข้อมูล เพื่อเพิ่มผลผลิตและใช้ทรัพยากรอย่างคุ้มค่า<\/span><span class=\"lang-en\">Data-driven precision agriculture and environmental monitoring for better yield and resource efficiency.<\/span>",
+    "build-tag3": "<span class=\"dot\"><\/span>IMPACTFUL",
+    "build-item-title3": "Smart Energy",
+    "build-item-desc3": "<span class=\"lang-th\">บริหารจัดการพลังงานแบบ Real-time เพื่อประหยัดพลังงานและเพิ่มประสิทธิภาพ<\/span><span class=\"lang-en\">Real-time energy monitoring and automation to optimize power consumption and efficiency.<\/span>",
+    "build-tag4": "<span class=\"dot\"><\/span>IMPACTFUL",
+    "build-item-title4": "Smart Factory",
+    "build-item-desc4": "<span class=\"lang-th\">เชื่อมต่อข้อมูลและเครื่องจักร เพื่อยกระดับประสิทธิภาพการผลิตด้วย Smart Factory<\/span><span class=\"lang-en\">Connecting data and machinery to elevate manufacturing productivity with Smart Factory.<\/span>",
+    "build-title_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-tag1_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-item-title1_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-item-desc1_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-tag2_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-item-title2_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-item-desc2_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-tag3_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-item-title3_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-item-desc3_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-tag4_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-item-title4_pos": {
+        "x": 0,
+        "y": 0
+    },
+    "build-item-desc4_pos": {
+        "x": 0,
+        "y": 0
+    }
+}

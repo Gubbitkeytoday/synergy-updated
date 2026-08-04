@@ -331,10 +331,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
       </a>
       <div class="hidden xl:flex items-center gap-8 text-sm sm:text-base font-800 uppercase tracking-wider text-ink">
         <a href="<?php echo home_url('/'); ?>#top" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">หน้าแรก</a>
+        <a href="<?php echo home_url('/about/'); ?>" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">เกี่ยวกับเรา</a>
+        <a href="<?php echo home_url('/service/'); ?>" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">บริการของเรา</a>
         <a href="<?php echo home_url('/'); ?>#solutions" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">โซลูชัน</a>
-        <a href="<?php echo home_url('/'); ?>#end-to-end" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">บริการวิศวกรรม</a>
         <a href="<?php echo home_url('/'); ?>#success-stories" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">ผลงานจริง</a>
-        <a href="<?php echo home_url('/'); ?>#synergy" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">เกี่ยวกับเรา</a>
         <button id="langToggleBtn" class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 text-ink hover:text-brand hover:border-brand transition duration-200 text-sm font-extrabold tracking-wider">
           <span class="lang-en inline-flex items-center gap-1.5"><svg viewBox="0 0 60 30" class="w-5 h-3 rounded-[2px] shrink-0" aria-hidden="true"><rect width="60" height="30" fill="#012169"/><path d="M0 0L60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0L60 30M60 0L0 30" stroke="#C8102E" stroke-width="4"/><rect x="25" width="10" height="30" fill="#fff"/><rect y="10" width="60" height="10" fill="#fff"/><rect x="27" width="6" height="30" fill="#C8102E"/><rect y="12" width="60" height="6" fill="#C8102E"/></svg>EN</span>
           <span class="lang-th inline-flex items-center gap-1.5"><svg viewBox="0 0 30 20" class="w-5 h-3 rounded-[2px] shrink-0" aria-hidden="true"><rect width="30" height="20" fill="#F4F5F8"/><rect width="30" height="3.4" fill="#A51931"/><rect y="16.6" width="30" height="3.4" fill="#A51931"/><rect y="7" width="30" height="6" fill="#2D2A4A"/></svg>TH</span>
@@ -1870,7 +1870,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <span class="absolute inset-0 rounded-full border-2 border-brand/30" aria-hidden="true"></span>
                   <div class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-white shadow-lg overflow-hidden flex items-center justify-center">
                     <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-logo.png"
-                      alt="SYNEXTA" class="w-full h-full object-cover"
+                      alt="SYNEXTA" class="w-full h-full object-cover scale-110"
                       onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     <span class="hidden font-display font-900 text-brand text-lg tracking-tight">SYN<span class="text-gold">EX</span>TA</span>
                   </div>
@@ -2418,6 +2418,23 @@ if (file_exists(__DIR__ . '/functions.php')) {
         box-shadow: 0 12px 24px -6px rgba(31, 107, 67, 0.15);
         transform: translateY(-3px);
       }
+
+      /* Quality policy: hold the statement to two lines on laptops too.
+         The English copy needs ~1195px per line at the inherited 23.125px, but the
+         card only offers ~1115px at a 1280px viewport, so it spilled to three lines
+         there. One step down in size covers 1250-1400px; the band starts at 1250
+         rather than 1200 because at 1200 the card is down to 1035px and even 20.5px
+         does not fit two lines. Below that, two lines would need type under 19px,
+         which is worse than simply wrapping, so the copy wraps naturally there.
+         !important is required: components/style.css sets
+         `[class*="text-lg"]{font-size:1.25rem!important}` and the paragraph carries
+         sm:text-lg. */
+      @media (min-width: 1250px) and (max-width: 1399.98px) {
+        #quality-policy-statement {
+          font-size: 20.5px !important;
+          line-height: 1.62 !important;
+        }
+      }
     </style>
     <!-- Glowing Background Effects -->
     <div class="glow-bg -top-40 -left-40"></div>
@@ -2432,15 +2449,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <section id="certifications-section" class="w-full">
 
         <!-- HEADER TITLE (left-aligned per design) -->
-        <div class="max-w-3xl mb-6">
+        <div class="max-w-none w-full mb-6">
           <div class="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-brand mb-4">
             <span class="w-8 h-[2px] bg-brand opacity-60"></span>
             STANDARD CERTIFICATIONS
             <span class="w-8 h-[2px] bg-brand opacity-60"></span>
           </div>
-          <h1 class="font-display font-800 text-4xl sm:text-6xl leading-[1.08] tracking-tight mb-4">
-            <span class="text-ink">Certified Standards,</span><br>
-            <span class="text-brand">Trusted by Industries</span>
+          <h1 class="font-display font-800 text-2xl sm:text-4xl lg:text-[42px] xl:text-5xl leading-tight tracking-tight mb-4 sm:whitespace-nowrap">
+            <span class="text-ink">Certified Standards,</span> <span class="text-brand">Trusted by Industries</span>
           </h1>
         </div>
 
@@ -2448,6 +2464,32 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- MAIN CERTIFICATIONS CONTAINER CARD -->
         <div
           class="bg-white border border-slate-200/80 rounded-[28px] p-6 sm:p-10 shadow-xl shadow-slate-200/50 space-y-8">
+
+          <!-- QUALITY POLICY BANNER -->
+          <!-- The statement fills the card's own inner width so it reads as two long
+               lines. It was capped at max-w-2xl, which is 777px of the 1277px the card
+               actually offers, and that forced the copy onto 3-4 short lines.
+               max-w-none rather than a max-w-6xl: scripts.js raises the root font to
+               18.5px, so every rem-based Tailwind max-width renders ~1.16x its nominal
+               value and no fixed step lines up with the card. Letting the parent do the
+               constraining is exact at every width. No <br> either - natural wrapping
+               balances the two lines by itself and cannot break if the copy changes. -->
+          <div class="max-w-none mx-auto text-center py-2 pb-4">
+            <div class="flex items-center justify-center mb-3">
+              <h2 class="font-display font-800 text-xl sm:text-2xl text-brand uppercase tracking-wider text-center">
+                <span class="lang-th">นโยบายคุณภาพ (QUALITY POLICY)</span>
+                <span class="lang-en">QUALITY POLICY</span>
+              </h2>
+            </div>
+            <p id="quality-policy-statement" class="text-base sm:text-lg text-body font-400 leading-relaxed max-w-none mx-auto">
+              <span class="lang-th">
+                บริษัท ซินเนอร์ยี่ เทคโนโลยี จำกัด มุ่งมั่นที่จะนวัตกรรม พัฒนา ผลิต และส่งมอบผลิตภัณฑ์และบริการที่มี<strong class="font-700 text-brand">มาตรฐานคุณภาพสูงสุด</strong> พร้อมการ<strong class="font-700 text-brand">ส่งมอบตรงเวลา</strong> เพื่อบรรลุ<strong class="font-700 text-brand">ความพึงพอใจของลูกค้า</strong>เหนือความคาดหมาย
+              </span>
+              <span class="lang-en">
+                Synergy Technology Co., Ltd. is committed to innovating, developing, manufacturing, and delivering products and services of the <strong class="font-700 text-brand">highest quality standards</strong>, with <strong class="font-700 text-brand">on-time delivery</strong>, to achieve <strong class="font-700 text-brand">customer satisfaction</strong> beyond expectations.
+              </span>
+            </p>
+          </div>
 
           <!-- SUMMARY CARDS (7 categories: Row 1 = 4 cards, Row 2 = 3 cards full width) -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-5 pb-6 border-b border-slate-100">

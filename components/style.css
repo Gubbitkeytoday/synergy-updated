@@ -438,4 +438,10 @@
       height: 0 !important;
       background: transparent !important;
     }
+
+    /* index.php และ components/scripts.js เขียน class="font-800" ไว้ 104 จุด
+       แต่ Tailwind ไม่มี utility ชื่อนี้ และไม่เคยมีใครนิยามไว้ ผลคือหัวข้อ h2
+       เกือบทั้งหน้าแรกเรนเดอร์ที่ weight 400 (บาง) แทนที่จะเป็น 800 (หนา)
+       นิยามที่นี่จุดเดียวแก้ได้ทั้ง 104 จุด โดยไม่ต้องแตะ markup */
+    .font-800 { font-weight: 800; }
   

@@ -193,45 +193,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const navItems = [
     { label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
     {
-      label: '<span class="lang-th">เกี่ยวกับเรา</span><span class="lang-en">About Us</span>',
-      href: pageHref('about.php'),
-      page: 'about.php',
-      megaCol: [
-        {
-          heading: '<span class="lang-th">เกี่ยวกับ Synergy Group</span><span class="lang-en">About Synergy Group</span>',
-          icon: 'fa-solid fa-building-user',
-          items: [
-            {
-              label: '<span class="lang-th">ภาพรวมองค์กร</span><span class="lang-en">Company Overview</span>',
-              href: pageHref('about.php'),
-              desc: '<span class="lang-th">วิสัยทัศน์และโครงสร้างกลุ่มธุรกิจ</span><span class="lang-en">Vision & Ecosystem Overview</span>'
-            },
-            {
-              label: '<span class="lang-th">หลักการบริหาร (OUR DNA)</span><span class="lang-en">OUR DNA</span>',
-              href: pageHref('about.php') + '#dna',
-              desc: '<span class="lang-th">Innovative · Trusted · Impactful</span><span class="lang-en">The Principles That Drive Solutions</span>'
-            },
-            {
-              label: '<span class="lang-th">เส้นทางเติบโต (OUR JOURNEY)</span><span class="lang-en">OUR JOURNEY</span>',
-              href: pageHref('about.php') + '#journey',
-              desc: '<span class="lang-th">จาก 2008 ถึง Engineering Intelligence</span><span class="lang-en">From 2008 to Intelligence</span>'
-            },
-            {
-              label: '<span class="lang-th">บริการวิศวกรรม</span><span class="lang-en">Engineering Services</span>',
-              href: homeHref('#end-to-end'),
-              desc: '<span class="lang-th">ขีดความสามารถวิศวกรรมและการผลิต</span><span class="lang-en">Engineering & Manufacturing Capabilities</span>'
-            }
-          ]
-        }
-      ]
+      label: '<span class="lang-th">บริการของเรา</span><span class="lang-en">Services</span>',
+      href: pageHref('service.php'),
+      page: 'service.php'
     },
-    {
-      label: '<span class="lang-th">โซลูชัน</span><span class="lang-en">Solutions</span>',
-      href: homeHref('#solutions'),
-      page: 'index.html',
-      section: 'solutions'
-    },
-    { label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' }
+    { label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' },
+    { label: '<span class="lang-th">เกี่ยวกับเรา</span><span class="lang-en">About Us</span>', href: pageHref('about.php'), page: 'about.php' }
   ];
 
 
