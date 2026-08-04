@@ -241,8 +241,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <!-- Dot Grid Overlay Effect for depth -->
   <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
-  <!-- ปรับความกว้างสูงสุดเพิ่มเป็น max-w-[90rem] หรือ max-w-full เพื่อให้ขยายกว้างขึ้น -->
-  <div class="max-w-[90rem] mx-auto px-6 lg:px-12 relative z-10 w-full">
+  <!-- ขยายกว้างเต็มหน้าจอ 100% ไร้ขีดจำกัดความกว้างสูงสุด -->
+  <div class="w-full px-6 sm:px-12 lg:px-16 xl:px-24 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
       
       <!-- Left side details (ปรับสัดส่วนเป็น 6 คอลัมน์) -->
