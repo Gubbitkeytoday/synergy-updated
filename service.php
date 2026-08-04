@@ -279,6 +279,21 @@ if (file_exists(__DIR__ . '/functions.php')) {
       letter-spacing: 0.14em !important;
       text-transform: uppercase !important;
     }
+    /* ==========================================================================
+       CARD TITLE BOX
+
+       In a row of cards the description has to start on the same line as its
+       neighbours'. It did not: "Global Standards" and several capability titles fit on
+       one line while the rest wrapped to two, so those descriptions sat ~28px higher
+       than the others (measured 27.9px in Why Syntech, 28.7-28.8px in Capabilities).
+
+       The title now always reserves two lines. 2.8em = 2 x the .svc-label 1.4
+       line-height, in em so it tracks the fluid font size instead of being a pixel
+       guess that breaks at the next breakpoint.
+       ========================================================================== */
+    .svc-titlebox { min-height: 2.8em; }
+    .svc-titlebox--center { display: flex; align-items: center; justify-content: center; }
+
     .svc-micro {                      /* = site text-xs   14.9 → 16.2px — the site's floor.
                                          Latin/numerals only (badges, cert sub-labels). */
       font-size: 0.875rem !important;
@@ -315,7 +330,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
     .svc-bullet-text {
       font-size: 15px !important;
       line-height: 1.5 !important;
-      font-weight: 700 !important;
+      font-weight: 500 !important;
       color: #0f172a !important;
     }
     @media (min-width: 1440px) {
@@ -370,14 +385,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- Thai subtitle -->
       <p class="svc-lede text-brand mb-4">
         <?php echo synergy_content('svc-hero-subtitle-th',
-          'From Vision to Market-Ready Products',
+          '<span class="lang-en">From Vision to Market-Ready Products</span><span class="lang-th">ตั้งแต่แนวคิดจนสินค้าพร้อมสู่ตลาด</span>',
           'service'); ?>
       </p>
 
       <!-- English description -->
       <p class="svc-copy text-body mb-10 max-w-[560px]">
         <?php echo synergy_content('svc-hero-desc',
-          'We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.',
+          '<span class="lang-en">We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.</span><span class="lang-th">เราคือพาร์ทเนอร์ด้านวิศวกรรมที่ดูแลทุกขั้นตอนของการพัฒนาผลิตภัณฑ์ ตั้งแต่การออกแบบ พัฒนาต้นแบบ การผลิต ไปจนถึงบริการหลังการขาย เพื่อส่งมอบผลิตภัณฑ์ที่พร้อมแข่งขันในตลาด</span>',
           'service'); ?>
       </p>
 
@@ -394,7 +409,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </span>
           <div class="flex flex-col">
             <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">One Partner</b>
-            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug">One trusted partner from concept to delivery.</span>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug"><span class="lang-en">One trusted partner from concept to delivery.</span><span class="lang-th">ครบทุกขั้นตอนกับพาร์ทเนอร์เดียว</span></span>
           </div>
         </div>
 
@@ -409,7 +424,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </span>
           <div class="flex flex-col">
             <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">Faster to Market</b>
-            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug">Accelerate product development and time-to-market.</span>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug"><span class="lang-en">Accelerate product development and time-to-market.</span><span class="lang-th">เร่งการพัฒนาผลิตภัณฑ์สู่ตลาด</span></span>
           </div>
         </div>
 
@@ -423,7 +438,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </span>
           <div class="flex flex-col">
             <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">Quality &amp; Compliance</b>
-            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug">Built to international quality and compliance standards.</span>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug"><span class="lang-en">Built to international quality and compliance standards.</span><span class="lang-th">มาตรฐานคุณภาพระดับสากล</span></span>
           </div>
         </div>
 
@@ -437,7 +452,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </span>
           <div class="flex flex-col">
             <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">Business Impact</b>
-            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug">Driving business value and competitive advantage.</span>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug"><span class="lang-en">Driving business value and competitive advantage.</span><span class="lang-th">สร้างผลลัพธ์ทางธุรกิจที่ยั่งยืน</span></span>
           </div>
         </div>
 
@@ -456,8 +471,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
       
       <div class="lg:pr-8 lg:border-r lg:border-[#004d3a]/10">
         <h2 class="font-display svc-h2 text-brand">
-          <span class="lang-en">Why Syntech</span>
-          <span class="lang-th">ทำไมต้องเลือก Syntech</span>
+          <span class="lang-en">Why Syntech</span><span class="lang-th">ทำไมต้องเลือก Syntech</span>
         </h2>
       </div>
 
@@ -468,36 +482,36 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
           </span>
-          <b class="svc-label">Engineering Excellence</b>
-          <p class="svc-caption">Expert engineering team with proven industry experience.</p>
+          <b class="svc-label svc-titlebox svc-titlebox--center">Engineering Excellence</b>
+          <p class="svc-caption"><span class="lang-en">Expert engineering team with proven industry experience.</span><span class="lang-th">ทีมวิศวกรผู้เชี่ยวชาญ และมีประสบการณ์</span></p>
         </div>
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10l9-5 9 5-9 5-9-5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M3 14l9 5 9-5"></path><path stroke-linecap="round" stroke-linejoin="round" d="M3 18l9 5 9-5"></path></svg>
           </span>
-          <b class="svc-label">End-to-End Solutions</b>
-          <p class="svc-caption">From concept and design to manufacturing and after-sales support.</p>
+          <b class="svc-label svc-titlebox svc-titlebox--center">End-to-End Solutions</b>
+          <p class="svc-caption"><span class="lang-en">From concept and design to manufacturing and after-sales support.</span><span class="lang-th">ครบทุกขั้นตอนตั้งแต่ ออกแบบจนส่งมอบ</span></p>
         </div>
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"></path></svg>
           </span>
-          <b class="svc-label">Scalable Production</b>
-          <p class="svc-caption">Supporting prototype, pilot, and mass production.</p>
+          <b class="svc-label svc-titlebox svc-titlebox--center">Scalable Production</b>
+          <p class="svc-caption"><span class="lang-en">Supporting prototype, pilot, and mass production.</span><span class="lang-th">รองรับการผลิตตั้งแต่ ต้นแบบถึงจำนวนมาก</span></p>
         </div>
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-4-8a15.3 15.3 0 0 1 4 8 15.3 15.3 0 0 1-4 8 15.3 15.3 0 0 1-4-8 15.3 15.3 0 0 1 4-8z"></path></svg>
           </span>
-          <b class="svc-label">Global Standards</b>
-          <p class="svc-caption">Compliant with international quality and manufacturing standards.</p>
+          <b class="svc-label svc-titlebox svc-titlebox--center">Global Standards</b>
+          <p class="svc-caption"><span class="lang-en">Compliant with international quality and manufacturing standards.</span><span class="lang-th">มาตรฐานการผลิตและ คุณภาพระดับสากล</span></p>
         </div>
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="5"></circle><circle cx="15.5" cy="12" r="5"></circle></svg>
           </span>
-          <b class="svc-label">Long-term Partnership</b>
-          <p class="svc-caption">Building trusted partnerships that grow with your business.</p>
+          <b class="svc-label svc-titlebox svc-titlebox--center">Long-term Partnership</b>
+          <p class="svc-caption"><span class="lang-en">Building trusted partnerships that grow with your business.</span><span class="lang-th">เป็นพาร์ทเนอร์ระยะยาว ที่ธุรกิจไว้วางใจ</span></p>
         </div>
       </div>
 
@@ -542,9 +556,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <!-- Centered Bullet List -->
           <div class="mt-2 w-full text-center space-y-1.5">
-            <div class="svc-bullet-text">• Understand customer requirements</div>
-            <div class="svc-bullet-text">• Conduct feasibility study</div>
-            <div class="svc-bullet-text">• Define project scope and planning</div>
+            <div class="svc-bullet-text">• <span class="lang-en">Understand customer requirements</span><span class="lang-th">วิเคราะห์ความต้องการของลูกค้า</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Conduct feasibility study</span><span class="lang-th">ศึกษาความเป็นไปได้ของโครงการ</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Define project scope and planning</span><span class="lang-th">กำหนดขอบเขตและแผนการดำเนินงาน</span></div>
           </div>
         </div>
 
@@ -562,9 +576,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <div class="mt-2 w-full text-center space-y-1.5">
-            <div class="svc-bullet-text">• Hardware &amp; Software Design</div>
-            <div class="svc-bullet-text">• PCB &amp; Mechanical Design</div>
-            <div class="svc-bullet-text">• Simulation &amp; Design Review</div>
+            <div class="svc-bullet-text">• <span class="lang-en">Hardware &amp; Software Design</span><span class="lang-th">ออกแบบฮาร์ดแวร์และซอฟต์แวร์</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">PCB &amp; Mechanical Design</span><span class="lang-th">ออกแบบ PCB และโครงสร้างผลิตภัณฑ์</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Simulation &amp; Design Review</span><span class="lang-th">จำลองและทบทวนการออกแบบ</span></div>
           </div>
         </div>
 
@@ -581,9 +595,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <div class="mt-2 w-full text-center space-y-1.5">
-            <div class="svc-bullet-text">• Build functional prototypes</div>
-            <div class="svc-bullet-text">• Functional testing</div>
-            <div class="svc-bullet-text">• Design refinement &amp; validation</div>
+            <div class="svc-bullet-text">• <span class="lang-en">Build functional prototypes</span><span class="lang-th">สร้างต้นแบบผลิตภัณฑ์</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Functional testing</span><span class="lang-th">ทดสอบการทำงาน</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Design refinement &amp; validation</span><span class="lang-th">ปรับปรุงและยืนยันการออกแบบ</span></div>
           </div>
         </div>
 
@@ -600,9 +614,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <div class="mt-2 w-full text-center space-y-1.5">
-            <div class="svc-bullet-text">• Standards compliance testing</div>
-            <div class="svc-bullet-text">• Safety verification</div>
-            <div class="svc-bullet-text">• Performance validation</div>
+            <div class="svc-bullet-text">• <span class="lang-en">Standards compliance testing</span><span class="lang-th">ทดสอบตามมาตรฐานสากล</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Safety verification</span><span class="lang-th">ตรวจสอบความปลอดภัย</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Performance validation</span><span class="lang-th">ยืนยันประสิทธิภาพการทำงาน</span></div>
           </div>
         </div>
 
@@ -619,9 +633,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <div class="mt-2 w-full text-center space-y-1.5">
-            <div class="svc-bullet-text">• New Product Introduction (NPI)</div>
-            <div class="svc-bullet-text">• Process &amp; quality control</div>
-            <div class="svc-bullet-text">• Production readiness</div>
+            <div class="svc-bullet-text">• <span class="lang-en">New Product Introduction (NPI)</span><span class="lang-th">วางแผนการผลิต (NPI)</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Process &amp; quality control</span><span class="lang-th">ควบคุมกระบวนการและคุณภาพ</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Production readiness</span><span class="lang-th">เตรียมความพร้อมก่อนการผลิตจริง</span></div>
           </div>
         </div>
 
@@ -639,9 +653,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <div class="mt-2 w-full text-center space-y-1.5">
-            <div class="svc-bullet-text">• High-quality manufacturing</div>
-            <div class="svc-bullet-text">• End-to-end quality control</div>
-            <div class="svc-bullet-text">• Full product traceability</div>
+            <div class="svc-bullet-text">• <span class="lang-en">High-quality manufacturing</span><span class="lang-th">ผลิตตามมาตรฐานคุณภาพระดับสากล</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">End-to-end quality control</span><span class="lang-th">ควบคุมคุณภาพทุกขั้นตอนการผลิต</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Full product traceability</span><span class="lang-th">ตรวจสอบย้อนกลับได้ตลอดกระบวนการ</span></div>
           </div>
         </div>
 
@@ -658,9 +672,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <div class="mt-2 w-full text-center space-y-1.5">
-            <div class="svc-bullet-text">• On-time delivery</div>
-            <div class="svc-bullet-text">• Installation support</div>
-            <div class="svc-bullet-text">• Documentation &amp; certification</div>
+            <div class="svc-bullet-text">• <span class="lang-en">On-time delivery</span><span class="lang-th">ส่งมอบตรงตามกำหนดเวลา</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Installation support</span><span class="lang-th">สนับสนุนการติดตั้งและใช้งาน</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Documentation &amp; certification</span><span class="lang-th">จัดเตรียมเอกสารและการรับรองที่เกี่ยวข้อง</span></div>
           </div>
         </div>
 
@@ -679,9 +693,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <div class="mt-2 w-full text-center space-y-1.5">
-            <div class="svc-bullet-text">• After-sales service</div>
-            <div class="svc-bullet-text">• Maintenance &amp; repair</div>
-            <div class="svc-bullet-text">• Continuous product improvement</div>
+            <div class="svc-bullet-text">• <span class="lang-en">After-sales service</span><span class="lang-th">บริการหลังการขาย</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Maintenance &amp; repair</span><span class="lang-th">บำรุงรักษาและซ่อมบำรุง</span></div>
+            <div class="svc-bullet-text">• <span class="lang-en">Continuous product improvement</span><span class="lang-th">อัปเดตและพัฒนาต่อเนื่อง</span></div>
           </div>
         </div>
 
@@ -709,35 +723,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 0 0-1.022-.547l-2.387-.477a6 6 0 0 0-3.86.517l-.318.158a6 6 0 0 1-3.86.517L6.05 15.23a2 2 0 0 0-1.806.547M8 4h8l-1 1v5.242a2 2 0 0 0 .586 1.414l3.828 3.828A2 2 0 0 1 18.005 20H5.995a2 2 0 0 1-1.414-3.414l3.828-3.828A2 2 0 0 0 9 11.342V5L8 4z"></path></svg>
             </span>
             <div>
-              <b class="svc-label">R&amp;D and Product Innovation</b>
-              <p class="svc-caption">Research, develop, and innovate products from concept to commercialization.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-brand leading-none mt-1">
-              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-            </span>
-            <div>
-              <b class="svc-label">Hardware &amp; Software Development</b>
-              <p class="svc-caption">Develop embedded hardware, firmware, and software solutions.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-brand leading-none mt-1">
-              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"></path></svg>
-            </span>
-            <div>
-              <b class="svc-label">PCB Design &amp; PCBA Manufacturing</b>
-              <p class="svc-caption">Design, manufacture, and assemble high-quality printed circuit boards.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-brand leading-none mt-1">
-              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-            </span>
-            <div>
-              <b class="svc-label">Testing &amp; Quality Assurance</b>
-              <p class="svc-caption">Ensure product reliability through comprehensive testing and quality control.</p>
+              <b class="svc-label svc-titlebox block">R&amp;D and Product Innovation</b>
+              <p class="svc-caption"><span class="lang-en">Research, develop, and innovate products from concept to commercialization.</span><span class="lang-th">วิจัย พัฒนา และสร้างนวัตกรรมผลิตภัณฑ์ ตั้งแต่แนวคิดจนพร้อมสู่เชิงพาณิชย์</span></p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -745,8 +732,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
             </span>
             <div>
-              <b class="svc-label">Mechanical Design &amp; Simulation</b>
-              <p class="svc-caption">Design mechanical structures and validate performance through simulation.</p>
+              <b class="svc-label svc-titlebox block">Mechanical Design &amp; Simulation</b>
+              <p class="svc-caption"><span class="lang-en">Design mechanical structures and validate performance through simulation.</span><span class="lang-th">ออกแบบโครงสร้างผลิตภัณฑ์ พร้อมจำลองและวิเคราะห์ประสิทธิภาพ</span></p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-brand leading-none mt-1">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+            </span>
+            <div>
+              <b class="svc-label svc-titlebox block">Hardware &amp; Software Development</b>
+              <p class="svc-caption"><span class="lang-en">Develop embedded hardware, firmware, and software solutions.</span><span class="lang-th">พัฒนาฮาร์ดแวร์ ระบบสมองกลฝังตัว (Embedded) เฟิร์มแวร์ และซอฟต์แวร์</span></p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -754,8 +750,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v10m-6-6v-6m0 6a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v4m12-4v-10m0 10a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v4"></path></svg>
             </span>
             <div>
-              <b class="svc-label">Box Build &amp; System Integration</b>
-              <p class="svc-caption">Assemble complete products and integrate hardware, software, and subsystems.</p>
+              <b class="svc-label svc-titlebox block">Box Build &amp; System Integration</b>
+              <p class="svc-caption"><span class="lang-en">Assemble complete products and integrate hardware, software, and subsystems.</span><span class="lang-th">ประกอบผลิตภัณฑ์และบูรณาการฮาร์ดแวร์ ซอฟต์แวร์ และระบบย่อยให้ทำงานร่วมกัน</span></p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-brand leading-none mt-1">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"></path></svg>
+            </span>
+            <div>
+              <b class="svc-label svc-titlebox block">PCB Design &amp; PCBA Manufacturing</b>
+              <p class="svc-caption"><span class="lang-en">Design, manufacture, and assemble high-quality printed circuit boards.</span><span class="lang-th">ออกแบบ ผลิต และประกอบแผงวงจรอิเล็กทรอนิกส์คุณภาพสูง</span></p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -763,8 +768,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4"></path></svg>
             </span>
             <div>
-              <b class="svc-label">Certification &amp; Compliance</b>
-              <p class="svc-caption">Support product certification and compliance with international standards.</p>
+              <b class="svc-label svc-titlebox block">Certification &amp; Compliance</b>
+              <p class="svc-caption"><span class="lang-en">Support product certification and compliance with international standards.</span><span class="lang-th">สนับสนุนการรับรองผลิตภัณฑ์และการปฏิบัติตามมาตรฐานสากล</span></p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-brand leading-none mt-1">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+            </span>
+            <div>
+              <b class="svc-label svc-titlebox block">Testing &amp; Quality Assurance</b>
+              <p class="svc-caption"><span class="lang-en">Ensure product reliability through comprehensive testing and quality control.</span><span class="lang-th">ทดสอบและควบคุมคุณภาพ เพื่อให้ผลิตภัณฑ์มีความน่าเชื่อถือ</span></p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -772,8 +786,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM19 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10M13 16h6m-6 0H9m10 0v-4a1 1 0 0 0-1-1h-3M19 16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1h-2v9"></path></svg>
             </span>
             <div>
-              <b class="svc-label">Supply Chain Management</b>
-              <p class="svc-caption">Manage sourcing, procurement, and production logistics for efficient delivery.</p>
+              <b class="svc-label svc-titlebox block">Supply Chain Management</b>
+              <p class="svc-caption"><span class="lang-en">Manage sourcing, procurement, and production logistics for efficient delivery.</span><span class="lang-th">บริหารจัดการการจัดหา จัดซื้อ และโลจิสติกส์การผลิต เพื่อการส่งมอบที่มีประสิทธิภาพ</span></p>
             </div>
           </div>
         </div>
@@ -853,15 +867,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div class="lg:col-span-7">
           <h2 class="font-display svc-h2 text-white">
-            Let's Build Your Next<br>
-            <span class="text-gold-bright font-extrabold">Successful Product</span> Together
+            <span class="lang-en">Let's Build Your Next<br><span class="text-gold-bright font-extrabold">Successful Product</span> Together</span>
+            <span class="lang-th">ร่วมสร้างผลิตภัณฑ์<br><span class="text-gold-bright font-extrabold">ที่ประสบความสำเร็จ</span> ไปกับเรา</span>
           </h2>
           <p class="svc-copy text-slate-100 mt-4 max-w-xl">
-            Your trusted engineering partner—from concept and design to manufacturing and market-ready products.
+            <span class="lang-en">Your trusted engineering partner—from concept and design to manufacturing and market-ready products.</span>
+            <span class="lang-th">พาร์ทเนอร์ด้านวิศวกรรมที่คุณไว้วางใจ ดูแลตั้งแต่การออกแบบ การพัฒนา การผลิต จนถึงผลิตภัณฑ์ที่พร้อมออกสู่ตลาด</span>
           </p>
           <a href="<?php echo home_url('/'); ?>#contact" class="bg-gold-bright hover:bg-[#C99700] active:scale-95 text-slate-900 svc-label uppercase tracking-wide px-8 py-3.5 rounded-xl shadow-lg shadow-gold-bright/20 inline-flex items-center gap-2 mt-8 transition duration-200">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 0 1-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-            Talk to Our Experts
+            <span class="lang-en">Talk to Our Experts</span>
+            <span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span>
           </a>
         </div>
 
@@ -872,7 +888,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </span>
             <div>
               <b class="svc-label block">Expert Team</b>
-              <p class="svc-caption text-slate-200 mt-1">Expert engineers with proven industry experience.</p>
+              <p class="svc-caption text-slate-200 mt-1">
+                <span class="lang-en">Expert engineers with proven industry experience.</span>
+                <span class="lang-th">ทีมวิศวกรผู้เชี่ยวชาญ พร้อมประสบการณ์จริง</span>
+              </p>
             </div>
           </div>
           <div class="flex gap-3">
@@ -881,7 +900,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </span>
             <div>
               <b class="svc-label block">Tailored Solutions</b>
-              <p class="svc-caption text-slate-200 mt-1">Engineered to fit your unique product and business needs.</p>
+              <p class="svc-caption text-slate-200 mt-1">
+                <span class="lang-en">Engineered to fit your unique product and business needs.</span>
+                <span class="lang-th">โซลูชันที่ออกแบบเฉพาะสำหรับธุรกิจคุณ</span>
+              </p>
             </div>
           </div>
           <div class="flex gap-3">
@@ -890,7 +912,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </span>
             <div>
               <b class="svc-label block">On-time Delivery</b>
-              <p class="svc-caption text-slate-200 mt-1">Consistent quality with reliable, on-time delivery.</p>
+              <p class="svc-caption text-slate-200 mt-1">
+                <span class="lang-en">Consistent quality with reliable, on-time delivery.</span>
+                <span class="lang-th">ส่งมอบตรงเวลา ด้วยมาตรฐานที่เชื่อถือได้</span>
+              </p>
             </div>
           </div>
           <div class="flex gap-3">
@@ -899,7 +924,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </span>
             <div>
               <b class="svc-label block">Trusted Partner</b>
-              <p class="svc-caption text-slate-200 mt-1">A long-term engineering partner you can trust.</p>
+              <p class="svc-caption text-slate-200 mt-1">
+                <span class="lang-en">A long-term engineering partner you can trust.</span>
+                <span class="lang-th">พาร์ทเนอร์ด้านวิศวกรรมที่เติบโตไปกับธุรกิจของคุณ</span>
+              </p>
             </div>
           </div>
         </div>
