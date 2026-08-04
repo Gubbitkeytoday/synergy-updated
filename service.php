@@ -342,7 +342,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <div id="navbar-container"></div>
 
 <!-- ==========================================================================
-     HERO SECTION — Matching Reference Design Image 100%
+     HERO SECTION — Clean Photo with SVG Organic S-Curve & HTML Elements
      ========================================================================== -->
 <section id="services-hero" class="relative bg-white overflow-hidden bg-cover bg-center bg-no-repeat pt-6 pb-28" style="min-height: 600px; background-image: url('<?php echo esc_url(get_template_directory_uri() . '/image/service-hero-bg.png'); ?>');">
 
