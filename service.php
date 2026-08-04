@@ -236,7 +236,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
      ========================================================================== -->
 <!-- HERO SECTION: Services / End-to-End Product Development (Matching About Hero layout) -->
 <section id="services-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 overflow-hidden bg-slate-50 min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-start justify-center">
-  <!-- Background Image Layer (พื้นหลังabout.png) - No dark filter overlay -->
+  <!-- Background Image Layer (about-hero-bg.png) - No dark filter overlay -->
   <div class="absolute inset-0 z-0 overflow-hidden hero-bg-layer">
     <img id="services-hero-bg-img" data-editable-img="service_hero_bg" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-[30%_center] sm:object-[55%_center] lg:object-[92%_center] scale-100 transition-transform duration-700" src="<?php echo esc_url(synergy_content('service_hero_bg_img', get_template_directory_uri() . '/image/about-hero-bg.png', 'service')); ?>" alt="Engineering Intelligence Services Background">
   </div>

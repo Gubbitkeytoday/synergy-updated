@@ -193,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const navItems = [
     { label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
     { label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' },
+    { label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>', href: pageHref('service.php'), page: 'service.php' },
     { label: '<span class="lang-th">เกี่ยวกับเรา</span><span class="lang-en">About Us</span>', href: pageHref('about.php'), page: 'about.php' }
   ];
 

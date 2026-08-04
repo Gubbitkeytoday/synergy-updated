@@ -188,7 +188,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
   <!-- HERO SECTION: About SynTech / Engineering Intelligence Since 2008 -->
   <section id="about-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 overflow-hidden bg-slate-50 min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-start justify-center">
-    <!-- Background Image Layer (พื้นหลังabout.png) - No dark filter overlay -->
+    <!-- Background Image Layer (about-hero-bg.png) - No dark filter overlay -->
     <div class="absolute inset-0 z-0 overflow-hidden hero-bg-layer">
       <!-- Focal point moves with the breakpoint. The photo is 1920x691 (2.78:1); a phone
            only ever shows ~26% of its width, so the desktop 92% anchor would crop the
