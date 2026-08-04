@@ -531,37 +531,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
     <!-- Process Container -->
     <div class="relative w-full">
 
-      <!-- Horizontal Dotted Arrow Connecting Line (Desktop lg+) -->
-      <div class="hidden lg:flex absolute top-[14px] left-[4%] right-[4%] items-center justify-between pointer-events-none z-0">
-        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
-          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
-        </div>
-        <div class="w-[10%]"></div>
-        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
-          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
-        </div>
-        <div class="w-[10%]"></div>
-        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
-          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
-        </div>
-        <div class="w-[10%]"></div>
-        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
-          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
-        </div>
-        <div class="w-[10%]"></div>
-        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
-          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
-        </div>
-        <div class="w-[10%]"></div>
-        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
-          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
-        </div>
-        <div class="w-[10%]"></div>
-        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
-          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
-        </div>
-      </div>
-
       <!-- 8 Steps Grid with Column Dividers -->
       <div class="svc-steps grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-8 gap-y-10 relative z-10">
         
