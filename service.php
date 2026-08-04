@@ -307,9 +307,16 @@ if (file_exists(__DIR__ . '/functions.php')) {
       }
       .svc-step:nth-child(2n)::after { display: none; }   /* 2-up: end of row */
     }
-    @media (min-width: 1024px) {
-      .svc-step:nth-child(2n)::after { display: block; }  /* 4-up: 2nd is mid-row */
-      .svc-step:nth-child(4n)::after { display: none; }   /* 4-up: end of row */
+    @media (min-width: 1024px) and (max-width: 1279px) {
+      .svc-steps { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+      .svc-step:nth-child(2n)::after { display: block; }
+      .svc-step:nth-child(4n)::after { display: none; }
+    }
+    @media (min-width: 1280px) {
+      .svc-steps { grid-template-columns: repeat(8, minmax(0, 1fr)) !important; }
+      .svc-step::after { display: block; width: calc(100% + 1rem); }
+      .svc-step:nth-child(4n)::after { display: block; }
+      .svc-step:nth-child(8n)::after { display: none; }
     }
 
     html body.is-live-editing [data-editable] .lang-th,
@@ -516,48 +523,80 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="w-16 h-[3px] bg-[#1F6B43] rounded-full mx-auto mt-3"></div>
     </div>
 
-    <!-- Process Container with Dashed Rail -->
+    <!-- Process Container -->
     <div class="relative w-full">
 
+      <!-- Horizontal Dotted Arrow Connecting Line (Desktop lg+) -->
+      <div class="hidden lg:flex absolute top-[14px] left-[5%] right-[5%] items-center justify-between pointer-events-none z-0">
+        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
+          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
+        </div>
+        <div class="w-[12%]"></div>
+        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
+          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
+        </div>
+        <div class="w-[12%]"></div>
+        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
+          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
+        </div>
+        <div class="w-[12%]"></div>
+        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
+          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
+        </div>
+        <div class="w-[12%]"></div>
+        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
+          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
+        </div>
+        <div class="w-[12%]"></div>
+        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
+          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
+        </div>
+        <div class="w-[12%]"></div>
+        <div class="flex-1 border-t-2 border-dotted border-[#1F6B43]/40 relative">
+          <span class="absolute -right-1 -top-[5px] text-[#1F6B43]/60 text-[9px]">►</span>
+        </div>
+      </div>
 
-      <!-- 8 Steps Grid -->
-      <div class="svc-steps grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 relative z-10">
+      <!-- 8 Steps Grid with Column Dividers -->
+      <div class="svc-steps grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-8 gap-y-10 relative z-10">
         
         <!-- Step 1: Concept & Requirement -->
-        <div class="svc-step flex flex-col items-center text-center group">
+        <div class="svc-step flex flex-col items-center text-center group lg:border-r lg:border-slate-200/60 px-3 lg:px-4">
           <!-- Step Number Badge -->
-          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0">1</span>
+          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold">1</span>
           <!-- Circular Icon Container -->
           <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
             </svg>
           </div>
-          <!-- Title -->
-          <h3 class="svc-label text-ink min-h-[2.8em] flex items-center justify-center text-center">
+          <!-- Title (Green bold + underline bar) -->
+          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Concept &amp;<br>Requirement
           </h3>
+          <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <!-- Bullet List -->
-          <div class="mt-3 w-full text-left svc-caption text-muted space-y-1.5">
+          <div class="mt-2 w-full text-left svc-caption text-muted space-y-1.5 font-medium">
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>วิเคราะห์ความต้องการ</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ศึกษาความเป็นไปได้</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>วางแนวทางโครงการ</span></div>
+            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>วางแผนโครงการ</span></div>
           </div>
         </div>
 
         <!-- Step 2: Product Design & Engineering -->
-        <div class="svc-step flex flex-col items-center text-center group">
-          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0">2</span>
+        <div class="svc-step flex flex-col items-center text-center group lg:border-r lg:border-slate-200/60 px-3 lg:px-4">
+          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold">2</span>
           <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
               <path stroke-linecap="round" stroke-linejoin="round" d="M12.5 7.5l3.5 3.5M6 15l3 3"/>
             </svg>
           </div>
-          <h3 class="svc-label text-ink min-h-[2.8em] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Product Design<br>&amp; Engineering
           </h3>
-          <div class="mt-3 w-full text-left svc-caption text-muted space-y-1.5">
+          <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
+          <div class="mt-2 w-full text-left svc-caption text-muted space-y-1.5 font-medium">
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ออกแบบฮาร์ดแวร์/ซอฟต์แวร์</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>PCB &amp; Mechanical Design</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>Simulation &amp; Review</span></div>
@@ -565,17 +604,18 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
 
         <!-- Step 3: Prototype Development -->
-        <div class="svc-step flex flex-col items-center text-center group">
-          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0">3</span>
+        <div class="svc-step flex flex-col items-center text-center group lg:border-r lg:border-slate-200/60 px-3 lg:px-4">
+          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold">3</span>
           <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
             </svg>
           </div>
-          <h3 class="svc-label text-ink min-h-[2.8em] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Prototype<br>Development
           </h3>
-          <div class="mt-3 w-full text-left svc-caption text-muted space-y-1.5">
+          <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
+          <div class="mt-2 w-full text-left svc-caption text-muted space-y-1.5 font-medium">
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>สร้างต้นแบบ</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ทดสอบการทำงาน</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ปรับปรุงและยืนยันแบบ</span></div>
@@ -583,18 +623,18 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
 
         <!-- Step 4: Verification & Validation -->
-        <div class="svc-step flex flex-col items-center text-center group">
-          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0">4</span>
+        <div class="svc-step flex flex-col items-center text-center group lg:border-r lg:border-slate-200/60 px-3 lg:px-4">
+          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold">4</span>
           <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
-              <circle cx="12" cy="12" r="9" stroke-linecap="round"/>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
             </svg>
           </div>
-          <h3 class="svc-label text-ink min-h-[2.8em] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Verification &amp;<br>Validation
           </h3>
-          <div class="mt-3 w-full text-left svc-caption text-muted space-y-1.5">
+          <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
+          <div class="mt-2 w-full text-left svc-caption text-muted space-y-1.5 font-medium">
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ทดสอบตามมาตรฐาน</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ตรวจสอบความปลอดภัย</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>รับรองประสิทธิภาพ</span></div>
@@ -602,17 +642,18 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
 
         <!-- Step 5: Manufacturing (NPI) -->
-        <div class="svc-step flex flex-col items-center text-center group">
-          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0">5</span>
+        <div class="svc-step flex flex-col items-center text-center group lg:border-r lg:border-slate-200/60 px-3 lg:px-4">
+          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold">5</span>
           <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V10l-6 3V10l-6 3V5H3v16h18zM8 17h3M8 13h3"/>
             </svg>
           </div>
-          <h3 class="svc-label text-ink min-h-[2.8em] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Manufacturing<br>(NPI)
           </h3>
-          <div class="mt-3 w-full text-left svc-caption text-muted space-y-1.5">
+          <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
+          <div class="mt-2 w-full text-left svc-caption text-muted space-y-1.5 font-medium">
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>วางแผนการผลิต (NPI)</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>จัดหาและควบคุมคุณภาพ</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>เตรียมสายการผลิต</span></div>
@@ -620,36 +661,38 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
 
         <!-- Step 6: Mass Production -->
-        <div class="svc-step flex flex-col items-center text-center group">
-          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0">6</span>
+        <div class="svc-step flex flex-col items-center text-center group lg:border-r lg:border-slate-200/60 px-3 lg:px-4">
+          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold">6</span>
           <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
               <rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"/>
             </svg>
           </div>
-          <h3 class="svc-label text-ink min-h-[2.8em] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Mass<br>Production
           </h3>
-          <div class="mt-3 w-full text-left svc-caption text-muted space-y-1.5">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ผลิตด้วยมาตรฐานสากล</span></div>
+          <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
+          <div class="mt-2 w-full text-left svc-caption text-muted space-y-1.5 font-medium">
+            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ผลิตได้ตามมาตรฐานสากล</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ควบคุมคุณภาพทุกขั้นตอน</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ตรวจสอบย้อนกลับได้</span></div>
           </div>
         </div>
 
         <!-- Step 7: Delivery & Deployment -->
-        <div class="svc-step flex flex-col items-center text-center group">
-          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0">7</span>
+        <div class="svc-step flex flex-col items-center text-center group lg:border-r lg:border-slate-200/60 px-3 lg:px-4">
+          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold">7</span>
           <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
               <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14v4m0 0L4 7m8 4v10M4 7v10l8 4"/>
             </svg>
           </div>
-          <h3 class="svc-label text-ink min-h-[2.8em] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Delivery &amp;<br>Deployment
           </h3>
-          <div class="mt-3 w-full text-left svc-caption text-muted space-y-1.5">
+          <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
+          <div class="mt-2 w-full text-left svc-caption text-muted space-y-1.5 font-medium">
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>จัดส่งตรงเวลา</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>สนับสนุนการติดตั้ง</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>เอกสารและการรับรอง</span></div>
@@ -657,17 +700,18 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
 
         <!-- Step 8: After-sales Support -->
-        <div class="svc-step flex flex-col items-center text-center group">
-          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0">8</span>
+        <div class="svc-step flex flex-col items-center text-center group px-3 lg:px-4">
+          <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white svc-micro flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold">8</span>
           <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 0 1-14 0m14 0a3 3 0 0 0-3-3m3 3v3a2 2 0 0 1-2 2h-1M5 11a3 3 0 0 1 3-3m-3 3v3a2 2 0 0 0 2 2h1m5 4h2a2 2 0 0 0 2-2v-1"/>
             </svg>
           </div>
-          <h3 class="svc-label text-ink min-h-[2.8em] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             After-sales<br>Support
           </h3>
-          <div class="mt-3 w-full text-left svc-caption text-muted space-y-1.5">
+          <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
+          <div class="mt-2 w-full text-left svc-caption text-muted space-y-1.5 font-medium">
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>บริการหลังการขาย</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>บำรุงรักษาและซ่อมบำรุง</span></div>
             <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>อัปเดตและพัฒนาต่อเนื่อง</span></div>
@@ -678,6 +722,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
     </div><!-- /Process Container -->
   </div>
 </section>
+
 
 
 <!-- ==========================================================================
