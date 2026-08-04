@@ -177,12 +177,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- NAVBAR CONTAINER -->
 <div id="navbar-container"></div>
 
-<main id="main" class="overflow-x-hidden pt-20">
+<main id="main">
 
 <!-- ==========================================================================
      HERO SECTION (Exact two-column split layout, matching design image perfectly)
      ========================================================================== -->
-<section id="services-hero" class="relative py-14 sm:py-20 lg:py-24 text-slate-900 bg-white">
+<section id="services-hero" class="relative pt-24 pb-14 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24 text-slate-900 bg-white">
   <!-- Dot Grid Overlay Effect for depth -->
   <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
