@@ -759,7 +759,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"></path></svg>
             </span>
             <div>
-              <b class="svc-label svc-titlebox block">PCB Design &amp; PCBA Manufacturing</b>
+              <b class="svc-label svc-titlebox block">PCB &amp; PCBA Manufacturing Service</b>
               <p class="svc-caption"><span class="lang-en">Design, manufacture, and assemble high-quality printed circuit boards.</span><span class="lang-th">ออกแบบ ผลิต และประกอบแผงวงจรอิเล็กทรอนิกส์คุณภาพสูง</span></p>
             </div>
           </div>
@@ -969,6 +969,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
     })();
 </script>
 
+<?php include __DIR__ . '/components/cookie-consent.php'; ?>
 <?php wp_footer(); ?>
 </body>
 </html>
