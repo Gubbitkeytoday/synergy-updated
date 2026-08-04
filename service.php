@@ -332,38 +332,16 @@ if (file_exists(__DIR__ . '/functions.php')) {
     </div><!-- /LEFT -->
 
     <!-- ═══════════════════════════════════════════════════
-         RIGHT: Image Composition (~45%)
+         RIGHT: Image (service-hero.png) (~44%)
     ═══════════════════════════════════════════════════ -->
-    <div class="flex-none w-full lg:w-[44%] relative flex items-center justify-center overflow-hidden min-h-[380px] lg:min-h-0">
-
-      <!-- Large light green circle ring (background decoration) -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] rounded-full border-[2px] border-brand/15 pointer-events-none"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[360px] rounded-full border border-brand/10 pointer-events-none"></div>
-
-      <!-- Main circular PCB image (top-center) -->
-      <div class="absolute top-[8%] left-1/2 -translate-x-1/2 w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] lg:w-[52%] lg:h-auto lg:aspect-square rounded-full overflow-hidden ring-[6px] ring-white shadow-2xl shadow-slate-300/50 z-10">
-        <img
-          src="<?php echo esc_url(get_template_directory_uri() . '/image/about/pcb-design-prototyping.png'); ?>"
-          alt="PCB Design & Prototyping Engineering"
-          class="w-full h-full object-cover object-center scale-110"
-          loading="eager"
-        >
-      </div>
-
-      <!-- Floating product/device image (bottom-right) -->
-      <div class="absolute bottom-[5%] right-[2%] w-[130px] sm:w-[160px] lg:w-[28%] z-20 drop-shadow-2xl">
-        <img
-          src="<?php echo esc_url(get_template_directory_uri() . '/image/solutions/energy-sensmini-a4.png'); ?>"
-          alt="Syntech SensMini A4 IoT Device"
-          class="w-full h-auto object-contain"
-          loading="eager"
-        >
-      </div>
-
-      <!-- Accent dot bottom-left -->
-      <div class="absolute bottom-[18%] left-[8%] w-3 h-3 rounded-full bg-brand/40 z-10"></div>
-      <div class="absolute bottom-[22%] left-[13%] w-2 h-2 rounded-full bg-brand/20 z-10"></div>
-
+    <div class="flex-none w-full lg:w-[44%] flex items-center justify-center p-6 lg:p-8">
+      <img
+        src="<?php echo esc_url(get_template_directory_uri() . '/image/service-hero.png'); ?>"
+        alt="End-to-End Product Development Hero Image"
+        class="w-full max-w-[620px] h-auto object-contain drop-shadow-xl rounded-2xl"
+        loading="eager"
+        fetchpriority="high"
+      >
     </div><!-- /RIGHT -->
   </div><!-- /flex row -->
 </section>
