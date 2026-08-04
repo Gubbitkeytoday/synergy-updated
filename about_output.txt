@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us · Engineering Intelligence Since 2008 | Synergy Group</title>
+  <meta name="description" content="For more than 18 years, Synergy Group has evolved into an Engineering Intelligence Company — integrating hardware, embedded systems, AI, and digital platforms to build intelligent solutions with lasting business impact.">
+  
+  <link rel="canonical" href="./about/">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Synergy Technology">
+  <meta property="og:title" content="About Us · Engineering Intelligence Since 2008 | Synergy Group">
+  <meta property="og:description" content="For more than 18 years, Synergy Group has evolved into an Engineering Intelligence Company — integrating hardware, embedded systems, AI, and digital platforms.">
+  <meta property="og:image" content="./image/about-hero-bg.png">
+  <meta property="og:url" content="./about/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Us · Engineering Intelligence Since 2008 | Synergy Group">
+  <meta name="twitter:description" content="18+ years from electronics engineering to the SynExta Intelligence Engine.">
+  <meta name="twitter:image" content="./image/about-hero-bg.png">
+
+  <!-- Browser Tab Icon (Favicon) -->
+  <link rel="icon" type="image/png" href="./image/s-logo.png">
+  <link rel="shortcut icon" type="image/png" href="./image/s-logo.png">
+  <link rel="apple-touch-icon" href="./image/s-logo.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#0B1F16",
+            brand: "#1F6B43",
+            "brand-bright": "#23862D",
+            "brand-deep": "#165031",
+            "brand-light": "#EAF3ED",
+            surface: "#F8FAF9",
+            body: "#2A3831",
+            muted: "#5C6E65",
+            "gold-bright": "#F2C72E",
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Google Fonts & FontAwesome CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./components/style.css?v=1785490365">
+
+  <style>
+    body {
+      font-family: 'SukhumvitSet', 'Inter', 'Sarabun', sans-serif;
+      scroll-behavior: smooth;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    h1, h2, h3, h4, h5, h6, .font-display {
+      font-family: 'Space Grotesk', 'SukhumvitSet', sans-serif;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    p, span, a {
+      overflow-wrap: break-word;
+    }
+    /* Glow Animations */
+    @keyframes pulse-glow {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 25px rgba(35, 134, 45, 0.8)); }
+    }
+    .animate-pulse-glow {
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .animate-pulse-glow { animation: none; }
+      #synexta-engine svg animate,
+      #synexta-engine svg animateMotion,
+      #synexta-engine svg animateTransform { display: none; }
+    }
+  </style>
+
+  <script>
+    window.wpThemeUrl = "./";
+    window.wpThemeUri = "./";
+  </script>
+  </head>
+
+<body id="top" class="bg-white text-body antialiased">
+  <!-- NAVBAR CONTAINER -->
+  <div id="navbar-container"></div>
+
+  <style>
+    /* Fluid heading sizes for this page.
+       components/style.css sizes type with attribute selectors like [class*="text-4xl"]
+       plus !important, and those also match the responsive variants (sm:text-4xl,
+       lg:text-6xl). The largest declared step therefore wins at EVERY breakpoint, which
+       left section headings at 47-60px on a 390px phone. These clamps restore a real
+       fluid scale without touching the shared stylesheet. */
+    #about-hero h1{font-size:clamp(30px,5.6vw,60px) !important;line-height:1.15 !important}
+    #dna h2,
+    #what-we-build h2,
+    #why-trust h2{font-size:clamp(22px,2.78vw,44px) !important;line-height:1.2 !important}
+
+    /* ---- Edit-mode reveals ----
+       Two things on this page are hidden at any given moment by design, and both
+       hold editable copy. contentEditable cannot reach a display:none node, so
+       edit mode un-hides them; normal visitors are unaffected. */
+
+    /* The inactive language. scripts.js hides it with
+       `html[lang="th"] .lang-en{display:none!important}`, so this needs both the
+       higher specificity and !important to win. */
+    html body.is-live-editing [data-editable] .lang-th,
+    html body.is-live-editing [data-editable] .lang-en{display:inline !important}
+
+    /* The chip stack, which is the source of the SynExta diagram's labels. It is
+       display:none above 1180px, i.e. exactly where the diagram is on screen. */
+    body.is-live-editing .synexta-stack{display:block !important;width:100%}
+  </style>
+
+  <!-- HERO SECTION: About SynTech / Engineering Intelligence Since 2008 -->
+  <section id="about-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 overflow-hidden bg-slate-50 min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-start justify-center">
+    <!-- Background Image Layer (พื้นหลังabout.png) - No dark filter overlay -->
+    <div class="absolute inset-0 z-0 overflow-hidden hero-bg-layer">
+      <!-- Focal point moves with the breakpoint. The photo is 1920x691 (2.78:1); a phone
+C:\xampp\php\php.exe : PHP Fatal error:  Uncaught Error: Call to undefined function esc_url() in 
+C:\Users\User\OneDrive\Desktop\synergy-updated\about.php:196
+At line:1 char:1
++ C:\xampp\php\php.exe about.php 2>&1 | Out-File -FilePath "about_outpu ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (PHP Fatal error...d\about.php:196:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Stack trace:
+#0 {main}
+  thrown in C:\Users\User\OneDrive\Desktop\synergy-updated\about.php on line 196
+           only ever shows ~26% of its width, so the desktop 92% anchor would crop the
+           SYNERGY building out of frame entirely and leave nothing but the far-right trees. -->
+      <img id="about-hero-bg-img" data-editable-img="hero_bg" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-[30%_center] sm:object-[55%_center] lg:object-[92%_center] scale-100 transition-transform duration-700" src="
+Fatal error: Uncaught Error: Call to undefined function esc_url() in C:\Users\User\OneDrive\Desktop\synergy-updated\about.php:196
+Stack trace:
+#0 {main}
+  thrown in C:\Users\User\OneDrive\Desktop\synergy-updated\about.php on line 196

@@ -193,7 +193,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- Focal point moves with the breakpoint. The photo is 1920x691 (2.78:1); a phone
            only ever shows ~26% of its width, so the desktop 92% anchor would crop the
            SYNERGY building out of frame entirely and leave nothing but the far-right trees. -->
-      <img id="about-hero-bg-img" data-editable-img="hero_bg" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-[30%_center] sm:object-[55%_center] lg:object-[92%_center] scale-100 transition-transform duration-700" src="<?php echo synergy_content('hero_bg_img', get_template_directory_uri() . '/พื้นหลังabout.png', 'about'); ?>" alt="Engineering Intelligence Ecosystem Journey Background">
+      <img id="about-hero-bg-img" data-editable-img="hero_bg" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-[30%_center] sm:object-[55%_center] lg:object-[92%_center] scale-100 transition-transform duration-700" src="<?php echo esc_url(synergy_content('hero_bg_img', get_template_directory_uri() . '/image/about-hero-bg.png', 'about')); ?>" alt="Engineering Intelligence Ecosystem Journey Background">
     </div>
 
     <!-- Legibility scrim (below lg only). On desktop the copy lands on open sky, but the
@@ -779,7 +779,7 @@ $journey_count = count($journey_steps);
 
 <?php foreach ($journey_steps as $j => $step): $n = $j + 1; ?>
         <div class="step<?php echo !empty($step['is_now']) ? ' is-now' : ''; ?>">
-          <div class="badge"><img data-editable-img="journey_img<?php echo $n; ?>" src="<?php echo synergy_content('journey_img' . $n . '_img', function_exists('synergy_asset') ? synergy_asset('image/journey/' . $step['icon'] . '.png') : get_template_directory_uri() . '/image/journey/' . $step['icon'] . '.png', 'about'); ?>" alt="<?php echo htmlspecialchars($step['year'], ENT_QUOTES); ?>" loading="lazy" decoding="async"></div>
+          <div class="badge"><img data-editable-img="journey_img<?php echo $n; ?>" src="<?php echo esc_url(synergy_content('journey_img' . $n . '_img', function_exists('synergy_asset') ? synergy_asset('image/journey/' . $step['icon'] . '.png') : get_template_directory_uri() . '/image/journey/' . $step['icon'] . '.png', 'about')); ?>" alt="<?php echo htmlspecialchars($step['year'], ENT_QUOTES); ?>" loading="lazy" decoding="async"></div>
           <div class="card">
             <p data-editable="journey-year<?php echo $n; ?>" <?php echo synergy_style('journey-year' . $n, 'about'); ?> class="year"><?php echo synergy_content('journey-year' . $n, $step['year'], 'about'); ?></p>
             <p data-editable="journey-name<?php echo $n; ?>" <?php echo synergy_style('journey-name' . $n, 'about'); ?> class="name"><?php echo synergy_content('journey-name' . $n, '<span class="lang-th">' . $step['name_th'] . '</span><span class="lang-en">' . $step['name_en'] . '</span>', 'about'); ?></p>
@@ -1062,7 +1062,7 @@ foreach ($sx_inputs as $sx) {
                green field, so the primary dark-green logo sank here too. The subtitle
                is the editable source the SVG's <text class="sub"> mirrors. -->
           <div class="hub">
-            <img data-editable-img="sx_hub_logo" src="<?php echo synergy_content('sx_hub_logo_img', get_template_directory_uri() . '/image/synexta-logo-on-dark.png', 'about'); ?>" alt="SYNEXTA" class="h-9 w-auto max-w-full object-contain" />
+            <img data-editable-img="sx_hub_logo" src="<?php echo esc_url(synergy_content('sx_hub_logo_img', get_template_directory_uri() . '/image/synexta-logo-on-dark.png', 'about')); ?>" alt="SYNEXTA" class="h-9 w-auto max-w-full object-contain" />
             <i data-editable="sx-hub-sub" <?php echo synergy_style('sx-hub-sub', 'about'); ?>><?php echo synergy_content('sx-hub-sub', 'Intelligence Engine', 'about'); ?></i>
           </div>
           <div class="grp">
@@ -1264,7 +1264,7 @@ foreach ($sx_outcomes as $sx) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img data-editable-img="build_img1" loading="lazy" decoding="async" src="<?php echo synergy_content('build_img1_img', get_template_directory_uri() . '/image/about/pcb-design-prototyping.png', 'about'); ?>" alt="Custom Engineering">
+                 <img data-editable-img="build_img1" loading="lazy" decoding="async" src="<?php echo esc_url(synergy_content('build_img1_img', get_template_directory_uri() . '/image/about/pcb-design-prototyping.png', 'about')); ?>" alt="Custom Engineering">
               </div>
               <span class="badge"><i class="fa-solid fa-microchip" aria-hidden="true"></i></span>
             </div>
@@ -1279,7 +1279,7 @@ foreach ($sx_outcomes as $sx) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img data-editable-img="build_img2" loading="lazy" decoding="async" src="<?php echo synergy_content('build_img2_img', get_template_directory_uri() . '/image/about/smart-agriculture.png', 'about'); ?>" alt="Smart Agriculture">
+                <img data-editable-img="build_img2" loading="lazy" decoding="async" src="<?php echo esc_url(synergy_content('build_img2_img', get_template_directory_uri() . '/image/about/smart-agriculture.png', 'about')); ?>" alt="Smart Agriculture">
               </div>
               <span class="badge"><i class="fa-solid fa-seedling" aria-hidden="true"></i></span>
             </div>
@@ -1294,7 +1294,7 @@ foreach ($sx_outcomes as $sx) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img data-editable-img="build_img3" loading="lazy" decoding="async" src="<?php echo synergy_content('build_img3_img', get_template_directory_uri() . '/image/about/smart-energy-hero.png', 'about'); ?>" alt="Smart Energy">
+                <img data-editable-img="build_img3" loading="lazy" decoding="async" src="<?php echo esc_url(synergy_content('build_img3_img', get_template_directory_uri() . '/image/about/smart-energy-hero.png', 'about')); ?>" alt="Smart Energy">
               </div>
               <span class="badge"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
             </div>
@@ -1309,7 +1309,7 @@ foreach ($sx_outcomes as $sx) {
           <div class="build-item">
             <div class="media">
               <div class="shot">
-                <img data-editable-img="build_img4" loading="lazy" decoding="async" src="<?php echo synergy_content('build_img4_img', get_template_directory_uri() . '/image/about/smart-factory.jpg', 'about'); ?>" alt="Smart Factory">
+                <img data-editable-img="build_img4" loading="lazy" decoding="async" src="<?php echo esc_url(synergy_content('build_img4_img', get_template_directory_uri() . '/image/about/smart-factory.jpg', 'about')); ?>" alt="Smart Factory">
               </div>
               <span class="badge"><i class="fa-solid fa-industry" aria-hidden="true"></i></span>
             </div>
@@ -1537,53 +1537,53 @@ foreach ($sx_outcomes as $sx) {
                script below, so each logo exists exactly once as editable markup. -->
           <div class="trust-cell">
             <span class="trust-logo">
-              <img data-editable-img="cert_img1" src="<?php echo synergy_content('cert_img1_img', get_template_directory_uri() . '/image/trust/iso-9001.png', 'about'); ?>" alt="ISO 9001:2015" loading="lazy" decoding="async">
+              <img data-editable-img="cert_img1" src="<?php echo esc_url(synergy_content('cert_img1_img', get_template_directory_uri() . '/image/trust/iso-9001.png', 'about')); ?>" alt="ISO 9001:2015" loading="lazy" decoding="async">
             </span>
           </div>
 
           <div class="trust-cell">
             <span class="trust-logo">
-              <img data-editable-img="cert_img2" src="<?php echo synergy_content('cert_img2_img', get_template_directory_uri() . '/image/trust/iso-14001.png', 'about'); ?>" alt="ISO 14001:2015" loading="lazy" decoding="async">
+              <img data-editable-img="cert_img2" src="<?php echo esc_url(synergy_content('cert_img2_img', get_template_directory_uri() . '/image/trust/iso-14001.png', 'about')); ?>" alt="ISO 14001:2015" loading="lazy" decoding="async">
             </span>
           </div>
 
           <div class="trust-cell">
             <span class="trust-logo">
-              <img data-editable-img="cert_img3" src="<?php echo synergy_content('cert_img3_img', get_template_directory_uri() . '/image/trust/iso-45001.png', 'about'); ?>" alt="ISO 45001:2018" loading="lazy" decoding="async">
+              <img data-editable-img="cert_img3" src="<?php echo esc_url(synergy_content('cert_img3_img', get_template_directory_uri() . '/image/trust/iso-45001.png', 'about')); ?>" alt="ISO 45001:2018" loading="lazy" decoding="async">
             </span>
           </div>
 
           <div class="trust-cell">
             <span class="trust-logo">
-              <img data-editable-img="cert_img4" src="<?php echo synergy_content('cert_img4_img', get_template_directory_uri() . '/image/trust/nia.png', 'about'); ?>" alt="NIA" loading="lazy" decoding="async">
+              <img data-editable-img="cert_img4" src="<?php echo esc_url(synergy_content('cert_img4_img', get_template_directory_uri() . '/image/trust/nia.png', 'about')); ?>" alt="NIA" loading="lazy" decoding="async">
             </span>
             <span data-editable="cert-cap4" <?php echo synergy_style('cert-cap4', 'about'); ?> class="trust-cap"><?php echo synergy_content('cert-cap4', 'National Innovation Agency', 'about'); ?></span>
           </div>
 
           <div class="trust-cell">
             <span class="trust-logo">
-              <img data-editable-img="cert_img5" src="<?php echo synergy_content('cert_img5_img', get_template_directory_uri() . '/image/trust/21st-tcc-best-awards.png', 'about'); ?>" alt="21st TCC Best Awards" loading="lazy" decoding="async">
+              <img data-editable-img="cert_img5" src="<?php echo esc_url(synergy_content('cert_img5_img', get_template_directory_uri() . '/image/trust/21st-tcc-best-awards.png', 'about')); ?>" alt="21st TCC Best Awards" loading="lazy" decoding="async">
             </span>
             <span data-editable="cert-cap5" <?php echo synergy_style('cert-cap5', 'about'); ?> class="trust-cap"><?php echo synergy_content('cert-cap5', '21st TCC Best Awards', 'about'); ?></span>
           </div>
 
           <div class="trust-cell">
             <span class="trust-logo">
-              <img data-editable-img="cert_img6" src="<?php echo synergy_content('cert_img6_img', get_template_directory_uri() . '/image/trust/22st-tcc-best-awards.png', 'about'); ?>" alt="22nd TCC Best Awards" loading="lazy" decoding="async">
+              <img data-editable-img="cert_img6" src="<?php echo esc_url(synergy_content('cert_img6_img', get_template_directory_uri() . '/image/trust/22st-tcc-best-awards.png', 'about')); ?>" alt="22nd TCC Best Awards" loading="lazy" decoding="async">
             </span>
             <span data-editable="cert-cap6" <?php echo synergy_style('cert-cap6', 'about'); ?> class="trust-cap"><?php echo synergy_content('cert-cap6', '22nd TCC Best Awards', 'about'); ?></span>
           </div>
 
           <div class="trust-cell">
             <span class="trust-logo">
-              <img data-editable-img="cert_img7" src="<?php echo synergy_content('cert_img7_img', get_template_directory_uri() . '/image/trust/iatf-16949.png', 'about'); ?>" alt="IATF 16949" loading="lazy" decoding="async">
+              <img data-editable-img="cert_img7" src="<?php echo esc_url(synergy_content('cert_img7_img', get_template_directory_uri() . '/image/trust/iatf-16949.png', 'about')); ?>" alt="IATF 16949" loading="lazy" decoding="async">
             </span>
             <span data-editable="cert-cap7" <?php echo synergy_style('cert-cap7', 'about'); ?> class="trust-cap"><?php echo synergy_content('cert-cap7', 'IATF 16949', 'about'); ?></span>
           </div>
 
           <div class="trust-cell">
             <span class="trust-logo">
-              <img data-editable-img="cert_img8" src="<?php echo synergy_content('cert_img8_img', get_template_directory_uri() . '/image/trust/ipc-a610f.jpg', 'about'); ?>" alt="IPC-A-610F Class 2" loading="lazy" decoding="async">
+              <img data-editable-img="cert_img8" src="<?php echo esc_url(synergy_content('cert_img8_img', get_template_directory_uri() . '/image/trust/ipc-a610f.jpg', 'about')); ?>" alt="IPC-A-610F Class 2" loading="lazy" decoding="async">
             </span>
             <span data-editable="cert-cap8" <?php echo synergy_style('cert-cap8', 'about'); ?> class="trust-cap"><?php echo synergy_content('cert-cap8', 'IPC-A-610F Class 2', 'about'); ?></span>
           </div>

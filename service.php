@@ -212,11 +212,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
       color: #5C6E65 !important;
       line-height: 1.4 !important;
     }
-    .svc-arch-list {
-      font-size: clamp(11px, 0.9vw, 12px) !important;
-      color: #5C6E65 !important;
-      line-height: 1.5 !important;
-    }
+    #services-hero h1{font-size:clamp(30px,5.6vw,60px) !important;line-height:1.15 !important}
+
+    html body.is-live-editing [data-editable] .lang-th,
+    html body.is-live-editing [data-editable] .lang-en{display:inline !important}
 </style>
 
 <script>
@@ -235,71 +234,38 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- ==========================================================================
      HERO SECTION (Exact two-column split layout, matching design image perfectly)
      ========================================================================== -->
-<section id="services-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 bg-white overflow-hidden">
-  <!-- Dot Grid Overlay Effect for depth -->
-  <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
+<!-- HERO SECTION: Services / End-to-End Product Development (Matching About Hero layout) -->
+<section id="services-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 overflow-hidden bg-slate-50 min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-start justify-center">
+  <!-- Background Image Layer (พื้นหลังabout.png) - No dark filter overlay -->
+  <div class="absolute inset-0 z-0 overflow-hidden hero-bg-layer">
+    <img id="services-hero-bg-img" data-editable-img="service_hero_bg" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-[30%_center] sm:object-[55%_center] lg:object-[92%_center] scale-100 transition-transform duration-700" src="<?php echo esc_url(synergy_content('service_hero_bg_img', get_template_directory_uri() . '/image/about-hero-bg.png', 'service')); ?>" alt="Engineering Intelligence Services Background">
+  </div>
 
-  <div class="w-full px-6 sm:px-12 lg:px-16 xl:px-24 relative z-10 py-8">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-      
-      <!-- Left side details (ปรับสัดส่วนเป็น 6 คอลัมน์) -->
-      <div class="space-y-6 lg:col-span-6 xl:col-span-6">
-        <!-- Eyebrow Pill -->
-        <span class="svc-eyebrow is-revealed" data-reveal="">
-          Our Service
-        </span>
+  <!-- Legibility scrim (below lg only) -->
+  <div class="absolute inset-0 z-[1] pointer-events-none lg:hidden bg-gradient-to-b from-white/85 via-white/65 to-white/15"></div>
 
-        <!-- Title -->
-        <h1 class="svc-title is-revealed" data-reveal="" style="--reveal-delay:60ms">
-          End-to-End<br>Product Development
-        </h1>
+  <!-- Grid Overlay Effect -->
+  <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#23862D_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none z-0"></div>
 
-        <!-- Subtitle (Thai lede) -->
-        <p class="svc-lede is-revealed" data-reveal="" style="--reveal-delay:120ms">
-          พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
-        </p>
+  <div class="max-w-7xl mx-auto px-6 relative z-10 w-full text-center">
+    <div class="max-w-6xl mx-auto space-y-4 flex flex-col items-center justify-center">
 
-        <!-- Description (English copy) -->
-        <p class="svc-copy is-revealed" data-reveal="" style="--reveal-delay:180ms">
-          We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.
-        </p>
+      <h1 data-editable="service-hero-title" <?php echo synergy_style('service-hero-title', 'service'); ?> class="font-display font-extrabold text-2xl sm:text-4xl lg:text-[44px] tracking-tight leading-none text-[#F2C72E] drop-shadow-[0_2px_10px_rgba(0,0,0,0.15)] text-center sm:whitespace-nowrap w-full mx-auto">
+        <?php echo synergy_content('service-hero-title', 'End-to-End <span class="text-brand-bright drop-shadow-[0_2px_15px_rgba(35,134,45,0.4)]">Product Development</span>', 'service'); ?>
+      </h1>
 
-        <!-- Props Row -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4 is-revealed" data-reveal="" style="--reveal-delay:240ms">
-          <div class="flex flex-col items-start text-left space-y-2">
-            <span class="text-brand text-2xl">
-              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </span>
-            <b class="svc-label">One Partner</b>
-            <p class="svc-caption">ดูแลครบทุกขั้นตอน ในที่เดียว</p>
-          </div>
-          <div class="flex flex-col items-start text-left space-y-2">
-            <span class="text-brand text-2xl">
-              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
-            </span>
-            <b class="svc-label">Faster to Market</b>
-            <p class="svc-caption">ลดเวลาในการพัฒนา และเปิดตัวสินค้า</p>
-          </div>
-          <div class="flex flex-col items-start text-left space-y-2">
-            <span class="text-brand text-2xl">
-              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.2"></circle></svg>
-            </span>
-            <b class="svc-label">Quality &amp; Compliance</b>
-            <p class="svc-caption">มาตรฐานสากล เชื่อถือได้</p>
-          </div>
-          <div class="flex flex-col items-start text-left space-y-2">
-            <span class="text-brand text-2xl">
-              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"></path></svg>
-            </span>
-            <b class="svc-label">Business Impact</b>
-            <p class="svc-caption">สร้างคุณค่าและความได้เปรียบ ในการแข่งขัน</p>
-          </div>
-        </div>
-      </div>
+      <p data-editable="service-hero-desc" <?php echo synergy_style('service-hero-desc', 'service'); ?> class="text-sm sm:text-base text-slate-900 font-medium leading-relaxed max-w-4xl text-center mx-auto">
+        <?php echo synergy_content('service-hero-desc', '<span class="lang-th">บริการพัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิด การออกแบบ พัฒนาต้นแบบ (NPI) การผลิต จนถึงบริการหลังการขาย<br>ส่งมอบโซลูชันวิศวกรรมอัจฉริยะ Smart Electronics และ AIoT ที่เชื่อถือได้และตอบโจทย์ธุรกิจอย่างยั่งยืน</span><span class="lang-en">We are your trusted end-to-end engineering partner. From concept design and NPI prototyping<br>to manufacturing and after-sales support, we deliver reliable Smart Electronics &amp; AIoT solutions.</span>', 'service'); ?>
+      </p>
 
-      <!-- Right side media (ขยายเป็น 6 คอลัมน์ และเอาจำกัดความสูงออก) -->
-      <div class="flex justify-end items-center w-full lg:col-span-6 xl:col-span-6 is-revealed" data-reveal="" style="--reveal-delay:120ms">
-        <img src="<?php echo get_template_directory_uri(); ?>/Home.png" alt="ภาพรวมบริการพัฒนาผลิตภัณฑ์ครบวงจรของ Syntech" class="w-full h-auto object-contain max-w-none">
+      <!-- Buttons Row (Placed further down near bottom center) -->
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-24 sm:pt-36 lg:pt-48 w-full">
+        <a data-editable="service-hero-btn1" <?php echo synergy_style('service-hero-btn1', 'service'); ?> href="#why-us" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
+          <?php echo synergy_content('service-hero-btn1', '<span class="lang-th">สำรวจบริการของเรา</span><span class="lang-en">Explore Our Services</span><i class="fa-solid fa-arrow-right text-xs ml-1"></i>', 'service'); ?>
+        </a>
+        <a data-editable="service-hero-btn2" <?php echo synergy_style('service-hero-btn2', 'service'); ?> href="<?php echo home_url('/'); ?>#contact" class="inline-flex items-center gap-2.5 bg-slate-900 hover:bg-slate-800 text-white border border-slate-900 px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+          <?php echo synergy_content('service-hero-btn2', '<i class="fa-regular fa-bookmark text-xs text-gold-bright mr-1"></i><span class="lang-th">พูดคุยกับทีมผู้เชี่ยวชาญ</span><span class="lang-en">Talk to Our Experts</span>', 'service'); ?>
+        </a>
       </div>
 
     </div>

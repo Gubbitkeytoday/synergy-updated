@@ -332,7 +332,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="hidden xl:flex items-center gap-8 text-sm sm:text-base font-800 uppercase tracking-wider text-ink">
         <a href="<?php echo home_url('/'); ?>#top" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">หน้าแรก</a>
         <a href="<?php echo home_url('/about/'); ?>" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">เกี่ยวกับเรา</a>
-        <a href="<?php echo home_url('/service/'); ?>" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">บริการของเรา</a>
         <a href="<?php echo home_url('/'); ?>#solutions" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">โซลูชัน</a>
         <a href="<?php echo home_url('/'); ?>#success-stories" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">ผลงานจริง</a>
         <button id="langToggleBtn" class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 text-ink hover:text-brand hover:border-brand transition duration-200 text-sm font-extrabold tracking-wider">
