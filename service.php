@@ -332,9 +332,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
     </div><!-- /LEFT -->
 
     <!-- ═══════════════════════════════════════════════════
-         RIGHT: Image (service-hero.png) (~48%)
+         RIGHT: Image (service-hero.png) (~48%) — Flush top with navbar
     ═══════════════════════════════════════════════════ -->
-    <div class="flex-none w-full lg:w-[48%] flex items-center justify-end overflow-hidden">
+    <div class="flex-none w-full lg:w-[48%] flex items-start justify-end overflow-hidden pt-0">
       <img
         src="<?php echo esc_url(get_template_directory_uri() . '/image/service-hero.png'); ?>"
         alt="End-to-End Product Development Hero Image"
