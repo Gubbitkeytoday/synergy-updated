@@ -1,67 +1,5 @@
-<?php
-/* Template Name: Services Page */
-if (isset($_SERVER['REQUEST_URI']) && preg_match('/\.php\/+$/i', $_SERVER['REQUEST_URI'])) {
-    $clean_uri = preg_replace('/\.php\/+$/i', '.php', $_SERVER['REQUEST_URI']);
-    header("Location: " . $clean_uri, true, 301);
-    exit();
-}
-if (!function_exists('get_template_directory_uri')) {
-    function get_template_directory_uri() { return '.'; }
-}
-if (!function_exists('get_stylesheet_directory_uri')) {
-    function get_stylesheet_directory_uri() { return '.'; }
-}
-if (!function_exists('get_template_directory')) {
-    function get_template_directory() { return __DIR__; }
-}
-if (!function_exists('get_stylesheet_directory')) {
-    function get_stylesheet_directory() { return __DIR__; }
-}
-if (!function_exists('get_stylesheet_uri')) {
-    function get_stylesheet_uri() { return './style.css'; }
-}
-if (!function_exists('home_url')) {
-    function home_url($path = '/') { return '.' . $path; }
-}
-if (!function_exists('body_class')) {
-    function body_class($class = '') {
-        $c = is_array($class) ? implode(' ', $class) : $class;
-        echo 'class="' . htmlspecialchars($c) . '"';
-    }
-}
-if (!function_exists('wp_head')) {
-    function wp_head() {}
-}
-if (!function_exists('wp_footer')) {
-    function wp_footer() {}
-}
-if (!function_exists('wp_enqueue_style')) {
-    function wp_enqueue_style() {}
-}
-if (!function_exists('add_action')) {
-    function add_action() {}
-}
-if (!function_exists('add_theme_support')) {
-    function add_theme_support() {}
-}
-if (!function_exists('language_attributes')) {
-    function language_attributes() { echo 'lang="th"'; }
-}
-if (!function_exists('bloginfo')) {
-    function bloginfo($show = '') { echo ''; }
-}
-if (!function_exists('is_front_page')) {
-    function is_front_page() { return false; }
-}
-if (!function_exists('is_home')) {
-    function is_home() { return false; }
-}
-if (file_exists(__DIR__ . '/functions.php')) {
-    require_once __DIR__ . '/functions.php';
-}
-?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -71,27 +9,27 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <meta name="theme-color" content="#1F6B43">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="canonical" href="<?php echo home_url('/service/'); ?>">
+<link rel="canonical" href="./service/">
 
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Syntech">
-<meta property="og:url" content="<?php echo home_url('/service/'); ?>">
+<meta property="og:url" content="./service/">
 <meta property="og:title" content="Services — End-to-End Product Development">
 <meta property="og:description" content="From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.">
-<meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/Home.png">
+<meta property="og:image" content="./Home.png">
 <meta property="og:image:width" content="611">
 <meta property="og:image:height" content="480">
 <meta property="og:locale" content="th_TH">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Services — End-to-End Product Development">
 <meta name="twitter:description" content="พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด">
-<meta name="twitter:image" content="<?php echo get_template_directory_uri(); ?>/Home.png">
+<meta name="twitter:image" content="./Home.png">
 
 <!-- Browser Tab Icon (Favicon) -->
-<link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
-<link rel="shortcut icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
-<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/image/s-logo.png">
+<link rel="icon" type="image/png" href="./image/s-logo.png">
+<link rel="shortcut icon" type="image/png" href="./image/s-logo.png">
+<link rel="apple-touch-icon" href="./image/s-logo.png">
 
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -122,7 +60,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- Global Theme Stylesheet -->
-<link rel="stylesheet" href="<?php echo function_exists('synergy_asset') ? synergy_asset('components/style.css') : './components/style.css'; ?>">
+<link rel="stylesheet" href="./components/style.css">
 
 <style>
     body {
@@ -329,12 +267,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
 </style>
 
 <script>
-    window.wpThemeUrl = "<?php echo get_template_directory_uri(); ?>/";
-    window.wpThemeUri = "<?php echo get_template_directory_uri(); ?>/";
+    window.wpThemeUrl = "./";
+    window.wpThemeUri = "./";
 </script>
-<?php wp_head(); ?>
+
 </head>
-<body <?php body_class("bg-white text-body antialiased"); ?>>
+<body class="bg-white text-body antialiased">
 
 <a class="skip-link fixed top-3 left-3 z-[99999] bg-brand text-white px-5 py-2.5 rounded-full font-bold text-sm -translate-y-24 focus:translate-y-0 transition duration-200" href="#main">ข้ามไปยังเนื้อหาหลัก</a>
 
@@ -344,7 +282,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- ==========================================================================
      HERO SECTION — Full-width background image layout
      ========================================================================== -->
-<section id="services-hero" class="relative bg-white overflow-hidden bg-cover bg-center bg-no-repeat" style="min-height:calc(100vh - 80px); background-image: url('<?php echo esc_url(get_template_directory_uri() . '/image/service-hero-bg.png'); ?>');">
+<section id="services-hero" class="relative bg-white overflow-hidden bg-cover bg-center bg-no-repeat" style="min-height:calc(100vh - 80px); background-image: url('./image/service-hero-bg.png');">
 
   <!-- Faint gradient overlay for text readability -->
   <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent pointer-events-none z-0"></div>
@@ -362,23 +300,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
       <!-- Main title -->
       <h1 class="font-display svc-h1 text-ink mb-4">
-        <?php echo synergy_content('svc-hero-title',
-          'End-to-End<br><span style="color:#1F6B43">Product Development</span>',
-          'service'); ?>
+        End-to-End<br><span style="color:#1F6B43">Product Development</span>
       </h1>
 
       <!-- Thai subtitle -->
       <p class="svc-lede text-brand mb-4">
-        <?php echo synergy_content('svc-hero-subtitle-th',
-          'From Vision to Market-Ready Products',
-          'service'); ?>
+        From Vision to Market-Ready Products
       </p>
 
       <!-- English description -->
       <p class="svc-copy text-body mb-10 max-w-[560px]">
-        <?php echo synergy_content('svc-hero-desc',
-          'We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.',
-          'service'); ?>
+        We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.
       </p>
 
       <!-- ── 4 Premium Glassmorphism Cards Row ── -->
@@ -781,7 +713,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
       <!-- Right image + cert overlays -->
       <div class="relative overflow-hidden rounded-3xl shadow-xl min-h-[380px]" data-reveal style="--reveal-delay:120ms">
-        <img src="<?php echo get_template_directory_uri(); ?>/images/capabilities-image.png"
+        <img src="./images/capabilities-image.png"
              alt="การตรวจสอบและทดสอบคุณภาพในสายการผลิตของ Syntech"
              class="absolute inset-0 w-full h-full object-cover">
         
@@ -859,7 +791,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <p class="svc-copy text-slate-100 mt-4 max-w-xl">
             Your trusted engineering partner—from concept and design to manufacturing and market-ready products.
           </p>
-          <a href="<?php echo home_url('/'); ?>#contact" class="bg-gold-bright hover:bg-[#C99700] active:scale-95 text-slate-900 svc-label uppercase tracking-wide px-8 py-3.5 rounded-xl shadow-lg shadow-gold-bright/20 inline-flex items-center gap-2 mt-8 transition duration-200">
+          <a href="./#contact" class="bg-gold-bright hover:bg-[#C99700] active:scale-95 text-slate-900 svc-label uppercase tracking-wide px-8 py-3.5 rounded-xl shadow-lg shadow-gold-bright/20 inline-flex items-center gap-2 mt-8 transition duration-200">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 0 1-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
             Talk to Our Experts
           </a>
@@ -914,8 +846,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <div id="footer-container" class="bg-ink w-full block"></div>
 
 <!-- Scripts -->
-<script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
-<script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/live-editor.js') : './components/live-editor.js'; ?>"></script>
+<script src="./components/scripts.js"></script>
+<script src="./components/live-editor.js"></script>
 
 <script>
     /* Injected native script directly to handle scroll-reveal so no extra file is needed */
@@ -941,6 +873,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
     })();
 </script>
 
-<?php wp_footer(); ?>
+
 </body>
 </html>

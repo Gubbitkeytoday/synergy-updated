@@ -142,8 +142,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
       font-size: clamp(11.5px, .82vw, 14px) !important; line-height: 1.5 !important;
       overflow-wrap: normal; word-break: keep-all;
     }
-    #energy-platform .se-arch .tier-label { color: #222222; }
-    #energy-platform .se-deploy .box { color: #1E2A30; }
 
     /* Smallest phones: two columns left 136px-wide cards 505px tall at 320px,
        so these two grids fall to a single column below 380px. */
@@ -171,7 +169,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
     @media(max-width:520px) {
       .se-c8 { grid-template-columns: repeat(2, 1fr); }
       .se-c6, .se-c5, .se-c4, .se-c3 { grid-template-columns: 1fr; }
-      .se-arch .se-c6, .se-arch .se-c3 { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* Logo flex row */
@@ -218,31 +215,231 @@ if (file_exists(__DIR__ . '/functions.php')) {
       overflow-wrap: normal; word-break: keep-all;
     }
 
-    /* Architecture diagram */
-    .se-arch { background: #f6f8f7; border: 1px solid #e3e9e5; border-radius: 20px; padding: clamp(14px, 1.8vw, 26px); }
-    .se-arch .tier { background: #fff; border: 1px solid #e3e9e5; border-radius: 14px; padding: clamp(10px, 1.2vw, 16px); }
-    .se-arch .tier-label {
-      font-size: clamp(8.5px, .72vw, 10.5px) !important; font-weight: 800; letter-spacing: .16em;
-      text-transform: uppercase; color: #6b7280; text-align: center; margin-bottom: 8px;
+    /* ======================================================================
+       SECTION 5 — SYNEXTA ENERGY PLATFORM ARCHITECTURE
+       Rebuilt to the supplied reference diagram: four stacked tiers (Enterprise
+       Dashboard → Energy Engine → Energy Gateway → field devices) joined by dashed
+       connectors that point UP the stack, with the Cloud / OR / On-Premise column
+       branching off to the right.
+
+       Sizes are clamp()ed because components/style.css forces every Tailwind step
+       with !important and its selectors also catch the responsive variants — a plain
+       text-xs here would render ~16px and blow the diagram apart.
+       ====================================================================== */
+    .sea {
+      /* --sea-gap doubles as the length of the branch connectors that reach across the
+         grid gap into the Cloud / On-Premise column, so the two can never fall out of
+         step with each other. */
+      --sea-gap: clamp(18px, 2vw, 30px);
+      --sea-dash: #1F6B43;
+      --sea-dev-gap: clamp(6px, .7vw, 13px);
+      --sea-head: #1F6B43;
+      display: grid; gap: var(--sea-gap);
     }
-    .se-arch .chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); gap: 8px; }
-    .se-arch .chip {
-      background: #f3f6f4; border: 1px solid #e3e9e5; border-radius: 9px; padding: 8px 6px; text-align: center;
-      font-size: clamp(9px, .78vw, 11.5px) !important; font-weight: 600; color: #2A3831; line-height: 1.25 !important;
+    @media (min-width: 1180px) {
+      .sea {
+        --sea-gap: clamp(22px, 2.4vw, 44px);
+        grid-template-columns: minmax(270px, 26%) 1fr minmax(120px, 148px);
+        align-items: center;
+      }
     }
-    .se-arch .engine { background: linear-gradient(180deg, #1f6b43, #12522f); border: 0; }
-    .se-arch .engine .tier-label { color: rgba(255, 255, 255, .75); }
-    .se-arch .engine .chip { background: rgba(255, 255, 255, .14); border-color: rgba(255, 255, 255, .22); color: #fff; }
-    .se-arch .flow { display: flex; align-items: center; justify-content: center; color: #1F6B43; font-size: 14px; margin: 8px 0; }
-    .se-deploy { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .se-deploy .box {
-      width: 100%; background: #fff; border: 1px solid #e3e9e5; border-radius: 14px; padding: 14px 10px; text-align: center;
-      font-size: clamp(10.5px, .9vw, 13px) !important; font-weight: 700; color: #2A3831; line-height: 1.3 !important;
+
+    /* ---- left column: the four platform features ---- */
+    .sea-rule { width: 46px; height: 3px; border-radius: 99px; background: #1f6b43; margin: 14px 0 22px; }
+    .sea-feats { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(16px, 1.6vw, 26px); }
+    .sea-feat { display: flex; gap: 14px; align-items: flex-start; }
+    .sea-feat-i {
+      flex: none; width: 44px; height: 44px; border-radius: 12px;
+      background: #fff; border: 1px solid #e3e9e5; color: #1f6b43;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 1px 2px rgba(11, 31, 22, .04);
     }
-    .se-deploy .or {
-      width: 42px; height: 42px; border-radius: 50%; background: #1f6b43; color: #fff;
+    .sea-feat-i svg { width: 22px; height: 22px; }
+    .sea-feat-t { font-size: clamp(14px, 1vw, 17px) !important; font-weight: 800; color: #0B1F16; line-height: 1.3 !important; margin-bottom: 4px; }
+    .sea-feat-p { font-size: clamp(12.5px, .88vw, 15px) !important; color: #5C6E65; line-height: 1.6 !important; overflow-wrap: normal; word-break: keep-all; }
+
+    /* ---- centre column: the diagram stack ---- */
+    .sea-stack { display: grid; gap: 0; position: relative; }
+    .sea-tier {
+      background: #fff; border: 1px solid #e6ece8; border-radius: 16px;
+      padding: clamp(12px, 1.15vw, 18px) clamp(10px, 1.1vw, 18px);
+      box-shadow: 0 1px 3px rgba(11, 31, 22, .04);
+      position: relative;
+    }
+    .sea-label {
+      font-size: clamp(9px, .68vw, 11px) !important; font-weight: 800; letter-spacing: .17em;
+      text-transform: uppercase; color: #1F6B43; text-align: center; line-height: 1.4 !important;
+      margin-bottom: clamp(8px, .9vw, 14px);
+    }
+
+    /* ----------------------------------------------------------------------
+       CONNECTOR LAYER — Vivid Dark Green Dashed Lines & Arrowheads
+       ---------------------------------------------------------------------- */
+
+    /* vertical run with an arrowhead pointing up the stack */
+    .sea-link { height: clamp(24px, 2.2vw, 38px); position: relative; }
+    .sea-link::before {
+      content: ''; position: absolute; top: 0; bottom: 0; left: 50%;
+      border-left: 2px dashed #1F6B43; opacity: 0.85;
+    }
+    .sea-link::after {
+      content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%);
+      width: 0; height: 0; border: 6px solid transparent; border-bottom-color: #1F6B43; border-top: 0;
+    }
+
+    /* The device bus: 6 device stubs rising to horizontal dashed line, 3 gateway risers going up */
+    .sea-bus {
+      height: clamp(28px, 2.6vw, 44px); position: relative;
+      display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--sea-dev-gap);
+    }
+    .sea-bus::before {
+      content: ''; position: absolute; top: 50%;
+      left: calc((100% - 5 * var(--sea-dev-gap)) / 12);
+      right: calc((100% - 5 * var(--sea-dev-gap)) / 12);
+      border-top: 2px dashed #1F6B43; opacity: 0.85;
+    }
+    .sea-bus-cell { position: relative; }
+    .sea-bus-cell::before {
+      content: ''; position: absolute; top: 50%; bottom: 0; left: 50%;
+      border-left: 2px dashed #1F6B43; opacity: 0.85;
+    }
+    /* 3 Risers pointing UP into Gateway 1, Gateway 2, Gateway 3 */
+    .sea-bus-riser { position: absolute; top: 0; bottom: 50%; left: 50%; }
+    .sea-bus-riser::before { content: ''; position: absolute; inset: 0; border-left: 2px dashed #1F6B43; opacity: 0.85; }
+    .sea-bus-riser::after {
+      content: ''; position: absolute; top: -2px; left: 0; transform: translateX(-50%);
+      width: 0; height: 0; border: 6px solid transparent; border-bottom-color: #1F6B43; border-top: 0;
+    }
+
+    /* Branch connectors into the deployment column (Desktop min-width 1180px) */
+    @media (min-width: 1180px) {
+      .sea-dep-box { position: relative; }
+      .sea-dep-box::before {
+        content: ''; position: absolute; top: 50%; right: 100%;
+        width: var(--sea-gap); border-top: 2px dashed #1F6B43; opacity: 0.85;
+      }
+      .sea-dep-box::after {
+        content: ''; position: absolute; top: 50%; right: 100%; transform: translateY(-50%);
+        width: 0; height: 0; border: 6px solid transparent; border-left-color: #1F6B43; border-right: 0;
+      }
+      
+      /* Vertical branch trunk connecting the 3 tiers on the right side */
+      .sea-stack::after {
+        content: ''; position: absolute; top: 12%; bottom: 12%; right: calc(var(--sea-gap) * -0.5);
+        border-right: 2px dashed #1F6B43; opacity: 0.85; pointer-events: none;
+      }
+    }
+    /* Stacked layout: the branch comes from above instead of from the left. */
+    @media (max-width: 1179px) {
+      .sea-deploy { position: relative; padding-top: clamp(20px, 2vw, 34px); }
+      .sea-deploy::before {
+        content: ''; position: absolute; top: 0; height: clamp(20px, 2vw, 34px); left: 50%;
+        border-left: 2px dashed #1F6B43; opacity: 0.85;
+      }
+      .sea-deploy::after {
+        content: ''; position: absolute; bottom: auto; top: clamp(20px, 2vw, 34px); left: 50%;
+        transform: translate(-50%, -100%);
+        width: 0; height: 0; border: 6px solid transparent; border-top-color: #1F6B43; border-bottom: 0;
+      }
+    }
+
+    /* dashboard / device rows */
+    .sea-row { display: grid; grid-template-columns: repeat(6, 1fr); }
+    .sea-cell { text-align: center; padding: 0 clamp(2px, .4vw, 8px); position: relative; }
+    .sea-cell + .sea-cell::before {
+      content: ''; position: absolute; left: 0; top: 12%; bottom: 12%; border-left: 1px solid #eef2f0;
+    }
+    .sea-cell svg { width: clamp(20px, 1.5vw, 26px); height: clamp(20px, 1.5vw, 26px); color: #1f6b43; margin: 0 auto clamp(5px, .5vw, 9px); display: block; }
+    .sea-cell-t { font-size: clamp(9.5px, .72vw, 12px) !important; font-weight: 700; color: #2A3831; line-height: 1.3 !important; }
+
+    /* the green engine tier */
+    .sea-engine {
+      background: linear-gradient(135deg, #21744a 0%, #1c6a42 45%, #14572f 100%);
+      border: 0; border-radius: 16px; padding: clamp(14px, 1.3vw, 22px) clamp(12px, 1.2vw, 20px);
+      position: relative; overflow: hidden;
+    }
+    .sea-engine::after {
+      /* the faint dotted texture in the reference's top-right corner */
+      content: ''; position: absolute; top: 0; right: 0; width: 42%; height: 100%;
+      background-image: radial-gradient(rgba(255,255,255,.16) 1.5px, transparent 1.5px);
+      background-size: 13px 13px; pointer-events: none;
+    }
+    .sea-engine-t {
+      position: relative; z-index: 1; text-align: center; color: #fff;
+      font-size: clamp(15px, 1.35vw, 25px) !important; font-weight: 800; line-height: 1.25 !important;
+      margin-bottom: clamp(10px, 1.1vw, 18px);
+    }
+    .sea-eng-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(7px, .8vw, 14px); }
+    .sea-eng-box {
+      background: rgba(255, 255, 255, .13); border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 11px; padding: clamp(10px, 1vw, 18px) clamp(4px, .5vw, 10px); text-align: center;
+    }
+    .sea-eng-box svg { width: clamp(19px, 1.4vw, 25px); height: clamp(19px, 1.4vw, 25px); color: #fff; margin: 0 auto clamp(5px, .55vw, 10px); display: block; }
+    .sea-eng-box span { display: block; color: #fff; font-size: clamp(9.5px, .72vw, 12.5px) !important; font-weight: 700; line-height: 1.3 !important; }
+
+    /* gateway row — three units linked left-to-right by dashed arrows */
+    .sea-gw { display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; gap: clamp(6px, .8vw, 16px); }
+    .sea-gw-cell { position: relative; display: flex; justify-content: center; }
+    /* left-to-right run between gateways, arrowhead on the receiving side */
+    .sea-gw-cell + .sea-gw-cell::before {
+      content: ''; position: absolute; top: 50%; right: 100%; width: clamp(6px, .8vw, 16px);
+      border-top: 2px dashed #1F6B43; opacity: 0.85;
+    }
+    .sea-gw-cell + .sea-gw-cell::after {
+      content: ''; position: absolute; top: 50%; right: 100%; transform: translateY(-50%);
+      width: 0; height: 0; border: 6px solid transparent; border-left-color: #1F6B43; border-right: 0;
+    }
+    /* Capped at the source's own 106px width — upscaling these small PNGs past their
+       native size only makes them soft. */
+    .sea-gw img { width: 100%; max-width: clamp(72px, 7vw, 106px); height: auto; display: block; }
+
+    /* field device row */
+    .sea-devs { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--sea-dev-gap); }
+    .sea-dev {
+      background: #fff; border: 1px solid #e6ece8; border-radius: 13px;
+      padding: clamp(8px, .85vw, 14px) clamp(4px, .5vw, 9px);
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: clamp(5px, .6vw, 10px);
+      box-shadow: 0 1px 3px rgba(11, 31, 22, .04);
+    }
+    .sea-dev-img { height: clamp(38px, 3.6vw, 62px); display: flex; align-items: center; justify-content: center; }
+    .sea-dev-img img { max-height: 100%; width: auto; max-width: 100%; display: block; }
+    .sea-dev-img svg { height: 100%; width: auto; color: #1f6b43; }
+    .sea-dev-t { font-size: clamp(8.5px, .66vw, 11.5px) !important; font-weight: 700; color: #2A3831; text-align: center; line-height: 1.25 !important; }
+
+    /* ---- right column: deployment choice ---- */
+    .sea-deploy { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1vw, 14px); }
+    .sea-dep-box {
+      width: 100%; background: #fff; border: 1px solid #e6ece8; border-radius: 15px;
+      padding: clamp(12px, 1.2vw, 20px) clamp(8px, .9vw, 14px); text-align: center;
+      box-shadow: 0 1px 3px rgba(11, 31, 22, .04);
+    }
+    .sea-dep-box svg { width: clamp(24px, 2vw, 34px); height: clamp(24px, 2vw, 34px); color: #1f6b43; margin: 0 auto clamp(6px, .7vw, 11px); display: block; }
+    .sea-dep-t { font-size: clamp(12px, .92vw, 15px) !important; font-weight: 800; color: #0B1F16; line-height: 1.3 !important; }
+    .sea-dep-p { font-size: clamp(9px, .68vw, 11.5px) !important; color: #6E8076; line-height: 1.45 !important; margin-top: 4px; overflow-wrap: normal; word-break: keep-all; }
+    .sea-or {
+      width: clamp(38px, 3vw, 52px); aspect-ratio: 1; border-radius: 50%; background: #1f6b43; color: #fff;
       display: flex; align-items: center; justify-content: center; font-weight: 800;
-      font-size: 12px !important; letter-spacing: .06em;
+      font-size: clamp(11px, .82vw, 14px) !important; letter-spacing: .06em; flex: none;
+    }
+
+    /* ---- responsive: the six-across rows cannot hold legible type on a phone ---- */
+    @media (max-width: 700px) {
+      .sea-row { grid-template-columns: repeat(3, 1fr); row-gap: clamp(12px, 3vw, 18px); }
+      .sea-cell:nth-child(3n+1)::before { display: none; }
+      .sea-devs { grid-template-columns: repeat(3, 1fr); }
+      .sea-eng-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Once the devices wrap onto several rows a single horizontal bus would point at
+         nothing, so the junction collapses to the same plain vertical connector used
+         between the other tiers. */
+      .sea-bus::before,
+      .sea-bus-cell::before { display: none; }
+      .sea-bus-riser { top: 0; bottom: 0; }
+    }
+    @media (max-width: 430px) {
+      .sea-row { grid-template-columns: repeat(2, 1fr); }
+      .sea-cell::before { display: none; }
+      .sea-devs { grid-template-columns: repeat(2, 1fr); }
     }
 
   </style>
@@ -739,147 +936,278 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <!-- ================= 5. สถาปัตยกรรมแพลตฟอร์ม SYNEXTA ENERGY ================= -->
   <section id="energy-platform" class="py-12 sm:py-16 bg-[#f6f8f7] border-y border-slate-100" style="scroll-margin-top:96px">
     <div class="se-shell">
-      <div class="grid lg:grid-cols-[minmax(280px,32%)_1fr] gap-8 lg:gap-12 items-center">
+      <div class="sea">
 
-        <!-- Left Features -->
+        <!-- ═══════════ LEFT: heading + the four platform features ═══════════ -->
         <div>
           <p class="se-eyebrow mb-3">
-            <span class="lang-th">สถาปัตยกรรมแพลตฟอร์ม SynExta Energy</span>
-            <span class="lang-en">SYNEXTA ENERGY PLATFORM ARCHITECTURE</span>
+            <span class="lang-th">แพลตฟอร์ม SYNEXTA ENERGY</span>
+            <span class="lang-en">SYNEXTA ENERGY PLATFORM</span>
           </p>
           <!-- หัวข้อ -->
-          <h2 class="se-h2 font-display text-ink mb-6">
+          <h2 class="se-h2 font-display text-ink">
             <span class="lang-th">แพลตฟอร์มเดียว<br>บริหารพลังงาน<span class="se-accent">ทุกไซต์งาน</span></span>
-            <span class="lang-en">One Platform.<br><span class="se-accent">Every</span> Site.</span>
+            <span class="lang-en">One Platform.<br><span class="se-accent">Every Site.</span></span>
           </h2>
-          
-          <ul class="space-y-5">
+          <div class="sea-rule"></div>
 
-            <!-- รองรับ Inverter ได้หลายแบรนด์ -->
-            <li class="flex gap-3.5">
-              <span class="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold"><i class="fa-solid fa-plug text-base"></i></span>
+          <ul class="sea-feats">
+
+            <!-- 1. รองรับ Inverter หลายแบรนด์ -->
+            <li class="sea-feat">
+              <span class="sea-feat-i" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3.1"/>
+                  <path d="M12 2.4v3M12 18.5v3M2.4 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/>
+                </svg>
+              </span>
               <div>
-                <div class="se-card-t text-ink mb-1">
-                  <span class="lang-th">รองรับ Inverter ได้หลายแบรนด์</span>
-                  <span class="lang-en">Multi-Brand Inverter Integration</span>
+                <div class="sea-feat-t">
+                  <span class="lang-th">รองรับ Inverter หลายแบรนด์</span>
+                  <span class="lang-en">Multi-brand Inverter Integration</span>
                 </div>
-                <p class="se-sub"><span class="lang-th">รองรับอินเวอร์เตอร์หลากหลายแบรนด์</span><span class="lang-en">Works with a wide range of inverter brands.</span></p>
-                <ul class="se-step-list mt-1.5">
-                  <li>Huawei</li><li>Sungrow</li><li>GoodWe</li><li>Growatt</li>
-                  <li>SMA</li><li>Fronius</li><li>Delta</li><li>Solis</li>
-                  <li class="bg-emerald-100 text-brand-deep font-bold">และแบรนด์อื่น ๆ</li>
-                </ul>
+                <p class="sea-feat-p">
+                  <span class="lang-th">เชื่อมต่ออินเวอร์เตอร์แบรนด์หลักได้ทั้งหมด ทั้ง Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis และแบรนด์อื่น ๆ ไว้ในแพลตฟอร์มเดียว</span>
+                  <span class="lang-en">Connect all major inverter brands — Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis and more — into one unified platform.</span>
+                </p>
               </div>
             </li>
 
-            <!-- บริหารจัดการได้หลายไซต์ -->
-            <li class="flex gap-3.5">
-              <span class="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold"><i class="fa-solid fa-sitemap text-base"></i></span>
+            <!-- 2. บริหารจัดการหลายไซต์ -->
+            <li class="sea-feat">
+              <span class="sea-feat-i" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 21h18M5 21V8.6l5.4-3.4V21M14 21V10.4l5 2.6V21"/>
+                  <path d="M7.6 11.4h.9M7.6 14.4h.9M16.4 15.6h.9"/>
+                </svg>
+              </span>
               <div>
-                <div class="se-card-t text-ink mb-1">
-                  <span class="lang-th">บริหารจัดการได้หลายไซต์ (ทั้งหมดในแพลตฟอร์มเดียว)</span>
-                  <span class="lang-en">Multi-Site Management</span>
+                <div class="sea-feat-t">
+                  <span class="lang-th">บริหารจัดการหลายไซต์</span>
+                  <span class="lang-en">Multi-site Management</span>
                 </div>
-                <p class="se-sub"><span class="lang-th">จัดการหลายไซต์ได้อย่างง่ายดาย</span><span class="lang-en">Manage many sites with ease.</span></p>
-                <ul class="se-step-list mt-1.5">
-                  <li>โรงงาน</li><li>อาคาร</li><li>สาขา</li><li>Solar Farm</li>
-                </ul>
+                <p class="sea-feat-p">
+                  <span class="lang-th">ติดตามไซต์งาน โรงงาน สาขา และระบบ Solar ได้ไม่จำกัดจำนวน จากศูนย์กลางเดียว</span>
+                  <span class="lang-en">Monitor unlimited sites, factories, branches and solar installations.</span>
+                </p>
               </div>
             </li>
 
-            <!-- รองรับ Cloud และ On-Premise -->
-            <li class="flex gap-3.5">
-              <span class="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold"><i class="fa-solid fa-cloud text-base"></i></span>
+            <!-- 3. ติดตั้งได้ยืดหยุ่น -->
+            <li class="sea-feat">
+              <span class="sea-feat-i" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6.6 18.4h10.9a3.6 3.6 0 0 0 .5-7.16 5.4 5.4 0 0 0-10.4-1.5A4.35 4.35 0 0 0 6.6 18.4Z"/>
+                </svg>
+              </span>
               <div>
-                <div class="se-card-t text-ink mb-1">
-                  <span class="lang-th">รองรับ Cloud และ On-Premise</span>
+                <div class="sea-feat-t">
+                  <span class="lang-th">ติดตั้งได้ยืดหยุ่น</span>
                   <span class="lang-en">Flexible Deployment</span>
                 </div>
-                <p class="se-sub"><span class="lang-th">ติดตั้งได้ตามนโยบายความปลอดภัยขององค์กร</span><span class="lang-en">Deploy to match your security policy.</span></p>
-                <ul class="se-step-list">
-                  <li>Cloud</li><li>On-Premise</li><li>Hybrid</li>
-                </ul>
+                <p class="sea-feat-p">
+                  <span class="lang-th">เลือกติดตั้งแบบ Cloud, On-Premise หรือ Hybrid ได้ตามนโยบายด้าน IT ขององค์กร</span>
+                  <span class="lang-en">Cloud, On-Premise or Hybrid deployment to fit your IT policy.</span>
+                </p>
               </div>
             </li>
 
-            <!-- เชื่อมต่อกับระบบอื่นได้ -->
-            <li class="flex gap-3.5">
-              <span class="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold"><i class="fa-solid fa-code text-base"></i></span>
+            <!-- 4. เชื่อมต่อระบบอื่นได้ -->
+            <li class="sea-feat">
+              <span class="sea-feat-i" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2.7l7.4 3v5.6c0 4.5-3 8.3-7.4 9.9-4.4-1.6-7.4-5.4-7.4-9.9V5.7l7.4-3Z"/>
+                  <path d="M9.3 12.1l1.9 1.9 3.6-3.7"/>
+                </svg>
+              </span>
               <div>
-                <div class="se-card-t text-ink mb-1">
-                  <span class="lang-th">เชื่อมต่อกับระบบอื่นได้</span>
-                  <span class="lang-en">Open API Integration</span>
+                <div class="sea-feat-t">
+                  <span class="lang-th">เชื่อมต่อระบบอื่นได้</span>
+                  <span class="lang-en">Open Integration</span>
                 </div>
-                <p class="se-sub"><span class="lang-th">เชื่อมต่อกับระบบภายนอกได้อย่างอิสระ</span><span class="lang-en">Connect freely with external systems.</span></p>
-                <ul class="se-step-list mt-1.5">
-                  <li>ERP</li><li>BMS</li><li>CMMS</li><li>API</li>
-                </ul>
+                <p class="sea-feat-p">
+                  <span class="lang-th">เชื่อมต่อกับ ERP, BMS, CMMS และระบบอื่น ๆ ขององค์กรได้ผ่าน Open API</span>
+                  <span class="lang-en">Seamlessly integrate with ERP, BMS, CMMS and other systems via open API.</span>
+                </p>
               </div>
             </li>
 
           </ul>
         </div>
 
-        <!-- Diagram Flow -->
-        <div class="grid lg:grid-cols-[1fr_auto] gap-5 items-center">
-          <div class="se-arch shadow-sm">
+        <!-- ═══════════ CENTRE: the architecture stack ═══════════ -->
+        <div class="sea-stack">
 
-            <!-- Headquarters / สำนักงานใหญ่ -->
-            <div class="tier">
-              <div class="tier-label"><span class="lang-th">สำนักงานใหญ่ / Enterprise Dashboard</span><span class="lang-en">Headquarters / Enterprise Dashboard</span></div>
-              <div class="chips">
-                <div class="chip"><i class="fa-solid fa-building block mb-1 text-brand"></i>HQ Control</div>
-                <div class="chip"><i class="fa-solid fa-location-dot block mb-1 text-brand"></i>Sites</div>
-                <div class="chip"><i class="fa-solid fa-file-lines block mb-1 text-brand"></i>Reports</div>
-                <div class="chip"><i class="fa-solid fa-bell block mb-1 text-brand"></i>Alerts</div>
-                <div class="chip"><i class="fa-solid fa-chart-line block mb-1 text-brand"></i>Analytics</div>
-                <div class="chip"><i class="fa-solid fa-users block mb-1 text-brand"></i>Users</div>
-              </div>
+          <!-- Tier 1 — Enterprise Dashboard -->
+          <div class="sea-tier">
+            <div class="sea-label">
+              <span class="lang-th">แดชบอร์ดสำหรับองค์กร</span>
+              <span class="lang-en">Enterprise Dashboard</span>
             </div>
-
-            <div class="flow"><i class="fa-solid fa-arrow-down"></i></div>
-
-            <!-- SynExta Energy Engine -->
-            <div class="tier engine">
-              <div class="tier-label">SynExta Energy Engine</div>
-              <div class="chips">
-                <div class="chip">AI Analytics</div>
-                <div class="chip">Rule Engine</div>
-                <div class="chip">Alert Engine</div>
-                <div class="chip">Energy Analytics</div>
+            <div class="sea-row">
+              <div class="sea-cell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="3" width="7.4" height="7.4" rx="1.6"/><rect x="13.6" y="3" width="7.4" height="7.4" rx="1.6"/>
+                  <rect x="3" y="13.6" width="7.4" height="7.4" rx="1.6"/><rect x="13.6" y="13.6" width="7.4" height="7.4" rx="1.6"/>
+                </svg>
+                <div class="sea-cell-t"><span class="lang-th">ภาพรวม</span><span class="lang-en">Overview</span></div>
               </div>
-            </div>
-
-            <div class="flow"><i class="fa-solid fa-arrow-down"></i></div>
-
-            <!-- Energy Gateway -->
-            <div class="tier">
-              <div class="tier-label">Energy Gateway</div>
-              <div class="chips se-c3">
-                <div class="chip"><i class="fa-solid fa-server block mb-1 text-brand"></i>Gateway 1</div>
-                <div class="chip"><i class="fa-solid fa-server block mb-1 text-brand"></i>Gateway 2</div>
-                <div class="chip"><i class="fa-solid fa-server block mb-1 text-brand"></i>Gateway 3</div>
+              <div class="sea-cell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 21h18M5 21V6.4l6-2.6V21M15 21v-9.4l4.6 2V21"/><path d="M7.7 9h.8M7.7 12h.8M7.7 15h.8"/>
+                </svg>
+                <div class="sea-cell-t"><span class="lang-th">ไซต์งาน</span><span class="lang-en">Sites</span></div>
               </div>
-            </div>
-
-            <div class="flow"><i class="fa-solid fa-arrow-down"></i></div>
-
-            <!-- Equipment Devices -->
-            <div class="chips se-c6">
-              <div class="chip"><i class="fa-solid fa-solar-panel block mb-1 text-brand"></i>Solar Inverter</div>
-              <div class="chip"><i class="fa-solid fa-bolt block mb-1 text-brand"></i>Energy Meter</div>
-              <div class="chip"><i class="fa-regular fa-lightbulb block mb-1 text-brand"></i>Lighting Controller</div>
-              <div class="chip"><i class="fa-solid fa-fan block mb-1 text-brand"></i>HVAC</div>
-              <div class="chip"><i class="fa-solid fa-charging-station block mb-1 text-brand"></i>EV Charger</div>
-              <div class="chip"><i class="fa-solid fa-microchip block mb-1 text-brand"></i>IoT Sensor</div>
+              <div class="sea-cell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6.4 2.8h7.2L18.6 8v13.2H6.4V2.8Z"/><path d="M13.4 2.8V8h5.2"/><path d="M9.2 12.4h6M9.2 16h4.2"/>
+                </svg>
+                <div class="sea-cell-t"><span class="lang-th">รายงาน</span><span class="lang-en">Reports</span></div>
+              </div>
+              <div class="sea-cell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 16.4V11a6 6 0 1 0-12 0v5.4L4.4 18.6h15.2L18 16.4Z"/><path d="M10.2 21.4h3.6"/>
+                </svg>
+                <div class="sea-cell-t"><span class="lang-th">การแจ้งเตือน</span><span class="lang-en">Alerts</span></div>
+              </div>
+              <div class="sea-cell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3.4 17.6l5-5.6 3.6 2.8 4-5.2 4.6-2.6"/><path d="M16.4 7h4.2v4.2"/>
+                </svg>
+                <div class="sea-cell-t"><span class="lang-th">วิเคราะห์ข้อมูล</span><span class="lang-en">Analytics</span></div>
+              </div>
+              <div class="sea-cell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="9.2" cy="8.4" r="3.4"/><path d="M3.2 20.2a6 6 0 0 1 12 0"/>
+                  <path d="M16.2 5.4a3.2 3.2 0 0 1 0 6M18.6 20.2a5.9 5.9 0 0 0-2.2-4.6"/>
+                </svg>
+                <div class="sea-cell-t"><span class="lang-th">ผู้ใช้งาน</span><span class="lang-en">Users</span></div>
+              </div>
             </div>
           </div>
 
-          <!-- Deployment Options -->
-          <div class="se-deploy">
-            <div class="box shadow-sm"><i class="fa-solid fa-cloud block mb-1.5 text-brand text-xl"></i>Cloud</div>
-            <div class="or"><span class="lang-th">หรือ</span><span class="lang-en">OR</span></div>
-            <div class="box shadow-sm"><i class="fa-solid fa-database block mb-1.5 text-brand text-xl"></i>On-Premise</div>
+          <div class="sea-link" aria-hidden="true"></div>
+
+          <!-- Tier 2 — SynExta Energy Engine -->
+          <div class="sea-engine">
+            <div class="sea-engine-t">SynExta Energy Engine</div>
+            <div class="sea-eng-grid">
+              <div class="sea-eng-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3.4" y="5.4" width="17.2" height="13.2" rx="3"/>
+                  <path d="M8.4 15V11l1.8 2.6L12 11v4M15 11v4h2.6"/>
+                </svg>
+                <span>AI Analytics</span>
+              </div>
+              <div class="sea-eng-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6.4 2.8h7.2L18.6 8v13.2H6.4V2.8Z"/><path d="M13.4 2.8V8h5.2"/>
+                  <path d="M9.4 13.4l1.6 1.6 3.4-3.4"/>
+                </svg>
+                <span>Rule Engine</span>
+              </div>
+              <div class="sea-eng-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3.4" y="4" width="17.2" height="16" rx="2.6"/>
+                  <path d="M8 15.6V11M12 15.6V8.4M16 15.6v-3"/>
+                </svg>
+                <span>Energy Analytics</span>
+              </div>
+              <div class="sea-eng-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M17.6 15.4V11a5.6 5.6 0 1 0-11.2 0v4.4L5 17.4h14l-1.4-2Z"/>
+                  <path d="M10.4 20.2h3.2"/><circle cx="18.4" cy="6.2" r="2.6"/>
+                </svg>
+                <span>Alert Engine</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sea-link" aria-hidden="true"></div>
+
+          <!-- Tier 3 — Energy Gateway -->
+          <div class="sea-tier">
+            <div class="sea-label">
+              <span class="lang-th">เกตเวย์พลังงาน</span>
+              <span class="lang-en">Energy Gateway</span>
+            </div>
+            <div class="sea-gw">
+              <div class="sea-gw-cell"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-1.png" alt="Energy Gateway รวบรวมข้อมูลจากอุปกรณ์ในไซต์งาน"></div>
+              <div class="sea-gw-cell"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-2.png" alt="Energy Gateway เชื่อมต่ออุปกรณ์หลายโปรโตคอล"></div>
+              <div class="sea-gw-cell"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-3.png" alt="Energy Gateway ส่งข้อมูลขึ้นแพลตฟอร์ม SynExta"></div>
+            </div>
+          </div>
+
+          <!-- The gateway<->device junction: a stub under each device feeding a shared
+               horizontal run, then one arrow up into the gateway tier. -->
+          <div class="sea-bus" aria-hidden="true">
+            <div class="sea-bus-cell"></div><div class="sea-bus-cell"></div><div class="sea-bus-cell"></div>
+            <div class="sea-bus-cell"></div><div class="sea-bus-cell"></div><div class="sea-bus-cell"></div>
+            <div class="sea-bus-riser"></div>
+          </div>
+
+          <!-- Tier 4 — field devices -->
+          <div class="sea-devs">
+            <div class="sea-dev">
+              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/solar-inverter.png" alt="Solar Inverter อินเวอร์เตอร์แปลงไฟจากแผงโซลาร์"></span>
+              <div class="sea-dev-t">Solar Inverter</div>
+            </div>
+            <div class="sea-dev">
+              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/energy-meter.png" alt="Energy Meter มิเตอร์วัดพลังงานไฟฟ้า"></span>
+              <div class="sea-dev-t">Energy Meter</div>
+            </div>
+            <div class="sea-dev">
+              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/lighting-controller.png" alt="Lighting Controller ชุดควบคุมระบบแสงสว่าง"></span>
+              <div class="sea-dev-t">Lighting Controller</div>
+            </div>
+            <div class="sea-dev">
+              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/hvac.png" alt="HVAC ระบบปรับอากาศ"></span>
+              <div class="sea-dev-t">HVAC</div>
+            </div>
+            <div class="sea-dev">
+              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/ev-charger.png" alt="EV Charger เครื่องอัดประจุยานยนต์ไฟฟ้า"></span>
+              <div class="sea-dev-t">EV Charger</div>
+            </div>
+            <div class="sea-dev">
+              <span class="sea-dev-img" aria-hidden="true">
+                <!-- IoT Sensor drawn inline as the reference's green node graphic -->
+                <svg viewBox="0 0 62 62" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <circle cx="31" cy="31" r="6.4" fill="#eef5f1"/>
+                  <path d="M31 24.6V12M31 37.4v12.6M24.6 31H12M37.4 31H50"/>
+                  <circle cx="31" cy="9" r="4.2"/><circle cx="31" cy="53" r="4.2"/>
+                  <circle cx="9" cy="31" r="4.2"/><circle cx="53" cy="31" r="4.2"/>
+                </svg>
+              </span>
+              <div class="sea-dev-t">IoT Sensor</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════ RIGHT: deployment choice ═══════════ -->
+        <div class="sea-deploy">
+          <div class="sea-dep-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6.6 18.4h10.9a3.6 3.6 0 0 0 .5-7.16 5.4 5.4 0 0 0-10.4-1.5A4.35 4.35 0 0 0 6.6 18.4Z"/>
+            </svg>
+            <div class="sea-dep-t">Cloud</div>
+            <p class="sea-dep-p">
+              <span class="lang-th">โครงสร้างคลาวด์ ปลอดภัยและขยายได้</span>
+              <span class="lang-en">Secure &amp; Scalable Cloud Infrastructure</span>
+            </p>
+          </div>
+
+          <div class="sea-or"><span class="lang-th">หรือ</span><span class="lang-en">OR</span></div>
+
+          <div class="sea-dep-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3.4" y="4" width="17.2" height="6" rx="1.8"/><rect x="3.4" y="14" width="17.2" height="6" rx="1.8"/>
+              <path d="M7 7h.02M7 17h.02M10.4 7h4M10.4 17h4"/>
+            </svg>
+            <div class="sea-dep-t">On-Premise</div>
+            <p class="sea-dep-p">
+              <span class="lang-th">เซิร์ฟเวอร์ภายในเครือข่ายองค์กร</span>
+              <span class="lang-en">Local Server On Your Network</span>
+            </p>
           </div>
         </div>
 
@@ -1150,7 +1478,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 1. บริษัทรับติดตั้ง Solar Rooftop -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/ind_energy_solar.png" alt="บริษัทรับติดตั้ง Solar Rooftop">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/solar_asset_mgmt.png" alt="บริษัทรับติดตั้ง Solar Rooftop บริหารระบบ Solar ทุกโครงการจากแพลตฟอร์มเดียว">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
@@ -1169,7 +1497,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 2. โรงงานอุตสาหกรรม -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/ind_industrial_new.jpg" alt="โรงงานอุตสาหกรรม (โรงงานพร้อม Solar Roof)">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/factory-hero-automotive.jpg" alt="โรงงานอุตสาหกรรม ติดตามการใช้ไฟฟ้าและควบคุมอุปกรณ์แบบ Real-time">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
@@ -1188,7 +1516,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 3. อาคารสำนักงาน -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/ind_smart_building_new.jpg" alt="อาคารสำนักงาน">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/cases/nida.jpg" alt="อาคารสำนักงาน ติดตามการใช้พลังงานรายอาคารจากศูนย์กลาง">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
@@ -1207,7 +1535,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 4. ธุรกิจค้าปลีกและร้านแฟรนไชส์ -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/ind_smart_building.png" alt="ธุรกิจค้าปลีกและร้านแฟรนไชส์">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/energy-remote-monitoring.png" alt="ธุรกิจค้าปลีกและร้านแฟรนไชส์ สำนักงานใหญ่ติดตามทุกสาขาจากศูนย์กลาง">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
@@ -1226,7 +1554,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 5. เจ้าของโครงการอสังหาริมทรัพย์ -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/hero-mypv-building.jpg" alt="เจ้าของโครงการอสังหาริมทรัพย์">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/cases/valuation.jpg" alt="เจ้าของโครงการอสังหาริมทรัพย์ บริหารพลังงานหลายอาคารจากแพลตฟอร์มเดียว">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>

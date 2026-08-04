@@ -1,4 +1,4 @@
-(function() {
+(function () {
   let isEditing = false;
   let isLoggedIn = localStorage.getItem('synergy_admin_auth') === '1';
   let pageName = window.location.pathname.includes('about') ? 'about' : 'index';
@@ -739,7 +739,7 @@
       } else {
         alert('เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ: ' + (json.error || 'Unknown error'));
       }
-    } catch(e) {
+    } catch (e) {
       alert('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
     } finally {
       confirmBtn.innerHTML = '<span style="font-size:18px;">☑️</span> กดยืนยันอีกครั้ง';
@@ -833,7 +833,7 @@
           setupCanvaControls();
         }
       }
-    } catch(e) {}
+    } catch (e) { }
   }
   loadSavedData();
 
@@ -856,7 +856,7 @@
           return;
         }
       }
-    } catch(e) {}
+    } catch (e) { }
     localStorage.removeItem('synergy_admin_auth');
     isLoggedIn = false;
     triggerBtn.style.display = 'none';
@@ -1109,7 +1109,7 @@
       const pageRect = { left: rect.left + window.scrollX, top: rect.top + window.scrollY, right: rect.right + window.scrollX, bottom: rect.bottom + window.scrollY };
 
       if (pageRect.left < marqueeRect.right && pageRect.right > marqueeRect.left &&
-          pageRect.top < marqueeRect.bottom && pageRect.bottom > marqueeRect.top) {
+        pageRect.top < marqueeRect.bottom && pageRect.bottom > marqueeRect.top) {
         setSelected(el, true);
       }
     });
@@ -1243,7 +1243,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ page: pageName, fields: resetFields })
       });
-    } catch(e) {}
+    } catch (e) { }
 
     hideAlignBubble();
     showToast('🔄 รีเซ็ตกลับตำแหน่งตั้งต้นสมบูรณ์เรียบร้อยแล้ว!');
@@ -1335,7 +1335,7 @@
         errDiv.textContent = json.error || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
         errDiv.style.display = 'block';
       }
-    } catch(e) {
+    } catch (e) {
       errDiv.textContent = 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์';
       errDiv.style.display = 'block';
     }
