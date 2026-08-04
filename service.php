@@ -312,6 +312,18 @@ if (file_exists(__DIR__ . '/functions.php')) {
       .svc-step::after { display: none !important; }
     }
 
+    .svc-bullet-text {
+      font-size: 15px !important;
+      line-height: 1.5 !important;
+      font-weight: 700 !important;
+      color: #0f172a !important;
+    }
+    @media (min-width: 1440px) {
+      .svc-bullet-text {
+        font-size: 15.5px !important;
+      }
+    }
+
     html body.is-live-editing [data-editable] .lang-th,
     html body.is-live-editing [data-editable] .lang-en{display:inline !important}
 </style>
@@ -568,11 +580,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
             Concept &amp;<br>Requirement
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <!-- Bullet List -->
-          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>วิเคราะห์ความต้องการ</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ศึกษาความเป็นไปได้</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>วางแผนโครงการ</span></div>
+          <!-- Centered Bullet List -->
+          <div class="mt-2 w-full text-center space-y-1.5">
+            <div class="svc-bullet-text">• วิเคราะห์ความต้องการ</div>
+            <div class="svc-bullet-text">• ศึกษาความเป็นไปได้</div>
+            <div class="svc-bullet-text">• วางแผนโครงการ</div>
           </div>
         </div>
 
@@ -589,10 +601,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             Product Design<br>&amp; Engineering
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ออกแบบฮาร์ดแวร์/ซอฟต์แวร์</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>PCB &amp; Mechanical Design</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>Simulation &amp; Review</span></div>
+          <div class="mt-2 w-full text-center space-y-1.5">
+            <div class="svc-bullet-text">• ออกแบบฮาร์ดแวร์/ซอฟต์แวร์</div>
+            <div class="svc-bullet-text">• PCB &amp; Mechanical Design</div>
+            <div class="svc-bullet-text">• Simulation &amp; Review</div>
           </div>
         </div>
 
@@ -608,10 +620,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             Prototype<br>Development
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>สร้างต้นแบบ</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ทดสอบการทำงาน</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ปรับปรุงและยืนยันแบบ</span></div>
+          <div class="mt-2 w-full text-center space-y-1.5">
+            <div class="svc-bullet-text">• สร้างต้นแบบ</div>
+            <div class="svc-bullet-text">• ทดสอบการทำงาน</div>
+            <div class="svc-bullet-text">• ปรับปรุงและยืนยันแบบ</div>
           </div>
         </div>
 
@@ -627,10 +639,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             Verification &amp;<br>Validation
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ทดสอบตามมาตรฐาน</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ตรวจสอบความปลอดภัย</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>รับรองประสิทธิภาพ</span></div>
+          <div class="mt-2 w-full text-center space-y-1.5">
+            <div class="svc-bullet-text">• ทดสอบตามมาตรฐาน</div>
+            <div class="svc-bullet-text">• ตรวจสอบความปลอดภัย</div>
+            <div class="svc-bullet-text">• รับรองประสิทธิภาพ</div>
           </div>
         </div>
 
@@ -646,10 +658,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             Manufacturing<br>(NPI)
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>วางแผนการผลิต (NPI)</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>จัดหาและควบคุมคุณภาพ</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>เตรียมสายการผลิต</span></div>
+          <div class="mt-2 w-full text-center space-y-1.5">
+            <div class="svc-bullet-text">• วางแผนการผลิต (NPI)</div>
+            <div class="svc-bullet-text">• จัดหาและควบคุมคุณภาพ</div>
+            <div class="svc-bullet-text">• เตรียมสายการผลิต</div>
           </div>
         </div>
 
@@ -666,10 +678,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             Mass<br>Production
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ผลิตได้ตามมาตรฐานสากล</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ควบคุมคุณภาพทุกขั้นตอน</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ตรวจสอบย้อนกลับได้</span></div>
+          <div class="mt-2 w-full text-center space-y-1.5">
+            <div class="svc-bullet-text">• ผลิตได้ตามมาตรฐานสากล</div>
+            <div class="svc-bullet-text">• ควบคุมคุณภาพทุกขั้นตอน</div>
+            <div class="svc-bullet-text">• ตรวจสอบย้อนกลับได้</div>
           </div>
         </div>
 
@@ -685,10 +697,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             Delivery &amp;<br>Deployment
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>จัดส่งตรงเวลา</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>สนับสนุนการติดตั้ง</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>เอกสารและการรับรอง</span></div>
+          <div class="mt-2 w-full text-center space-y-1.5">
+            <div class="svc-bullet-text">• จัดส่งตรงเวลา</div>
+            <div class="svc-bullet-text">• สนับสนุนการติดตั้ง</div>
+            <div class="svc-bullet-text">• เอกสารและการรับรอง</div>
           </div>
         </div>
 
@@ -706,10 +718,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             After-sales<br>Support
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>บริการหลังการขาย</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>บำรุงรักษาและซ่อมบำรุง</span></div>
-            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>อัปเดตและพัฒนาต่อเนื่อง</span></div>
+          <div class="mt-2 w-full text-center space-y-1.5">
+            <div class="svc-bullet-text">• บริการหลังการขาย</div>
+            <div class="svc-bullet-text">• บำรุงรักษาและซ่อมบำรุง</div>
+            <div class="svc-bullet-text">• อัปเดตและพัฒนาต่อเนื่อง</div>
           </div>
         </div>
 
