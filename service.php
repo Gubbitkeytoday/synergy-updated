@@ -342,22 +342,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <div id="navbar-container"></div>
 
 <!-- ==========================================================================
-     HERO SECTION — Two-column layout matching design reference exactly
+     HERO SECTION — Full-width background image layout
      ========================================================================== -->
-<section id="services-hero" class="relative bg-white overflow-hidden" style="min-height:calc(100vh - 80px)">
+<section id="services-hero" class="relative bg-white overflow-hidden bg-cover bg-center bg-no-repeat" style="min-height:calc(100vh - 80px); background-image: url('<?php echo esc_url(get_template_directory_uri() . '/image/service-hero-bg.png'); ?>');">
 
-  <!-- Dot grid overlay -->
-  <div class="absolute inset-0 opacity-[0.06] bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
+  <!-- Faint gradient overlay for text readability -->
+  <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent pointer-events-none z-0"></div>
 
-  <!-- Faint green glow top-left -->
-  <div class="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-brand/5 blur-3xl pointer-events-none z-0"></div>
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-center" style="min-height:calc(100vh - 80px)">
 
-  <div class="relative z-10 flex flex-col lg:flex-row w-full" style="min-height:calc(100vh - 80px)">
-
-    <!-- ═══════════════════════════════════════════════════
-         LEFT: Text Content (~55%)
-    ═══════════════════════════════════════════════════ -->
-    <div class="flex-none w-full lg:w-[56%] flex flex-col justify-center px-8 sm:px-14 lg:px-16 xl:px-20 py-14 lg:py-0">
+    <!-- Text Content Wrapper -->
+    <div class="max-w-3xl py-14 lg:py-20">
 
       <!-- Eyebrow pill -->
       <span class="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full border border-brand/30 bg-brand/5 text-brand svc-kicker mb-6">
@@ -387,7 +382,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
       </p>
 
       <!-- ── 4 Props Row ── -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-7 pt-7 border-t border-slate-100/80">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-7 pt-7 border-t border-slate-200/80">
 
         <!-- 1. One Partner -->
         <div class="flex flex-col gap-1.5">
@@ -439,21 +434,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
 
       </div><!-- /4 Props -->
-    </div><!-- /LEFT -->
-
-    <!-- ═══════════════════════════════════════════════════
-         RIGHT: Image (service-hero.png) (~48%) — Flush top with navbar
-    ═══════════════════════════════════════════════════ -->
-    <div class="flex-none w-full lg:w-[44%] flex items-start justify-end overflow-hidden pt-0">
-      <img
-        src="<?php echo esc_url(get_template_directory_uri() . '/image/service-hero.png'); ?>"
-        alt="End-to-End Product Development Hero Image"
-        class="w-full h-auto object-cover lg:object-right"
-        loading="eager"
-        fetchpriority="high"
-      >
-    </div><!-- /RIGHT -->
-  </div><!-- /flex row -->
+    </div><!-- /Text Content Wrapper -->
+  </div>
 </section>
 
 
