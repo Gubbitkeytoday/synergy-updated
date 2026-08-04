@@ -1123,19 +1123,22 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <!-- 2 Vertical Dashed Arrows connecting Gateway up to Energy Engine -->
-          <div class="h-8 relative my-1 hidden sm:block">
-            <div class="absolute left-[16.66%] top-0 bottom-0 border-l-2 border-dashed border-[#1F6B43]">
-              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
-            </div>
-            <div class="absolute left-[83.33%] top-0 bottom-0 border-l-2 border-dashed border-[#1F6B43]">
-              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
-            </div>
+          <!-- 2 Vertical Dashed SVG Arrows connecting Gateway up to Energy Engine -->
+          <div class="h-9 relative my-1 hidden sm:block">
+            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
+              <defs>
+                <marker id="sea-up-arrow-1" viewBox="0 0 10 10" refX="5" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
+                </marker>
+              </defs>
+              <line x1="16.66%" y1="36" x2="16.66%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+              <line x1="83.33%" y1="36" x2="83.33%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+            </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
-            <div class="absolute left-1/2 top-0 bottom-0 border-l-2 border-dashed border-[#1F6B43]">
-              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
-            </div>
+            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
+              <line x1="50%" y1="24" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+            </svg>
           </div>
 
           <!-- Tier 3 — Energy Gateway -->
@@ -1147,54 +1150,60 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <div class="sea-gw flex items-center justify-between gap-2 sm:gap-4">
               <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-1.png" alt="Energy Gateway 1"></div>
               
-              <!-- Dashed Arrow 1 to 2 -->
-              <div class="flex-none flex items-center justify-center w-10 sm:w-16">
-                <div class="w-full border-t-2 border-dashed border-[#1F6B43] relative">
-                  <span class="absolute -right-1.5 -top-[7px] text-[#1F6B43] text-[10px] leading-none">►</span>
-                </div>
+              <!-- SVG Dashed Arrow 1 to 2 -->
+              <div class="flex-none flex items-center justify-center w-12 sm:w-20">
+                <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
+                  <defs>
+                    <marker id="sea-right-arrow-gw" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 1.5 1.5 L 8.5 5 L 1.5 8.5 z" fill="#1F6B43" />
+                    </marker>
+                  </defs>
+                  <line x1="0" y1="8" x2="88%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-right-arrow-gw)" />
+                </svg>
               </div>
 
               <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-2.png" alt="Energy Gateway 2"></div>
               
-              <!-- Dashed Arrow 2 to 3 -->
-              <div class="flex-none flex items-center justify-center w-10 sm:w-16">
-                <div class="w-full border-t-2 border-dashed border-[#1F6B43] relative">
-                  <span class="absolute -right-1.5 -top-[7px] text-[#1F6B43] text-[10px] leading-none">►</span>
-                </div>
+              <!-- SVG Dashed Arrow 2 to 3 -->
+              <div class="flex-none flex items-center justify-center w-12 sm:w-20">
+                <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
+                  <line x1="0" y1="8" x2="88%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-right-arrow-gw)" />
+                </svg>
               </div>
 
               <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-3.png" alt="Energy Gateway 3"></div>
             </div>
           </div>
 
-          <!-- Gateway <-> Device Junction Bus with 3 Risers pointing UP -->
-          <div class="h-9 relative my-1 hidden sm:block">
-            <!-- Horizontal Bus Line -->
-            <div class="absolute top-[50%] left-[8.33%] right-[8.33%] border-t-2 border-dashed border-[#1F6B43]"></div>
-            
-            <!-- 6 Device Stubs from bottom to bus -->
-            <div class="absolute bottom-0 top-[50%] left-[8.33%] border-l-2 border-dashed border-[#1F6B43]"></div>
-            <div class="absolute bottom-0 top-[50%] left-[25%] border-l-2 border-dashed border-[#1F6B43]"></div>
-            <div class="absolute bottom-0 top-[50%] left-[41.66%] border-l-2 border-dashed border-[#1F6B43]"></div>
-            <div class="absolute bottom-0 top-[50%] left-[58.33%] border-l-2 border-dashed border-[#1F6B43]"></div>
-            <div class="absolute bottom-0 top-[50%] left-[75%] border-l-2 border-dashed border-[#1F6B43]"></div>
-            <div class="absolute bottom-0 top-[50%] left-[91.66%] border-l-2 border-dashed border-[#1F6B43]"></div>
+          <!-- Gateway <-> Device Junction Bus with 3 SVG Risers pointing UP -->
+          <div class="h-10 relative my-1 hidden sm:block">
+            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
+              <defs>
+                <marker id="sea-up-arrow-bus" viewBox="0 0 10 10" refX="5" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
+                </marker>
+              </defs>
+              <!-- Horizontal Bus Line -->
+              <line x1="8.33%" y1="20" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              
+              <!-- 6 Device Stubs from bottom to bus -->
+              <line x1="8.33%" y1="40" x2="8.33%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <line x1="25%" y1="40" x2="25%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <line x1="41.66%" y1="40" x2="41.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <line x1="58.33%" y1="40" x2="58.33%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <line x1="75%" y1="40" x2="75%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <line x1="91.66%" y1="40" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
 
-            <!-- 3 Gateway Risers pointing UP into Gateway 1, 2, 3 -->
-            <div class="absolute top-0 bottom-[50%] left-[16.66%] border-l-2 border-dashed border-[#1F6B43]">
-              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
-            </div>
-            <div class="absolute top-0 bottom-[50%] left-[50%] border-l-2 border-dashed border-[#1F6B43]">
-              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
-            </div>
-            <div class="absolute top-0 bottom-[50%] left-[83.33%] border-l-2 border-dashed border-[#1F6B43]">
-              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
-            </div>
+              <!-- 3 Gateway Risers pointing UP into Gateway 1, 2, 3 -->
+              <line x1="16.66%" y1="20" x2="16.66%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <line x1="50%" y1="20" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <line x1="83.33%" y1="20" x2="83.33%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+            </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
-            <div class="absolute left-1/2 top-0 bottom-0 border-l-2 border-dashed border-[#1F6B43]">
-              <span class="absolute -left-[5.5px] -top-2 text-[#1F6B43] text-[11px] leading-none">▲</span>
-            </div>
+            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
+              <line x1="50%" y1="24" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+            </svg>
           </div>
 
           <!-- Tier 4 — field devices -->
