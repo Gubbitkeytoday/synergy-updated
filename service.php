@@ -332,13 +332,13 @@ if (file_exists(__DIR__ . '/functions.php')) {
     </div><!-- /LEFT -->
 
     <!-- ═══════════════════════════════════════════════════
-         RIGHT: Image (service-hero.png) (~44%)
+         RIGHT: Image (service-hero.png) (~48%)
     ═══════════════════════════════════════════════════ -->
-    <div class="flex-none w-full lg:w-[44%] flex items-center justify-center p-6 lg:p-8">
+    <div class="flex-none w-full lg:w-[48%] flex items-center justify-end overflow-hidden">
       <img
         src="<?php echo esc_url(get_template_directory_uri() . '/image/service-hero.png'); ?>"
         alt="End-to-End Product Development Hero Image"
-        class="w-full max-w-[620px] h-auto object-contain drop-shadow-xl rounded-2xl"
+        class="w-full h-auto object-cover lg:object-right"
         loading="eager"
         fetchpriority="high"
       >
