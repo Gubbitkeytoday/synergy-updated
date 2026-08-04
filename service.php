@@ -237,12 +237,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- ==========================================================================
      HERO SECTION (Exact two-column split layout, matching design image perfectly)
      ========================================================================== -->
-<section id="services-hero" class="relative py-6 lg:py-10 text-slate-900 bg-white overflow-hidden">
+<section id="services-hero" class="relative min-h-[calc(100vh-80px)] flex flex-col justify-center text-slate-900 bg-white overflow-hidden">
   <!-- Dot Grid Overlay Effect for depth -->
   <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
-  <!-- ขยายกว้างเต็มหน้าจอ 100% ไร้ขีดจำกัดความกว้างสูงสุด -->
-  <div class="w-full px-6 sm:px-12 lg:px-16 xl:px-24 relative z-10">
+  <div class="w-full px-6 sm:px-12 lg:px-16 xl:px-24 relative z-10 py-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
       
       <!-- Left side details (ปรับสัดส่วนเป็น 6 คอลัมน์) -->
