@@ -237,37 +237,38 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- ==========================================================================
      HERO SECTION (Exact two-column split layout, matching design image perfectly)
      ========================================================================== -->
-<section id="services-hero" class="relative py-14 sm:py-20 lg:py-24 text-slate-900 bg-white">
+<section id="services-hero" class="relative py-14 sm:py-20 lg:py-24 text-slate-900 bg-white overflow-hidden" style="scroll-margin-top: 96px;">
   <!-- Dot Grid Overlay Effect for depth -->
   <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
-  <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+  <!-- ปรับความกว้างสูงสุดเพิ่มเป็น max-w-[90rem] หรือ max-w-full เพื่อให้ขยายกว้างขึ้น -->
+  <div class="max-w-[90rem] mx-auto px-6 lg:px-12 relative z-10 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
       
-      <!-- Left side details (7 columns) -->
-      <div class="space-y-6 lg:col-span-7">
+      <!-- Left side details (ปรับสัดส่วนเป็น 6 คอลัมน์) -->
+      <div class="space-y-6 lg:col-span-6 xl:col-span-6">
         <!-- Eyebrow Pill -->
-        <span class="svc-eyebrow" data-reveal>
+        <span class="svc-eyebrow is-revealed" data-reveal="">
           Our Service
         </span>
 
         <!-- Title -->
-        <h1 class="svc-title" data-reveal style="--reveal-delay:60ms">
+        <h1 class="svc-title is-revealed" data-reveal="" style="--reveal-delay:60ms">
           End-to-End<br>Product Development
         </h1>
 
         <!-- Subtitle (Thai lede) -->
-        <p class="svc-lede" data-reveal style="--reveal-delay:120ms">
+        <p class="svc-lede is-revealed" data-reveal="" style="--reveal-delay:120ms">
           พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
         </p>
 
         <!-- Description (English copy) -->
-        <p class="svc-copy" data-reveal style="--reveal-delay:180ms">
+        <p class="svc-copy is-revealed" data-reveal="" style="--reveal-delay:180ms">
           We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.
         </p>
 
         <!-- Props Row -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4" data-reveal style="--reveal-delay:240ms">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4 is-revealed" data-reveal="" style="--reveal-delay:240ms">
           <div class="flex flex-col items-start text-left space-y-2">
             <span class="text-brand text-2xl">
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -299,10 +300,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
       </div>
 
-      <!-- Right side media (5 columns) -->
-      <div class="flex justify-center items-center w-full lg:col-span-5" data-reveal style="--reveal-delay:120ms">
-        <img src="<?php echo get_template_directory_uri(); ?>/Home.png" alt="ภาพรวมบริการพัฒนาผลิตภัณฑ์ครบวงจรของ Syntech"
-             class="w-full h-auto max-h-[500px] object-contain">
+      <!-- Right side media (ขยายเป็น 6 คอลัมน์ และเอาจำกัดความสูงออก) -->
+      <div class="flex justify-end items-center w-full lg:col-span-6 xl:col-span-6 is-revealed" data-reveal="" style="--reveal-delay:120ms">
+        <img src="<?php echo get_template_directory_uri(); ?>/Home.png" alt="ภาพรวมบริการพัฒนาผลิตภัณฑ์ครบวงจรของ Syntech" class="w-full h-auto object-contain max-w-none">
       </div>
 
     </div>
