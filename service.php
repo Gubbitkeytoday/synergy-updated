@@ -342,25 +342,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <div id="navbar-container"></div>
 
 <!-- ==========================================================================
-     HERO SECTION — Clean Photo with SVG Organic S-Curve & HTML Elements
+     HERO SECTION — Full-width background image layout
      ========================================================================== -->
-<section id="services-hero" class="relative bg-white overflow-hidden bg-cover bg-center bg-no-repeat pt-6 pb-28" style="min-height: 600px; background-image: url('<?php echo esc_url(get_template_directory_uri() . '/image/service-hero-bg.png'); ?>');">
+<section id="services-hero" class="relative bg-white overflow-hidden bg-cover bg-center bg-no-repeat" style="min-height:calc(100vh - 80px); background-image: url('<?php echo esc_url(get_template_directory_uri() . '/image/service-hero-bg.png'); ?>');">
 
-  <!-- SVG Organic S-Curve & Yellow Accent Wave (Matching Reference Image 100%) -->
-  <svg class="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1440 680" preserveAspectRatio="none">
-    <!-- Smooth Organic White S-Curve (Wider to cover description text comfortably) -->
-    <path fill="#ffffff" d="M 0,0 L 640,0 C 750,0 720,270 590,400 C 480,510 720,600 1440,600 L 1440,680 L 0,680 Z"/>
-    <!-- Yellow/Orange Accent Wave (Bottom Right) -->
-    <path fill="#F5B800" d="M 1180,680 C 1280,520 1440,500 1440,680 Z"/>
-  </svg>
+  <!-- Faint gradient overlay for text readability -->
+  <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent pointer-events-none z-0"></div>
 
-  <!-- Mobile/Tablet gradient fallback overlay -->
-  <div class="block lg:hidden absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30 pointer-events-none z-0"></div>
-
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-center py-8 lg:py-14">
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-center" style="min-height:calc(100vh - 80px)">
 
     <!-- Text Content Wrapper -->
-    <div class="max-w-xl lg:max-w-2xl">
+    <div class="max-w-3xl py-14 lg:py-20">
 
       <!-- Eyebrow pill -->
       <span class="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full border border-brand/30 bg-brand/5 text-brand svc-kicker mb-6">
@@ -383,93 +375,76 @@ if (file_exists(__DIR__ . '/functions.php')) {
       </p>
 
       <!-- English description -->
-      <p class="svc-copy text-body mb-8 max-w-[540px]">
+      <p class="svc-copy text-body mb-10 max-w-[560px]">
         <?php echo synergy_content('svc-hero-desc',
           'We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.',
           'service'); ?>
       </p>
 
-      <!-- ── CTA Buttons Row ── -->
-      <div class="flex flex-wrap items-center gap-4">
-        <!-- Button 1: Solid Green -->
-        <a href="#process" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#1F6B43] text-white font-bold text-sm sm:text-base hover:bg-[#185535] transition shadow-md group">
-          <span>ดูบริการของเรา</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-          </svg>
-        </a>
-        <!-- Button 2: Outline Green Play -->
-        <a href="#why-us" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full border-2 border-[#1F6B43] text-[#1F6B43] font-bold text-sm sm:text-base hover:bg-[#1F6B43]/5 transition">
-          <span class="w-5 h-5 rounded-full border-2 border-[#1F6B43] flex items-center justify-center text-[9px] pl-0.5 font-black">▶</span>
-          <span>ชมวิดีโอแนะนำ</span>
-        </a>
-      </div>
+      <!-- ── 4 Premium Glassmorphism Cards Row ── -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-8 border-t border-slate-200/80">
 
+        <!-- 1. One Partner -->
+        <div class="bg-white/85 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-4">
+          <span class="w-11 h-11 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center text-[#1F6B43] shrink-0 shadow-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20H7m10 0a5 5 0 10-10 0m10 0V8a5 5 0 00-5-5H7a5 5 0 00-5 5v12"/>
+              <circle cx="12" cy="8" r="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div class="flex flex-col">
+            <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">One Partner</b>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug">ดูแลครบทุกขั้นตอนในที่เดียว</span>
+          </div>
+        </div>
+
+        <!-- 2. Faster to Market -->
+        <div class="bg-white/85 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-4">
+          <span class="w-11 h-11 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center text-[#1F6B43] shrink-0 shadow-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="9" stroke-linecap="round"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 3"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5l1 2M7.5 3.5l-1 2"/>
+            </svg>
+          </span>
+          <div class="flex flex-col">
+            <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">Faster to Market</b>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug">ลดเวลาในการพัฒนาและเปิดตัวสินค้า</span>
+          </div>
+        </div>
+
+        <!-- 3. Quality & Compliance -->
+        <div class="bg-white/85 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-4">
+          <span class="w-11 h-11 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center text-[#1F6B43] shrink-0 shadow-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 4v5c0 4.5-3.5 8.5-8 10C7.5 20.5 4 16.5 4 12V7l8-4z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+            </svg>
+          </span>
+          <div class="flex flex-col">
+            <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">Quality &amp; Compliance</b>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug">มาตรฐานสากล เชื่อถือได้</span>
+          </div>
+        </div>
+
+        <!-- 4. Business Impact -->
+        <div class="bg-white/85 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-4">
+          <span class="w-11 h-11 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center text-[#1F6B43] shrink-0 shadow-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 17l4-5 4 3 4-6 4-3"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18"/>
+            </svg>
+          </span>
+          <div class="flex flex-col">
+            <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">Business Impact</b>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug">สร้างคุณค่าและความได้เปรียบในการแข่งขัน</span>
+          </div>
+        </div>
+
+      </div><!-- /4 Cards -->
     </div><!-- /Text Content Wrapper -->
   </div>
 </section>
-
-<!-- ==========================================================================
-     FLOATING 4 PROPS WHITE CARD SECTION (Matching Reference Image)
-     ========================================================================== -->
-<div class="relative z-20 max-w-7xl mx-auto px-6 sm:px-12 -mt-16 sm:-mt-20 mb-16">
-  <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-100/90 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-center">
-    
-    <!-- 1. One Partner -->
-    <div class="flex items-center gap-4 sm:border-r sm:border-slate-100 pb-4 sm:pb-0 pr-4">
-      <div class="w-14 h-14 rounded-2xl bg-[#eef7f2] text-[#1F6B43] flex items-center justify-center shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-        </svg>
-      </div>
-      <div>
-        <b class="svc-label text-slate-900 block">One Partner</b>
-        <span class="svc-caption text-slate-500 text-xs">ดูแลครบทุกขั้นตอนในที่เดียว</span>
-      </div>
-    </div>
-
-    <!-- 2. Faster to Market -->
-    <div class="flex items-center gap-4 lg:border-r lg:border-slate-100 pb-4 sm:pb-0 pr-4">
-      <div class="w-14 h-14 rounded-2xl bg-[#eef7f2] text-[#1F6B43] flex items-center justify-center shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
-          <circle cx="12" cy="12" r="9" stroke-linecap="round"/>
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 3"/>
-        </svg>
-      </div>
-      <div>
-        <b class="svc-label text-slate-900 block">Faster to Market</b>
-        <span class="svc-caption text-slate-500 text-xs">ลดเวลาในการพัฒนาและเปิดตัวสินค้า</span>
-      </div>
-    </div>
-
-    <!-- 3. Quality & Compliance -->
-    <div class="flex items-center gap-4 sm:border-r sm:border-slate-100 pb-4 sm:pb-0 pr-4">
-      <div class="w-14 h-14 rounded-2xl bg-[#eef7f2] text-[#1F6B43] flex items-center justify-center shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-        </svg>
-      </div>
-      <div>
-        <b class="svc-label text-slate-900 block">Quality &amp; Compliance</b>
-        <span class="svc-caption text-slate-500 text-xs">มาตรฐานสากล เชื่อถือได้</span>
-      </div>
-    </div>
-
-    <!-- 4. Business Impact -->
-    <div class="flex items-center gap-4">
-      <div class="w-14 h-14 rounded-2xl bg-[#eef7f2] text-[#1F6B43] flex items-center justify-center shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-        </svg>
-      </div>
-      <div>
-        <b class="svc-label text-slate-900 block">Business Impact</b>
-        <span class="svc-caption text-slate-500 text-xs">สร้างคุณค่าและความได้เปรียบในการแข่งขัน</span>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 
 <!-- ==========================================================================
