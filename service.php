@@ -566,9 +566,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <p class="text-sm lg:text-base text-slate-200 mt-4 max-w-lg leading-relaxed">
             ให้เราเป็นพาร์ทเนอร์ในการพัฒนาผลิตภัณฑ์ของคุณ ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
           </p>
-          <button data-modal-open class="bg-gold-bright hover:bg-[#C99700] active:scale-95 text-slate-900 font-extrabold text-sm uppercase px-8 py-3.5 rounded-xl shadow-lg shadow-gold-bright/20 inline-flex items-center gap-2 mt-8 transition duration-200">
+          <a href="<?php echo home_url('/'); ?>#contact" class="bg-gold-bright hover:bg-[#C99700] active:scale-95 text-slate-900 font-extrabold text-sm uppercase px-8 py-3.5 rounded-xl shadow-lg shadow-gold-bright/20 inline-flex items-center gap-2 mt-8 transition duration-200">
             <i class="fa-solid fa-comments"></i> Talk to Our Experts
-          </button>
+          </a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -612,90 +612,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <i class="fa-solid fa-arrow-up text-lg"></i>
 </button>
 
-<!-- ==========================================================================
-     Contact modal
-     ========================================================================== -->
-<div class="modal fixed inset-0 z-[99999] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm transition-all duration-300 opacity-0 pointer-events-none" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
-  <div class="modal__panel w-full max-w-xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto transform translate-y-8 transition-transform duration-300">
-    <button class="modal__close absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-50 border border-slate-100 text-slate-500 hover:text-slate-800 transition duration-200" type="button" data-modal-close aria-label="ปิดหน้าต่าง">
-      <i class="fa-solid fa-xmark text-lg"></i>
-    </button>
-
-    <h2 class="modal__title font-display font-extrabold text-brand text-2xl" id="modalTitle">Talk to Our Experts</h2>
-    <p class="modal__intro text-sm text-slate-500 mt-2">
-      ทิ้งรายละเอียดโครงการไว้ ทีมวิศวกรของเราจะติดต่อกลับภายใน 1 วันทำการ
-    </p>
-
-    <p class="form-status p-3 rounded-xl text-xs flex items-center gap-2 mt-4 hidden" id="formStatus" role="status" aria-live="polite">
-      <i class="fa-solid fa-circle-check text-base" id="formStatusIcon"></i>
-      <span id="formStatusText"></span>
-    </p>
-
-    <form id="contactForm" class="space-y-4 mt-6" novalidate>
-      <div class="field flex flex-col">
-        <label class="text-xs font-bold text-slate-700 mb-1" for="fullName">ชื่อ-นามสกุล / Full Name <span class="text-red-500" aria-hidden="true">*</span></label>
-        <input class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand transition duration-200" type="text" id="fullName" name="fullName" autocomplete="name" required
-               maxlength="120" placeholder="สมชาย ใจดี">
-        <span class="error text-red-500 text-[10px] mt-1 hidden" id="err-fullName">กรุณากรอกชื่อ-นามสกุล</span>
-      </div>
-
-      <div class="field flex flex-col">
-        <label class="text-xs font-bold text-slate-700 mb-1" for="email">อีเมลที่ทำงาน / Work Email <span class="text-red-500" aria-hidden="true">*</span></label>
-        <input class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand transition duration-200" type="email" id="email" name="email" autocomplete="email" required
-               maxlength="180" inputmode="email" spellcheck="false" placeholder="somchai@company.co.th">
-        <span class="error text-red-500 text-[10px] mt-1 hidden" id="err-email">กรุณากรอกอีเมลให้ถูกต้อง</span>
-      </div>
-
-      <div class="field flex flex-col">
-        <label class="text-xs font-bold text-slate-700 mb-1" for="phone">เบอร์โทรศัพท์ / Phone</label>
-        <input class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand transition duration-200" type="tel" id="phone" name="phone" autocomplete="tel"
-               inputmode="tel" maxlength="32" placeholder="081-234-5678">
-      </div>
-
-      <div class="field flex flex-col">
-        <label class="text-xs font-bold text-slate-700 mb-1" for="stage">ขั้นตอนที่ต้องการให้ช่วย / Where are you now?</label>
-        <select class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-brand transition duration-200" id="stage" name="stage">
-          <option value="">— เลือกขั้นตอน —</option>
-          <option>Concept &amp; Requirement</option>
-          <option>Design &amp; Engineering</option>
-          <option>Prototype</option>
-          <option>Verification &amp; Validation</option>
-          <option>Manufacturing / NPI</option>
-          <option>Mass Production</option>
-          <option>After-sales Support</option>
-        </select>
-      </div>
-
-      <div class="field flex flex-col">
-        <label class="text-xs font-bold text-slate-700 mb-1" for="message">รายละเอียดโครงการ / Project Scope</label>
-        <textarea class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand transition duration-200" id="message" name="message" rows="4" maxlength="2000"
-                  placeholder="เล่าให้เราฟังเกี่ยวกับผลิตภัณฑ์ ไทม์ไลน์ หรือความต้องการด้านวิศวกรรม..."></textarea>
-      </div>
-
-      <!-- Honeypot: bots fill this, humans never see it -->
-      <div class="field field--trap hidden" aria-hidden="true">
-        <label for="company_url">Company URL</label>
-        <input type="text" id="company_url" name="company_url" tabindex="-1" autocomplete="off">
-      </div>
-
-      <button class="w-full bg-gold-bright hover:bg-[#C99700] text-slate-900 font-extrabold text-sm uppercase py-3.5 rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2" type="submit">
-        <i class="fa-solid fa-paper-plane"></i>
-        <span>ส่งข้อมูลติดต่อ</span>
-      </button>
-
-      <p class="text-[10px] text-center text-slate-400 mt-2">
-        ข้อมูลของคุณจะถูกใช้เพื่อติดต่อกลับเท่านั้น
-      </p>
-    </form>
-  </div>
-</div>
-
 <!-- FOOTER CONTAINER -->
 <div id="footer-container" class="bg-ink w-full block"></div>
 
 <!-- Scripts -->
 <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
-<script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/wise-bohr-script.js') : './components/wise-bohr-script.js'; ?>" defer></script>
 <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/live-editor.js') : './components/live-editor.js'; ?>"></script>
 
 <?php wp_footer(); ?>
