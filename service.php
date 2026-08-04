@@ -564,15 +564,15 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </svg>
           </div>
           <!-- Title -->
-          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[36px] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[14px] xl:text-[15px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Concept &amp;<br>Requirement
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
           <!-- Bullet List -->
-          <div class="mt-2 w-full text-left text-[11.5px] sm:text-[12.5px] text-slate-600 space-y-1 font-medium leading-snug">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>วิเคราะห์ความต้องการ</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ศึกษาความเป็นไปได้</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>วางแผนโครงการ</span></div>
+          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>วิเคราะห์ความต้องการ</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ศึกษาความเป็นไปได้</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>วางแผนโครงการ</span></div>
           </div>
         </div>
 
@@ -585,14 +585,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <path stroke-linecap="round" stroke-linejoin="round" d="M12.5 7.5l3.5 3.5M6 15l3 3"/>
             </svg>
           </div>
-          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[36px] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[14px] xl:text-[15px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Product Design<br>&amp; Engineering
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[11.5px] sm:text-[12.5px] text-slate-600 space-y-1 font-medium leading-snug">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ออกแบบฮาร์ดแวร์/ซอฟต์แวร์</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>PCB &amp; Mechanical Design</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>Simulation &amp; Review</span></div>
+          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ออกแบบฮาร์ดแวร์/ซอฟต์แวร์</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>PCB &amp; Mechanical Design</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>Simulation &amp; Review</span></div>
           </div>
         </div>
 
@@ -604,14 +604,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
             </svg>
           </div>
-          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[36px] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[14px] xl:text-[15px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Prototype<br>Development
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[11.5px] sm:text-[12.5px] text-slate-600 space-y-1 font-medium leading-snug">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>สร้างต้นแบบ</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ทดสอบการทำงาน</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ปรับปรุงและยืนยันแบบ</span></div>
+          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>สร้างต้นแบบ</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ทดสอบการทำงาน</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ปรับปรุงและยืนยันแบบ</span></div>
           </div>
         </div>
 
@@ -623,14 +623,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
             </svg>
           </div>
-          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[36px] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[14px] xl:text-[15px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Verification &amp;<br>Validation
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[11.5px] sm:text-[12.5px] text-slate-600 space-y-1 font-medium leading-snug">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ทดสอบตามมาตรฐาน</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ตรวจสอบความปลอดภัย</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>รับรองประสิทธิภาพ</span></div>
+          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ทดสอบตามมาตรฐาน</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ตรวจสอบความปลอดภัย</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>รับรองประสิทธิภาพ</span></div>
           </div>
         </div>
 
@@ -642,14 +642,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V10l-6 3V10l-6 3V5H3v16h18zM8 17h3M8 13h3"/>
             </svg>
           </div>
-          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[36px] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[14px] xl:text-[15px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Manufacturing<br>(NPI)
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[11.5px] sm:text-[12.5px] text-slate-600 space-y-1 font-medium leading-snug">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>วางแผนการผลิต (NPI)</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>จัดหาและควบคุมคุณภาพ</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>เตรียมสายการผลิต</span></div>
+          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>วางแผนการผลิต (NPI)</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>จัดหาและควบคุมคุณภาพ</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>เตรียมสายการผลิต</span></div>
           </div>
         </div>
 
@@ -662,14 +662,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"/>
             </svg>
           </div>
-          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[36px] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[14px] xl:text-[15px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Mass<br>Production
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[11.5px] sm:text-[12.5px] text-slate-600 space-y-1 font-medium leading-snug">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ผลิตได้ตามมาตรฐานสากล</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ควบคุมคุณภาพทุกขั้นตอน</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>ตรวจสอบย้อนกลับได้</span></div>
+          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ผลิตได้ตามมาตรฐานสากล</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ควบคุมคุณภาพทุกขั้นตอน</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>ตรวจสอบย้อนกลับได้</span></div>
           </div>
         </div>
 
@@ -681,14 +681,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14v4m0 0L4 7m8 4v10M4 7v10l8 4"/>
             </svg>
           </div>
-          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[36px] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[14px] xl:text-[15px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             Delivery &amp;<br>Deployment
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[11.5px] sm:text-[12.5px] text-slate-600 space-y-1 font-medium leading-snug">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>จัดส่งตรงเวลา</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>สนับสนุนการติดตั้ง</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>เอกสารและการรับรอง</span></div>
+          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>จัดส่งตรงเวลา</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>สนับสนุนการติดตั้ง</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>เอกสารและการรับรอง</span></div>
           </div>
         </div>
 
@@ -696,18 +696,20 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="svc-step flex flex-col items-center text-center group px-2 lg:px-3">
           <span class="w-7 h-7 rounded-full bg-[#1F6B43] text-white flex items-center justify-center mb-3 shadow-sm z-10 shrink-0 font-extrabold text-xs">8</span>
           <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105 shadow-sm z-10">
+            <!-- Fixed Upright Headset / Support Headphone Icon -->
             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#1F6B43]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 0 1-14 0m14 0a3 3 0 0 0-3-3m3 3v3a2 2 0 0 1-2 2h-1M5 11a3 3 0 0 1 3-3m-3 3v3a2 2 0 0 0 2 2h1m5 4h2a2 2 0 0 0 2-2v-1"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3a9 9 0 0 0-9 9v4a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H4a7 7 0 0 1 14 0h-3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h1a3 3 0 0 0 3-3v-4a9 9 0 0 0-9-9z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19a3 3 0 0 1-6 0"/>
             </svg>
           </div>
-          <h3 class="font-extrabold text-[#1F6B43] text-[13px] sm:text-[14px] leading-snug min-h-[36px] flex items-center justify-center text-center">
+          <h3 class="font-extrabold text-[#1F6B43] text-[14px] xl:text-[15px] leading-snug min-h-[38px] flex items-center justify-center text-center">
             After-sales<br>Support
           </h3>
           <div class="w-7 h-[2px] bg-[#1F6B43] rounded-full my-2"></div>
-          <div class="mt-2 w-full text-left text-[11.5px] sm:text-[12.5px] text-slate-600 space-y-1 font-medium leading-snug">
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>บริการหลังการขาย</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>บำรุงรักษาและซ่อมบำรุง</span></div>
-            <div class="flex items-start gap-1"><span class="text-[#1F6B43] font-bold">•</span><span>อัปเดตและพัฒนาต่อเนื่อง</span></div>
+          <div class="mt-2 w-full text-left text-[13.5px] lg:text-[14px] xl:text-[14.5px] text-slate-900 space-y-1.5 font-bold leading-tight">
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>บริการหลังการขาย</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>บำรุงรักษาและซ่อมบำรุง</span></div>
+            <div class="flex items-start gap-1.5"><span class="text-[#1F6B43] font-black text-[16px] leading-none select-none">•</span><span>อัปเดตและพัฒนาต่อเนื่อง</span></div>
           </div>
         </div>
 
