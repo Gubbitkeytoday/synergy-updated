@@ -6,7 +6,6 @@ if (isset($_SERVER['REQUEST_URI']) && preg_match('/\.php\/+$/i', $_SERVER['REQUE
     exit();
 }
 if (!function_exists('get_template_directory_uri')) {
-    // Return direct path on local server to load assets
     function get_template_directory_uri() { return '.'; }
 }
 if (!function_exists('get_stylesheet_directory_uri')) {
@@ -157,10 +156,66 @@ if (file_exists(__DIR__ . '/functions.php')) {
     [style*="--reveal-delay:180ms"] { transition-delay: 180ms; }
     [style*="--reveal-delay:240ms"] { transition-delay: 240ms; }
 
-    /* Fluid heading scale to match about.php exactly */
-    #services-hero h1 {
+    /* ==========================================================================
+       PREMIUM CUSTOM SCOPED CSS (Protects font sizes from global conflicts)
+       ========================================================================== */
+    .svc-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px 6px 11px;
+      background: #f0f9f5 !important;
+      color: #1F6B43 !important;
+      border: 1px solid #d7efe6 !important;
+      border-radius: 9999px !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+    }
+    .svc-eyebrow::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #23862D !important;
+      box-shadow: 0 0 0 3px rgba(35, 134, 45, 0.2);
+    }
+    .svc-title {
+      font-family: 'Space Grotesk', sans-serif !important;
       font-size: clamp(32px, 5.2vw, 56px) !important;
-      line-height: 1.12 !important;
+      font-weight: 800 !important;
+      line-height: 1.15 !important;
+      color: #1F6B43 !important;
+      letter-spacing: -0.02em !important;
+    }
+    .svc-lede {
+      font-size: clamp(16px, 1.8vw, 21px) !important;
+      font-weight: 700 !important;
+      color: #23862D !important;
+      line-height: 1.45 !important;
+    }
+    .svc-copy {
+      font-family: 'Inter', sans-serif !important;
+      font-size: clamp(14px, 1.3vw, 16px) !important;
+      color: #5C6E65 !important;
+      line-height: 1.6 !important;
+    }
+    .svc-label {
+      font-size: clamp(14px, 1.2vw, 16px) !important;
+      font-weight: 700 !important;
+      color: #165031 !important;
+      line-height: 1.35 !important;
+    }
+    .svc-caption {
+      font-size: clamp(11.5px, 0.95vw, 13px) !important;
+      color: #5C6E65 !important;
+      line-height: 1.4 !important;
+    }
+    .svc-arch-list {
+      font-size: clamp(11px, 0.9vw, 12px) !important;
+      color: #5C6E65 !important;
+      line-height: 1.5 !important;
     }
 </style>
 
@@ -177,85 +232,77 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <!-- NAVBAR CONTAINER -->
 <div id="navbar-container"></div>
 
-<main id="main">
+<main id="main" class="overflow-x-hidden pt-20">
 
 <!-- ==========================================================================
      HERO SECTION (Exact two-column split layout, matching design image perfectly)
      ========================================================================== -->
-<!-- Top padding is intentionally small: components/scripts.js already applies
-     body{padding-top:80px} on every page to clear the fixed navbar. The pt-24/32/36
-     that used to be here stacked a SECOND clearance on top of it (lg:pt-36 = 9rem =
-     166px at this page's 18.5px root), which is where the empty band above the
-     eyebrow came from. -->
-<section id="services-hero" class="relative pt-6 pb-14 sm:pt-8 sm:pb-20 lg:pt-10 lg:pb-24 text-slate-900 bg-white overflow-x-hidden">
+<section id="services-hero" class="relative py-14 sm:py-20 lg:py-24 text-slate-900 bg-white">
   <!-- Dot Grid Overlay Effect for depth -->
   <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#1F6B43_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
   <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      
       <!-- Left side details (7 columns) -->
       <div class="space-y-6 lg:col-span-7">
         <!-- Eyebrow Pill -->
-        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f0f9f5] text-brand text-xs font-bold border border-[#d7efe6] uppercase" data-reveal>
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-bright animate-pulse"></span>
+        <span class="svc-eyebrow" data-reveal>
           Our Service
         </span>
 
         <!-- Title -->
-        <h1 class="font-display font-extrabold text-brand tracking-tight" data-reveal style="--reveal-delay:60ms">
+        <h1 class="svc-title" data-reveal style="--reveal-delay:60ms">
           End-to-End<br>Product Development
         </h1>
 
         <!-- Subtitle (Thai lede) -->
-        <p class="text-base sm:text-xl font-bold text-brand leading-relaxed" data-reveal style="--reveal-delay:120ms">
+        <p class="svc-lede" data-reveal style="--reveal-delay:120ms">
           พัฒนาผลิตภัณฑ์ครบวงจร ตั้งแต่แนวคิดจนพร้อมออกสู่ตลาด
         </p>
 
         <!-- Description (English copy) -->
-        <p class="text-slate-500 text-sm sm:text-base leading-relaxed max-w-xl font-normal" data-reveal style="--reveal-delay:180ms">
+        <p class="svc-copy" data-reveal style="--reveal-delay:180ms">
           We are your trusted engineering partner. From product design and prototyping to manufacturing and after-sales support, we deliver innovative, reliable, and market-ready solutions.
         </p>
 
         <!-- Props Row -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4" data-reveal style="--reveal-delay:240ms">
-          <div class="flex flex-col items-start text-left space-y-1.5">
+          <div class="flex flex-col items-start text-left space-y-2">
             <span class="text-brand text-2xl">
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             </span>
-            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">One Partner</b>
-            <p class="text-[10px] text-slate-500 leading-tight">ดูแลครบทุกขั้นตอน ในที่เดียว</p>
+            <b class="svc-label">One Partner</b>
+            <p class="svc-caption">ดูแลครบทุกขั้นตอน ในที่เดียว</p>
           </div>
-          <div class="flex flex-col items-start text-left space-y-1.5">
+          <div class="flex flex-col items-start text-left space-y-2">
             <span class="text-brand text-2xl">
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
             </span>
-            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Faster to Market</b>
-            <p class="text-[10px] text-slate-500 leading-tight">ลดเวลาในการพัฒนา และเปิดตัวสินค้า</p>
+            <b class="svc-label">Faster to Market</b>
+            <p class="svc-caption">ลดเวลาในการพัฒนา และเปิดตัวสินค้า</p>
           </div>
-          <div class="flex flex-col items-start text-left space-y-1.5">
+          <div class="flex flex-col items-start text-left space-y-2">
             <span class="text-brand text-2xl">
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.2"></circle></svg>
             </span>
-            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Quality &amp; Compliance</b>
-            <p class="text-[10px] text-slate-500 leading-tight">มาตรฐานสากล เชื่อถือได้</p>
+            <b class="svc-label">Quality &amp; Compliance</b>
+            <p class="svc-caption">มาตรฐานสากล เชื่อถือได้</p>
           </div>
-          <div class="flex flex-col items-start text-left space-y-1.5">
+          <div class="flex flex-col items-start text-left space-y-2">
             <span class="text-brand text-2xl">
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"></path></svg>
             </span>
-            <b class="text-brand-deep text-xs sm:text-sm font-extrabold">Business Impact</b>
-            <p class="text-[10px] text-slate-500 leading-tight">สร้างคุณค่าและความได้เปรียบ ในการแข่งขัน</p>
+            <b class="svc-label">Business Impact</b>
+            <p class="svc-caption">สร้างคุณค่าและความได้เปรียบ ในการแข่งขัน</p>
           </div>
         </div>
       </div>
 
-      <!-- Right side media (5 columns) — now simply fills its track, since the bleed is
-           handled once by .hero-bleed on the row instead of per item. -->
-      <div class="flex justify-center lg:justify-end items-center w-full lg:col-span-5" data-reveal style="--reveal-delay:120ms">
+      <!-- Right side media (5 columns) -->
+      <div class="flex justify-center items-center w-full lg:col-span-5" data-reveal style="--reveal-delay:120ms">
         <img src="<?php echo get_template_directory_uri(); ?>/Home.png" alt="ภาพรวมบริการพัฒนาผลิตภัณฑ์ครบวงจรของ Syntech"
-             loading="eager" fetchpriority="high" decoding="async"
-             class="w-full h-auto max-h-[400px] sm:max-h-[500px] xl:max-h-[600px] object-contain">
+             class="w-full h-auto max-h-[500px] object-contain">
       </div>
 
     </div>
@@ -263,7 +310,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 </section>
 
 <!-- ==========================================================================
-     WHY CHOOSE SECTION (No outer card wrappers, clean fluid grid)
+     WHY CHOOSE SECTION
      ========================================================================== -->
 <section id="why-us" class="py-16 bg-[#f8faf9] border-b border-slate-100 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 relative z-10">
@@ -280,36 +327,36 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
           </span>
-          <b class="text-brand text-xs sm:text-sm font-extrabold">Engineering Excellence</b>
-          <p class="text-[10px] text-slate-500 leading-tight">ทีมวิศวกรผู้เชี่ยวชาญ และมีประสบการณ์</p>
+          <b class="svc-label">Engineering Excellence</b>
+          <p class="svc-caption">ทีมวิศวกรผู้เชี่ยวชาญ และมีประสบการณ์</p>
         </div>
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10l9-5 9 5-9 5-9-5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M3 14l9 5 9-5"></path><path stroke-linecap="round" stroke-linejoin="round" d="M3 18l9 5 9-5"></path></svg>
           </span>
-          <b class="text-brand text-xs sm:text-sm font-extrabold">End-to-End Solutions</b>
-          <p class="text-[10px] text-slate-500 leading-tight">ครบทุกขั้นตอนตั้งแต่ ออกแบบจนส่งมอบ</p>
+          <b class="svc-label">End-to-End Solutions</b>
+          <p class="svc-caption">ครบทุกขั้นตอนตั้งแต่ ออกแบบจนส่งมอบ</p>
         </div>
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"></path></svg>
           </span>
-          <b class="text-brand text-xs sm:text-sm font-extrabold">Scalable Production</b>
-          <p class="text-[10px] text-slate-500 leading-tight">รองรับการผลิตตั้งแต่ ต้นแบบถึงจำนวนมาก</p>
+          <b class="svc-label">Scalable Production</b>
+          <p class="svc-caption">รองรับการผลิตตั้งแต่ ต้นแบบถึงจำนวนมาก</p>
         </div>
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-4-8a15.3 15.3 0 0 1 4 8 15.3 15.3 0 0 1-4 8 15.3 15.3 0 0 1-4-8 15.3 15.3 0 0 1 4-8z"></path></svg>
           </span>
-          <b class="text-brand text-xs sm:text-sm font-extrabold">Global Standards</b>
-          <p class="text-[10px] text-slate-500 leading-tight">มาตรฐานการผลิตและ คุณภาพระดับสากล</p>
+          <b class="svc-label">Global Standards</b>
+          <p class="svc-caption">มาตรฐานการผลิตและ คุณภาพระดับสากล</p>
         </div>
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand text-3xl">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="5"></circle><circle cx="15.5" cy="12" r="5"></circle></svg>
           </span>
-          <b class="text-brand text-xs sm:text-sm font-extrabold">Long-term Partnership</b>
-          <p class="text-[10px] text-slate-500 leading-tight">เป็นพาร์ทเนอร์ระยะยาว ที่ธุรกิจไว้วางใจ</p>
+          <b class="svc-label">Long-term Partnership</b>
+          <p class="svc-caption">เป็นพาร์ทเนอร์ระยะยาว ที่ธุรกิจไว้วางใจ</p>
         </div>
       </div>
 
@@ -342,7 +389,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
         </span>
         <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Concept &amp;<br>Requirement</h3>
-        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
+        <ul class="svc-arch-list text-left space-y-1 mt-2 list-disc pl-3">
           <li>วิเคราะห์ความต้องการ</li>
           <li>ศึกษาความเป็นไปได้</li>
           <li>วางแผนโครงการ</li>
@@ -356,7 +403,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
         </span>
         <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Product Design<br>&amp; Engineering</h3>
-        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
+        <ul class="svc-arch-list text-left space-y-1 mt-2 list-disc pl-3">
           <li>ออกแบบฮาร์ดแวร์/ซอฟต์แวร์</li>
           <li>PCB &amp; Mechanical Design</li>
           <li>Simulation &amp; Review</li>
@@ -370,7 +417,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
         </span>
         <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Prototype<br>Development</h3>
-        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
+        <ul class="svc-arch-list text-left space-y-1 mt-2 list-disc pl-3">
           <li>สร้างต้นแบบ</li>
           <li>ทดสอบการทำงาน</li>
           <li>ปรับปรุงและยืนยันแบบ</li>
@@ -384,7 +431,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path></svg>
         </span>
         <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Verification &amp;<br>Validation</h3>
-        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
+        <ul class="svc-arch-list text-left space-y-1 mt-2 list-disc pl-3">
           <li>ทดสอบตามมาตรฐาน</li>
           <li>ตรวจสอบความปลอดภัย</li>
           <li>รับรองประสิทธิภาพ</li>
@@ -398,7 +445,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 20h20M4 20V10l5 3V10l5 3V7l6 4v9M8 20v-4h3v4"></path></svg>
         </span>
         <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Manufacturing<br>(NPI)</h3>
-        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
+        <ul class="svc-arch-list text-left space-y-1 mt-2 list-disc pl-3">
           <li>วางแผนการผลิต (NPI)</li>
           <li>จัดหาและควบคุมคุณภาพ</li>
           <li>เตรียมสายการผลิต</li>
@@ -412,7 +459,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"></path></svg>
         </span>
         <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Mass<br>Production</h3>
-        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
+        <ul class="svc-arch-list text-left space-y-1 mt-2 list-disc pl-3">
           <li>ผลิตด้วยมาตรฐานสากล</li>
           <li>ควบคุมคุณภาพทุกขั้นตอน</li>
           <li>ตรวจสอบย้อนกลับได้</li>
@@ -426,7 +473,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14v4m0 0L4 7m8 4v10M4 7v10l8 4"></path></svg>
         </span>
         <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">Delivery &amp;<br>Deployment</h3>
-        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
+        <ul class="svc-arch-list text-left space-y-1 mt-2 list-disc pl-3">
           <li>จัดส่งตรงเวลา</li>
           <li>สนับสนุนการติดตั้ง</li>
           <li>เอกสารและการรับรอง</li>
@@ -440,7 +487,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 0 0 2-2V9a6 6 0 1 0-12 0v10a2 2 0 0 0 2 2z"></path></svg>
         </span>
         <h3 class="font-extrabold text-brand text-xs leading-tight min-h-[36px] flex items-center justify-center">After-sales<br>Support</h3>
-        <ul class="text-[10px] text-slate-500 text-left space-y-1 mt-2 list-disc pl-3">
+        <ul class="svc-arch-list text-left space-y-1 mt-2 list-disc pl-3">
           <li>บริการหลังการขาย</li>
           <li>บำรุงรักษาและซ่อมบำรุง</li>
           <li>อัปเดตและพัฒนาต่อเนื่อง</li>
@@ -452,7 +499,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 </section>
 
 <!-- ==========================================================================
-     CAPABILITIES SECTION (No outer cards, unified style)
+     CAPABILITIES SECTION
      ========================================================================== -->
 <section id="capabilities" class="py-16 bg-[#f8faf9] border-t border-b border-slate-100">
   <div class="max-w-7xl mx-auto px-6">
@@ -468,8 +515,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 0 0-1.022-.547l-2.387-.477a6 6 0 0 0-3.86.517l-.318.158a6 6 0 0 1-3.86.517L6.05 15.23a2 2 0 0 0-1.806.547M8 4h8l-1 1v5.242a2 2 0 0 0 .586 1.414l3.828 3.828A2 2 0 0 1 18.005 20H5.995a2 2 0 0 1-1.414-3.414l3.828-3.828A2 2 0 0 0 9 11.342V5L8 4z"></path></svg>
             </span>
             <div>
-              <b class="text-brand text-sm sm:text-base font-extrabold">R&amp;D and Product Innovation</b>
-              <p class="text-xs text-slate-500 mt-1">วิจัยและพัฒนาผลิตภัณฑ์ นวัตกรรม</p>
+              <b class="svc-label">R&amp;D and Product Innovation</b>
+              <p class="svc-caption">วิจัยและพัฒนาผลิตภัณฑ์ นวัตกรรม</p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -477,8 +524,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
             </span>
             <div>
-              <b class="text-brand text-sm sm:text-base font-extrabold">Mechanical Design &amp; Simulation</b>
-              <p class="text-xs text-slate-500 mt-1">ออกแบบโครงสร้างและจำลองการทำงาน</p>
+              <b class="svc-label">Mechanical Design &amp; Simulation</b>
+              <p class="svc-caption">ออกแบบโครงสร้างและจำลองการทำงาน</p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -486,8 +533,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
             </span>
             <div>
-              <b class="text-brand text-sm sm:text-base font-extrabold">Hardware &amp; Software Development</b>
-              <p class="text-xs text-slate-500 mt-1">พัฒนาฮาร์ดแวร์และซอฟต์แวร์</p>
+              <b class="svc-label">Hardware &amp; Software Development</b>
+              <p class="svc-caption">พัฒนาฮาร์ดแวร์และซอฟต์แวร์</p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -495,8 +542,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v10m-6-6v-6m0 6a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v4m12-4v-10m0 10a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 2v4"></path></svg>
             </span>
             <div>
-              <b class="text-brand text-sm sm:text-base font-extrabold">Box Build &amp; System Integration</b>
-              <p class="text-xs text-slate-500 mt-1">ประกอบและรวมระบบ</p>
+              <b class="svc-label">Box Build &amp; System Integration</b>
+              <p class="svc-caption">ประกอบและรวมระบบ</p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -504,8 +551,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4M9 9h6v6H9z"></path></svg>
             </span>
             <div>
-              <b class="text-brand text-sm sm:text-base font-extrabold">PCB Design &amp; PCBA Manufacturing</b>
-              <p class="text-xs text-slate-500 mt-1">ออกแบบและผลิตแผงวงจรอิเล็กทรอนิกส์</p>
+              <b class="svc-label">PCB Design &amp; PCBA Manufacturing</b>
+              <p class="svc-caption">ออกแบบและผลิตแผงวงจรอิเล็กทรอนิกส์</p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -513,8 +560,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4"></path></svg>
             </span>
             <div>
-              <b class="text-brand text-sm sm:text-base font-extrabold">Certification &amp; Compliance</b>
-              <p class="text-xs text-slate-500 mt-1">มาตรฐานและการรับรองผลิตภัณฑ์</p>
+              <b class="svc-label">Certification &amp; Compliance</b>
+              <p class="svc-caption">มาตรฐานและการรับรองผลิตภัณฑ์</p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -522,8 +569,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
             </span>
             <div>
-              <b class="text-brand text-sm sm:text-base font-extrabold">Testing &amp; Quality Assurance</b>
-              <p class="text-xs text-slate-500 mt-1">ทดสอบและควบคุมคุณภาพ</p>
+              <b class="svc-label">Testing &amp; Quality Assurance</b>
+              <p class="svc-caption">ทดสอบและควบคุมคุณภาพ</p>
             </div>
           </div>
           <div class="flex items-start gap-3">
@@ -531,8 +578,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM19 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10M13 16h6m-6 0H9m10 0v-4a1 1 0 0 0-1-1h-3M19 16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1h-2v9"></path></svg>
             </span>
             <div>
-              <b class="text-brand text-sm sm:text-base font-extrabold">Supply Chain Management</b>
-              <p class="text-xs text-slate-500 mt-1">บริหารจัดการซัพพลายเชน</p>
+              <b class="svc-label">Supply Chain Management</b>
+              <p class="svc-caption">บริหารจัดการซัพพลายเชน</p>
             </div>
           </div>
         </div>

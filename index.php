@@ -2011,13 +2011,13 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- Left: Text Info -->
         <div>
           <span class="text-brand text-xs font-700 tracking-[0.2em] uppercase block mb-3">
-            <span class="lang-th">ลูกค้าของเรา</span>
-            <span class="lang-en">OUR CUSTOMERS</span>
+            <span class="lang-th">ขอบคุณในความเชื่อมั่น</span>
+            <span class="lang-en">TRUSTED BY OUR CUSTOMERS &amp; PARTNERS</span>
           </span>
           <h2
             class="font-display font-800 text-3xl sm:text-4xl lg:text-[44px] text-ink tracking-tight leading-[1.2] mb-4">
-            <span class="lang-th">ได้รับความไว้วางใจจากลูกค้า</span>
-            <span class="lang-en">Trusted by Our Customers</span>
+            <span class="lang-th">ที่ได้รับความไว้วางใจ<br class="hidden sm:inline">จากลูกค้า<span class="inline-block">และพาร์ทเนอร์</span></span>
+            <span class="lang-en">Thank you for the confidence and trust you place in us.</span>
           </h2>
           <p class="text-lg sm:text-xl font-400 text-body leading-relaxed mb-6">
             <span class="lang-th">ทุกโครงการเริ่มต้นจากความไว้วางใจ เรามุ่งมั่นส่งมอบงานวิศวกรรมที่เชื่อถือได้
@@ -2505,7 +2505,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="max-w-none mx-auto text-center py-2 pb-4">
             <div class="flex items-center justify-center mb-3">
               <h2 class="font-display font-800 text-xl sm:text-2xl text-brand uppercase tracking-wider text-center">
-                <span class="lang-th">นโยบายคุณภาพ (QUALITY POLICY)</span>
+                <span class="lang-th">นโยบายคุณภาพ</span>
                 <span class="lang-en">QUALITY POLICY</span>
               </h2>
             </div>
