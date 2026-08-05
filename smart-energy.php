@@ -568,6 +568,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- โลโก้ลูกค้า -->
       <div class="se-logos">
         <img src="<?php echo get_template_directory_uri(); ?>/image/NIDA_WISDOM.png" alt="NIDA WISDOM for Change" title="NIDA" loading="lazy">
+        <img src="<?php echo get_template_directory_uri(); ?>/images/nida-logo.jpg" alt="NIDA Smart Energy Project" title="NIDA Project" loading="lazy">
         <img src="<?php echo get_template_directory_uri(); ?>/image/SANSIRI.png" alt="SANSIRI" title="San Siri" loading="lazy">
         <img src="<?php echo get_template_directory_uri(); ?>/image/Valuation_Engineering.png" alt="Valuation Engineering" title="VALUATION ENGINEERING" loading="lazy">
       </div>
