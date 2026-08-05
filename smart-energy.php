@@ -1165,12 +1165,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <!-- 2 Vertical Dashed SVG Node Connectors connecting Gateway up to Energy Engine -->
           <div class="h-9 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="16.66%" y1="36" x2="12.5%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <circle cx="12.5%" cy="6" r="3.5" fill="#1F6B43" />
+              <line x1="16.66%" y1="36" x2="16.66%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <circle cx="16.66%" cy="6" r="3.5" fill="#1F6B43" />
               <circle cx="16.66%" cy="36" r="3.5" fill="#1F6B43" />
 
-              <line x1="83.33%" y1="36" x2="87.5%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <circle cx="87.5%" cy="6" r="3.5" fill="#1F6B43" />
+              <line x1="83.33%" y1="36" x2="83.33%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <circle cx="83.33%" cy="6" r="3.5" fill="#1F6B43" />
               <circle cx="83.33%" cy="36" r="3.5" fill="#1F6B43" />
             </svg>
           </div>
@@ -1182,35 +1182,29 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
 
           <!-- Tier 3 — Energy Gateway -->
-          <div class="sea-tier">
+          <div class="sea-tier relative">
             <div class="sea-label">
               <span class="lang-th">เกตเวย์พลังงาน</span>
               <span class="lang-en">Energy Gateway</span>
             </div>
-            <div class="sea-gw flex items-center justify-between gap-2 sm:gap-4">
-              <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-1.png" alt="Energy Gateway 1"></div>
-              
-              <!-- SVG Dashed Line 1 to 2 -->
-              <div class="flex-none flex items-center justify-center w-12 sm:w-20">
-                <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
-                  <line x1="0" y1="8" x2="100%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-                  <circle cx="0" cy="8" r="3" fill="#1F6B43" />
-                  <circle cx="100%" cy="8" r="3" fill="#1F6B43" />
-                </svg>
-              </div>
 
-              <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-2.png" alt="Energy Gateway 2"></div>
-              
-              <!-- SVG Dashed Line 2 to 3 -->
-              <div class="flex-none flex items-center justify-center w-12 sm:w-20">
-                <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
-                  <line x1="0" y1="8" x2="100%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-                  <circle cx="0" cy="8" r="3" fill="#1F6B43" />
-                  <circle cx="100%" cy="8" r="3" fill="#1F6B43" />
-                </svg>
-              </div>
+            <!-- SVG Dashed Lines Connecting Gateway 1 -> 2 -> 3 -->
+            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:block z-0 px-[16.66%]">
+              <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
+                <line x1="15%" y1="8" x2="35%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+                <circle cx="15%" cy="8" r="3" fill="#1F6B43" />
+                <circle cx="35%" cy="8" r="3" fill="#1F6B43" />
 
-              <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-3.png" alt="Energy Gateway 3"></div>
+                <line x1="65%" y1="8" x2="85%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+                <circle cx="65%" cy="8" r="3" fill="#1F6B43" />
+                <circle cx="85%" cy="8" r="3" fill="#1F6B43" />
+              </svg>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 relative z-10">
+              <div class="flex justify-center items-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-1.png" alt="Energy Gateway 1" class="max-w-[106px] w-full h-auto"></div>
+              <div class="flex justify-center items-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-2.png" alt="Energy Gateway 2" class="max-w-[106px] w-full h-auto"></div>
+              <div class="flex justify-center items-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-3.png" alt="Energy Gateway 3" class="max-w-[106px] w-full h-auto"></div>
             </div>
           </div>
 
