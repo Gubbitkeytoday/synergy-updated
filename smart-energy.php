@@ -1165,8 +1165,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <!-- 2 Vertical Dashed SVG Arrows connecting Gateway up to Energy Engine -->
           <div class="h-9 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="16.66%" y1="36" x2="16.66%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
-              <line x1="83.33%" y1="36" x2="83.33%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+              <line x1="16.66%" y1="36" x2="12.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+              <line x1="83.33%" y1="36" x2="87.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
             </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
