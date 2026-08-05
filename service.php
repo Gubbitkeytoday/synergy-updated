@@ -535,13 +535,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- 5-up from sm gave each item 129px on an iPad, which cannot hold a 16.5px label.
            3-up through the tablet range, 5-up only once there is room for it. -->
       <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-x-5 gap-y-8">
-        <div class="flex flex-col items-center text-center space-y-2">
-          <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          </span>
-          <b class="svc-label svc-titlebox svc-titlebox--center">Engineering Excellence</b>
-          <p class="svc-caption"><span class="lang-en">Expert engineering team with proven industry experience.</span><span class="lang-th">ทีมวิศวกรผู้เชี่ยวชาญ และมีประสบการณ์</span></p>
-        </div>
+        
+        <!-- 1. End-to-End Solutions -->
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10l9-5 9 5-9 5-9-5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M3 14l9 5 9-5"></path><path stroke-linecap="round" stroke-linejoin="round" d="M3 18l9 5 9-5"></path></svg>
@@ -549,13 +544,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <b class="svc-label svc-titlebox svc-titlebox--center">End-to-End Solutions</b>
           <p class="svc-caption"><span class="lang-en">From concept and design to manufacturing and after-sales support.</span><span class="lang-th">ครบทุกขั้นตอนตั้งแต่ ออกแบบจนส่งมอบ</span></p>
         </div>
-        <div class="flex flex-col items-center text-center space-y-2">
-          <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"></path></svg>
-          </span>
-          <b class="svc-label svc-titlebox svc-titlebox--center">Scalable Production</b>
-          <p class="svc-caption"><span class="lang-en">Supporting prototype, pilot, and mass production.</span><span class="lang-th">รองรับการผลิตตั้งแต่ ต้นแบบถึงจำนวนมาก</span></p>
-        </div>
+
+        <!-- 2. Global Standards -->
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-4-8a15.3 15.3 0 0 1 4 8 15.3 15.3 0 0 1-4 8 15.3 15.3 0 0 1-4-8 15.3 15.3 0 0 1 4-8z"></path></svg>
@@ -563,6 +553,26 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <b class="svc-label svc-titlebox svc-titlebox--center">Global Standards</b>
           <p class="svc-caption"><span class="lang-en">Compliant with international quality and manufacturing standards.</span><span class="lang-th">มาตรฐานการผลิตและ คุณภาพระดับสากล</span></p>
         </div>
+
+        <!-- 3. Engineering Excellence -->
+        <div class="flex flex-col items-center text-center space-y-2">
+          <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </span>
+          <b class="svc-label svc-titlebox svc-titlebox--center">Engineering Excellence</b>
+          <p class="svc-caption"><span class="lang-en">Expert engineering team with proven industry experience.</span><span class="lang-th">ทีมวิศวกรผู้เชี่ยวชาญ และมีประสบการณ์</span></p>
+        </div>
+
+        <!-- 4. Scalable Production -->
+        <div class="flex flex-col items-center text-center space-y-2">
+          <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"></path></svg>
+          </span>
+          <b class="svc-label svc-titlebox svc-titlebox--center">Scalable Production</b>
+          <p class="svc-caption"><span class="lang-en">Supporting prototype, pilot, and mass production.</span><span class="lang-th">รองรับการผลิตตั้งแต่ ต้นแบบถึงจำนวนมาก</span></p>
+        </div>
+
+        <!-- 5. Long-term Partnership -->
         <div class="flex flex-col items-center text-center space-y-2">
           <span class="w-12 h-12 flex items-center justify-center text-brand leading-none">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="8.5" cy="12" r="5"></circle><circle cx="15.5" cy="12" r="5"></circle></svg>
@@ -570,6 +580,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <b class="svc-label svc-titlebox svc-titlebox--center">Long-term Partnership</b>
           <p class="svc-caption"><span class="lang-en">Building trusted partnerships that grow with your business.</span><span class="lang-th">เป็นพาร์ทเนอร์ระยะยาว ที่ธุรกิจไว้วางใจ</span></p>
         </div>
+
       </div>
 
     </div>
