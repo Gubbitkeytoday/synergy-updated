@@ -970,336 +970,453 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- ================= 5. สถาปัตยกรรมแพลตฟอร์ม SYNEXTA ENERGY ================= -->
-  <section id="energy-platform" class="py-12 sm:py-16 bg-[#f6f8f7] border-y border-slate-100" style="scroll-margin-top:96px">
+  <section id="energy-platform" class="py-12 sm:py-16 bg-[#f4f7f5] border-y border-slate-200/80" style="scroll-margin-top:96px">
     <div class="se-shell">
-      <div class="sea">
 
-        <!-- ═══════════ LEFT: heading + the four platform features ═══════════ -->
-        <div>
-          <p class="se-eyebrow mb-3">
-            <span class="lang-th">แพลตฟอร์ม SYNEXTA ENERGY</span>
-            <span class="lang-en">SYNEXTA ENERGY PLATFORM</span>
-          </p>
-          <!-- หัวข้อ -->
-          <h2 class="se-h2 font-display text-ink">
-            <span class="lang-th">แพลตฟอร์มเดียว<br>บริหารพลังงาน<span class="se-accent">ทุกไซต์งาน</span></span>
-            <span class="lang-en">One Platform.<br><span class="se-accent">Every Site.</span></span>
-          </h2>
-          <div class="sea-rule"></div>
-
-          <ul class="sea-feats">
-
-            <!-- 1. รองรับ Inverter หลายแบรนด์ -->
-            <li class="sea-feat">
-              <span class="sea-feat-i" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="3.1"/>
-                  <path d="M12 2.4v3M12 18.5v3M2.4 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/>
-                </svg>
-              </span>
-              <div>
-                <div class="sea-feat-t">
-                  <span class="lang-th">รองรับ Inverter หลายแบรนด์</span>
-                  <span class="lang-en">Multi-brand Inverter Integration</span>
-                </div>
-                <p class="sea-feat-p">
-                  <span class="lang-th">เชื่อมต่ออินเวอร์เตอร์แบรนด์หลักได้ทั้งหมด ทั้ง Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis และแบรนด์อื่น ๆ ไว้ในแพลตฟอร์มเดียว</span>
-                  <span class="lang-en">Connect all major inverter brands — Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis and more — into one unified platform.</span>
-                </p>
-              </div>
-            </li>
-
-            <!-- 2. บริหารจัดการหลายไซต์ -->
-            <li class="sea-feat">
-              <span class="sea-feat-i" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 21h18M5 21V8.6l5.4-3.4V21M14 21V10.4l5 2.6V21"/>
-                  <path d="M7.6 11.4h.9M7.6 14.4h.9M16.4 15.6h.9"/>
-                </svg>
-              </span>
-              <div>
-                <div class="sea-feat-t">
-                  <span class="lang-th">บริหารจัดการหลายไซต์</span>
-                  <span class="lang-en">Multi-site Management</span>
-                </div>
-                <p class="sea-feat-p">
-                  <span class="lang-th">ติดตามไซต์งาน โรงงาน สาขา และระบบ Solar ได้ไม่จำกัดจำนวน จากศูนย์กลางเดียว</span>
-                  <span class="lang-en">Monitor unlimited sites, factories, branches and solar installations.</span>
-                </p>
-              </div>
-            </li>
-
-            <!-- 3. ติดตั้งได้ยืดหยุ่น -->
-            <li class="sea-feat">
-              <span class="sea-feat-i" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M6.6 18.4h10.9a3.6 3.6 0 0 0 .5-7.16 5.4 5.4 0 0 0-10.4-1.5A4.35 4.35 0 0 0 6.6 18.4Z"/>
-                </svg>
-              </span>
-              <div>
-                <div class="sea-feat-t">
-                  <span class="lang-th">ติดตั้งได้ยืดหยุ่น</span>
-                  <span class="lang-en">Flexible Deployment</span>
-                </div>
-                <p class="sea-feat-p">
-                  <span class="lang-th">เลือกติดตั้งแบบ Cloud, On-Premise หรือ Hybrid ได้ตามนโยบายด้าน IT ขององค์กร</span>
-                  <span class="lang-en">Cloud, On-Premise or Hybrid deployment to fit your IT policy.</span>
-                </p>
-              </div>
-            </li>
-
-            <!-- 4. เชื่อมต่อระบบอื่นได้ -->
-            <li class="sea-feat">
-              <span class="sea-feat-i" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2.7l7.4 3v5.6c0 4.5-3 8.3-7.4 9.9-4.4-1.6-7.4-5.4-7.4-9.9V5.7l7.4-3Z"/>
-                  <path d="M9.3 12.1l1.9 1.9 3.6-3.7"/>
-                </svg>
-              </span>
-              <div>
-                <div class="sea-feat-t">
-                  <span class="lang-th">เชื่อมต่อระบบอื่นได้</span>
-                  <span class="lang-en">Open Integration</span>
-                </div>
-                <p class="sea-feat-p">
-                  <span class="lang-th">เชื่อมต่อกับ ERP, BMS, CMMS และระบบอื่น ๆ ขององค์กรได้ผ่าน Open API</span>
-                  <span class="lang-en">Seamlessly integrate with ERP, BMS, CMMS and other systems via open API.</span>
-                </p>
-              </div>
-            </li>
-
-          </ul>
-        </div>
-
-        <!-- ═══════════ CENTRE: the architecture stack ═══════════ -->
-        <div class="sea-stack">
-
-          <!-- Tier 1 — Enterprise Dashboard -->
-          <div class="sea-tier">
-            <div class="sea-label">
-              <span class="lang-th">แดชบอร์ดสำหรับองค์กร</span>
-              <span class="lang-en">Enterprise Dashboard</span>
-            </div>
-            <div class="sea-row">
-              <div class="sea-cell">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <rect x="3" y="3" width="7.4" height="7.4" rx="1.6"/><rect x="13.6" y="3" width="7.4" height="7.4" rx="1.6"/>
-                  <rect x="3" y="13.6" width="7.4" height="7.4" rx="1.6"/><rect x="13.6" y="13.6" width="7.4" height="7.4" rx="1.6"/>
-                </svg>
-                <div class="sea-cell-t"><span class="lang-th">ภาพรวม</span><span class="lang-en">Overview</span></div>
-              </div>
-              <div class="sea-cell">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M3 21h18M5 21V6.4l6-2.6V21M15 21v-9.4l4.6 2V21"/><path d="M7.7 9h.8M7.7 12h.8M7.7 15h.8"/>
-                </svg>
-                <div class="sea-cell-t"><span class="lang-th">ไซต์งาน</span><span class="lang-en">Sites</span></div>
-              </div>
-              <div class="sea-cell">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M6.4 2.8h7.2L18.6 8v13.2H6.4V2.8Z"/><path d="M13.4 2.8V8h5.2"/><path d="M9.2 12.4h6M9.2 16h4.2"/>
-                </svg>
-                <div class="sea-cell-t"><span class="lang-th">รายงาน</span><span class="lang-en">Reports</span></div>
-              </div>
-              <div class="sea-cell">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M18 16.4V11a6 6 0 1 0-12 0v5.4L4.4 18.6h15.2L18 16.4Z"/><path d="M10.2 21.4h3.6"/>
-                </svg>
-                <div class="sea-cell-t"><span class="lang-th">การแจ้งเตือน</span><span class="lang-en">Alerts</span></div>
-              </div>
-              <div class="sea-cell">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M3.4 17.6l5-5.6 3.6 2.8 4-5.2 4.6-2.6"/><path d="M16.4 7h4.2v4.2"/>
-                </svg>
-                <div class="sea-cell-t"><span class="lang-th">วิเคราะห์ข้อมูล</span><span class="lang-en">Analytics</span></div>
-              </div>
-              <div class="sea-cell">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <circle cx="9.2" cy="8.4" r="3.4"/><path d="M3.2 20.2a6 6 0 0 1 12 0"/>
-                  <path d="M16.2 5.4a3.2 3.2 0 0 1 0 6M18.6 20.2a5.9 5.9 0 0 0-2.2-4.6"/>
-                </svg>
-                <div class="sea-cell-t"><span class="lang-th">ผู้ใช้งาน</span><span class="lang-en">Users</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tier 2 — SynExta Energy Engine -->
-          <div class="sea-engine">
-            <div class="sea-engine-t">SynExta Energy Engine</div>
-            <div class="sea-eng-grid">
-              <div class="sea-eng-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <rect x="3.4" y="5.4" width="17.2" height="13.2" rx="3"/>
-                  <path d="M8.4 15V11l1.8 2.6L12 11v4M15 11v4h2.6"/>
-                </svg>
-                <span>AI Analytics</span>
-              </div>
-              <div class="sea-eng-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M6.4 2.8h7.2L18.6 8v13.2H6.4V2.8Z"/><path d="M13.4 2.8V8h5.2"/>
-                  <path d="M9.4 13.4l1.6 1.6 3.4-3.4"/>
-                </svg>
-                <span>Rule Engine</span>
-              </div>
-              <div class="sea-eng-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <rect x="3.4" y="4" width="17.2" height="16" rx="2.6"/>
-                  <path d="M8 15.6V11M12 15.6V8.4M16 15.6v-3"/>
-                </svg>
-                <span>Energy Analytics</span>
-              </div>
-              <div class="sea-eng-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M17.6 15.4V11a5.6 5.6 0 1 0-11.2 0v4.4L5 17.4h14l-1.4-2Z"/>
-                  <path d="M10.4 20.2h3.2"/><circle cx="18.4" cy="6.2" r="2.6"/>
-                </svg>
-                <span>Alert Engine</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2 Vertical Dashed SVG Arrows connecting Gateway up to Energy Engine -->
-          <div class="h-9 relative my-1 hidden sm:block">
-            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <defs>
-                <marker id="sea-up-arrow" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
-                </marker>
-              </defs>
-              <line id="sea-line-left-v" x1="16.66%" y1="36" x2="12.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
-              <line id="sea-line-right-v" x1="83.33%" y1="36" x2="87.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
-            </svg>
-          </div>
-          <div class="h-6 relative my-1 block sm:hidden">
-            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="50%" y1="24" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
-            </svg>
-          </div>
-
-          <!-- Tier 3 — Energy Gateway -->
-          <div class="sea-tier relative">
-            <div class="sea-label">
-              <span class="lang-th">เกตเวย์พลังงาน</span>
-              <span class="lang-en">Energy Gateway</span>
-            </div>
-
-            <!-- SVG Dashed Lines Connecting Gateway 1 <-> 2 <-> 3 -->
-            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:block z-0 px-[16.66%]">
-              <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
-                <defs>
-                  <marker id="sea-left-arrow" viewBox="0 0 10 10" refX="1.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                    <path d="M 8.5 1.5 L 1.5 5 L 8.5 8.5 z" fill="#1F6B43" />
-                  </marker>
-                  <marker id="sea-right-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                    <path d="M 1.5 1.5 L 8.5 5 L 1.5 8.5 z" fill="#1F6B43" />
-                  </marker>
-                </defs>
-                <line id="sea-line-gw-12" x1="12%" y1="8" x2="38%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
-                <line id="sea-line-gw-23" x1="62%" y1="8" x2="88%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
+      <!-- MASTER CARD CANVAS -->
+      <div class="bg-white rounded-[28px] border border-slate-200/90 p-5 sm:p-8 shadow-xl shadow-slate-200/50 relative overflow-hidden">
+        
+        <!-- BRAND HEADER INSIDE CONTAINER -->
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center text-white shadow-sm">
+              <!-- SYNEXTA LEAF / ENERGY ICON -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
               </svg>
             </div>
-
-            <div class="grid grid-cols-3 gap-4 relative z-10">
-              <div class="flex justify-center items-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-1.png" alt="Energy Gateway 1" class="max-w-[106px] w-full h-auto"></div>
-              <div class="flex justify-center items-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-2.png" alt="Energy Gateway 2" class="max-w-[106px] w-full h-auto"></div>
-              <div class="flex justify-center items-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-3.png" alt="Energy Gateway 3" class="max-w-[106px] w-full h-auto"></div>
-            </div>
-          </div>
-
-          <!-- Gateway <-> Device Junction Bus with 6 Device Stubs and Center Riser into Gateway 2 -->
-          <div class="h-10 relative my-1 hidden sm:block">
-            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <defs>
-                <marker id="sea-up-arrow-bus" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
-                </marker>
-              </defs>
-              <!-- Horizontal Bus Line -->
-              <line id="sea-line-bus-main" x1="8.33%" y1="20" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              
-              <!-- 6 Device Stubs pointing UP to the bus line -->
-              <line x1="8.33%" y1="40" x2="8.33%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-              <line x1="25%" y1="40" x2="25%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-              <line x1="41.66%" y1="40" x2="41.66%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-              <line x1="58.33%" y1="40" x2="58.33%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-              <line x1="75%" y1="40" x2="75%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-              <line x1="91.66%" y1="40" x2="91.66%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-
-              <!-- Center Gateway Riser pointing UP into Gateway 2 -->
-              <line id="sea-line-bus-riser" x1="50%" y1="20" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-            </svg>
-          </div>
-          <div class="h-6 relative my-1 block sm:hidden">
-            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="50%" y1="24" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-            </svg>
-          </div>
-
-          <!-- Tier 4 — field devices -->
-          <div class="sea-devs">
-            <div class="sea-dev">
-              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/solar-inverter.png" alt="Solar Inverter อินเวอร์เตอร์แปลงไฟจากแผงโซลาร์"></span>
-              <div class="sea-dev-t">Solar Inverter</div>
-            </div>
-            <div class="sea-dev">
-              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/energy-meter.png" alt="Energy Meter มิเตอร์วัดพลังงานไฟฟ้า"></span>
-              <div class="sea-dev-t">Energy Meter</div>
-            </div>
-            <div class="sea-dev">
-              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/lighting-controller.png" alt="Lighting Controller ชุดควบคุมระบบแสงสว่าง"></span>
-              <div class="sea-dev-t">Lighting Controller</div>
-            </div>
-            <div class="sea-dev">
-              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/hvac.png" alt="HVAC ระบบปรับอากาศ"></span>
-              <div class="sea-dev-t">HVAC</div>
-            </div>
-            <div class="sea-dev">
-              <span class="sea-dev-img"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/ev-charger.png" alt="EV Charger เครื่องอัดประจุยานยนต์ไฟฟ้า"></span>
-              <div class="sea-dev-t">EV Charger</div>
-            </div>
-            <div class="sea-dev">
-              <span class="sea-dev-img" aria-hidden="true">
-                <!-- IoT Sensor drawn inline as the reference's green node graphic -->
-                <svg viewBox="0 0 62 62" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <circle cx="31" cy="31" r="6.4" fill="#eef5f1"/>
-                  <path d="M31 24.6V12M31 37.4v12.6M24.6 31H12M37.4 31H50"/>
-                  <circle cx="31" cy="9" r="4.2"/><circle cx="31" cy="53" r="4.2"/>
-                  <circle cx="9" cy="31" r="4.2"/><circle cx="53" cy="31" r="4.2"/>
-                </svg>
-              </span>
-              <div class="sea-dev-t">IoT Sensor</div>
-            </div>
+            <span class="font-display font-extrabold text-slate-800 text-sm sm:text-base tracking-wider">SYNEXTA ENERGY</span>
           </div>
         </div>
 
-        <!-- ═══════════ RIGHT: deployment choice ═══════════ -->
-        <div class="sea-deploy">
-          <div class="sea-dep-box">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M6.6 18.4h10.9a3.6 3.6 0 0 0 .5-7.16 5.4 5.4 0 0 0-10.4-1.5A4.35 4.35 0 0 0 6.6 18.4Z"/>
-            </svg>
-            <div class="sea-dep-t">Cloud</div>
-            <p class="sea-dep-p">
-              <span class="lang-th">โครงสร้างคลาวด์ ปลอดภัยและขยายได้</span>
-              <span class="lang-en">Secure &amp; Scalable Cloud Infrastructure</span>
-            </p>
+        <!-- MAIN 3-COLUMN ARCHITECTURE LAYOUT -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch relative">
+
+          <!-- ═══════════ LEFT COLUMN: HEADLINE + 4 FEATURE CARDS ═══════════ -->
+          <div class="lg:col-span-3 flex flex-col justify-between space-y-4">
+            <div>
+              <p class="text-[#059669] font-bold text-[11px] sm:text-xs tracking-widest uppercase mb-2 block">
+                <span class="lang-th">ALL-IN-ONE ENERGY PLATFORM</span>
+                <span class="lang-en">ALL-IN-ONE ENERGY PLATFORM</span>
+              </p>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight mb-3 font-display">
+                <span class="lang-th">แพลตฟอร์มเดียว<br>บริหารพลังงาน<br><span class="text-[#059669]">ทุกไซต์งาน</span></span>
+                <span class="lang-en">One Platform.<br>Manage Energy.<br><span class="text-[#059669]">Every Site.</span></span>
+              </h2>
+              <p class="text-slate-500 text-xs sm:text-sm leading-relaxed mb-4">
+                <span class="lang-th">เชื่อมต่อ ควบคุม และวิเคราะห์การใช้พลังงานด้วยเทคโนโลยี AI เพื่อประสิทธิภาพสูงสุด</span>
+                <span class="lang-en">Connect, control, and analyze energy consumption with AI technology for maximum efficiency.</span>
+              </p>
+            </div>
+
+            <!-- 4 FEATURE ITEMS -->
+            <div class="space-y-3">
+              <!-- Feature 1 -->
+              <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex items-start gap-3 hover:shadow-md transition">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-800 text-xs sm:text-sm mb-0.5">
+                    <span class="lang-th">รองรับ Inverter หลายแบรนด์</span>
+                    <span class="lang-en">Multi-brand Inverter Support</span>
+                  </h3>
+                  <p class="text-slate-500 text-[11px] leading-relaxed">
+                    <span class="lang-th">เชื่อมต่ออินเวอร์เตอร์แบรนด์ชั้นนำ Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis และแบรนด์อื่น ๆ</span>
+                    <span class="lang-en">Connect top inverter brands: Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis and more.</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Feature 2 -->
+              <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex items-start gap-3 hover:shadow-md transition">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-800 text-xs sm:text-sm mb-0.5">
+                    <span class="lang-th">บริหารจัดการหลายไซต์</span>
+                    <span class="lang-en">Multi-site Management</span>
+                  </h3>
+                  <p class="text-slate-500 text-[11px] leading-relaxed">
+                    <span class="lang-th">ติดตามการใช้งานโรงงาน สาขา และระบบ Solar ได้แบบเรียลไทม์ จากศูนย์กลางเดียว</span>
+                    <span class="lang-en">Monitor factories, branches, and Solar systems in real-time from a central hub.</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Feature 3 -->
+              <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex items-start gap-3 hover:shadow-md transition">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-800 text-xs sm:text-sm mb-0.5">
+                    <span class="lang-th">ติดตั้งได้ยืดหยุ่น</span>
+                    <span class="lang-en">Flexible Deployment</span>
+                  </h3>
+                  <p class="text-slate-500 text-[11px] leading-relaxed">
+                    <span class="lang-th">เลือกติดตั้งแบบ Cloud, On-Premise หรือ Hybrid ได้ตามนโยบายด้าน IT</span>
+                    <span class="lang-en">Deploy on Cloud, On-Premise, or Hybrid based on IT policies.</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Feature 4 -->
+              <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex items-start gap-3 hover:shadow-md transition">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-800 text-xs sm:text-sm mb-0.5">
+                    <span class="lang-th">เชื่อมต่อระบบอัตโนมัติ</span>
+                    <span class="lang-en">Automated Open API</span>
+                  </h3>
+                  <p class="text-slate-500 text-[11px] leading-relaxed">
+                    <span class="lang-th">เชื่อมต่อกับ ERP, BMS, CMMS และระบบอื่น ๆ ขององค์กร ได้ผ่าน Open API</span>
+                    <span class="lang-en">Integrate with ERP, BMS, CMMS, and enterprise systems via Open API.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="sea-or"><span class="lang-th">หรือ</span><span class="lang-en">OR</span></div>
+          <!-- ═══════════ CENTER COLUMN: TOP NAV + CORE RADIAL DIAGRAM + EQUIPMENT ═══════════ -->
+          <div class="lg:col-span-6 bg-[#f3f7f5] rounded-3xl p-4 sm:p-6 border border-slate-200/60 flex flex-col justify-between relative overflow-hidden">
+            
+            <!-- TOP NAV BAR PILL -->
+            <div class="bg-white rounded-2xl p-2.5 shadow-sm border border-slate-100 grid grid-cols-6 gap-1 text-center mb-4">
+              <div class="flex flex-col items-center justify-center cursor-pointer group relative pb-1">
+                <div class="w-7 h-7 rounded-lg bg-emerald-50 text-[#059669] flex items-center justify-center mb-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </div>
+                <span class="text-[10px] sm:text-xs font-bold text-[#059669]"><span class="lang-th">ภาพรวม</span><span class="lang-en">Overview</span></span>
+                <div class="absolute bottom-0 w-6 h-0.5 bg-[#059669] rounded-full"></div>
+              </div>
 
-          <div class="sea-dep-box">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3.4" y="4" width="17.2" height="6" rx="1.8"/><rect x="3.4" y="14" width="17.2" height="6" rx="1.8"/>
-              <path d="M7 7h.02M7 17h.02M10.4 7h4M10.4 17h4"/>
-            </svg>
-            <div class="sea-dep-t">On-Premise</div>
-            <p class="sea-dep-p">
-              <span class="lang-th">เซิร์ฟเวอร์ภายในเครือข่ายองค์กร</span>
-              <span class="lang-en">Local Server On Your Network</span>
-            </p>
+              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
+                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-4 7 4v13"/></svg>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">ไซต์งาน</span><span class="lang-en">Sites</span></span>
+              </div>
+
+              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
+                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">รายงาน</span><span class="lang-en">Reports</span></span>
+              </div>
+
+              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
+                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">การแจ้งเตือน</span><span class="lang-en">Alerts</span></span>
+              </div>
+
+              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
+                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">วิเคราะห์ข้อมูล</span><span class="lang-en">Analytics</span></span>
+              </div>
+
+              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
+                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">ผู้ใช้งาน</span><span class="lang-en">Users</span></span>
+              </div>
+            </div>
+
+            <!-- CENTRAL RADIAL ENGINE DIAGRAM -->
+            <div class="relative py-6 my-auto flex items-center justify-center">
+              
+              <!-- Radial Gradient Halo Background -->
+              <div class="absolute inset-0 bg-radial from-emerald-500/10 via-emerald-300/5 to-transparent rounded-full pointer-events-none"></div>
+
+              <!-- Concentric Dashed Orbit Circle -->
+              <div class="w-[280px] h-[280px] sm:w-[310px] sm:h-[310px] rounded-full border-2 border-dashed border-emerald-300/70 relative flex items-center justify-center shadow-inner">
+                
+                <!-- Orbit Decorative Light Dots -->
+                <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+                <div class="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+                <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+                <div class="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
+
+                <!-- 1. TOP NODE: AI Analytics -->
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-white rounded-2xl px-3 py-1.5 border border-slate-200/80 shadow-md flex items-center gap-1.5 z-10 hover:scale-105 transition">
+                  <div class="w-4 h-4 text-[#059669]">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"/></svg>
+                  </div>
+                  <span class="text-[11px] font-bold text-slate-800">AI Analytics</span>
+                </div>
+
+                <!-- 2. RIGHT NODE: Energy Analytics -->
+                <div class="absolute top-1/2 -right-5 -translate-y-1/2 bg-white rounded-2xl px-3 py-1.5 border border-slate-200/80 shadow-md flex items-center gap-1.5 z-10 hover:scale-105 transition">
+                  <div class="w-4 h-4 text-[#059669]">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                  </div>
+                  <span class="text-[11px] font-bold text-slate-800">Energy Analytics</span>
+                </div>
+
+                <!-- 3. BOTTOM NODE: Alert Engine -->
+                <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-2xl px-3 py-1.5 border border-slate-200/80 shadow-md flex items-center gap-1.5 z-10 hover:scale-105 transition">
+                  <div class="w-4 h-4 text-[#059669]">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  </div>
+                  <span class="text-[11px] font-bold text-slate-800">Alert Engine</span>
+                </div>
+
+                <!-- 4. LEFT NODE: Rule Engine -->
+                <div class="absolute top-1/2 -left-5 -translate-y-1/2 bg-white rounded-2xl px-3 py-1.5 border border-slate-200/80 shadow-md flex items-center gap-1.5 z-10 hover:scale-105 transition">
+                  <div class="w-4 h-4 text-[#059669]">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9"/><line x1="12" y1="14" x2="12" y2="15"/></svg>
+                  </div>
+                  <span class="text-[11px] font-bold text-slate-800">Rule Engine</span>
+                </div>
+
+                <!-- CENTER HUB SPHERE & LABELS -->
+                <div class="flex flex-col items-center justify-center text-center relative z-0">
+                  <div class="text-[11px] sm:text-xs font-extrabold text-slate-900 mb-0.5 tracking-tight leading-tight">
+                    <div>SynExta</div>
+                    <div>Energy Engine</div>
+                  </div>
+                  <!-- Glowing 3D AI Core Image -->
+                  <div class="relative w-24 h-24 sm:w-32 sm:h-32 my-0.5">
+                    <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-ai-core-3d.png" alt="SynExta AI Core" class="w-full h-full object-contain filter drop-shadow-[0_6px_14px_rgba(16,185,129,0.3)]">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- FIELD CONNECTIVITY LABEL BRIDGES -->
+            <div class="text-center my-2.5 relative z-10">
+              <div class="inline-flex items-center gap-2 bg-emerald-800 text-white text-[10px] sm:text-xs font-bold px-3.5 py-1 rounded-full shadow-md">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="lang-th">เชื่อมต่ออุปกรณ์และระบบภาคสนาม</span>
+                <span class="lang-en">Field Equipment & System Integration</span>
+              </div>
+            </div>
+
+            <!-- 6 FIELD EQUIPMENT CARDS -->
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-2 border-t border-slate-200/60">
+              <!-- Equipment 1 -->
+              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
+                <div class="h-10 flex items-center justify-center mb-1">
+                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/solar-inverter.png" alt="Solar Inverter" class="max-h-full w-auto object-contain">
+                </div>
+                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">Solar Inverter</div>
+                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
+                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </div>
+              </div>
+
+              <!-- Equipment 2 -->
+              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
+                <div class="h-10 flex items-center justify-center mb-1">
+                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/energy-meter.png" alt="Energy Meter" class="max-h-full w-auto object-contain">
+                </div>
+                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">Energy Meter</div>
+                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
+                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+              </div>
+
+              <!-- Equipment 3 -->
+              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
+                <div class="h-10 flex items-center justify-center mb-1">
+                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/lighting-controller.png" alt="Lighting Controller" class="max-h-full w-auto object-contain">
+                </div>
+                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">Lighting Controller</div>
+                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
+                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9 6 6 0 0 0 6 9a6 6 0 0 0 2.91 5z"/></svg>
+                </div>
+              </div>
+
+              <!-- Equipment 4 -->
+              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
+                <div class="h-10 flex items-center justify-center mb-1">
+                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/hvac.png" alt="HVAC" class="max-h-full w-auto object-contain">
+                </div>
+                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">HVAC</div>
+                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
+                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 12a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4z"/></svg>
+                </div>
+              </div>
+
+              <!-- Equipment 5 -->
+              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
+                <div class="h-10 flex items-center justify-center mb-1">
+                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/ev-charger.png" alt="EV Charger" class="max-h-full w-auto object-contain">
+                </div>
+                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">EV Charger</div>
+                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
+                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-1.1 0-2 .9-2 2v7c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                </div>
+              </div>
+
+              <!-- Equipment 6 -->
+              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
+                <div class="h-10 flex items-center justify-center mb-1 text-[#059669]">
+                  <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg>
+                </div>
+                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">IoT Sensor</div>
+                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
+                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                </div>
+              </div>
+
+            </div>
           </div>
+
+          <!-- ═══════════ RIGHT COLUMN: DEPLOYMENT OPTIONS ═══════════ -->
+          <div class="lg:col-span-3 flex flex-col justify-between space-y-3">
+            
+            <div class="text-center mb-2">
+              <span class="font-bold text-slate-800 text-xs sm:text-sm">
+                <span class="lang-th">เลือกการติดตั้งที่เหมาะกับคุณ</span>
+                <span class="lang-en">Choose Deployment Fit for You</span>
+              </span>
+            </div>
+
+            <!-- DEPLOYMENT CARDS -->
+            <div class="space-y-3 my-auto">
+              
+              <!-- 1. CLOUD -->
+              <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 hover:border-emerald-500/40 hover:shadow-md transition text-center relative overflow-hidden group">
+                <div class="w-16 h-16 mx-auto mb-1 relative">
+                  <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-cloud-3d.png" alt="Cloud Deployment" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm">Cloud</h3>
+                <p class="text-slate-500 text-[11px] mt-0.5 leading-snug">
+                  <span class="lang-th">โครงสร้างคลาวด์ ปลอดภัยและขยายตัว ได้ไม่จำกัด</span>
+                  <span class="lang-en">Secure and infinitely scalable cloud infrastructure.</span>
+                </p>
+              </div>
+
+              <!-- OR BADGE SEPARATOR -->
+              <div class="w-7 h-7 rounded-full bg-emerald-800 text-white font-bold text-[10px] flex items-center justify-center mx-auto shadow-sm border border-emerald-600">
+                <span class="lang-th">หรือ</span>
+                <span class="lang-en">OR</span>
+              </div>
+
+              <!-- 2. ON-PREMISE -->
+              <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 hover:border-emerald-500/40 hover:shadow-md transition text-center relative overflow-hidden group">
+                <div class="w-16 h-16 mx-auto mb-1 relative">
+                  <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-onprem-3d.png" alt="On-Premise Deployment" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm">On-Premise</h3>
+                <p class="text-slate-500 text-[11px] mt-0.5 leading-snug">
+                  <span class="lang-th">เซิร์ฟเวอร์ภายใน เครือข่ายองค์กร ควบคุมข้อมูลได้เต็มที่</span>
+                  <span class="lang-en">Local internal server with full data control.</span>
+                </p>
+              </div>
+
+              <!-- 3. HYBRID -->
+              <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 hover:border-emerald-500/40 hover:shadow-md transition text-center relative overflow-hidden group">
+                <div class="w-16 h-16 mx-auto mb-1 relative">
+                  <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-hybrid-3d.png" alt="Hybrid Deployment" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm">Hybrid</h3>
+                <p class="text-slate-500 text-[11px] mt-0.5 leading-snug">
+                  <span class="lang-th">ผสานข้อดีของ Cloud และ On-Premise ยืดหยุ่น ปลอดภัย</span>
+                  <span class="lang-en">Combine benefits of Cloud and On-Premise.</span>
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ═══════════ BOTTOM BANNER: 4 KEY BENEFIT POINTS ═══════════ -->
+        <div class="w-full bg-white rounded-2xl p-4 shadow-sm border border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 items-center">
+          
+          <!-- Benefit 1 -->
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 text-xs sm:text-sm">
+                <span class="lang-th">ลดต้นทุนพลังงาน</span>
+                <span class="lang-en">Reduce Energy Costs</span>
+              </div>
+              <div class="text-slate-500 text-[11px] sm:text-xs">
+                <span class="lang-th">เพิ่มประสิทธิภาพการใช้พลังงาน</span>
+                <span class="lang-en">Maximize Energy Efficiency</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Benefit 2 -->
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0">
+              <span class="font-extrabold text-xs text-[#059669]">CO₂</span>
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 text-xs sm:text-sm">
+                <span class="lang-th">ลดการปล่อยคาร์บอน</span>
+                <span class="lang-en">Reduce Carbon Emissions</span>
+              </div>
+              <div class="text-slate-500 text-[11px] sm:text-xs">
+                <span class="lang-th">สอดคล้องเป้าหมาย Net Zero</span>
+                <span class="lang-en">Align with Net Zero Goals</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Benefit 3 -->
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 text-xs sm:text-sm">
+                <span class="lang-th">ปลอดภัย เชื่อถือได้</span>
+                <span class="lang-en">Safe &amp; Reliable</span>
+              </div>
+              <div class="text-slate-500 text-[11px] sm:text-xs">
+                <span class="lang-th">ด้วยมาตรฐานระดับสากล และระบบความปลอดภัยสูง</span>
+                <span class="lang-en">International standard security.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Benefit 4 -->
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 text-xs sm:text-sm">
+                <span class="lang-th">ขยายธุรกิจได้ไม่จำกัด</span>
+                <span class="lang-en">Infinitely Scalable</span>
+              </div>
+              <div class="text-slate-500 text-[11px] sm:text-xs">
+                <span class="lang-th">รองรับการเติบโตในอนาคต</span>
+                <span class="lang-en">Ready for future growth.</span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
+
     </div>
   </section>
 

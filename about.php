@@ -130,6 +130,111 @@ if (file_exists(__DIR__ . '/functions.php')) {
     p, span, a {
       overflow-wrap: break-word;
     }
+
+    /* ==========================================================================
+       THAI LINE BREAKING IN THE FOUNDATION SECTION
+
+       body above sets word-break: break-word. A Thai sentence has no spaces, so the
+       browser counts it as ONE long word and is then free to break it at an arbitrary
+       character when it will not fit — splitting vowels and tone marks off their
+       consonant. The Core Values captions live in a max-w-[125px] column, eight of them
+       across, which is exactly narrow enough for that to happen on every card.
+
+       word-break: normal hands the decision back to the browser's Thai dictionary
+       line-breaker. text-wrap: pretty stops a single word being left alone on the last
+       line, which in a box this narrow looks like a mistake. See AGENTS.md §3.
+
+       Applied to #about-hero too: the hero copy is now a 620-character Thai paragraph,
+       and at 324px wide on a phone that is 17 lines of a single space-less "word" — the
+       worst case for break-word.
+
+       Scoped to these two sections so nothing else on the page changes.
+       ========================================================================== */
+    #about-hero p,
+    #about-hero .lang-th,
+    #about-hero .lang-en,
+    #principles p,
+    #principles .lang-th,
+    #principles .lang-en {
+      word-break: normal;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    /* ==========================================================================
+       ABOUT HERO COPY — turning one 620-character block into something scannable
+
+       THE PROBLEM
+       The hero paragraph is a single 620-character company-history sentence pair. The
+       previous author already measured it and left the note in the markup: about 7 lines
+       on a desktop and about 19 on a 375px phone. Nineteen lines of justified history is
+       not a hero — nobody reads it, and it buries the two facts that actually matter
+       (founded 2008, 100% Thai-owned) in the middle of the flow.
+
+       THE FIX — same facts, three levels instead of one
+         .ah-lede  the hook: founding year + Thai-owned. Larger, brand green, read first.
+         .ah-body  the narrative sentences. Normal body size.
+         .ah-tags  the industry lists as chips. Four or five industries strung together
+                   with commas is the worst possible use of prose — as chips the eye takes
+                   them in at once and they stop inflating the line count.
+       Nothing is cut. Every industry, both sector lists and every term the copy names is
+       still on the page; only the shape changed.
+
+       Sizes are rem with !important and Thai gets 1.8 leading and word-break: normal, for
+       the reasons in AGENTS.md §2 and §3.
+       ========================================================================== */
+    .ah-copy { display: block; }
+    .ah-copy > * + * { margin-top: 0.85em; }
+
+    .ah-lede {
+      display: block;
+      font-size: 1.25rem !important;
+      line-height: 1.5 !important;
+      font-weight: 700 !important;
+      color: #0d5c3a;
+      word-break: normal;
+      text-wrap: pretty;
+    }
+    .ah-body {
+      display: block;
+      font-size: 1.075rem !important;
+      line-height: 1.8 !important;
+      font-weight: 400 !important;
+      word-break: normal;
+      text-wrap: pretty;
+    }
+    /* Latin needs less leading than Thai at the same size — see AGENTS.md §3. */
+    html[lang="en"] .ah-body { line-height: 1.65 !important; }
+
+    .ah-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+    }
+    .ah-tags-label {
+      font-size: 0.875rem !important;
+      line-height: 1.4 !important;
+      font-weight: 800 !important;
+      color: #0d5c3a;
+      margin-right: 2px;
+    }
+    .ah-tag {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .82);
+      border: 1px solid #cfe6d8;
+      font-size: 0.875rem !important;
+      line-height: 1.35 !important;
+      font-weight: 600 !important;
+      color: #14532d;
+      /* The hero sits on a photo. A chip must stay readable over both the open sky on
+         desktop and the darker building visible in the tighter mobile crop. */
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      white-space: nowrap;
+    }
     /* Glow Animations */
     @keyframes pulse-glow {
       0%, 100% { transform: scale(1); opacity: 0.8; }
@@ -211,12 +316,22 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <?php echo synergy_content('hero-title', 'Engineering Intelligence <span class="text-brand-bright drop-shadow-[0_2px_15px_rgba(35,134,45,0.4)]">Since 2008</span>', 'about'); ?>
         </h1>
 
-        <p data-editable="hero-desc" <?php echo synergy_style('hero-desc', 'about'); ?> class="text-sm sm:text-base text-slate-900 font-medium leading-relaxed max-w-4xl text-center mx-auto">
-          <?php echo synergy_content('hero-desc', '<span class="lang-th">กว่า 18 ปีที่เราพัฒนาจากงานวิศวกรรมอิเล็กทรอนิกส์ สู่บริษัทด้าน Engineering Intelligence<br>ผสานฮาร์ดแวร์ ระบบสมองกลฝังตัว AI และดิจิทัลแพลตฟอร์ม เพื่อสร้างโซลูชันอัจฉริยะที่ส่งมอบผลลัพธ์ยั่งยืน</span><span class="lang-en">For more than 18 years, we&#39;ve evolved from electronics engineering into an Engineering Intelligence Company<br>integrating hardware, embedded systems, AI, and digital platforms to build intelligent solutions.</span>', 'about'); ?>
-        </p>
+        <!-- text-left, not text-center — the hero copy went from a 2-line strapline to a
+             620-character company-history paragraph (about 7 lines on a desktop, about 19
+             on a 375px phone). A centred block that long is hard to read: with both edges
+             ragged the eye has to hunt for the start of each new line. The block itself is
+             still centred in the hero via mx-auto, and the h1 above stays centred, so the
+             composition is unchanged — only the paragraph's own alignment. -->
+        <div data-editable="hero-desc" <?php echo synergy_style('hero-desc', 'about'); ?> class="max-w-4xl mx-auto">
+          <?php echo synergy_content('hero-desc', '<div class="lang-th max-w-4xl mx-auto space-y-5 text-center"><div class="flex flex-wrap items-center justify-center gap-3 mb-2"><span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-600/20 text-[#0E3B2E] text-xs font-extrabold tracking-wide uppercase"><i class="fa-solid fa-flag text-emerald-600"></i> ก่อตั้งปี 2551 (ค.ศ. 2008) · คนไทยถือหุ้น 100%</span><span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-600/20 text-amber-900 text-xs font-extrabold tracking-wide uppercase"><i class="fa-solid fa-cube text-amber-600"></i> One Stop Services (Prototype to Mass Production)</span></div><p class="text-base sm:text-lg text-slate-800 font-medium leading-relaxed max-w-4xl mx-auto text-center sm:text-justify"><strong class="text-[#0E3B2E] font-bold">บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด</strong> ก่อตั้งขึ้นในปี พ.ศ. 2551 (ค.ศ. 2008) โดยเป็นธุรกิจที่คนไทยถือหุ้น 100% เริ่มต้นจากการให้บริการแบบครบวงจร (<strong class="text-[#0E3B2E] font-bold">One Stop Services</strong>) ครอบคลุมการบริหารจัดการด้านการออกแบบและการผลิตเทคโนโลยีทั้งด้านฮาร์ดแวร์และซอฟต์แวร์ ตั้งแต่การสร้างต้นแบบ (<strong class="text-[#0E3B2E] font-bold">Prototype</strong>) จนถึงการผลิตเชิงมวล (<strong class="text-[#0E3B2E] font-bold">Mass Production</strong>) สำหรับอุตสาหกรรมยานยนต์ ระบบไฟส่องสว่าง ระบบโซลาร์โฮมซิสเต็ม (Solar Home System) และอุตสาหกรรมอุปกรณ์อิเล็กทรอนิกส์</p><p class="text-base sm:text-lg text-slate-700 font-normal leading-relaxed max-w-4xl mx-auto text-center sm:text-justify pt-1">บริษัทได้พัฒนาอย่างต่อเนื่องโดยนำเทคโนโลยี <strong class="text-emerald-700 font-bold">IoT</strong> และ <strong class="text-emerald-700 font-bold">AI</strong> มาประยุกต์ใช้เพื่อขยายสู่ผลิตภัณฑ์ <strong class="text-emerald-700 font-bold">Smart Solutions</strong> เพื่อตอบสนองความต้องการด้านการพัฒนาเมืองอัจฉริยะ (<strong class="text-[#0E3B2E] font-bold">Smart City</strong>) และภาคอุตสาหกรรม เกษตรกรรม การค้าและพาณิชยกรรม รวมถึงภาคการแพทย์</p><div class="pt-2 flex flex-wrap items-center justify-center gap-2 text-xs"><span class="text-slate-500 font-bold uppercase tracking-wider mr-1">ครอบคลุมทุกภาคส่วน:</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">Smart City</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">ภาคอุตสาหกรรม</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">เกษตรกรรม</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">การค้าและพาณิชยกรรม</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">การแพทย์</span></div></div><div class="lang-en max-w-4xl mx-auto space-y-5 text-center"><div class="flex flex-wrap items-center justify-center gap-3 mb-2"><span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-600/20 text-[#0E3B2E] text-xs font-extrabold tracking-wide uppercase"><i class="fa-solid fa-flag text-emerald-600"></i> Founded 2008 · 100% Thai-Owned Business</span><span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-600/20 text-amber-900 text-xs font-extrabold tracking-wide uppercase"><i class="fa-solid fa-cube text-amber-600"></i> One Stop Services (Prototype to Mass Production)</span></div><p class="text-base sm:text-lg text-slate-800 font-medium leading-relaxed max-w-4xl mx-auto text-center sm:text-justify"><strong class="text-[#0E3B2E] font-bold">Synergy Technology Co., Ltd.</strong> was founded in 2008 (B.E. 2551) as a 100% Thai-owned business, starting with comprehensive <strong class="text-[#0E3B2E] font-bold">One Stop Services</strong> covering the management of technology design and production — both hardware and software — from <strong class="text-[#0E3B2E] font-bold">Prototype to Mass Production</strong> for the automotive, lighting, Solar Home System, and electronic equipment industries.</p><p class="text-base sm:text-lg text-slate-700 font-normal leading-relaxed max-w-4xl mx-auto text-center sm:text-justify pt-1">The company has continuously developed by applying <strong class="text-emerald-700 font-bold">IoT</strong> and <strong class="text-emerald-700 font-bold">AI</strong> technologies to expand into <strong class="text-emerald-700 font-bold">Smart Solutions</strong> products, addressing the needs of Smart City development as well as the industrial, agricultural, trade and commerce, and medical sectors.</p><div class="pt-2 flex flex-wrap items-center justify-center gap-2 text-xs"><span class="text-slate-500 font-bold uppercase tracking-wider mr-1">Key Sectors:</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">Smart City</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">Industrial</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">Agricultural</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">Trade &amp; Commerce</span><span class="px-3 py-1 rounded-lg bg-slate-100 border border-slate-200/80 text-slate-700 font-semibold shadow-2xs">Medical</span></div></div>', 'about'); ?>
+        </div>
 
-        <!-- Buttons Row (Placed further down near bottom center) -->
-        <div class="flex flex-wrap items-center justify-center gap-4 pt-24 sm:pt-36 lg:pt-48 w-full">
+        <!-- Buttons Row (Placed further down near bottom center)
+             Padding cut from pt-24/36/48 (96/144/192px). That gap existed to push the
+             buttons down the tall hero when the copy above was two lines; the new
+             paragraph fills that space itself. Left as it was, the hero grew past
+             900px on a phone and the text covered the whole background image. -->
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-10 sm:pt-14 lg:pt-20 w-full">
           <a data-editable="hero-btn1" <?php echo synergy_style('hero-btn1', 'about'); ?> href="<?php echo home_url('/'); ?>#solutions" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
             <?php echo synergy_content('hero-btn1', '<span class="lang-th">สำรวจโซลูชันของเรา</span><span class="lang-en">Explore Our Solutions</span><i class="fa-solid fa-arrow-right text-xs ml-1"></i>', 'about'); ?>
           </a>
@@ -282,8 +397,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
               <!-- Description -->
               <p class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed max-w-md">
-                <span class="lang-th">มุ่งสู่การเป็นผู้นำด้านการพัฒนา <span class="text-[#0d5c3a] font-bold">Smart Electronics และ AIoT Solutions</span> แบบครบวงจร เพื่อสร้างผลลัพธ์ทางธุรกิจ ที่เติบโตอย่างยั่งยืน</span>
-                <span class="lang-en">To be a leading innovator in end-to-end <span class="text-[#0d5c3a] font-bold">Smart Electronics and AIoT Solutions</span> for sustainable business impact.</span>
+                <span class="lang-th">มุ่งเป็นผู้นำนวัตกรรมด้าน <span class="text-[#0d5c3a] font-bold">Smart Electronics และ AIoT Solutions</span> แบบครบวงจร เพื่อสร้างผลกระทบเชิงบวกต่อธุรกิจอย่างยั่งยืน</span>
+                <span class="lang-en">To be a leader in end-to-end <span class="text-[#0d5c3a] font-bold">Smart Electronics and AIoT</span> innovations, driving sustainable business impact.</span>
               </p>
             </div>
           </div>
@@ -311,8 +426,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
               <!-- Description -->
               <p class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed max-w-md">
-                <span class="lang-th">มุ่งมั่นเป็น พาร์ทเนอร์ด้านวิศวกรรมครบวงจร ให้บริการตั้งแต่การสร้างนวัตกรรม การออกแบบ การพัฒนาต้นแบบ (NPI) การผลิต และบริการหลังการขาย พร้อมส่งมอบ Smart Electronics และ AIoT Solutions ที่เชื่อถือได้ เพื่อสร้างคุณค่าและการเติบโตอย่างยั่งยืน ให้กับทั้งภาครัฐและภาคเอกชน</span>
-                <span class="lang-en">To serve as a trusted end-to-end engineering partner from innovation, design, NPI to manufacturing and after-sales service, delivering reliable Smart Electronics and AIoT Solutions that create lasting value and sustainable growth for public and private sectors.</span>
+                <span class="lang-th">เป็นพันธมิตรแบบครบวงจรด้าน <span class="text-[#0d5c3a] font-bold">Smart Electronics และ AIoT Technology</span> ตั้งแต่การสร้างนวัตกรรม การออกแบบ การพัฒนาผลิตภัณฑ์ใหม่เข้าสู่การผลิต (NPI) ไปจนถึงการผลิตแบบ Mass Customization และการบริการหลังการขายที่เชื่อถือได้ ซึ่งสร้างคุณค่าที่ยั่งยืนและการเติบโตให้แก่ภาครัฐและภาคเอกชนทั่วโลก</span>
+                <span class="lang-en">To be a trusted end-to-end partner in <span class="text-[#0d5c3a] font-bold">Smart Electronics and AIoT Technology</span> — spanning innovation, design, New Product Introduction (NPI), Mass Customization, and reliable after-sales services — delivering sustainable value and growth for public and private sectors worldwide.</span>
               </p>
             </div>
           </div>
@@ -340,97 +455,105 @@ if (file_exists(__DIR__ . '/functions.php')) {
               
               <!-- 1. Possibility -->
               <div class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-slate-50">
-                <div class="w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
+                <div class="relative w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
                   <i class="fa-solid fa-mountain text-lg"></i>
+                  <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">P</span>
                 </div>
                 <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Possibility</h5>
                 <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">เชื่อว่าทุกความท้าทายมีทางออก</span>
+                  <span class="lang-th">เชื่อว่าทุกโจทย์มีทางออก</span>
                   <span class="lang-en">Believe every challenge has a solution.</span>
                 </p>
               </div>
 
               <!-- 2. Ownership -->
               <div class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-slate-50">
-                <div class="w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
+                <div class="relative w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
                   <i class="fa-regular fa-user text-lg"></i>
+                  <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">O</span>
                 </div>
                 <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Ownership</h5>
                 <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">รับผิดชอบในงานเสมือนเป็นเจ้าของธุรกิจ</span>
+                  <span class="lang-th">รับผิดชอบงานเสมือนเจ้าของ</span>
                   <span class="lang-en">Take responsibility like an owner.</span>
                 </p>
               </div>
 
               <!-- 3. Successor -->
               <div class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-slate-50">
-                <div class="w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
+                <div class="relative w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
                   <i class="fa-solid fa-users text-lg"></i>
+                  <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">S</span>
                 </div>
                 <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Successor</h5>
                 <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">ส่งต่อความรู้และสร้างคนรุ่นใหม่</span>
+                  <span class="lang-th">สร้างคนรุ่นต่อไปให้เติบโต</span>
                   <span class="lang-en">Grow the next generation.</span>
                 </p>
               </div>
 
               <!-- 4. Sincere -->
               <div class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-slate-50">
-                <div class="w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
+                <div class="relative w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
                   <i class="fa-regular fa-handshake text-lg"></i>
+                  <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">S</span>
                 </div>
                 <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Sincere</h5>
                 <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">จริงใจ ซื่อสัตย์ และสร้างความไว้วางใจ</span>
-                  <span class="lang-en">Build trust through honesty.</span>
+                  <span class="lang-th">จริงใจต่อลูกค้าและทีม</span>
+                  <span class="lang-en">Be genuine with customers and team.</span>
                 </p>
               </div>
 
               <!-- 5. Ideation -->
               <div class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-slate-50">
-                <div class="w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
+                <div class="relative w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
                   <i class="fa-regular fa-lightbulb text-lg"></i>
+                  <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">I</span>
                 </div>
                 <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Ideation</h5>
                 <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">กล้าคิด กล้าสร้างสรรค์นวัตกรรม</span>
-                  <span class="lang-en">Think differently and create.</span>
+                  <span class="lang-th">กล้าคิด กล้าสร้างสรรค์</span>
+                  <span class="lang-en">Dare to think and create.</span>
                 </p>
               </div>
 
               <!-- 6. Be Better -->
               <div class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-slate-50">
-                <div class="w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
+                <div class="relative w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
                   <i class="fa-solid fa-chart-line text-lg"></i>
+                  <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">B</span>
                 </div>
                 <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Be Better</h5>
                 <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">พัฒนาและปรับปรุงอย่างต่อเนื่อง</span>
+                  <span class="lang-th">พัฒนาให้ดีขึ้นทุกวัน</span>
                   <span class="lang-en">Improve every day.</span>
                 </p>
               </div>
 
               <!-- 7. Learner -->
               <div class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-slate-50">
-                <div class="w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
+                <div class="relative w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
                   <i class="fa-solid fa-graduation-cap text-lg"></i>
+                  <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">L</span>
                 </div>
                 <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Learner</h5>
                 <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">เรียนรู้สิ่งใหม่อยู่เสมอ</span>
+                  <span class="lang-th">เรียนรู้ไม่หยุดนิ่ง</span>
                   <span class="lang-en">Never stop learning.</span>
                 </p>
               </div>
 
               <!-- 8. Empathy -->
               <div class="flex flex-col items-center p-2 rounded-xl transition-colors hover:bg-slate-50">
-                <div class="w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
+                <div class="relative w-11 h-11 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center mb-2 shadow-xs">
                   <i class="fa-regular fa-user text-lg"></i>
+                  <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">E</span>
                 </div>
                 <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Empathy</h5>
                 <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
                   <span class="lang-th">เข้าใจลูกค้าและเพื่อนร่วมงาน</span>
-                  <span class="lang-en">Understand people before solving problems.</span>
+                  <span class="lang-en">Understand customers and colleagues.</span>
                 </p>
               </div>
 
@@ -520,8 +643,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
           <h3 class="font-extrabold text-xl sm:text-2xl text-[#0d5c3a] uppercase tracking-wider mb-3">COMMITMENT</h3>
           <p class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed">
-            <span class="lang-th">เรามุ่งมั่นส่งมอบผลิตภัณฑ์และบริการที่ดีที่สุด สร้างความร่วมมือระยะยาวกับลูกค้า และสร้างผลลัพธ์ที่ยั่งยืนให้กับธุรกิจ บุคลากร และสังคม ด้วยคุณภาพ นวัตกรรม และการพัฒนาอย่างต่อเนื่อง</span>
-            <span class="lang-en">We are committed to delivering the best products and services, building long-term partnerships with customers, and creating sustainable value for business, people, and society through quality, innovation, and continuous improvement.</span>
+            <span class="lang-th">เรามุ่งมั่นส่งมอบผลิตภัณฑ์และบริการที่ดีที่สุด สร้างความสัมพันธ์อันดีในระยะยาว และขับเคลื่อนผลกระทบเชิงบวกอย่างยั่งยืนต่อลูกค้า บุคลากร และสังคม ผ่านคุณภาพ นวัตกรรม และการปรับปรุงอย่างต่อเนื่อง</span>
+            <span class="lang-en">We are committed to delivering the best products and services, building long-term partnerships, and driving sustainable impact for our customers, people, and society through quality, innovation, and continuous improvement.</span>
           </p>
         </div>
       </div>

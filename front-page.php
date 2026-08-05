@@ -482,7 +482,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <h4 class="font-bold text-sm text-brand mb-2 min-h-[2.5rem] flex items-center justify-center">Smart
                 Factory</h4>
               <p class="text-xs text-muted font-light leading-relaxed"><span class="lang-th">เพิ่มประสิทธิภาพการผลิต
-                  เชื่อมต่อเครื่องจักร และข้อมูลแบบเรียลไทม์</span><span class="lang-en">Boost production efficiency
+                  เชื่อมต่อเครื่องจักร และข้อมูลแบบ Real-time</span><span class="lang-en">Boost production efficiency
                   with machine connectivity and real-time data</span></p>
             </div>
             <div class="flex flex-col items-center text-center px-2 sm:border-l sm:border-black/5 h-full justify-start">
