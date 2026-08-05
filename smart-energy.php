@@ -498,9 +498,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
   <!-- ================= 1. ส่วน HERO (ภาพหลัก) ================= -->
   <section id="energy-hero" class="relative pt-12 pb-24 sm:pt-16 sm:pb-32 lg:pt-20 lg:pb-40 text-white overflow-hidden bg-[#0a1118] min-h-[720px] sm:min-h-[800px] lg:min-h-[860px] flex items-center">
-    <!-- Background Image Layer - ไม่มีชั้นทำให้มืดทับ (ตัวรูปเข้มอยู่แล้ว ตัวอักษรขาวอ่านออก) -->
+    <!-- Background Image Layer -->
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      <img loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-center" src="<?php echo get_template_directory_uri(); ?>/image/solutions/energy-hero-bg.png" alt="Smart Energy Management Background">
+      <img loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-center" src="<?php echo get_template_directory_uri(); ?>/images/hero-smart-energy.jpg" alt="Smart Energy Management Background">
+      <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
     </div>
     <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#23862D_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none z-0"></div>
 

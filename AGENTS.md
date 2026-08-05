@@ -60,6 +60,18 @@
   ไม่งั้น `style.css` ทับ และเขียน rem ไม่ใช่ px เพื่อให้ตามค่า root (17px → 18.5px ที่ ≥1024px)
 - **เจอ class ขนาดซ้อนกันให้ลบทิ้ง** เช่น `class="svc-caption text-[13px] leading-snug"` —
   สองตัวหลังไม่มีผลเลย แต่ทำให้คนอ่านโค้ดเข้าใจผิดว่าตัวอักษร 13px (จริงคือ 18px)
+- **`style="font-size:..."` แบบไม่มี `!important` แพ้** inline style ปกติชนะ stylesheet
+  แต่ **แพ้ rule ที่มี `!important`** และ `style.css` บังคับ **element selector เปล่าๆ** ไว้ด้วย:
+  ```css
+  p, li, td, th { font-size: 1.075rem !important; line-height: 1.65 !important; }
+  h1,h2,h3,h4,h5,h6 { line-height: 1.25 !important; letter-spacing: -0.015em !important;
+                      font-family: 'SukhumvitSet' … !important; }
+  ```
+  → **ทุก `<p>` `<li>` `<td>` `<th>` บนเว็บถูกล็อกขนาดไว้แล้ว** เขียน `style="font-size:80px"`
+  บน `<p>` จะได้ 19px (เจอจริงตอนทำ `404.php`: ตัวเลข "404" ที่ขอ 168px ออกมา ~19px)
+  ทางแก้: ใส่ `!important` ในอินไลน์ **และ/หรือ** เลี่ยง `<p>` ใช้ `<div>`/`<span>`
+  (`div`/`span` ไม่อยู่ในลิสต์ที่ถูกบังคับขนาด)
+  หมายเหตุ: `font-display` (Space Grotesk) **ไม่มีผลบน h1–h6** เพราะ `!important` ทับฟอนต์อยู่
 
 ---
 
@@ -144,7 +156,42 @@ html[lang="en"] .lang-th { display: none !important; }
 
 ---
 
-## 7. โครงสร้างโปรเจกต์
+## 7. หน้าใหม่บน WordPress ขึ้นหน้าแรก — ไม่ใช่ redirect 🛑
+
+**อาการ:** เปิด `/privacy-policy/` แล้วเห็นหน้าแรก URL ยังเป็น `/privacy-policy/` อยู่
+**เกิดกับ `/about/` มาแล้ว แก้แล้ว แล้วเกิดซ้ำกับ `/privacy-policy/` และ `/service/`**
+
+**สาเหตุ:** WordPress หา template ตามลำดับนี้
+
+```
+page-{slug}.php → page-{id}.php → page.php → singular.php → index.php
+```
+
+และ **`index.php` ของธีมนี้คือหน้าแรกแบบ hard-code** (ไม่มี `have_posts()` / `the_content()` เลย)
+ดังนั้น Page ที่ไม่มี template ตรงกันจะร่วงลงมาถึง `index.php` = **ได้หน้าแรก**
+ไม่มี redirect ที่ไหนเลย ไม่มีใครส่ง `Location` header — WordPress แค่หยิบ template ผิด
+
+**กฎ:**
+
+- **เพิ่ม Page ใหม่ใน WordPress = ต้องมี `page-{slug}.php`** เนื้อหาอยู่ไฟล์เดิม
+  ไฟล์นี้แค่ `require get_theme_file_path('ชื่อไฟล์.php');` (ดู `page-about.php` เป็นแบบ)
+- `/* Template Name: X */` **ไม่พอ** — นั่นแค่ทำให้ *เลือกได้* ในหน้า admin
+  ถ้าไม่ไปเลือกให้ Page นั้นด้วยมือ ก็ยังร่วงลง `index.php` เหมือนเดิม
+  ส่วน `page-{slug}.php` ถูกหยิบ **อัตโนมัติ** ไม่ต้องตั้งอะไร → เชื่อถือได้กว่า
+- **`page.php` และ `404.php` มีแล้ว อย่าลบ** สองไฟล์นี้คือตัวกันไม่ให้บั๊กคลาสนี้กลับมา
+  หน้าใหม่ที่ยังไม่มี `page-{slug}.php` จะได้ `page.php` (แสดงเนื้อหาจริง) ไม่ใช่หน้าแรก
+- **ยังไม่มี `search.php` / `single.php` / `archive.php`** → URL แบบ `/?s=...` หรือโพสต์เดี่ยว
+  จะยังร่วงลง `index.php` = ได้หน้าแรก **ห้ามใส่ช่องค้นหาที่ไหนจนกว่าจะมี `search.php`**
+  ไม่งั้นพาผู้ใช้จากทางตันไปอีกทางตัน
+
+**เช็คลิสต์เวลาหน้าใหม่ไม่ขึ้น:**
+1. มี Page ใน WordPress ที่ slug ตรงกันไหม และ **เผยแพร่แล้วหรือยัง** (ฉบับร่าง/ถังขยะ = 404)
+2. มี `page-{slug}.php` ไหม
+3. ตั้งค่า permalink ใหม่ (Settings → Permalinks → Save) หลังเพิ่ม template
+
+---
+
+## 8. โครงสร้างโปรเจกต์
 
 - Plain PHP ที่เตรียมย้ายไป WordPress — `functions.php` shim ฟังก์ชัน WP
   (`home_url()`, `get_template_directory_uri()`, `language_attributes()`)

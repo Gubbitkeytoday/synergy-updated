@@ -12,6 +12,90 @@ if (!function_exists('synergy_theme_setup')) {
     }
 }
 
+/* ==============================================================================
+   STATIC PAGE ROUTES  —  why /privacy-policy/ was 404ing
+
+   The templates in this theme (privacy-policy.php, service.php, about.php,
+   smart-energy.php) are hand-written markup. They contain no the_content(), so there is
+   nothing an editor would ever supply. But WordPress will only route a URL to a template
+   if a matching POST exists in the database, so /privacy-policy/ 404'd for a reason that
+   has nothing to do with the theme: nobody had created and PUBLISHED a Page with that
+   slug. (WordPress auto-creates a "Privacy Policy" page as a DRAFT on install, and a
+   draft is not publicly viewable — which is very likely what happened here.)
+
+   Adding page-{slug}.php fixed the WRONG-TEMPLATE half of the bug. This fixes the
+   NO-SUCH-URL half: these four URLs are now served by the theme directly, whether or not
+   a Page row exists. Consequences worth knowing:
+
+     · the site no longer depends on someone remembering to publish a Page in wp-admin
+       for content that lives entirely in the theme files
+     · a real Page still wins. The rule is registered non-'top' so WordPress resolves a
+       genuine Page first, and page-{slug}.php then picks the same template — so if you
+       DO create /privacy-policy/ as a Page later, nothing here fights it.
+     · status is forced to 200. Without it WordPress would keep the 404 header it had
+       already decided on, and the page would render correctly while telling search
+       engines it does not exist.
+
+   If you add another static template, add its slug to the list in one place below.
+   ============================================================================== */
+if (!function_exists('synergy_static_routes')) {
+    function synergy_static_routes() {
+        return array('privacy-policy', 'service', 'about', 'smart-energy');
+    }
+}
+
+if (!function_exists('synergy_register_static_routes') && function_exists('add_action')) {
+
+    function synergy_register_static_routes() {
+        foreach (synergy_static_routes() as $slug) {
+            add_rewrite_rule(
+                '^' . $slug . '/?$',
+                'index.php?synergy_static=' . $slug,
+                'bottom'          // 'bottom' so a real Page/post with this slug still wins
+            );
+        }
+    }
+    add_action('init', 'synergy_register_static_routes');
+
+    function synergy_static_query_var($vars) {
+        $vars[] = 'synergy_static';
+        return $vars;
+    }
+    add_filter('query_vars', 'synergy_static_query_var');
+
+    function synergy_static_template($template) {
+        $slug = get_query_var('synergy_static');
+        if (!$slug || !in_array($slug, synergy_static_routes(), true)) {
+            return $template;
+        }
+        $file = get_theme_file_path($slug . '.php');
+        if (!file_exists($file)) {
+            return $template;
+        }
+        // WordPress found no post, so it has already queued a 404. Undo that.
+        status_header(200);
+        global $wp_query;
+        $wp_query->is_404 = false;
+        return $file;
+    }
+    add_filter('template_include', 'synergy_static_template');
+
+    /* Rewrite rules are cached in the database, so a new rule does nothing until they are
+       rebuilt — normally by visiting Settings > Permalinks and pressing Save. Doing it here
+       means the routes work the moment the theme files are uploaded, with no admin step.
+       Guarded by a version option so this runs ONCE, not on every request: flushing
+       rewrite rules on every page load is a well-known way to make a site crawl. Bump the
+       version string whenever synergy_static_routes() changes. */
+    function synergy_maybe_flush_rewrites() {
+        $version = 'static-routes-1';
+        if (get_option('synergy_rewrite_version') !== $version) {
+            flush_rewrite_rules();
+            update_option('synergy_rewrite_version', $version);
+        }
+    }
+    add_action('wp_loaded', 'synergy_maybe_flush_rewrites');
+}
+
 // Cache-busting URL for theme assets: /components/style.css -> .../components/style.css?v=1712345678
 if (!function_exists('synergy_asset')) {
     function synergy_asset($relative_path) {
