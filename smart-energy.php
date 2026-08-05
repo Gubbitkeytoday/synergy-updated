@@ -1170,8 +1170,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
                 </marker>
               </defs>
-              <line x1="16.66%" y1="36" x2="16.66%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
-              <line x1="83.33%" y1="36" x2="83.33%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
+              <line x1="16.66%" y1="36" x2="12.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
+              <line x1="83.33%" y1="36" x2="87.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
             </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
