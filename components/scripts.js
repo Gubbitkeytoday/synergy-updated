@@ -192,24 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── NAV STRUCTURE ───────────────────────────────────────────
   const navItems = [
     { label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
-    {
-      label: '<span class="lang-th">โซลูชัน</span><span class="lang-en">Solutions</span>',
-      href: homeHref('#solutions'),
-      page: 'index.html',
-      section: 'solutions',
-      megaCol: [
-        {
-          heading: 'Solutions & Engineering',
-          icon: 'fa-solid fa-layer-group',
-          items: [
-            { label: '<span class="lang-th">1. Smart Factory</span><span class="lang-en">1. Smart Factory</span>', href: homeHref('#solutions') },
-            { label: '<span class="lang-th">2. Smart Agriculture</span><span class="lang-en">2. Smart Agriculture</span>', href: homeHref('#solutions') },
-            { label: '<span class="lang-th">3. Smart Energy Solution ⚡</span><span class="lang-en">3. Smart Energy Solution ⚡</span>', href: pageHref('smart-energy.php') }
-          ]
-        }
-      ]
-    },
-    { label: '<span class="lang-th">Smart Energy</span><span class="lang-en">Smart Energy</span>', href: pageHref('smart-energy.php'), page: 'smart-energy.php' },
     { label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' },
     {
       label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>',
