@@ -1170,8 +1170,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
                 </marker>
               </defs>
-              <line x1="16.66%" y1="36" x2="12.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
-              <line x1="83.33%" y1="36" x2="87.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
+              <line id="sea-line-left-v" x1="16.66%" y1="36" x2="12.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
+              <line id="sea-line-right-v" x1="83.33%" y1="36" x2="87.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
             </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
@@ -1198,8 +1198,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                     <path d="M 1.5 1.5 L 8.5 5 L 1.5 8.5 z" fill="#1F6B43" />
                   </marker>
                 </defs>
-                <line x1="12%" y1="8" x2="38%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
-                <line x1="62%" y1="8" x2="88%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
+                <line id="sea-line-gw-12" x1="12%" y1="8" x2="38%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
+                <line id="sea-line-gw-23" x1="62%" y1="8" x2="88%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
               </svg>
             </div>
 
@@ -1219,7 +1219,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 </marker>
               </defs>
               <!-- Horizontal Bus Line -->
-              <line x1="8.33%" y1="20" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <line id="sea-line-bus-main" x1="8.33%" y1="20" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
               
               <!-- 6 Device Stubs pointing UP to the bus line -->
               <line x1="8.33%" y1="40" x2="8.33%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
@@ -1230,7 +1230,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <line x1="91.66%" y1="40" x2="91.66%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
 
               <!-- Center Gateway Riser pointing UP into Gateway 2 -->
-              <line x1="50%" y1="20" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <line id="sea-line-bus-riser" x1="50%" y1="20" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
             </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
@@ -1717,6 +1717,170 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
   <!-- Scripts -->
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
+
+  <!-- ==========================================================================
+       LIVE VISUAL SVG LINE EDITOR PANEL (เครื่องมือปรับแต่งพิกัดเส้น SVG แบบเรียลไทม์)
+       ========================================================================== -->
+  <div id="sea-line-editor-trigger" class="fixed bottom-6 right-6 z-[99990] flex items-center gap-2 bg-[#1F6B43] text-white px-4 py-2.5 rounded-full shadow-2xl hover:bg-emerald-700 cursor-pointer transition-all duration-300 font-bold text-sm">
+    <i class="fa-solid fa-sliders"></i>
+    <span>ปรับแต่งเส้น SVG เอง (Visual Editor)</span>
+  </div>
+
+  <div id="sea-line-editor-panel" class="fixed bottom-20 right-6 z-[99995] w-96 max-h-[80vh] overflow-y-auto bg-white/95 backdrop-blur-md p-5 rounded-2xl border border-slate-200 shadow-2xl hidden text-slate-800 text-sm">
+    <div class="flex items-center justify-between border-b pb-3 mb-4">
+      <b class="text-[#1F6B43] flex items-center gap-2 text-base">
+        <i class="fa-solid fa-compass-drafting"></i>
+        Visual Line Editor
+      </b>
+      <button id="sea-editor-close" class="text-slate-400 hover:text-slate-700 text-lg px-1">&times;</button>
+    </div>
+
+    <!-- Slanted Left Line -->
+    <div class="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+      <div class="font-bold text-xs text-slate-500 uppercase mb-2">🔴 เส้นเฉียงซ้าย (Gateway 1 ➔ AI Analytics)</div>
+      <label class="block text-xs text-slate-600 mb-1">จุดเริ่ม X1 (Gateway 1): <span id="val-left-x1" class="font-bold text-[#1F6B43]">16.66%</span></label>
+      <input type="range" id="input-left-x1" min="0" max="40" step="0.1" value="16.66" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer mb-3">
+
+      <label class="block text-xs text-slate-600 mb-1">จุดจบ X2 (AI Analytics): <span id="val-left-x2" class="font-bold text-[#1F6B43]">12.5%</span></label>
+      <input type="range" id="input-left-x2" min="0" max="40" step="0.1" value="12.5" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+    </div>
+
+    <!-- Slanted Right Line -->
+    <div class="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+      <div class="font-bold text-xs text-slate-500 uppercase mb-2">🔴 เส้นเฉียงขวา (Gateway 3 ➔ Alert Engine)</div>
+      <label class="block text-xs text-slate-600 mb-1">จุดเริ่ม X1 (Gateway 3): <span id="val-right-x1" class="font-bold text-[#1F6B43]">83.33%</span></label>
+      <input type="range" id="input-right-x1" min="60" max="100" step="0.1" value="83.33" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer mb-3">
+
+      <label class="block text-xs text-slate-600 mb-1">จุดจบ X2 (Alert Engine): <span id="val-right-x2" class="font-bold text-[#1F6B43]">87.5%</span></label>
+      <input type="range" id="input-right-x2" min="60" max="100" step="0.1" value="87.5" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+    </div>
+
+    <!-- Gateway Horizontal 1-2 -->
+    <div class="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+      <div class="font-bold text-xs text-slate-500 uppercase mb-2">🟢 เส้นแนวนอน Gateway 1 ↔ 2</div>
+      <label class="block text-xs text-slate-600 mb-1">เริ่ม X1: <span id="val-gw12-x1" class="font-bold text-[#1F6B43]">12%</span></label>
+      <input type="range" id="input-gw12-x1" min="0" max="40" step="1" value="12" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer mb-3">
+
+      <label class="block text-xs text-slate-600 mb-1">จบ X2: <span id="val-gw12-x2" class="font-bold text-[#1F6B43]">38%</span></label>
+      <input type="range" id="input-gw12-x2" min="10" max="50" step="1" value="38" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+    </div>
+
+    <!-- Gateway Horizontal 2-3 -->
+    <div class="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+      <div class="font-bold text-xs text-slate-500 uppercase mb-2">🟢 เส้นแนวนอน Gateway 2 ↔ 3</div>
+      <label class="block text-xs text-slate-600 mb-1">เริ่ม X1: <span id="val-gw23-x1" class="font-bold text-[#1F6B43]">62%</span></label>
+      <input type="range" id="input-gw23-x1" min="50" max="90" step="1" value="62" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer mb-3">
+
+      <label class="block text-xs text-slate-600 mb-1">จบ X2: <span id="val-gw23-x2" class="font-bold text-[#1F6B43]">88%</span></label>
+      <input type="range" id="input-gw23-x2" min="60" max="100" step="1" value="88" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+    </div>
+
+    <!-- Center Riser -->
+    <div class="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200/80">
+      <div class="font-bold text-xs text-slate-500 uppercase mb-2">🔵 แกนตั้งกลาง (Bus ➔ Gateway 2)</div>
+      <label class="block text-xs text-slate-600 mb-1">ตำแหน่ง X: <span id="val-riser-x" class="font-bold text-[#1F6B43]">50%</span></label>
+      <input type="range" id="input-riser-x" min="30" max="70" step="0.5" value="50" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col gap-2 pt-2 border-t border-slate-200">
+      <button id="sea-btn-copy" class="w-full py-2 bg-[#1F6B43] text-white rounded-lg font-bold text-xs hover:bg-emerald-700 transition">
+        📋 คัดลอกโค้ด SVG ที่ปรับแล้ว
+      </button>
+      <button id="sea-btn-reset" class="w-full py-2 bg-slate-200 text-slate-700 rounded-lg font-bold text-xs hover:bg-slate-300 transition">
+        🔄 รีเซ็ตค่าเริ่มต้น
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const trigger = document.getElementById('sea-line-editor-trigger');
+      const panel = document.getElementById('sea-line-editor-panel');
+      const closeBtn = document.getElementById('sea-editor-close');
+
+      if (!trigger || !panel) return;
+
+      trigger.addEventListener('click', () => panel.classList.toggle('hidden'));
+      if (closeBtn) closeBtn.addEventListener('click', () => panel.classList.add('hidden'));
+
+      // Line Elements
+      const lineLeftV = document.getElementById('sea-line-left-v');
+      const lineRightV = document.getElementById('sea-line-right-v');
+      const lineGw12 = document.getElementById('sea-line-gw-12');
+      const lineGw23 = document.getElementById('sea-line-gw-23');
+      const lineRiser = document.getElementById('sea-line-bus-riser');
+
+      // Inputs & Value displays
+      const controls = [
+        { id: 'left-x1', el: lineLeftV, attr: 'x1', suffix: '%' },
+        { id: 'left-x2', el: lineLeftV, attr: 'x2', suffix: '%' },
+        { id: 'right-x1', el: lineRightV, attr: 'x1', suffix: '%' },
+        { id: 'right-x2', el: lineRightV, attr: 'x2', suffix: '%' },
+        { id: 'gw12-x1', el: lineGw12, attr: 'x1', suffix: '%' },
+        { id: 'gw12-x2', el: lineGw12, attr: 'x2', suffix: '%' },
+        { id: 'gw23-x1', el: lineGw23, attr: 'x1', suffix: '%' },
+        { id: 'gw23-x2', el: lineGw23, attr: 'x2', suffix: '%' },
+        { id: 'riser-x', el: lineRiser, attr: ['x1', 'x2'], suffix: '%' }
+      ];
+
+      function updateLine(ctrl, val) {
+        if (!ctrl.el) return;
+        const formattedVal = val + ctrl.suffix;
+        if (Array.isArray(ctrl.attr)) {
+          ctrl.attr.forEach(a => ctrl.el.setAttribute(a, formattedVal));
+        } else {
+          ctrl.el.setAttribute(ctrl.attr, formattedVal);
+        }
+        document.getElementById('val-' + ctrl.id).textContent = formattedVal;
+        localStorage.setItem('sea-line-' + ctrl.id, val);
+      }
+
+      controls.forEach(ctrl => {
+        const input = document.getElementById('input-' + ctrl.id);
+        if (!input) return;
+
+        // Restore saved settings if available
+        const saved = localStorage.getItem('sea-line-' + ctrl.id);
+        if (saved !== null) {
+          input.value = saved;
+          updateLine(ctrl, saved);
+        }
+
+        input.addEventListener('input', (e) => {
+          updateLine(ctrl, e.target.value);
+        });
+      });
+
+      // Copy Code
+      const btnCopy = document.getElementById('sea-btn-copy');
+      if (btnCopy) {
+        btnCopy.addEventListener('click', () => {
+          const code = `
+<!-- Updated SVG Connector Coordinates -->
+<line x1="${lineLeftV?.getAttribute('x1')}" y1="36" x2="${lineLeftV?.getAttribute('x2')}" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
+<line x1="${lineRightV?.getAttribute('x1')}" y1="36" x2="${lineRightV?.getAttribute('x2')}" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
+<line x1="${lineGw12?.getAttribute('x1')}" y1="8" x2="${lineGw12?.getAttribute('x2')}" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
+<line x1="${lineGw23?.getAttribute('x1')}" y1="8" x2="${lineGw23?.getAttribute('x2')}" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
+<line x1="${lineRiser?.getAttribute('x1')}" y1="20" x2="${lineRiser?.getAttribute('x2')}" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+          `.trim();
+          navigator.clipboard.writeText(code).then(() => {
+            btnCopy.textContent = '✅ คัดลอกสำเร็จแล้ว!';
+            setTimeout(() => btnCopy.textContent = '📋 คัดลอกโค้ด SVG ที่ปรับแล้ว', 2000);
+          });
+        });
+      }
+
+      // Reset
+      const btnReset = document.getElementById('sea-btn-reset');
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          localStorage.clear();
+          location.reload();
+        });
+      }
+    })();
+  </script>
 
 <?php include __DIR__ . '/components/cookie-consent.php'; ?>
   <?php wp_footer(); ?>
