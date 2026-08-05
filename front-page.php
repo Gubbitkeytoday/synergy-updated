@@ -2482,7 +2482,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <p id="quality-policy-statement" class="text-base sm:text-lg text-body font-400 leading-relaxed max-w-none mx-auto">
               <span class="lang-th">
-                บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด มุ่งมั่นที่จะนวัตกรรม พัฒนา ผลิต และส่งมอบผลิตภัณฑ์และบริการที่มี<strong class="font-700 text-brand">มาตรฐานคุณภาพสูงสุด</strong> พร้อมการ<strong class="font-700 text-brand">ส่งมอบตรงเวลา</strong> เพื่อบรรลุ<strong class="font-700 text-brand">ความพึงพอใจของลูกค้า</strong>เหนือความคาดหมาย
+                บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด มุ่งมั่นในการสร้างสรรค์นวัตกรรม พัฒนา ผลิต และส่งมอบผลิตภัณฑ์และบริการที่มี<strong class="font-700 text-brand">มาตรฐานคุณภาพสูงสุด</strong> พร้อมการ<strong class="font-700 text-brand">ส่งมอบตรงเวลา</strong> เพื่อสร้าง<strong class="font-700 text-brand">ความพึงพอใจให้แก่ลูกค้า</strong>เกินความคาดหมาย
               </span>
               <span class="lang-en">
                 Synergy Technology Co., Ltd. is committed to innovating, developing, manufacturing, and delivering products and services of the <strong class="font-700 text-brand">highest quality standards</strong>, with <strong class="font-700 text-brand">on-time delivery</strong>, to achieve <strong class="font-700 text-brand">customer satisfaction</strong> beyond expectations.
