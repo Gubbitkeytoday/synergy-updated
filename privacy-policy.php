@@ -49,7 +49,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>นโยบายความเป็นส่วนตัว | Privacy Policy — Synergy Technology</title>
 
-<meta name="description" content="นโยบายความเป็นส่วนตัวของบริษัท ซินเนอร์ยี่ เทคโนโลยี จำกัด จัดทำตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)">
+<meta name="description" content="นโยบายความเป็นส่วนตัวของบริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด จัดทำตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)">
 <meta name="theme-color" content="#1F6B43">
 <meta name="color-scheme" content="light">
 <!-- A legal notice should be indexable but carries no SEO value as a preview target. -->
@@ -159,7 +159,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <span class="lang-en">Privacy Policy</span>
       </h1>
       <p class="pp-p text-body mt-4">
-        สำหรับเว็บไซต์บริษัท ซินเนอร์ยี่ เทคโนโลยี จำกัด (Synergy Technology Co., Ltd.)
+        สำหรับเว็บไซต์บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด (Synergy Technology Co., Ltd.)
       </p>
       <p class="pp-sm text-muted mt-2">
         <span class="lang-th">มีผลบังคับใช้: 24 กรกฎาคม 2569</span>
@@ -173,7 +173,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
     <div class="pp-shell">
 
       <p class="pp-p text-body">
-        บริษัท ซินเนอร์ยี่ เทคโนโลยี จำกัด (&ldquo;บริษัท&rdquo;, &ldquo;เรา&rdquo;) ให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคลของลูกค้า คู่ค้า ผู้เยี่ยมชมเว็บไซต์ ผู้สมัครงาน และผู้ติดต่อทุกท่าน นโยบายฉบับนี้จัดทำขึ้นเพื่ออธิบายแนวทางการเก็บรวบรวม ใช้ เปิดเผย และเก็บรักษาข้อมูลส่วนบุคคลของท่านเมื่อเข้าใช้งานเว็บไซต์หรือใช้บริการของบริษัท ให้เป็นไปตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)
+        บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด (&ldquo;บริษัท&rdquo;, &ldquo;เรา&rdquo;) ให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคลของลูกค้า คู่ค้า ผู้เยี่ยมชมเว็บไซต์ ผู้สมัครงาน และผู้ติดต่อทุกท่าน นโยบายฉบับนี้จัดทำขึ้นเพื่ออธิบายแนวทางการเก็บรวบรวม ใช้ เปิดเผย และเก็บรักษาข้อมูลส่วนบุคคลของท่านเมื่อเข้าใช้งานเว็บไซต์หรือใช้บริการของบริษัท ให้เป็นไปตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)
       </p>
 
       <!-- 1 -->
@@ -371,7 +371,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <li><strong>Synergy Technology Co., Ltd.</strong></li>
             <li>96 หมู่ 1 ต.คลองหนึ่ง อ.คลองหลวง จ.ปทุมธานี 12120</li>
             <li>โทรศัพท์: <a href="tel:+6625161594" class="text-brand font-bold hover:underline">+66 2 516 1594</a></li>
-            <li>อีเมล: <a href="mailto:info@syntechnology.com" class="text-brand font-bold hover:underline">info@syntechnology.com</a></li>
+            <li>อีเมล: <a href="mailto:sales@syntechnology.com" class="text-brand font-bold hover:underline">sales@syntechnology.com</a></li>
           </ul>
         </div>
       </div>

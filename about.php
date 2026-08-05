@@ -715,7 +715,7 @@ $journey_steps = array(
     'year' => '2008',
     'name_th' => 'ก่อตั้งบริษัท',
     'name_en' => 'Founded Synergy Technology',
-    'desc_th' => 'ก่อตั้งบริษัท ซินเนอร์ยี่ เทคโนโลยี จำกัด',
+    'desc_th' => 'ก่อตั้งบริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด',
     'desc_en' => 'Established Synergy Technology Co., Ltd. as an engineering and electronics company.',
   ),
   array(
