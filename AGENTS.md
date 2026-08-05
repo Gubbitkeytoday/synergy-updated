@@ -184,10 +184,87 @@ page-{slug}.php → page-{id}.php → page.php → singular.php → index.php
   จะยังร่วงลง `index.php` = ได้หน้าแรก **ห้ามใส่ช่องค้นหาที่ไหนจนกว่าจะมี `search.php`**
   ไม่งั้นพาผู้ใช้จากทางตันไปอีกทางตัน
 
+**อาการที่ 2 (คนละสาเหตุ): 404 จริง** ถ้า **ไม่มี Page ที่ slug นั้นเลย** (หรือเป็นฉบับร่าง /
+อยู่ถังขยะ) WordPress จะ 404 เพราะมันจะ route URL ไป template ได้ก็ต่อเมื่อมี post ใน database
+`page-{slug}.php` ช่วยไม่ได้ในกรณีนี้ — WordPress ไม่ไปถึงขั้นเลือก template เลย
+→ แก้ด้วย **`synergy_static_routes()` ใน `functions.php`** ที่ทำให้ 4 URL นี้เสิร์ฟจากธีมตรงๆ
+ไม่ต้องมี Page ใน database: `privacy-policy`, `service`, `about`, `smart-energy`
+**เพิ่ม template นิ่งใหม่ = เพิ่ม slug ในลิสต์นั้น จบ ไม่ต้องทำอะไรอื่น**
+
+**🛑 ห้ามเปลี่ยนไปใช้ `add_rewrite_rule()` — ลองแล้ว ไม่ทำงาน**
+เวอร์ชันแรกของโค้ดนี้ใช้ `add_rewrite_rule(..., 'bottom')` ด้วยเหตุผลว่า "Page จริงควรชนะ"
+เหตุผลนั้น**ผิด และ route ไม่เคยยิงเลยแม้ครั้งเดียว** เพราะ WordPress มี rule ดักจับทุกอย่าง
+อยู่ในชุด default:
+
+```
+(.?.+?)(?:/([0-9]+))?/?$  →  index.php?pagename=$matches[1]&page=$matches[2]
+```
+
+rule นี้ match `privacy-policy` **ไม่ว่าจะมี Page นั้นอยู่หรือไม่** พอเราลงทะเบียนที่ `'bottom'`
+rule ของเราอยู่หลังมัน → WordPress match pagename rule ก่อน ตั้ง `pagename=privacy-policy`
+หาไม่เจอ แล้ว 404 — rule ของเราไม่ถูกประเมินเลย query var ไม่เคยถูกตั้ง
+(ย้ายไป `'top'` ยิงได้ แต่จะบัง Page จริง และต้อง flush rewrite rules ก่อนจึงจะมีผล
+= เพิ่มขั้นตอนที่พลาดได้ตอน deploy)
+
+**วิธีที่ใช้จริง: hook `template_include` ตอน `is_404()`** ไม่มี rewrite rule เลย
+ไม่ต้อง flush อะไร ทำงานทันทีที่อัปโหลดไฟล์ ไม่ขึ้นกับลำดับ rule และ **Page จริงชนะเองโดยธรรมชาติ**
+(ถ้ามี Page อยู่ WordPress ไม่ 404 → filter return ทันที)
+
+- ต้อง `status_header(200)` + `$wp_query->is_404 = false` ไม่งั้นหน้าแสดงถูกแต่ส่ง
+  header 404 ให้ Google (แสดงผลปกติ แต่ไม่ถูก index)
+- ต้องปิด `do_redirect_guess_404_permalink` และ `redirect_canonical` **เฉพาะ slug พวกนี้**
+  เพราะ `redirect_canonical()` รันที่ `template_redirect` ซึ่ง **มาก่อน** `template_include`
+  ถ้าไม่ปิด มันอาจ 301 ไปที่อื่นก่อนเราได้แตะ = อาการ "เด้งไปหน้าแรก" กลับมาอีก
+
+**อาการที่ 3 (ตัวจริงบนเว็บ live): หน้าเปล่า + "is proudly powered by WordPress"** 🛑
+
+ถ้าเห็น HTML ขึ้นต้นด้วยสามบรรทัดนี้ **หยุดเดา — คุณรู้คำตอบแล้ว**
+
+```html
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="stylesheet" href=".../style.css" media="screen">
+<link rel="pingback" href=".../xmlrpc.php">
+```
+
+นี่คือ **`wp-includes/theme-compat/header.php`** ของ WordPress core (คู่กับ
+`theme-compat/footer.php` ที่พิมพ์ "is proudly powered by WordPress") WordPress หยิบมาใช้
+เมื่อ **template เรียก `get_header()`/`get_footer()` แต่ธีมไม่มีสองไฟล์นั้น**
+
+- **template ของธีมนี้ไม่มีตัวไหนเรียก `get_header()` เลย** — แต่ **ปลั๊กอินเรียก**
+  Elementor, WooCommerce, ฟอร์มต่างๆ เรียกทั้งนั้น (บนเว็บ live body class คือ
+  `elementor-default elementor-kit-295`)
+- **`header.php` + `footer.php` มีแล้ว อย่าลบ** สองไฟล์นี้คือตัวกันไม่ให้หน้าที่ปลั๊กอิน
+  เรนเดอร์ออกมาเป็นหน้าเปล่าไร้ navbar ไร้ฟอนต์ ไร้ cookie banner
+- ธีมเองยังไม่ใช้สองไฟล์นั้น (แต่ละหน้าพิมพ์ `<head>` ของตัวเองเพราะมี SEO/OG/type scale
+  ต่างกัน) **ไม่ต้องไปแปลง template เดิมให้ใช้ `get_header()`** ไม่ได้อะไรเพิ่ม
+
+**และกับดักที่ทำให้ `page-{slug}.php` ถูกข้ามทั้งดุ้น:**
+`get_page_template()` เอาค่า **post meta `_wp_page_template` มาก่อน** `page-{slug}.php`
+→ ถ้ามีใครตั้ง template ของ Page นั้นเป็น Elementor ใน wp-admin **ไฟล์ในธีมถูกข้ามทันที**
+ไม่มี error ไม่มีอะไรฟ้อง นี่คือเหตุผลที่ `synergy_static_template()` **ไม่ได้เช็ค `is_404()`**
+แล้ว แต่ยึด template ตาม slug ตรงๆ เพื่อทับสิ่งที่ page builder เลือกไว้
+
+**และกับดักชั้นที่ 3 — priority ของ filter** 🛑
+`Elementor` hook `template_include` ที่ **priority 11**:
+```php
+add_filter( 'template_include', [ $this, 'template_include' ], 11 )   // Elementor core
+```
+priority ที่มากกว่าได้พูดคำสุดท้าย ดังนั้นถ้าเรา hook ที่ **default 10 Elementor จะทิ้งของเรา**
+วัดบนเว็บ live แล้ว: หน้าเรนเดอร์ `header.php` + `footer.php` ของธีมถูกต้อง แต่
+`<div id="main">` **ว่างเปล่า childCount=0** = Elementor เรียก `get_header()`,
+`the_content()` (ว่าง), `get_footer()` → **เปลือกถูกแต่หน้ายังว่าง**
+→ `synergy_static_template()` จึงลงทะเบียนที่ **priority 9999** **ห้ามลดลง**
+
+⚠️ **ผลข้างเคียงที่ต้องรู้:** 4 slug ใน `synergy_static_routes()` **แก้ใน Elementor หรือ
+block editor ไม่ได้อีกแล้ว** — ซึ่งตรงตามเจตนา เพราะไฟล์พวกนั้นไม่มี `the_content()`
+editor จึงไม่เคยเปลี่ยนอะไรได้จริง มันแค่ *ดูเหมือน* แก้ได้ ถ้าอยากให้หน้าไหนแก้ใน editor ได้
+ต้องเอา slug ออกจากลิสต์ แล้วไปสร้างหน้านั้นใน editor ให้เรียบร้อย
+
 **เช็คลิสต์เวลาหน้าใหม่ไม่ขึ้น:**
-1. มี Page ใน WordPress ที่ slug ตรงกันไหม และ **เผยแพร่แล้วหรือยัง** (ฉบับร่าง/ถังขยะ = 404)
+1. slug อยู่ใน `synergy_static_routes()` หรือมี Page ที่ **เผยแพร่แล้ว** ไหม (ฉบับร่าง = 404)
 2. มี `page-{slug}.php` ไหม
 3. ตั้งค่า permalink ใหม่ (Settings → Permalinks → Save) หลังเพิ่ม template
+4. **`<main>` มี `pt-20` ไหม** navbar เป็น `position:fixed` สูง 80px ถ้าไม่มีเนื้อหาจะถูกทับ
 
 ---
 

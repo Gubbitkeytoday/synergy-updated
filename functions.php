@@ -3,7 +3,16 @@
 if (!function_exists('synergy_theme_setup')) {
     function synergy_theme_setup() {
         if (function_exists('add_theme_support')) {
-            add_theme_support('title-tag');
+            /* NO add_theme_support('title-tag') — deliberate, and it was removed for a
+               reason that showed up in the served HTML.
+               'title-tag' makes wp_head() emit its own <title>. But every template in this
+               theme hardcodes a hand-written <title> with page-specific Thai + English SEO
+               copy, and each also calls wp_head(). The live page came back with TWO empty
+               <title></title> tags for that reason. Duplicate titles are an SEO defect and
+               which one a crawler honours is not something to leave to chance.
+               header.php / page.php / 404.php do not need this support either: they pass
+               wp_get_document_title() into components/doc-head.php, which prints the tag
+               itself. That function works whether or not title-tag is declared. */
             add_theme_support('post-thumbnails');
         }
     }
@@ -13,30 +22,42 @@ if (!function_exists('synergy_theme_setup')) {
 }
 
 /* ==============================================================================
-   STATIC PAGE ROUTES  —  why /privacy-policy/ was 404ing
+   STATIC PAGE ROUTES  —  serving /privacy-policy/ etc. without a Page in the database
 
-   The templates in this theme (privacy-policy.php, service.php, about.php,
-   smart-energy.php) are hand-written markup. They contain no the_content(), so there is
-   nothing an editor would ever supply. But WordPress will only route a URL to a template
-   if a matching POST exists in the database, so /privacy-policy/ 404'd for a reason that
-   has nothing to do with the theme: nobody had created and PUBLISHED a Page with that
-   slug. (WordPress auto-creates a "Privacy Policy" page as a DRAFT on install, and a
-   draft is not publicly viewable — which is very likely what happened here.)
+   THE PROBLEM
+   privacy-policy.php, service.php, about.php and smart-energy.php are hand-written
+   markup. They contain no the_content(), so there is nothing an editor would ever supply.
+   But WordPress only routes a URL to a template when a matching POST exists in the
+   database, so /privacy-policy/ 404s unless somebody has created AND PUBLISHED a Page
+   with that slug. (WordPress auto-creates a "Privacy Policy" page as a DRAFT on install,
+   and a draft is not publicly viewable — the likely history here.)
 
-   Adding page-{slug}.php fixed the WRONG-TEMPLATE half of the bug. This fixes the
-   NO-SUCH-URL half: these four URLs are now served by the theme directly, whether or not
-   a Page row exists. Consequences worth knowing:
+   page-{slug}.php fixed the wrong-template half of the bug. This fixes the no-such-URL
+   half.
 
-     · the site no longer depends on someone remembering to publish a Page in wp-admin
-       for content that lives entirely in the theme files
-     · a real Page still wins. The rule is registered non-'top' so WordPress resolves a
-       genuine Page first, and page-{slug}.php then picks the same template — so if you
-       DO create /privacy-policy/ as a Page later, nothing here fights it.
-     · status is forced to 200. Without it WordPress would keep the 404 header it had
-       already decided on, and the page would render correctly while telling search
-       engines it does not exist.
+   WHY THERE IS NO add_rewrite_rule() HERE  —  read this before "improving" it
+   The first version of this code did use add_rewrite_rule() registered at 'bottom',
+   reasoning that a genuine Page should still win. That reasoning is wrong and the routes
+   never fired even once. WordPress ships a CATCH-ALL page rule in its default set:
 
-   If you add another static template, add its slug to the list in one place below.
+       (.?.+?)(?:/([0-9]+))?/?$   ->   index.php?pagename=$matches[1]&page=$matches[2]
+
+   It matches "privacy-policy" whether or not such a Page exists. Registered at 'bottom',
+   our rule sat AFTER it, so WordPress matched the pagename rule first, set
+   pagename=privacy-policy, found no post, and 404'd — our rule was never evaluated and
+   the synergy_static query var was never set. Moving to 'top' would fire, but then it
+   would shadow a real Page and require a rewrite-rule flush to take effect at all, which
+   is one more thing to get wrong on deploy.
+
+   Hooking template_include on an actual 404 avoids all of it:
+     · nothing to flush, so it works the moment the files are uploaded
+     · immune to rewrite-rule ordering
+     · a real published Page wins for free — if one exists WordPress never 404s, so this
+       filter returns early and page-{slug}.php handles it as normal
+     · status is forced back to 200, otherwise the page would render correctly while
+       telling search engines it does not exist
+
+   To add another static template: add its slug below. Nothing else to do.
    ============================================================================== */
 if (!function_exists('synergy_static_routes')) {
     function synergy_static_routes() {
@@ -44,56 +65,130 @@ if (!function_exists('synergy_static_routes')) {
     }
 }
 
-if (!function_exists('synergy_register_static_routes') && function_exists('add_action')) {
+if (!function_exists('synergy_static_template') && function_exists('add_filter')) {
 
-    function synergy_register_static_routes() {
-        foreach (synergy_static_routes() as $slug) {
-            add_rewrite_rule(
-                '^' . $slug . '/?$',
-                'index.php?synergy_static=' . $slug,
-                'bottom'          // 'bottom' so a real Page/post with this slug still wins
-            );
+    /**
+     * Path of the current request, relative to the WordPress home URL.
+     * The home-path strip is what makes this work on a subdirectory install
+     * (example.com/site/privacy-policy/ -> "privacy-policy").
+     */
+    function synergy_request_slug() {
+        $uri  = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $path = (string) parse_url($uri, PHP_URL_PATH);
+        $path = trim(rawurldecode($path), '/');
+
+        $home = (string) parse_url(home_url('/'), PHP_URL_PATH);
+        $home = trim($home, '/');
+        if ($home !== '' && strpos($path, $home) === 0) {
+            $path = trim(substr($path, strlen($home)), '/');
         }
+        return $path;
     }
-    add_action('init', 'synergy_register_static_routes');
 
-    function synergy_static_query_var($vars) {
-        $vars[] = 'synergy_static';
-        return $vars;
-    }
-    add_filter('query_vars', 'synergy_static_query_var');
-
+    /**
+     * WHY THIS IS NOT GATED ON is_404()  —  the actual cause of the live bug
+     *
+     * The previous version only stepped in when WordPress had failed to resolve the URL.
+     * On the live site it never fired even once, because /privacy-policy/ was NOT a 404:
+     * a Page with that slug does exist. The page was broken for a completely different
+     * reason, visible in the served HTML:
+     *
+     *     <link rel="profile" href="https://gmpg.org/xfn/11">
+     *     <link rel="stylesheet" href=".../synergy-updated/style.css" media="screen">
+     *     <link rel="pingback" href=".../xmlrpc.php">
+     *     ... "is proudly powered by WordPress"
+     *
+     * That is wp-includes/theme-compat/header.php and footer.php — WordPress core's
+     * fallbacks, used when a template calls get_header()/get_footer() and the theme has
+     * neither. No template in THIS theme calls them. Elementor's page template does, and
+     * the body class on the live page was "elementor-default elementor-kit-295".
+     *
+     * So: the Page had its template set to an Elementor one, stored in the
+     * _wp_page_template post meta. get_page_template() places that meta value FIRST in
+     * the hierarchy — ahead of page-{slug}.php — so page-privacy-policy.php was skipped
+     * entirely, Elementor rendered an empty layout, and the theme-compat fallbacks
+     * supplied that header and footer.
+     *
+     * Hence: match on the slug and take over whatever WordPress or a page builder chose.
+     *
+     * TRADE-OFF, STATED PLAINLY: for these four slugs the theme file now always wins, so
+     * these four pages CANNOT be edited in Elementor or the block editor any more. That is
+     * intended — privacy-policy.php, service.php, about.php and smart-energy.php are
+     * hand-written markup with no the_content(), so an editor was never able to change
+     * what they display anyway. It only looked editable. To make one of them editable,
+     * remove its slug from synergy_static_routes() and build the page properly in the
+     * editor instead.
+     */
     function synergy_static_template($template) {
-        $slug = get_query_var('synergy_static');
-        if (!$slug || !in_array($slug, synergy_static_routes(), true)) {
-            return $template;
+        $slug = synergy_request_slug();
+        if ($slug === '' || !in_array($slug, synergy_static_routes(), true)) {
+            return $template;   // not ours — leave WordPress (and 404.php) alone
         }
         $file = get_theme_file_path($slug . '.php');
         if (!file_exists($file)) {
             return $template;
         }
-        // WordPress found no post, so it has already queued a 404. Undo that.
-        status_header(200);
-        global $wp_query;
-        $wp_query->is_404 = false;
+
+        // If no Page row exists WordPress has already queued a 404. Undo that, or the
+        // page would render correctly while telling search engines it does not exist.
+        if (is_404()) {
+            status_header(200);
+            header_remove('Expires');
+            header_remove('Cache-Control');
+            global $wp_query;
+            if ($wp_query) {
+                $wp_query->is_404 = false;
+            }
+        }
         return $file;
     }
-    add_filter('template_include', 'synergy_static_template');
+    /* PRIORITY 9999 IS LOAD-BEARING — do not drop it back to the default.
+     *
+     * Registered at the default priority 10, this filter ran and returned the right
+     * template, and Elementor then threw it away. Elementor's page-template module hooks
+     * the same filter at priority 11:
+     *
+     *     add_filter( 'template_include', [ $this, 'template_include' ], 11 )
+     *
+     * Later priority wins the final say, so Elementor's choice replaced ours. Measured on
+     * the live site after the theme-compat fix: the page rendered this theme's header.php
+     * and footer.php with <div id="main"> completely EMPTY between them — that is
+     * Elementor's elementor_header_footer template calling get_header(), the_content()
+     * (nothing, because the Page has no Elementor content) and get_footer().
+     *
+     * So the shell looked correct and the page was still blank. 9999 puts this last.
+     */
+    add_filter('template_include', 'synergy_static_template', 9999);
 
-    /* Rewrite rules are cached in the database, so a new rule does nothing until they are
-       rebuilt — normally by visiting Settings > Permalinks and pressing Save. Doing it here
-       means the routes work the moment the theme files are uploaded, with no admin step.
-       Guarded by a version option so this runs ONCE, not on every request: flushing
-       rewrite rules on every page load is a well-known way to make a site crawl. Bump the
-       version string whenever synergy_static_routes() changes. */
-    function synergy_maybe_flush_rewrites() {
-        $version = 'static-routes-1';
-        if (get_option('synergy_rewrite_version') !== $version) {
-            flush_rewrite_rules();
-            update_option('synergy_rewrite_version', $version);
-        }
+    /* ---------------------------------------------------------------------------
+       STOP WORDPRESS REDIRECTING THE URL AWAY BEFORE WE GET IT
+
+       template_include runs from template-loader.php, but redirect_canonical() runs
+       EARLIER, on template_redirect. On a 404 it calls redirect_guess_404_permalink(),
+       which looks for a published post whose slug merely STARTS WITH the requested one
+       and 301s to it — and if it finds nothing usable the request can still end up
+       bounced to the site root. That is the original reported symptom exactly: open
+       /privacy-policy/ and land on the home page.
+
+       So a redirect can beat us to it, and no amount of correctness in the template
+       filter would help — the response is already a 3xx by then. These two filters opt
+       our static slugs out of both guessing paths. They are scoped to those slugs only,
+       so canonical redirects keep working normally everywhere else on the site (trailing
+       slashes, ?p=123, uppercase paths and so on).
+       --------------------------------------------------------------------------- */
+    function synergy_is_static_request() {
+        return in_array(synergy_request_slug(), synergy_static_routes(), true);
     }
-    add_action('wp_loaded', 'synergy_maybe_flush_rewrites');
+
+    function synergy_block_404_guess($do_guess) {
+        return synergy_is_static_request() ? false : $do_guess;
+    }
+    add_filter('do_redirect_guess_404_permalink', 'synergy_block_404_guess');
+
+    function synergy_block_canonical_redirect($redirect_url) {
+        return synergy_is_static_request() ? false : $redirect_url;
+    }
+    add_filter('redirect_canonical', 'synergy_block_canonical_redirect');
 }
 
 // Cache-busting URL for theme assets: /components/style.css -> .../components/style.css?v=1712345678

@@ -207,6 +207,52 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── NAV STRUCTURE ───────────────────────────────────────────
   const navItems = [
     { label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
+    {
+      label: '<span class="lang-th">โซลูชัน</span><span class="lang-en">Solutions</span>',
+      href: homeHref('#solutions'),
+      page: 'index.html',
+      section: 'solutions',
+      megaCol: [
+        {
+          heading: 'Smart Solutions',
+          icon: 'fa-solid fa-layer-group',
+          items: [
+            { label: '<span class="lang-th">1. Smart Factory</span><span class="lang-en">1. Smart Factory</span>', href: homeHref('#solutions') },
+            { label: '<span class="lang-th">2. Smart Energy</span><span class="lang-en">2. Smart Energy</span>', href: pageHref('smart-energy.php') },
+            { label: '<span class="lang-th">3. Smart Agriculture</span><span class="lang-en">3. Smart Agriculture</span>', href: homeHref('#solutions') }
+          ]
+        }
+      ]
+    },
+    {
+      label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>',
+      href: pageHref('service.php'),
+      page: 'service.php',
+      megaCol: [
+        {
+          heading: 'Engineering & Manufacturing Services',
+          icon: 'fa-solid fa-microchip',
+          items: [
+            {
+              label: '<span class="lang-th">1. R&D & Hardware Engineering</span><span class="lang-en">1. R&D & Hardware Engineering</span>',
+              href: `${pageHref('service.php')}#capabilities`
+            },
+            {
+              label: '<span class="lang-th">2. Turnkey Manufacturing (OEM/ODM)</span><span class="lang-en">2. Turnkey Manufacturing (OEM/ODM)</span>',
+              href: `${pageHref('service.php')}#process`
+            },
+            {
+              label: '<span class="lang-th">3. Quality & Standards Certification</span><span class="lang-en">3. Quality & Standards Certification</span>',
+              href: `${pageHref('service.php')}#why-us`
+            },
+            {
+              label: '<span class="lang-th">4. Smart Solution Integration</span><span class="lang-en">4. Smart Solution Integration</span>',
+              href: `${pageHref('service.php')}#capabilities`
+            }
+          ]
+        }
+      ]
+    },
     { label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' },
     { label: '<span class="lang-th">เกี่ยวกับเรา</span><span class="lang-en">About Us</span>', href: pageHref('about.php'), page: 'about.php' }
   ];
