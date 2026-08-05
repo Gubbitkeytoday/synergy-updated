@@ -31,7 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(() => {});
 
   // ===== SUKHUMVIT SET FONT INJECTION =====
-  const fontPrefix = upPrefix + 'fonts/';
+  const getFontPrefix = () => {
+    if (isWordPress && (window.wpThemeUri || window.wpThemeUrl)) {
+      const baseUri = window.wpThemeUri || window.wpThemeUrl;
+      return baseUri.replace(/\/$/, '') + '/fonts/';
+    }
+    const rawPath = window.location.pathname;
+    if (rawPath.includes('/solutions/')) {
+      return upPrefix + 'fonts/';
+    }
+    if (rawPath.endsWith('/') && rawPath !== '/') {
+      return '../fonts/';
+    }
+    return 'fonts/';
+  };
+  const fontPrefix = getFontPrefix();
   const sukhumvitStyle = document.createElement('style');
   sukhumvitStyle.textContent = `
     @font-face {
