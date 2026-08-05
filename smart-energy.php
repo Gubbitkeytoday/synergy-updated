@@ -1127,15 +1127,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <!-- Tier 1 to Tier 2 SVG Connector -->
-          <div class="h-8 relative my-1 hidden sm:block">
-            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="50%" y1="28" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <circle cx="50%" cy="6" r="3.5" fill="#1F6B43" />
-              <circle cx="50%" cy="28" r="3.5" fill="#1F6B43" />
-            </svg>
-          </div>
-
           <!-- Tier 2 — SynExta Energy Engine -->
           <div class="sea-engine">
             <div class="sea-engine-t">SynExta Energy Engine</div>
@@ -1171,22 +1162,21 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <!-- 2 Vertical Dashed SVG Node Connectors connecting Gateway up to Energy Engine -->
+          <!-- 2 Vertical Dashed SVG Arrows connecting Gateway up to Energy Engine -->
           <div class="h-9 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="16.66%" y1="36" x2="16.66%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <circle cx="16.66%" cy="6" r="3.5" fill="#1F6B43" />
-              <circle cx="16.66%" cy="36" r="3.5" fill="#1F6B43" />
-
-              <line x1="83.33%" y1="36" x2="83.33%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <circle cx="83.33%" cy="6" r="3.5" fill="#1F6B43" />
-              <circle cx="83.33%" cy="36" r="3.5" fill="#1F6B43" />
+              <defs>
+                <marker id="sea-up-arrow" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
+                </marker>
+              </defs>
+              <line x1="16.66%" y1="36" x2="16.66%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
+              <line x1="83.33%" y1="36" x2="83.33%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
             </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="50%" y1="24" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <circle cx="50%" cy="6" r="3.5" fill="#1F6B43" />
+              <line x1="50%" y1="24" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow)" />
             </svg>
           </div>
 
@@ -1197,16 +1187,19 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <span class="lang-en">Energy Gateway</span>
             </div>
 
-            <!-- SVG Dashed Lines Connecting Gateway 1 -> 2 -> 3 -->
+            <!-- SVG Dashed Lines Connecting Gateway 1 <-> 2 <-> 3 -->
             <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:block z-0 px-[16.66%]">
               <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
-                <line x1="15%" y1="8" x2="35%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-                <circle cx="15%" cy="8" r="3" fill="#1F6B43" />
-                <circle cx="35%" cy="8" r="3" fill="#1F6B43" />
-
-                <line x1="65%" y1="8" x2="85%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-                <circle cx="65%" cy="8" r="3" fill="#1F6B43" />
-                <circle cx="85%" cy="8" r="3" fill="#1F6B43" />
+                <defs>
+                  <marker id="sea-left-arrow" viewBox="0 0 10 10" refX="1.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M 8.5 1.5 L 1.5 5 L 8.5 8.5 z" fill="#1F6B43" />
+                  </marker>
+                  <marker id="sea-right-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M 1.5 1.5 L 8.5 5 L 1.5 8.5 z" fill="#1F6B43" />
+                  </marker>
+                </defs>
+                <line x1="12%" y1="8" x2="38%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
+                <line x1="62%" y1="8" x2="88%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-start="url(#sea-left-arrow)" marker-end="url(#sea-right-arrow)" />
               </svg>
             </div>
 
@@ -1217,37 +1210,27 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <!-- Gateway <-> Device Junction Bus with 3 SVG Risers into Gateways -->
+          <!-- Gateway <-> Device Junction Bus with 6 Device Stubs and Center Riser into Gateway 2 -->
           <div class="h-10 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
+              <defs>
+                <marker id="sea-up-arrow-bus" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
+                </marker>
+              </defs>
               <!-- Horizontal Bus Line -->
               <line x1="8.33%" y1="20" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
               
-              <!-- 6 Device Stubs from bottom to bus -->
-              <line x1="8.33%" y1="40" x2="8.33%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <line x1="25%" y1="40" x2="25%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <line x1="41.66%" y1="40" x2="41.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <line x1="58.33%" y1="40" x2="58.33%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <line x1="75%" y1="40" x2="75%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <line x1="91.66%" y1="40" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <!-- 6 Device Stubs pointing UP to the bus line -->
+              <line x1="8.33%" y1="40" x2="8.33%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <line x1="25%" y1="40" x2="25%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <line x1="41.66%" y1="40" x2="41.66%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <line x1="58.33%" y1="40" x2="58.33%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <line x1="75%" y1="40" x2="75%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <line x1="91.66%" y1="40" x2="91.66%" y2="22" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
 
-              <!-- Device Junction Node Dots on Bus -->
-              <circle cx="8.33%" cy="20" r="3" fill="#1F6B43" />
-              <circle cx="25%" cy="20" r="3" fill="#1F6B43" />
-              <circle cx="41.66%" cy="20" r="3" fill="#1F6B43" />
-              <circle cx="58.33%" cy="20" r="3" fill="#1F6B43" />
-              <circle cx="75%" cy="20" r="3" fill="#1F6B43" />
-              <circle cx="91.66%" cy="20" r="3" fill="#1F6B43" />
-
-              <!-- 3 Gateway Risers into Gateway 1, 2, 3 -->
-              <line x1="16.66%" y1="20" x2="16.66%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <line x1="50%" y1="20" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-              <line x1="83.33%" y1="20" x2="83.33%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
-
-              <!-- Gateway Terminal Node Dots -->
-              <circle cx="16.66%" cy="6" r="3.5" fill="#1F6B43" />
-              <circle cx="50%" cy="6" r="3.5" fill="#1F6B43" />
-              <circle cx="83.33%" cy="6" r="3.5" fill="#1F6B43" />
+              <!-- Center Gateway Riser pointing UP into Gateway 2 -->
+              <line x1="50%" y1="20" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
             </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
