@@ -1115,7 +1115,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <div class="sea-link" aria-hidden="true"></div>
+          <!-- Tier 1 to Tier 2 SVG Connector -->
+          <div class="h-8 relative my-1 hidden sm:block">
+            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
+              <defs>
+                <marker id="sea-up-arrow-1" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
+                </marker>
+              </defs>
+              <line x1="50%" y1="28" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+            </svg>
+          </div>
 
           <!-- Tier 2 — SynExta Energy Engine -->
           <div class="sea-engine">
@@ -1155,11 +1165,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <!-- 2 Vertical Dashed SVG Arrows connecting Gateway up to Energy Engine -->
           <div class="h-9 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <defs>
-                <marker id="sea-up-arrow-1" viewBox="0 0 10 10" refX="5" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
-                </marker>
-              </defs>
               <line x1="16.66%" y1="36" x2="16.66%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
               <line x1="83.33%" y1="36" x2="83.33%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
             </svg>
@@ -1183,7 +1188,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <div class="flex-none flex items-center justify-center w-12 sm:w-20">
                 <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
                   <defs>
-                    <marker id="sea-right-arrow-gw" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                    <marker id="sea-right-arrow-gw" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
                       <path d="M 1.5 1.5 L 8.5 5 L 1.5 8.5 z" fill="#1F6B43" />
                     </marker>
                   </defs>
@@ -1208,7 +1213,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="h-10 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
               <defs>
-                <marker id="sea-up-arrow-bus" viewBox="0 0 10 10" refX="5" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                <marker id="sea-up-arrow-bus" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="6" markerHeight="6" orient="auto">
                   <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
                 </marker>
               </defs>
