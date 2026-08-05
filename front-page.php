@@ -331,9 +331,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
       </a>
       <div class="hidden xl:flex items-center gap-8 text-sm sm:text-base font-800 uppercase tracking-wider text-ink">
         <a href="<?php echo home_url('/'); ?>#top" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">หน้าแรก</a>
-        <a href="<?php echo home_url('/about/'); ?>" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">เกี่ยวกับเรา</a>
-        <a href="<?php echo home_url('/'); ?>#solutions" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">โซลูชัน</a>
         <a href="<?php echo home_url('/'); ?>#success-stories" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">ผลงานจริง</a>
+        <a href="<?php echo home_url('/about/'); ?>" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 font-bold tracking-wide">เกี่ยวกับเรา</a>
         <button id="langToggleBtn" class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-slate-200 text-ink hover:text-brand hover:border-brand transition duration-200 text-sm font-extrabold tracking-wider">
           <span class="lang-en inline-flex items-center gap-1.5"><svg viewBox="0 0 60 30" class="w-5 h-3 rounded-[2px] shrink-0" aria-hidden="true"><rect width="60" height="30" fill="#012169"/><path d="M0 0L60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0L60 30M60 0L0 30" stroke="#C8102E" stroke-width="4"/><rect x="25" width="10" height="30" fill="#fff"/><rect y="10" width="60" height="10" fill="#fff"/><rect x="27" width="6" height="30" fill="#C8102E"/><rect y="12" width="60" height="6" fill="#C8102E"/></svg>EN</span>
           <span class="lang-th inline-flex items-center gap-1.5"><svg viewBox="0 0 30 20" class="w-5 h-3 rounded-[2px] shrink-0" aria-hidden="true"><rect width="30" height="20" fill="#F4F5F8"/><rect width="30" height="3.4" fill="#A51931"/><rect y="16.6" width="30" height="3.4" fill="#A51931"/><rect y="7" width="30" height="6" fill="#2D2A4A"/></svg>TH</span>
