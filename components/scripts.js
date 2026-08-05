@@ -204,8 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
           items: [
             { label: '<span class="lang-th">1. Smart Factory</span><span class="lang-en">1. Smart Factory</span>', href: homeHref('#solutions'), desc: 'ระบบโรงงานอัจฉริยะและการเชื่อมต่อเครื่องจักร' },
             { label: '<span class="lang-th">2. Smart Agriculture</span><span class="lang-en">2. Smart Agriculture</span>', href: homeHref('#solutions'), desc: 'เกษตรอัจฉริยะ ไอโอทีและเซ็นเซอร์วัดผล' },
-            { label: '<span class="lang-th">3. Custom IoT & Hardware</span><span class="lang-en">3. Custom IoT & Hardware</span>', href: homeHref('#solutions'), desc: 'ออกแบบพัฒนาฮาร์ดแวร์และซอฟต์แวร์เฉพาะทาง' },
-            { label: '<span class="lang-th">4. Smart Energy Solution ⚡</span><span class="lang-en">4. Smart Energy Solution ⚡</span>', href: pageHref('smart-energy.php'), desc: 'ระบบบริหารจัดการพลังงาน โซลาร์เซลล์ & EV Charger' }
+            { label: '<span class="lang-th">3. Smart Energy Solution ⚡</span><span class="lang-en">3. Smart Energy Solution ⚡</span>', href: pageHref('smart-energy.php'), desc: 'ระบบบริหารจัดการพลังงาน โซลาร์เซลล์ & EV Charger' }
           ]
         }
       ]
