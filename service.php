@@ -413,18 +413,16 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
         </div>
 
-        <!-- 2. Faster to Market -->
+        <!-- 2. On-time Delivery -->
         <div class="bg-white/85 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-4">
           <span class="w-11 h-11 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center text-[#1F6B43] shrink-0 shadow-xs">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-              <circle cx="12" cy="12" r="9" stroke-linecap="round"/>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 3"/>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.5l1 2M7.5 3.5l-1 2"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
             </svg>
           </span>
           <div class="flex flex-col">
-            <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">Faster to Market</b>
-            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug"><span class="lang-en">Accelerate product development and time-to-market.</span><span class="lang-th">เร่งการพัฒนาผลิตภัณฑ์สู่ตลาด</span></span>
+            <b class="svc-label text-[#1F6B43] text-[15px] font-extrabold mb-0.5">On-time Delivery</b>
+            <span class="svc-caption text-slate-600 text-[13px] font-medium leading-snug"><span class="lang-en">Reliable, on-time delivery you can count on.</span><span class="lang-th">ส่งมอบตรงเวลา ด้วยมาตรฐานที่เชื่อถือได้</span></span>
           </div>
         </div>
 
@@ -867,12 +865,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div class="lg:col-span-7">
           <h2 class="font-display svc-h2 text-white">
-            <span class="lang-en">Let's Build Your Next<br><span class="text-gold-bright font-extrabold">Successful Product</span> Together</span>
-            <span class="lang-th">ร่วมสร้างผลิตภัณฑ์<br><span class="text-gold-bright font-extrabold">ที่ประสบความสำเร็จ</span> ไปกับเรา</span>
+            <span class="lang-en">Design. Develop. Manufacture.<br><span class="text-gold-bright font-extrabold">All in One Place.</span></span>
+            <span class="lang-th">สร้างสรรค์ พัฒนา และผลิต<br><span class="text-gold-bright font-extrabold">ครบจบในที่เดียว</span></span>
           </h2>
           <p class="svc-copy text-slate-100 mt-4 max-w-xl">
-            <span class="lang-en">Your trusted engineering partner—from concept and design to manufacturing and market-ready products.</span>
-            <span class="lang-th">พาร์ทเนอร์ด้านวิศวกรรมที่คุณไว้วางใจ ดูแลตั้งแต่การออกแบบ การพัฒนา การผลิต จนถึงผลิตภัณฑ์ที่พร้อมออกสู่ตลาด</span>
+            <span class="lang-en">From product design and development to OEM/ODM manufacturing and smart solution integration, we provide complete end-to-end engineering and manufacturing services.</span>
+            <span class="lang-th">ดูแลตั้งแต่การออกแบบ การพัฒนาผลิตภัณฑ์ การผลิต OEM/ODM จนถึงการต่อยอดเป็น Smart Solutions</span>
           </p>
           <a href="<?php echo home_url('/'); ?>#contact" class="bg-gold-bright hover:bg-[#C99700] active:scale-95 text-slate-900 svc-label uppercase tracking-wide px-8 py-3.5 rounded-xl shadow-lg shadow-gold-bright/20 inline-flex items-center gap-2 mt-8 transition duration-200">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 0 1-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
