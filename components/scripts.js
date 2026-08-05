@@ -211,7 +211,39 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     { label: '<span class="lang-th">Smart Energy</span><span class="lang-en">Smart Energy</span>', href: pageHref('smart-energy.php'), page: 'smart-energy.php' },
     { label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' },
-    { label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>', href: pageHref('service.php'), page: 'service.php' },
+    {
+      label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>',
+      href: pageHref('service.php'),
+      page: 'service.php',
+      megaCol: [
+        {
+          heading: 'Engineering & Manufacturing Services',
+          icon: 'fa-solid fa-microchip',
+          items: [
+            {
+              label: '<span class="lang-th">1. R&D & Hardware Engineering</span><span class="lang-en">1. R&D & Hardware Engineering</span>',
+              href: `${pageHref('service.php')}#capabilities`,
+              desc: 'ออกแบบ พัฒนาฮาร์ดแวร์ PCB, Firmware & Mechanical Structure'
+            },
+            {
+              label: '<span class="lang-th">2. Turnkey Manufacturing (OEM/ODM)</span><span class="lang-en">2. Turnkey Manufacturing (OEM/ODM)</span>',
+              href: `${pageHref('service.php')}#process`,
+              desc: 'บริการผลิต NPI, PCBA Assembly & Mass Production ครบวงจร'
+            },
+            {
+              label: '<span class="lang-th">3. Quality & Standards Certification</span><span class="lang-en">3. Quality & Standards Certification</span>',
+              href: `${pageHref('service.php')}#why-us`,
+              desc: 'ควบคุมคุณภาพและการทดสอบมาตรฐานสากล ISO & IATF'
+            },
+            {
+              label: '<span class="lang-th">4. Smart Solution Integration</span><span class="lang-en">4. Smart Solution Integration</span>',
+              href: `${pageHref('service.php')}#capabilities`,
+              desc: 'ประกอบและต่อยอดฮาร์ดแวร์เข้ากับระบบซอฟต์แวร์อัจฉริยะ'
+            }
+          ]
+        }
+      ]
+    },
     { label: '<span class="lang-th">เกี่ยวกับเรา</span><span class="lang-en">About Us</span>', href: pageHref('about.php'), page: 'about.php' }
   ];
 
