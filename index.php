@@ -3114,6 +3114,30 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   placeholder="พิมพ์ข้อความของคุณที่นี่..."></textarea>
               </div>
 
+              <!-- ===== PDPA CONSENT =====
+                   Two boxes on purpose. The first covers replying to this enquiry and is
+                   required; the second is marketing and is optional, so agreeing to be
+                   contacted is not conditional on agreeing to be marketed to. PDPA treats
+                   consent bundled with an unrelated purpose as weak consent. -->
+              <div class="space-y-3 pt-1">
+                <label class="flex items-start gap-3 cursor-pointer">
+                  <input type="checkbox" name="consent_contact" required
+                    class="mt-1 w-[18px] h-[18px] flex-none accent-brand cursor-pointer">
+                  <span class="text-muted" style="font-size:0.875rem;line-height:1.7">
+                    <span class="lang-th">ข้าพเจ้าได้อ่านและยอมรับ<a href="<?php echo home_url('/privacy-policy/'); ?>" target="_blank" rel="noopener" class="text-brand font-bold underline">นโยบายความเป็นส่วนตัว</a>ของบริษัท และยินยอมให้บริษัทเก็บรวบรวม ใช้ และประมวลผลข้อมูลส่วนบุคคลของข้าพเจ้าเพื่อการติดต่อกลับ การจัดทำใบเสนอราคา การนัดหมายสาธิตระบบ และการดำเนินการที่เกี่ยวข้องตามวัตถุประสงค์ที่แจ้งไว้ <span class="text-rose-500">*</span></span>
+                    <span class="lang-en">I have read and accept the company&rsquo;s <a href="<?php echo home_url('/privacy-policy/'); ?>" target="_blank" rel="noopener" class="text-brand font-bold underline">Privacy Policy</a> and consent to the collection, use and processing of my personal data in order to respond to this enquiry, prepare a quotation, arrange a demonstration and carry out the related purposes stated. <span class="text-rose-500">*</span></span>
+                  </span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer">
+                  <input type="checkbox" name="consent_marketing"
+                    class="mt-1 w-[18px] h-[18px] flex-none accent-brand cursor-pointer">
+                  <span class="text-muted" style="font-size:0.875rem;line-height:1.7">
+                    <span class="lang-th">ข้าพเจ้ายินยอมรับข่าวสาร ข้อมูลสินค้าและบริการจากบริษัท (ไม่บังคับ และสามารถถอนความยินยอมได้ภายหลัง)</span>
+                    <span class="lang-en">I agree to receive news and information about products and services (optional; you may withdraw this at any time).</span>
+                  </span>
+                </label>
+              </div>
+
               <!-- Submit Button -->
               <button type="submit"
                 class="w-full bg-brand hover:bg-brand-deep text-white font-700 py-3.5 rounded-xl text-sm tracking-wider uppercase transition shadow-md cursor-pointer">
@@ -3153,6 +3177,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
       })();
     </script>
 
+<?php include __DIR__ . '/components/cookie-consent.php'; ?>
 <?php wp_footer(); ?>
 </body>
 

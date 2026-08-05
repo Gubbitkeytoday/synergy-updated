@@ -1646,6 +1646,7 @@ foreach ($sx_outcomes as $sx) {
   <!-- Scripts -->
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/live-editor.js') : './components/live-editor.js'; ?>"></script>
+<?php include __DIR__ . '/components/cookie-consent.php'; ?>
   <?php wp_footer(); ?>
 </body>
 

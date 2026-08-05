@@ -435,8 +435,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40">
             <span><span class="lang-th">© 2026 บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด สงวนลิขสิทธิ์</span><span class="lang-en">© 2026 Synergy Technology Co., Ltd. All rights reserved.</span></span>
             <div class="flex items-center gap-6">
-              <a href="${pageHref('contact.html')}" class="hover:text-white/70 transition-colors"><span class="lang-th">นโยบายความเป็นส่วนตัว</span><span class="lang-en">Privacy Policy</span></a>
-              <a href="${pageHref('contact.html')}" class="hover:text-white/70 transition-colors"><span class="lang-th">ข้อกำหนด</span><span class="lang-en">Terms</span></a>
+              <a href="${pageHref('privacy-policy.php')}" class="hover:text-white/70 transition-colors"><span class="lang-th">นโยบายความเป็นส่วนตัว</span><span class="lang-en">Privacy Policy</span></a>
+              <a href="${pageHref('privacy-policy.php#cookies')}" class="hover:text-white/70 transition-colors"><span class="lang-th">นโยบายคุกกี้</span><span class="lang-en">Cookie Policy</span></a>
+              <a href="#" onclick="event.preventDefault();window.synergyConsent&&window.synergyConsent.open()" class="hover:text-white/70 transition-colors"><span class="lang-th">ตั้งค่าคุกกี้</span><span class="lang-en">Cookie Settings</span></a>
             </div>
           </div>
 

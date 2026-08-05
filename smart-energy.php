@@ -107,8 +107,26 @@ if (file_exists(__DIR__ . '/functions.php')) {
       overflow-wrap: break-word;
     }
 
+    /* ==========================================================================
+       TYPE SCALE — matched to the site's own steps
+
+       components/style.css fixes the site scale with !important, so it is knowable:
+       root 17px / 18.5px from 1024px up, giving text-xs 14.9-16.2px, text-sm
+       16.6-18.0px, text-base 18.3-19.9px, text-lg 21.2-23.1px. front-page.php leans on
+       text-sm and text-xs; the smallest text anywhere else on the site is 16.2px.
+
+       Measured on this page before the change: eyebrow 11.8px, card body 12.7px, the
+       architecture labels 9.5-10.4px. Thai supporting copy at 12.7px is below any
+       readable floor — Thai needs MORE than Latin at the same nominal size because
+       ko-kai height matches Latin CAP height, not x-height, and the stacked vowels and
+       tone marks fill in. 16px is also the accepted body minimum (Material 3 says 16sp,
+       Apple HIG 17pt).
+
+       Every token below is now a step the rest of the site already uses, in rem so it
+       scales with the shared root rather than being pinned to px on this page alone.
+       ========================================================================== */
     .se-eyebrow {
-      font-size: clamp(11.5px, .82vw, 15px) !important;
+      font-size: 0.875rem !important;          /* = text-xs   14.9 -> 16.2px */
       font-weight: 800 !important;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -117,17 +135,54 @@ if (file_exists(__DIR__ . '/functions.php')) {
     #energy-hero .se-eyebrow { color: #4ade80; }
     /* สูตร h2 กลางของทั้งไซต์: 22px @390 / 40px @1440 / 44px @1920 (ตรงกับ index.php และ about.php) */
     .se-h2 { font-size: clamp(22px, 2.78vw, 44px) !important; line-height: 1.2 !important; font-weight: 800; }
-    .se-lede { font-size: clamp(14px, 1.12vw, 20px) !important; line-height: 1.65 !important; }
+    .se-lede { font-size: 1.075rem !important; line-height: 1.7 !important; }   /* = text-base 18.3 -> 19.9px */
     /* คำโปรยใน hero ใช้ขนาด/น้ำหนักเดียวกับ hero ของ about.php (20px / 500) */
-    #energy-hero .se-lede { font-size: clamp(18px, 1.39vw, 20px) !important; font-weight: 500 !important; }
-    .se-card-t { font-size: clamp(14.5px, 1.02vw, 19px) !important; line-height: 1.3 !important; font-weight: 800; }
-    .se-card-p { font-size: clamp(12.5px, .88vw, 15.5px) !important; line-height: 1.55 !important; overflow-wrap: normal; word-break: keep-all; hyphens: none; }
+    #energy-hero .se-lede { font-size: 1.25rem !important; font-weight: 500 !important; }  /* = text-lg 21.2 -> 23.1px */
+    .se-card-t { font-size: 1.075rem !important; line-height: 1.35 !important; font-weight: 800; }   /* = text-base, bold */
+    /* Cards sitting in the same row must put their description on the same line. A
+       one-line title next to a longer one pushed them out of step.
+
+       The reserve is expressed in LINES, because how many lines a title needs depends on
+       how wide its column is — and the Thai titles need three at 6-across (measured:
+       "เพิ่มประสิทธิภาพการผลิตไฟจากโซลาร์" wraps to 3 lines in a 6-across cell while
+       "ลดค่าไฟฟ้า" takes 1). The count therefore steps down with the grid, so no
+       breakpoint is left with dead space above its descriptions.
+       1.35 = the .se-card-t line-height. */
+    .se-card-t.se-titlebox {
+      min-height: calc(var(--se-title-lines, 2) * 1.35em);
+      display: flex; align-items: center;
+    }
+    .se-card-t.se-titlebox--center { justify-content: center; }
+    .se-c6, .se-c5 { --se-title-lines: 3; }  /* 6/5 across: the longest titles need three */
+    @media (max-width: 1599px) {
+      .se-c6 { --se-title-lines: 2; }           /* 3 across from here: two lines is enough */
+    }
+    @media (max-width: 1180px) {
+      .se-c5 { --se-title-lines: 2; }
+    }
+    @media (max-width: 520px) {
+      .se-c6, .se-c5 { --se-title-lines: 1; }   /* single column: nothing wraps */
+    }
+
+    /* A flex item defaults to min-width:auto, so a long title refused to shrink below
+       its longest word and pushed its card 93px past the viewport at 1265px in English.
+       min-width:0 lets the text block wrap inside its grid track instead. */
+    /* the card is both a grid item and a flex row; every level needs to be allowed
+       to shrink or the longest word re-inflates the track */
+    .se-grid > * { min-width: 0; }
+    .se-grid .se-card-t, .se-grid .se-card-p, .se-grid > div > div { min-width: 0; }
+    .se-grid .se-card-t > span, .se-grid .se-card-p > span { min-width: 0; }
+
+    .se-card-p { font-size: 0.975rem !important; line-height: 1.8 !important; overflow-wrap: normal; word-break: keep-all; hyphens: none; }   /* = text-sm; 1.8 leading for Thai */
     .se-grid { display: grid; grid-auto-rows: 1fr; }
     /* ===== Page shell =================================================
        Measured at 1920px: max-w-[1400px] filled only 73.5% of the viewport, leaving a
        253px gutter each side, while every type clamp had already topped out at ~1400px.
        A big monitor therefore showed small text in a narrow column. The shell grows to
        1760px with a fluid gutter, and the raised clamps above keep scaling into it. */
+    /* The primary action must not be the smallest text in its own section. */
+    .se-cta-label { font-size: 0.975rem !important; letter-spacing: .06em; }
+
     .se-shell { width: 100%; max-width: 1760px; margin-inline: auto; padding-inline: clamp(16px, 3.2vw, 64px); }
     /* ===== SynExta architecture section - palette taken from the reference =====
        eyebrow rgb(0,98,82) | headline rgb(0,13,36) | accent word rgb(7,105,54)
@@ -137,11 +192,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
     #energy-platform .se-h2 { color: #000D24; }
     #energy-platform .se-accent { color: #076936; }
     #energy-platform .se-card-t { color: #292929; }
-    #energy-platform .se-sub {
-      color: #545454; margin: 2px 0 6px;
-      font-size: clamp(11.5px, .82vw, 14px) !important; line-height: 1.5 !important;
-      overflow-wrap: normal; word-break: keep-all;
-    }
 
     /* Smallest phones: two columns left 136px-wide cards 505px tall at 320px,
        so these two grids fall to a single column below 380px. */
@@ -150,25 +200,32 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
 
     /* Layout column responsiveness */
-    .se-c3 { grid-template-columns: repeat(3, 1fr); }
-    .se-c4 { grid-template-columns: repeat(4, 1fr); }
-    .se-c5 { grid-template-columns: repeat(5, 1fr); }
-    .se-c6 { grid-template-columns: repeat(6, 1fr); }
-    .se-c8 { grid-template-columns: repeat(8, 1fr); }
+    .se-c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .se-c4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .se-c5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .se-c6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .se-c8 { grid-template-columns: repeat(8, minmax(0, 1fr)); }
 
+    /* The 6-up outcome row only works when a cell is wide enough for its title. At
+       1265px it measured 182px per cell, where the longest titles ran to four lines and
+       no two-line reserve could align them. Six across is therefore held back until
+       1600px, where a cell is ~250px; below that the row reads better as 3 + 3 than as
+       six cramped columns. */
+    @media(max-width:1599px) {
+      .se-c6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
     @media(max-width:1180px) {
-      .se-c8 { grid-template-columns: repeat(4, 1fr); }
-      .se-c6 { grid-template-columns: repeat(3, 1fr); }
-      .se-c5 { grid-template-columns: repeat(3, 1fr); }
-      .se-c4 { grid-template-columns: repeat(3, 1fr); }
+      .se-c8 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .se-c5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .se-c4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     @media(max-width:820px) {
-      .se-c8 { grid-template-columns: repeat(3, 1fr); }
-      .se-c6, .se-c5, .se-c4, .se-c3 { grid-template-columns: repeat(2, 1fr); }
+      .se-c8 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .se-c6, .se-c5, .se-c4, .se-c3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media(max-width:520px) {
-      .se-c8 { grid-template-columns: repeat(2, 1fr); }
-      .se-c6, .se-c5, .se-c4, .se-c3 { grid-template-columns: 1fr; }
+      .se-c8 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .se-c6, .se-c5, .se-c4, .se-c3 { grid-template-columns: minmax(0, 1fr); }
     }
 
     /* Logo flex row */
@@ -184,36 +241,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
     .se-logos img:hover { transform: translateY(-2px); }
 
     /* Challenge cards */
-    .se-chal {
-      background: #fff; border: 1px solid #e8ecea; border-radius: 16px; padding: clamp(16px, 1.4vw, 22px);
-      transition: transform .25s, box-shadow .25s, border-color .25s; display: flex; flex-direction: column;
-    }
-    .se-chal:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(11, 33, 39, 0.09); border-color: #23862D; }
-    .se-chal-i {
-      width: clamp(38px, 2.8vw, 46px); height: clamp(38px, 2.8vw, 46px); border-radius: 12px;
-      background: rgba(31, 107, 67, 0.1); color: #1F6B43;
-      display: flex; align-items: center; justify-content: center; margin-bottom: 14px; font-size: 1.25rem;
-    }
 
     /* Step flow */
-    .se-flow { list-style: none; margin: 0; padding: 0; }
-    .se-step {
-      position: relative; background: #fff; border: 1px solid #e3e9e5; border-radius: 16px;
-      padding: clamp(16px, 1.8vw, 24px); transition: all 0.25s ease;
-    }
-    .se-step:hover { border-color: #23862D; box-shadow: 0 10px 25px rgba(31, 107, 67, 0.08); transform: translateY(-3px); }
-    .se-step-n {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-width: 38px; height: 38px; padding: 0 10px; border-radius: 10px; margin-bottom: 12px;
-      background: linear-gradient(160deg, #2f9560, #12673c); color: #fff; font-weight: 800; letter-spacing: .04em;
-      font-size: clamp(12px, 1vw, 14px) !important; line-height: 1 !important;
-    }
-    .se-step-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-    .se-step-list li {
-      background: #f1f5f2; border: 1px solid #e3e9e5; border-radius: 7px; padding: 4px 9px; color: #2A3831;
-      font-size: clamp(9.5px, .78vw, 11.5px) !important; font-weight: 600; line-height: 1.2 !important;
-      overflow-wrap: normal; word-break: keep-all;
-    }
 
     /* ======================================================================
        SECTION 5 — SYNEXTA ENERGY PLATFORM ARCHITECTURE
@@ -255,8 +284,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
       box-shadow: 0 1px 2px rgba(11, 31, 22, .04);
     }
     .sea-feat-i svg { width: 22px; height: 22px; }
-    .sea-feat-t { font-size: clamp(14px, 1vw, 17px) !important; font-weight: 800; color: #0B1F16; line-height: 1.3 !important; margin-bottom: 4px; }
-    .sea-feat-p { font-size: clamp(12.5px, .88vw, 15px) !important; color: #5C6E65; line-height: 1.6 !important; overflow-wrap: normal; word-break: keep-all; }
+    .sea-feat-t { font-size: 1.075rem !important; font-weight: 800; color: #0B1F16; line-height: 1.35 !important; margin-bottom: 5px; }
+    .sea-feat-p { font-size: 0.975rem !important; color: #5C6E65; line-height: 1.8 !important; overflow-wrap: normal; word-break: keep-all; }
 
     /* ---- centre column: the diagram stack ---- */
     .sea-stack { display: grid; gap: 0; position: relative; }
@@ -267,7 +296,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
       position: relative;
     }
     .sea-label {
-      font-size: clamp(9px, .68vw, 11px) !important; font-weight: 800; letter-spacing: .17em;
+      font-size: 0.875rem !important; font-weight: 800; letter-spacing: .14em;
       text-transform: uppercase; color: #1F6B43; text-align: center; line-height: 1.4 !important;
       margin-bottom: clamp(8px, .9vw, 14px);
     }
@@ -290,7 +319,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
     /* The device bus: 6 device stubs rising to horizontal dashed line, 3 gateway risers going up */
     .sea-bus {
       height: clamp(28px, 2.6vw, 44px); position: relative;
-      display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--sea-dev-gap);
+      display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: var(--sea-dev-gap);
     }
     .sea-bus::before {
       content: ''; position: absolute; top: 50%;
@@ -344,13 +373,13 @@ if (file_exists(__DIR__ . '/functions.php')) {
     }
 
     /* dashboard / device rows */
-    .sea-row { display: grid; grid-template-columns: repeat(6, 1fr); }
+    .sea-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
     .sea-cell { text-align: center; padding: 0 clamp(2px, .4vw, 8px); position: relative; }
     .sea-cell + .sea-cell::before {
       content: ''; position: absolute; left: 0; top: 12%; bottom: 12%; border-left: 1px solid #eef2f0;
     }
     .sea-cell svg { width: clamp(20px, 1.5vw, 26px); height: clamp(20px, 1.5vw, 26px); color: #1f6b43; margin: 0 auto clamp(5px, .5vw, 9px); display: block; }
-    .sea-cell-t { font-size: clamp(9.5px, .72vw, 12px) !important; font-weight: 700; color: #2A3831; line-height: 1.3 !important; }
+    .sea-cell-t { font-size: 0.875rem !important; font-weight: 700; color: #2A3831; line-height: 1.35 !important; }
 
     /* the green engine tier */
     .sea-engine {
@@ -369,16 +398,16 @@ if (file_exists(__DIR__ . '/functions.php')) {
       font-size: clamp(15px, 1.35vw, 25px) !important; font-weight: 800; line-height: 1.25 !important;
       margin-bottom: clamp(10px, 1.1vw, 18px);
     }
-    .sea-eng-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(7px, .8vw, 14px); }
+    .sea-eng-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(7px, .8vw, 14px); }
     .sea-eng-box {
       background: rgba(255, 255, 255, .13); border: 1px solid rgba(255, 255, 255, .2);
       border-radius: 11px; padding: clamp(10px, 1vw, 18px) clamp(4px, .5vw, 10px); text-align: center;
     }
     .sea-eng-box svg { width: clamp(19px, 1.4vw, 25px); height: clamp(19px, 1.4vw, 25px); color: #fff; margin: 0 auto clamp(5px, .55vw, 10px); display: block; }
-    .sea-eng-box span { display: block; color: #fff; font-size: clamp(9.5px, .72vw, 12.5px) !important; font-weight: 700; line-height: 1.3 !important; }
+    .sea-eng-box span { display: block; color: #fff; font-size: 0.875rem !important; font-weight: 700; line-height: 1.35 !important; }
 
     /* gateway row — three units linked left-to-right by dashed arrows */
-    .sea-gw { display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; gap: clamp(6px, .8vw, 16px); }
+    .sea-gw { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; gap: clamp(6px, .8vw, 16px); }
     .sea-gw-cell { position: relative; display: flex; justify-content: center; }
     /* left-to-right run between gateways, arrowhead on the receiving side */
     .sea-gw-cell + .sea-gw-cell::before {
@@ -394,7 +423,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
     .sea-gw img { width: 100%; max-width: clamp(72px, 7vw, 106px); height: auto; display: block; }
 
     /* field device row */
-    .sea-devs { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--sea-dev-gap); }
+    .sea-devs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--sea-dev-gap); }
     .sea-dev {
       background: #fff; border: 1px solid #e6ece8; border-radius: 13px;
       padding: clamp(8px, .85vw, 14px) clamp(4px, .5vw, 9px);
@@ -404,7 +433,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
     .sea-dev-img { height: clamp(38px, 3.6vw, 62px); display: flex; align-items: center; justify-content: center; }
     .sea-dev-img img { max-height: 100%; width: auto; max-width: 100%; display: block; }
     .sea-dev-img svg { height: 100%; width: auto; color: #1f6b43; }
-    .sea-dev-t { font-size: clamp(8.5px, .66vw, 11.5px) !important; font-weight: 700; color: #2A3831; text-align: center; line-height: 1.25 !important; }
+    .sea-dev-t { font-size: 0.875rem !important; font-weight: 700; color: #2A3831; text-align: center; line-height: 1.3 !important; }
 
     /* ---- right column: deployment choice ---- */
     .sea-deploy { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1vw, 14px); }
@@ -414,20 +443,20 @@ if (file_exists(__DIR__ . '/functions.php')) {
       box-shadow: 0 1px 3px rgba(11, 31, 22, .04);
     }
     .sea-dep-box svg { width: clamp(24px, 2vw, 34px); height: clamp(24px, 2vw, 34px); color: #1f6b43; margin: 0 auto clamp(6px, .7vw, 11px); display: block; }
-    .sea-dep-t { font-size: clamp(12px, .92vw, 15px) !important; font-weight: 800; color: #0B1F16; line-height: 1.3 !important; }
-    .sea-dep-p { font-size: clamp(9px, .68vw, 11.5px) !important; color: #6E8076; line-height: 1.45 !important; margin-top: 4px; overflow-wrap: normal; word-break: keep-all; }
+    .sea-dep-t { font-size: 0.975rem !important; font-weight: 800; color: #0B1F16; line-height: 1.35 !important; }
+    .sea-dep-p { font-size: 0.875rem !important; color: #6E8076; line-height: 1.55 !important; margin-top: 5px; overflow-wrap: normal; word-break: keep-all; }
     .sea-or {
       width: clamp(38px, 3vw, 52px); aspect-ratio: 1; border-radius: 50%; background: #1f6b43; color: #fff;
       display: flex; align-items: center; justify-content: center; font-weight: 800;
-      font-size: clamp(11px, .82vw, 14px) !important; letter-spacing: .06em; flex: none;
+      font-size: 0.875rem !important; letter-spacing: .06em; flex: none;
     }
 
     /* ---- responsive: the six-across rows cannot hold legible type on a phone ---- */
     @media (max-width: 700px) {
-      .sea-row { grid-template-columns: repeat(3, 1fr); row-gap: clamp(12px, 3vw, 18px); }
+      .sea-row { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: clamp(12px, 3vw, 18px); }
       .sea-cell:nth-child(3n+1)::before { display: none; }
-      .sea-devs { grid-template-columns: repeat(3, 1fr); }
-      .sea-eng-grid { grid-template-columns: repeat(2, 1fr); }
+      .sea-devs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .sea-eng-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
       /* Once the devices wrap onto several rows a single horizontal bus would point at
          nothing, so the junction collapses to the same plain vertical connector used
@@ -437,9 +466,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
       .sea-bus-riser { top: 0; bottom: 0; }
     }
     @media (max-width: 430px) {
-      .sea-row { grid-template-columns: repeat(2, 1fr); }
+      .sea-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .sea-cell::before { display: none; }
-      .sea-devs { grid-template-columns: repeat(2, 1fr); }
+      .sea-devs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
   </style>
@@ -484,7 +513,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </span>
           </h1>
 
-          <div class="mt-2 text-emerald-400 font-semibold tracking-wide" style="font-size:clamp(13.5px,1.15vw,17px)">
+          <div class="mt-2 text-emerald-400 font-semibold tracking-wide se-lede">
             <span class="lang-th">แพลตฟอร์มเดียวสำหรับบริหารจัดการพลังงานและระบบ Solar ครบวงจร</span>
             <span class="lang-en">One Platform for Complete Energy Visibility</span>
           </div>
@@ -501,7 +530,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
           <!-- ปุ่ม -->
           <div class="mt-8 flex flex-wrap gap-4">
-            <a href="<?php echo home_url('/'); ?>#contact" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5" style="font-size:clamp(12px,1vw,14px)">
+            <a href="<?php echo home_url('/'); ?>#contact" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5 se-cta-label">
               <i class="fa-solid fa-paper-plane text-xs"></i>
               <span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span>
               <span class="lang-en">Talk to Our Experts</span>
@@ -1448,7 +1477,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
           <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-arrow-trend-down"></i></span>
           <div>
-            <div class="se-card-t text-ink mb-1">
+            <div class="se-card-t se-titlebox text-ink mb-1">
               <span class="lang-th">ลดค่าไฟฟ้า</span>
               <span class="lang-en">Reduce Electricity Cost</span>
             </div>
@@ -1460,7 +1489,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
           <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-solar-panel"></i></span>
           <div>
-            <div class="se-card-t text-ink mb-1">
+            <div class="se-card-t se-titlebox text-ink mb-1">
               <span class="lang-th">เพิ่มประสิทธิภาพการผลิตไฟจาก Solar</span>
               <span class="lang-en">Increase Solar Performance</span>
             </div>
@@ -1472,7 +1501,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
           <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-leaf"></i></span>
           <div>
-            <div class="se-card-t text-ink mb-1">
+            <div class="se-card-t se-titlebox text-ink mb-1">
               <span class="lang-th">ลดการสูญเสียพลังงาน</span>
               <span class="lang-en">Reduce Energy Waste</span>
             </div>
@@ -1484,7 +1513,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
           <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-eye"></i></span>
           <div>
-            <div class="se-card-t text-ink mb-1">
+            <div class="se-card-t se-titlebox text-ink mb-1">
               <span class="lang-th">ติดตามข้อมูลแบบ Real-time</span>
               <span class="lang-en">Real-Time Visibility</span>
             </div>
@@ -1496,7 +1525,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
           <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-network-wired"></i></span>
           <div>
-            <div class="se-card-t text-ink mb-1">
+            <div class="se-card-t se-titlebox text-ink mb-1">
               <span class="lang-th">บริหารจัดการทุกไซต์จากศูนย์กลาง</span>
               <span class="lang-en">Manage Unlimited Sites</span>
             </div>
@@ -1508,7 +1537,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
           <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-wrench"></i></span>
           <div>
-            <div class="se-card-t text-ink mb-1">
+            <div class="se-card-t se-titlebox text-ink mb-1">
               <span class="lang-th">แก้ไขปัญหาได้รวดเร็วยิ่งขึ้น</span>
               <span class="lang-en">Faster Issue Resolution</span>
             </div>
@@ -1542,7 +1571,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t text-ink mb-2">
+              <div class="se-card-t se-titlebox text-ink mb-2">
                 <span class="lang-th">บริษัทรับติดตั้ง Solar Rooftop</span>
                 <span class="lang-en">Solar EPC</span>
               </div>
@@ -1561,7 +1590,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t text-ink mb-2">
+              <div class="se-card-t se-titlebox text-ink mb-2">
                 <span class="lang-th">โรงงานอุตสาหกรรม</span>
                 <span class="lang-en">Manufacturing</span>
               </div>
@@ -1580,7 +1609,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t text-ink mb-2">
+              <div class="se-card-t se-titlebox text-ink mb-2">
                 <span class="lang-th">อาคารสำนักงาน</span>
                 <span class="lang-en">Commercial Buildings</span>
               </div>
@@ -1599,7 +1628,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t text-ink mb-2">
+              <div class="se-card-t se-titlebox text-ink mb-2">
                 <span class="lang-th">ธุรกิจค้าปลีกและร้านแฟรนไชส์</span>
                 <span class="lang-en">Retail &amp; Franchise</span>
               </div>
@@ -1618,7 +1647,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t text-ink mb-2">
+              <div class="se-card-t se-titlebox text-ink mb-2">
                 <span class="lang-th">เจ้าของโครงการอสังหาริมทรัพย์</span>
                 <span class="lang-en">Property Developers</span>
               </div>
@@ -1634,12 +1663,58 @@ if (file_exists(__DIR__ . '/functions.php')) {
     </div>
   </section>
 
+  <!-- ================= 9. เริ่มต้นกับเรา (ปิดท้าย) ================= -->
+  <!-- The page's only call to action used to be the hero button, ~6,000px above the
+       footer. This closes the page where a visitor who has read everything actually is.
+       Both strings are reused from the hero, so no new copy is introduced. -->
+  <section id="energy-cta" class="py-14 sm:py-20 bg-white" style="scroll-margin-top:96px">
+    <div class="se-shell">
+      <div class="relative overflow-hidden rounded-[28px] px-6 py-10 sm:px-10 sm:py-14 lg:px-16 text-white"
+           style="background:linear-gradient(135deg,#0d4636 0%,#093427 55%,#06261c 100%)">
+        <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
+
+        <div class="relative z-10 grid gap-8 lg:grid-cols-[1.35fr_auto] lg:items-center">
+          <div>
+            <p class="se-eyebrow mb-3" style="color:#4ade80">
+              <span class="lang-th">เริ่มต้นกับเรา</span>
+              <span class="lang-en">GET STARTED</span>
+            </p>
+            <h2 class="se-h2 font-display text-white">
+              <span class="lang-th">บริหารจัดการพลังงานอัจฉริยะ<br><span class="text-brand-bright">เพื่อธุรกิจที่ใช้พลังงานอย่างมีประสิทธิภาพ</span></span>
+              <span class="lang-en">Power Your Business with<br><span class="text-brand-bright">Smart Energy Management</span></span>
+            </h2>
+            <p class="se-lede text-slate-200 mt-5 max-w-2xl">
+              <span class="lang-th">แพลตฟอร์มเดียวสำหรับบริหารจัดการพลังงานและระบบ Solar ครบวงจร</span>
+              <span class="lang-en">One Platform for Complete Energy Visibility</span>
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row lg:flex-col gap-3 lg:gap-4 lg:min-w-[240px]">
+            <a href="<?php echo home_url('/'); ?>#contact"
+               class="se-cta-label inline-flex items-center justify-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
+              <i class="fa-solid fa-comments"></i>
+              <span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span>
+              <span class="lang-en">Talk to Our Experts</span>
+            </a>
+            <a href="#energy-platform"
+               class="se-cta-label inline-flex items-center justify-center gap-2.5 border border-white/30 bg-white/5 text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-white/10 hover:border-white/50 transition-all">
+              <i class="fa-solid fa-diagram-project"></i>
+              <span class="lang-th">ดูสถาปัตยกรรมระบบ</span>
+              <span class="lang-en">See the Architecture</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER CONTAINER -->
   <div id="footer-container" class="bg-ink w-full block"></div>
 
   <!-- Scripts -->
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
 
+<?php include __DIR__ . '/components/cookie-consent.php'; ?>
   <?php wp_footer(); ?>
 </body>
 

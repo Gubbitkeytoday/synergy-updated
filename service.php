@@ -378,14 +378,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- Main title -->
       <h1 class="font-display svc-h1 text-ink mb-4">
         <?php echo synergy_content('svc-hero-title',
-          'End-to-End<br><span style="color:#1F6B43">Product Development</span>',
+          'Turnkey Hardware<br><span style="color:#1F6B43">Engineering &amp; Manufacturing</span>',
           'service'); ?>
       </h1>
 
-      <!-- Thai subtitle -->
+      <!-- Thai & English subtitle -->
       <p class="svc-lede text-brand mb-4">
         <?php echo synergy_content('svc-hero-subtitle-th',
-          '<span class="lang-en">From Vision to Market-Ready Products</span><span class="lang-th">ตั้งแต่แนวคิดจนสินค้าพร้อมสู่ตลาด</span>',
+          '<span class="lang-en">From Concept to Mass Production</span><span class="lang-th">ตั้งแต่แนวคิดจนพร้อมผลิตเชิงพาณิชย์</span>',
           'service'); ?>
       </p>
 

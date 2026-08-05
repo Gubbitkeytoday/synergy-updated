@@ -22,6 +22,16 @@ if ($cleanPath === '/service' || $cleanPath === '/services') {
     exit;
 }
 
+// Handle /privacy-policy (and /cookie-policy, which is a section of the same document)
+if ($cleanPath === '/privacy-policy' || $cleanPath === '/privacy') {
+    require __DIR__ . '/privacy-policy.php';
+    exit;
+}
+if ($cleanPath === '/cookie-policy' || $cleanPath === '/cookies') {
+    header('Location: ' . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/privacy-policy#cookies', true, 302);
+    exit;
+}
+
 // Handle /index or /
 if ($cleanPath === '' || $cleanPath === '/index') {
     require __DIR__ . '/index.php';
