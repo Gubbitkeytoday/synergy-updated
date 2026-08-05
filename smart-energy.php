@@ -514,21 +514,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <span class="lang-en">ENERGY INTELLIGENCE</span>
           </p>
           
-          <!-- หัวข้อหลัก -->
+          <!-- หัวข้อหลัก (Locked in English) -->
           <h1 class="font-display font-extrabold text-white tracking-tight" style="font-size:clamp(30px,4.17vw,60px);line-height:1.15">
-            <span class="lang-th">
-              บริหารจัดการพลังงานอัจฉริยะ<br>
-              <span class="text-brand-bright">เพื่อธุรกิจที่ใช้พลังงานอย่างมีประสิทธิภาพ</span>
-            </span>
-            <span class="lang-en">
-              Power Your Business with<br>
-              <span class="text-brand-bright">Smart Energy Management</span>
-            </span>
+            Power Your Business with<br>
+            <span class="text-brand-bright">Smart Energy Management</span>
           </h1>
 
           <div class="mt-2 text-emerald-400 font-semibold tracking-wide se-lede">
-            <span class="lang-th">แพลตฟอร์มเดียวสำหรับบริหารจัดการพลังงานและระบบ Solar ครบวงจร</span>
-            <span class="lang-en">One Platform for Complete Energy Visibility</span>
+            One Platform for Complete Energy Visibility
           </div>
 
           <!-- คำอธิบาย -->
