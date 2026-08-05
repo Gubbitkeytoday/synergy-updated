@@ -202,9 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
           heading: 'Solutions & Engineering',
           icon: 'fa-solid fa-layer-group',
           items: [
-            { label: '<span class="lang-th">1. Smart Factory</span><span class="lang-en">1. Smart Factory</span>', href: homeHref('#solutions'), desc: 'ระบบโรงงานอัจฉริยะและการเชื่อมต่อเครื่องจักร' },
-            { label: '<span class="lang-th">2. Smart Agriculture</span><span class="lang-en">2. Smart Agriculture</span>', href: homeHref('#solutions'), desc: 'เกษตรอัจฉริยะ ไอโอทีและเซ็นเซอร์วัดผล' },
-            { label: '<span class="lang-th">3. Smart Energy Solution ⚡</span><span class="lang-en">3. Smart Energy Solution ⚡</span>', href: pageHref('smart-energy.php'), desc: 'ระบบบริหารจัดการพลังงาน โซลาร์เซลล์ & EV Charger' }
+            { label: '<span class="lang-th">1. Smart Factory</span><span class="lang-en">1. Smart Factory</span>', href: homeHref('#solutions') },
+            { label: '<span class="lang-th">2. Smart Agriculture</span><span class="lang-en">2. Smart Agriculture</span>', href: homeHref('#solutions') },
+            { label: '<span class="lang-th">3. Smart Energy Solution ⚡</span><span class="lang-en">3. Smart Energy Solution ⚡</span>', href: pageHref('smart-energy.php') }
           ]
         }
       ]
@@ -222,23 +222,19 @@ document.addEventListener('DOMContentLoaded', () => {
           items: [
             {
               label: '<span class="lang-th">1. R&D & Hardware Engineering</span><span class="lang-en">1. R&D & Hardware Engineering</span>',
-              href: `${pageHref('service.php')}#capabilities`,
-              desc: 'ออกแบบ พัฒนาฮาร์ดแวร์ PCB, Firmware & Mechanical Structure'
+              href: `${pageHref('service.php')}#capabilities`
             },
             {
               label: '<span class="lang-th">2. Turnkey Manufacturing (OEM/ODM)</span><span class="lang-en">2. Turnkey Manufacturing (OEM/ODM)</span>',
-              href: `${pageHref('service.php')}#process`,
-              desc: 'บริการผลิต NPI, PCBA Assembly & Mass Production ครบวงจร'
+              href: `${pageHref('service.php')}#process`
             },
             {
               label: '<span class="lang-th">3. Quality & Standards Certification</span><span class="lang-en">3. Quality & Standards Certification</span>',
-              href: `${pageHref('service.php')}#why-us`,
-              desc: 'ควบคุมคุณภาพและการทดสอบมาตรฐานสากล ISO & IATF'
+              href: `${pageHref('service.php')}#why-us`
             },
             {
               label: '<span class="lang-th">4. Smart Solution Integration</span><span class="lang-en">4. Smart Solution Integration</span>',
-              href: `${pageHref('service.php')}#capabilities`,
-              desc: 'ประกอบและต่อยอดฮาร์ดแวร์เข้ากับระบบซอฟต์แวร์อัจฉริยะ'
+              href: `${pageHref('service.php')}#capabilities`
             }
           ]
         }
@@ -260,9 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="space-y-1">
           ${col.items.map(sub => `
-            <a href="${sub.href}" data-nav-link class="flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 hover:border-slate-100 border border-transparent transition duration-200 group">
+            <a href="${sub.href}" data-nav-link class="flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-50 hover:border-slate-100 border border-transparent transition duration-200 group">
               <span class="text-[13px] font-700 text-ink group-hover:text-brand leading-snug transition-colors">${sub.label}</span>
-              ${sub.desc ? `<span class="text-[11px] text-slate-400 font-normal leading-snug mt-0.5">${sub.desc}</span>` : ''}
             </a>`).join('')}
         </div>
       </div>`).join('');
@@ -287,12 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderMobileMenu = (item) => {
     const subLinks = item.megaCol.flatMap(col =>
       col.items.map(sub => `
-        <a href="${sub.href}" class="py-2.5 pl-4 border-l-2 border-slate-100 text-body hover:text-brand hover:border-brand transition-all text-xs flex gap-2.5 items-center">
+        <a href="${sub.href}" class="py-2 pl-4 border-l-2 border-slate-100 text-body hover:text-brand hover:border-brand transition-all text-xs flex gap-2.5 items-center">
           <i class="${col.icon} text-brand text-[10px] w-3"></i>
-          <div class="flex flex-col">
-            <span class="font-bold text-[12.5px]">${sub.label}</span>
-            ${sub.desc ? `<span class="text-[10px] text-slate-400 font-normal mt-0.5">${sub.desc}</span>` : ''}
-          </div>
+          <span class="font-bold text-[12.5px]">${sub.label}</span>
         </a>`)
     ).join('');
     return `
