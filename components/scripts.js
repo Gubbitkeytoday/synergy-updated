@@ -16,8 +16,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const upPrefix = isInSolutionsFolder ? '../'.repeat(1 + solutionsSubDepth) : '';
   const navbarOffset = 96;
 
+  const getAssetPath = (relativeSubPath) => {
+    if (isWordPress && (window.wpThemeUri || window.wpThemeUrl)) {
+      const baseUri = window.wpThemeUri || window.wpThemeUrl;
+      return baseUri.replace(/\/$/, '') + '/' + relativeSubPath.replace(/^\//, '');
+    }
+    const rawPath = window.location.pathname;
+    if (rawPath.includes('/solutions/')) {
+      return upPrefix + relativeSubPath.replace(/^\//, '');
+    }
+    if (rawPath.endsWith('/') && rawPath !== '/') {
+      return '../' + relativeSubPath.replace(/^\//, '');
+    }
+    return relativeSubPath.replace(/^\//, '');
+  };
+
   // ===== DYNAMIC CMS DATA LOADER =====
-  fetch(upPrefix + 'content/site_data.json')
+  fetch(getAssetPath('content/site_data.json'))
     .then(res => res.json())
     .then(data => {
       if (!data) return;
@@ -31,21 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(() => {});
 
   // ===== SUKHUMVIT SET FONT INJECTION =====
-  const getFontPrefix = () => {
-    if (isWordPress && (window.wpThemeUri || window.wpThemeUrl)) {
-      const baseUri = window.wpThemeUri || window.wpThemeUrl;
-      return baseUri.replace(/\/$/, '') + '/fonts/';
-    }
-    const rawPath = window.location.pathname;
-    if (rawPath.includes('/solutions/')) {
-      return upPrefix + 'fonts/';
-    }
-    if (rawPath.endsWith('/') && rawPath !== '/') {
-      return '../fonts/';
-    }
-    return 'fonts/';
-  };
-  const fontPrefix = getFontPrefix();
+  const fontPrefix = getAssetPath('fonts/');
   const sukhumvitStyle = document.createElement('style');
   sukhumvitStyle.textContent = `
     @font-face {
