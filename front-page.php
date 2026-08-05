@@ -424,32 +424,32 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-4 p-8 flex-1 items-stretch">
             <div class="flex flex-col items-center text-center px-2 h-full justify-start">
-              <div class="w-14 h-14 rounded-full bg-surface/80 border border-brand/10 text-brand flex items-center justify-center mb-5 shrink-0 p-2 shadow-sm">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/rd-flask.png" alt="R&D" class="w-9 h-9 object-contain" />
+              <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-5 shrink-0 p-3 shadow-sm hover:scale-110 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/rd-flask.png" alt="R&D" class="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
               </div>
               <h4 class="font-bold text-sm text-brand mb-2 min-h-[2.5rem] flex items-center justify-center">R&amp;D
               </h4>
               <p class="text-xs text-muted font-light leading-relaxed"><span class="lang-th">วิจัย พัฒนา และสร้างต้นแบบผลิตภัณฑ์</span><span class="lang-en">Research, Product Development &amp; Prototyping</span></p>
             </div>
             <div class="flex flex-col items-center text-center px-2 sm:border-l sm:border-black/5 h-full justify-start">
-              <div class="w-14 h-14 rounded-full bg-surface/80 border border-brand/10 text-brand flex items-center justify-center mb-5 shrink-0 p-2 shadow-sm">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/rd-pcb.png" alt="PCB" class="w-9 h-9 object-contain" />
+              <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-5 shrink-0 p-3 shadow-sm hover:scale-110 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/rd-pcb.png" alt="PCB" class="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
               </div>
               <h4 class="font-bold text-sm text-brand mb-2 min-h-[2.5rem] flex items-center justify-center">PCB
               </h4>
               <p class="text-xs text-muted font-light leading-relaxed"><span class="lang-th">ออกแบบวงจรและ PCB ตามมาตรฐานสากล</span><span class="lang-en">PCB Circuit &amp; Layout Design</span></p>
             </div>
             <div class="flex flex-col items-center text-center px-2 sm:border-l sm:border-black/5 h-full justify-start">
-              <div class="w-14 h-14 rounded-full bg-surface/80 border border-brand/10 text-brand flex items-center justify-center mb-5 shrink-0 p-2 shadow-sm">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/rd-pcba.png" alt="PCB Assembly" class="w-9 h-9 object-contain" />
+              <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-5 shrink-0 p-3 shadow-sm hover:scale-110 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/rd-pcba.png" alt="PCB Assembly" class="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
               </div>
               <h4 class="font-bold text-sm text-brand mb-2 min-h-[2.5rem] flex items-center justify-center">PCB Assembly
               </h4>
               <p class="text-xs text-muted font-light leading-relaxed"><span class="lang-th">ผลิตและประกอบแผงวงจร (SMT/THT)</span><span class="lang-en">High-Quality PCBA Manufacturing (SMT/THT)</span></p>
             </div>
             <div class="flex flex-col items-center text-center px-2 sm:border-l sm:border-black/5 h-full justify-start">
-              <div class="w-14 h-14 rounded-full bg-surface/80 border border-brand/10 text-brand flex items-center justify-center mb-5 shrink-0 p-2 shadow-sm">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/rd-boxbuild.png" alt="Box Build &amp; Testing" class="w-9 h-9 object-contain" />
+              <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-5 shrink-0 p-3 shadow-sm hover:scale-110 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/rd-boxbuild.png" alt="Box Build &amp; Testing" class="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
               </div>
               <h4 class="font-bold text-sm text-brand mb-2 min-h-[2.5rem] flex items-center justify-center">Box Build
                 &amp; Testing</h4>
@@ -476,8 +476,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 p-8 flex-1 items-stretch">
             <div class="flex flex-col items-center text-center px-2 h-full justify-start">
-              <div class="w-14 h-14 rounded-full bg-surface/80 border border-brand/10 text-brand flex items-center justify-center mb-5 shrink-0 p-2 shadow-sm">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/sol-factory.png" alt="Smart Factory" class="w-9 h-9 object-contain" />
+              <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-5 shrink-0 p-3 shadow-sm hover:scale-110 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/sol-factory.png" alt="Smart Factory" class="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
               </div>
               <h4 class="font-bold text-sm text-brand mb-2 min-h-[2.5rem] flex items-center justify-center">Smart
                 Factory</h4>
@@ -486,8 +486,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   with machine connectivity and real-time data</span></p>
             </div>
             <div class="flex flex-col items-center text-center px-2 sm:border-l sm:border-black/5 h-full justify-start">
-              <div class="w-14 h-14 rounded-full bg-surface/80 border border-brand/10 text-brand flex items-center justify-center mb-5 shrink-0 p-2 shadow-sm">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/sol-energy.png" alt="Smart Energy" class="w-9 h-9 object-contain" />
+              <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-5 shrink-0 p-3 shadow-sm hover:scale-110 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/sol-energy.png" alt="Smart Energy" class="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
               </div>
               <h4 class="font-bold text-sm text-brand mb-2 min-h-[2.5rem] flex items-center justify-center">Smart Energy
               </h4>
@@ -496,8 +496,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   to reduce costs and improve sustainability</span></p>
             </div>
             <div class="flex flex-col items-center text-center px-2 sm:border-l sm:border-black/5 h-full justify-start">
-              <div class="w-14 h-14 rounded-full bg-surface/80 border border-brand/10 text-brand flex items-center justify-center mb-5 shrink-0 p-2 shadow-sm">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/sol-agriculture.png" alt="Smart Agriculture" class="w-9 h-9 object-contain" />
+              <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#eef7f2] border border-[#d2ebd9] flex items-center justify-center mb-5 shrink-0 p-3 shadow-sm hover:scale-110 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/sol-agriculture.png" alt="Smart Agriculture" class="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
               </div>
               <h4 class="font-bold text-sm text-brand mb-2 min-h-[2.5rem] flex items-center justify-center">Smart
                 Agriculture</h4>
@@ -522,8 +522,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div
           class="flex gap-4 items-start bg-surface/60 border border-black/5 rounded-2xl p-5 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div
-            class="w-11 h-11 rounded-xl bg-white border border-black/5 shadow-sm text-brand flex items-center justify-center shrink-0 p-1.5">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/val-target.png" alt="Business-Driven Solutions" class="w-7 h-7 object-contain" />
+            class="w-14 h-14 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] shadow-sm flex items-center justify-center shrink-0 p-2.5">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/val-target.png" alt="Business-Driven Solutions" class="w-10 h-10 object-contain" />
           </div>
           <div>
             <h4 class="font-bold text-sm text-ink mb-1"><span class="lang-th">โซลูชันที่ตอบโจทย์ธุรกิจ</span><span
@@ -536,8 +536,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div
           class="flex gap-4 items-start bg-surface/60 border border-black/5 rounded-2xl p-5 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div
-            class="w-11 h-11 rounded-xl bg-white border border-black/5 shadow-sm text-brand flex items-center justify-center shrink-0 p-1.5">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/val-growth.png" alt="Efficiency &amp; Cost Reduction" class="w-7 h-7 object-contain" />
+            class="w-14 h-14 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] shadow-sm flex items-center justify-center shrink-0 p-2.5">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/val-growth.png" alt="Efficiency &amp; Cost Reduction" class="w-10 h-10 object-contain" />
           </div>
           <div>
             <h4 class="font-bold text-sm text-ink mb-1"><span class="lang-th">เพิ่มประสิทธิภาพและลดต้นทุน</span><span
@@ -550,8 +550,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div
           class="flex gap-4 items-start bg-surface/60 border border-black/5 rounded-2xl p-5 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div
-            class="w-11 h-11 rounded-xl bg-white border border-black/5 shadow-sm text-brand flex items-center justify-center shrink-0 p-1.5">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/val-partner.png" alt="Trusted Engineering Partner" class="w-7 h-7 object-contain" />
+            class="w-14 h-14 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] shadow-sm flex items-center justify-center shrink-0 p-2.5">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/val-partner.png" alt="Trusted Engineering Partner" class="w-10 h-10 object-contain" />
           </div>
           <div>
             <h4 class="font-bold text-sm text-ink mb-1"><span class="lang-th">พาร์ทเนอร์ที่เชื่อถือได้</span><span
@@ -564,8 +564,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div
           class="flex gap-4 items-start bg-surface/60 border border-black/5 rounded-2xl p-5 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
           <div
-            class="w-11 h-11 rounded-xl bg-white border border-black/5 shadow-sm text-brand flex items-center justify-center shrink-0 p-1.5">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/val-quality.png" alt="World-Class Standards &amp; Quality" class="w-7 h-7 object-contain" />
+            class="w-14 h-14 rounded-xl bg-[#eef7f2] border border-[#d2ebd9] shadow-sm flex items-center justify-center shrink-0 p-2.5">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/val-quality.png" alt="World-Class Standards &amp; Quality" class="w-10 h-10 object-contain" />
           </div>
           <div>
             <h4 class="font-bold text-sm text-ink mb-1"><span class="lang-th">มาตรฐานและคุณภาพระดับสากล</span><span
