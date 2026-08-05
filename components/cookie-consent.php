@@ -90,11 +90,11 @@
          mark earns its space at 44px, a hero graphic would not.
      ========================================================================== */
   .sc-cc-mark {
-    flex: none; width: 32px; height: 32px; border-radius: 10px;
+    flex: none; width: 44px; height: 44px; border-radius: 14px;
     background: #eef7f2; border: 1px solid #d2ebd9; color: #1F6B43;
     display: flex; align-items: center; justify-content: center;
   }
-  .sc-cc-mark svg { width: 18px; height: 18px; }
+  .sc-cc-mark svg { width: 28px; height: 28px; }
   .sc-cc-head { display: flex; gap: 14px; align-items: flex-start; }
 
   /* "you can change this any time" — removes the sense that this is a one-shot,
