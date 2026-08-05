@@ -342,10 +342,19 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
     /* Branch connectors into the deployment column (Desktop min-width 1180px) */
     @media (min-width: 1180px) {
+      .sea-engine, .sea-tier { position: relative; }
+      /* Right horizontal output line extending from Engine/Tier to the vertical trunk line */
+      .sea-engine::before,
+      .sea-tier::before {
+        content: ''; position: absolute; top: 50%; left: 100%;
+        width: calc(var(--sea-gap) * 0.5); border-top: 2px dashed #1F6B43; opacity: 0.85; pointer-events: none;
+      }
+      
       .sea-dep-box { position: relative; }
+      /* Left horizontal input line extending into Cloud / On-Premise box from vertical trunk line */
       .sea-dep-box::before {
         content: ''; position: absolute; top: 50%; right: 100%;
-        width: var(--sea-gap); border-top: 2px dashed #1F6B43; opacity: 0.85;
+        width: calc(var(--sea-gap) * 0.5); border-top: 2px dashed #1F6B43; opacity: 0.85;
       }
       /* Node junction dot at the box entrance */
       .sea-dep-box::after {
