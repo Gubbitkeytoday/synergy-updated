@@ -347,9 +347,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
         content: ''; position: absolute; top: 50%; right: 100%;
         width: var(--sea-gap); border-top: 2px dashed #1F6B43; opacity: 0.85;
       }
+      /* Node junction dot at the box entrance */
       .sea-dep-box::after {
-        content: ''; position: absolute; top: 50%; right: 100%; transform: translateY(-50%);
-        width: 0; height: 0; border: 6px solid transparent; border-left-color: #1F6B43; border-right: 0;
+        content: ''; position: absolute; top: 50%; right: calc(100% - 4px); transform: translateY(-50%);
+        width: 8px; height: 8px; border-radius: 999px; background: #1F6B43;
+        box-shadow: 0 0 8px rgba(31, 107, 67, 0.4);
       }
       
       /* Vertical branch trunk connecting the 3 tiers on the right side */
@@ -366,9 +368,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
         border-left: 2px dashed #1F6B43; opacity: 0.85;
       }
       .sea-deploy::after {
-        content: ''; position: absolute; bottom: auto; top: clamp(20px, 2vw, 34px); left: 50%;
-        transform: translate(-50%, -100%);
-        width: 0; height: 0; border: 6px solid transparent; border-top-color: #1F6B43; border-bottom: 0;
+        content: ''; position: absolute; top: clamp(20px, 2vw, 34px); left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px; height: 8px; border-radius: 999px; background: #1F6B43;
+        box-shadow: 0 0 8px rgba(31, 107, 67, 0.4);
       }
     }
 
@@ -1118,12 +1121,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <!-- Tier 1 to Tier 2 SVG Connector -->
           <div class="h-8 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <defs>
-                <marker id="sea-up-arrow-1" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
-                </marker>
-              </defs>
-              <line x1="50%" y1="28" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+              <line x1="50%" y1="28" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <circle cx="50%" cy="6" r="3.5" fill="#1F6B43" />
+              <circle cx="50%" cy="28" r="3.5" fill="#1F6B43" />
             </svg>
           </div>
 
@@ -1162,16 +1162,22 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <!-- 2 Vertical Dashed SVG Arrows connecting Gateway up to Energy Engine -->
+          <!-- 2 Vertical Dashed SVG Node Connectors connecting Gateway up to Energy Engine -->
           <div class="h-9 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="16.66%" y1="36" x2="12.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
-              <line x1="83.33%" y1="36" x2="87.5%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+              <line x1="16.66%" y1="36" x2="12.5%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <circle cx="12.5%" cy="6" r="3.5" fill="#1F6B43" />
+              <circle cx="16.66%" cy="36" r="3.5" fill="#1F6B43" />
+
+              <line x1="83.33%" y1="36" x2="87.5%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <circle cx="87.5%" cy="6" r="3.5" fill="#1F6B43" />
+              <circle cx="83.33%" cy="36" r="3.5" fill="#1F6B43" />
             </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <line x1="50%" y1="24" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-1)" />
+              <line x1="50%" y1="24" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <circle cx="50%" cy="6" r="3.5" fill="#1F6B43" />
             </svg>
           </div>
 
@@ -1184,24 +1190,23 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <div class="sea-gw flex items-center justify-between gap-2 sm:gap-4">
               <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-1.png" alt="Energy Gateway 1"></div>
               
-              <!-- SVG Dashed Arrow 1 to 2 -->
+              <!-- SVG Dashed Line 1 to 2 -->
               <div class="flex-none flex items-center justify-center w-12 sm:w-20">
                 <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
-                  <defs>
-                    <marker id="sea-right-arrow-gw" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                      <path d="M 1.5 1.5 L 8.5 5 L 1.5 8.5 z" fill="#1F6B43" />
-                    </marker>
-                  </defs>
-                  <line x1="0" y1="8" x2="88%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-right-arrow-gw)" />
+                  <line x1="0" y1="8" x2="100%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+                  <circle cx="0" cy="8" r="3" fill="#1F6B43" />
+                  <circle cx="100%" cy="8" r="3" fill="#1F6B43" />
                 </svg>
               </div>
 
               <div class="sea-gw-cell flex-1 flex justify-center"><img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/gateway-2.png" alt="Energy Gateway 2"></div>
               
-              <!-- SVG Dashed Arrow 2 to 3 -->
+              <!-- SVG Dashed Line 2 to 3 -->
               <div class="flex-none flex items-center justify-center w-12 sm:w-20">
                 <svg class="w-full h-4 overflow-visible" preserveAspectRatio="none">
-                  <line x1="0" y1="8" x2="88%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-right-arrow-gw)" />
+                  <line x1="0" y1="8" x2="100%" y2="8" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+                  <circle cx="0" cy="8" r="3" fill="#1F6B43" />
+                  <circle cx="100%" cy="8" r="3" fill="#1F6B43" />
                 </svg>
               </div>
 
@@ -1209,14 +1214,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <!-- Gateway <-> Device Junction Bus with 3 SVG Risers pointing UP -->
+          <!-- Gateway <-> Device Junction Bus with 3 SVG Risers into Gateways -->
           <div class="h-10 relative my-1 hidden sm:block">
             <svg class="w-full h-full overflow-visible" preserveAspectRatio="none">
-              <defs>
-                <marker id="sea-up-arrow-bus" viewBox="0 0 10 10" refX="5" refY="1.5" markerWidth="6" markerHeight="6" orient="auto">
-                  <path d="M 1.5 8.5 L 5 1.5 L 8.5 8.5 z" fill="#1F6B43" />
-                </marker>
-              </defs>
               <!-- Horizontal Bus Line -->
               <line x1="8.33%" y1="20" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
               
@@ -1228,10 +1228,23 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <line x1="75%" y1="40" x2="75%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
               <line x1="91.66%" y1="40" x2="91.66%" y2="20" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
 
-              <!-- 3 Gateway Risers pointing UP into Gateway 1, 2, 3 -->
-              <line x1="16.66%" y1="20" x2="16.66%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-              <line x1="50%" y1="20" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
-              <line x1="83.33%" y1="20" x2="83.33%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#sea-up-arrow-bus)" />
+              <!-- Device Junction Node Dots on Bus -->
+              <circle cx="8.33%" cy="20" r="3" fill="#1F6B43" />
+              <circle cx="25%" cy="20" r="3" fill="#1F6B43" />
+              <circle cx="41.66%" cy="20" r="3" fill="#1F6B43" />
+              <circle cx="58.33%" cy="20" r="3" fill="#1F6B43" />
+              <circle cx="75%" cy="20" r="3" fill="#1F6B43" />
+              <circle cx="91.66%" cy="20" r="3" fill="#1F6B43" />
+
+              <!-- 3 Gateway Risers into Gateway 1, 2, 3 -->
+              <line x1="16.66%" y1="20" x2="16.66%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <line x1="50%" y1="20" x2="50%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+              <line x1="83.33%" y1="20" x2="83.33%" y2="6" stroke="#1F6B43" stroke-width="2" stroke-dasharray="4 4" />
+
+              <!-- Gateway Terminal Node Dots -->
+              <circle cx="16.66%" cy="6" r="3.5" fill="#1F6B43" />
+              <circle cx="50%" cy="6" r="3.5" fill="#1F6B43" />
+              <circle cx="83.33%" cy="6" r="3.5" fill="#1F6B43" />
             </svg>
           </div>
           <div class="h-6 relative my-1 block sm:hidden">
