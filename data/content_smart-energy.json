@@ -1,0 +1,12 @@
+{
+  "hero-eyebrow": "<span class=\"lang-th\">ENERGY Management</span><span class=\"lang-en\">ENERGY Management</span>",
+  "hero-eyebrow_pos": { "x": 0, "y": 0 },
+  "hero-title": "<span class=\"lang-th\">ขับเคลื่อนธุรกิจด้วย <span class=\"text-brand-bright inline-block sm:inline\">ระบบบริหารจัดการพลังงานอัจฉริยะ</span></span><span class=\"lang-en\">Power Your Business with <span class=\"text-brand-bright inline-block sm:inline\">Smart Energy Management</span></span>",
+  "hero-title_pos": { "x": 0, "y": 0 },
+  "hero-subtitle": "<span class=\"lang-th\">แพลตฟอร์มเดียว เพื่อการบริหารจัดการพลังงานอย่างครบวงจร</span><span class=\"lang-en\">One Platform for Smart Energy Management</span>",
+  "hero-subtitle_pos": { "x": 0, "y": 0 },
+  "hero-desc": "<span class=\"lang-th\">บริหารจัดการข้อมูลพลังงานและระบบสาธารณูปโภคขององค์กร ทั้งอาคาร โรงงาน <span class=\"inline-block\">สาขาแฟรนไชส์</span> ในหลายพื้นที่ได้ในที่เดียว โดยสามารถติดตามการใช้ไฟฟ้า การผลิตพลังงาน ระบบอื่นๆ ทั้งภายในและภายนอกอาคาร รวมถึงอุปกรณ์ IoT ต่างๆ ได้แบบ Real-time ผ่าน Platform เดียว พร้อมระบบแจ้งเตือน การกำหนดสิทธิ์ผู้ใช้งาน และข้อมูลเชิงลึกที่ช่วยเพิ่มประสิทธิภาพการดำเนินงาน <span class=\"inline-block\">และลดต้นทุนพลังงาน</span></span><span class=\"lang-en\">Manage energy and utility data across buildings, factories, franchise branches, and multiple sites from a single platform. Monitor electricity consumption, energy generation, indoor and outdoor building facilities, and IoT devices in real time through one centralized dashboard. Stay informed with instant alerts, role-based user access, and actionable insights that improve operational efficiency and reduce energy costs.</span>",
+  "hero-desc_pos": { "x": 0, "y": 0 },
+  "hero-btn1": "<i class=\"fa-solid fa-paper-plane text-xs mr-2\"></i><span class=\"lang-th\">ปรึกษาผู้เชี่ยวชาญ</span><span class=\"lang-en\">Talk to Our Experts</span>",
+  "hero-btn1_pos": { "x": 0, "y": 0 }
+}

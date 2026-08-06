@@ -240,7 +240,7 @@
       }
     }
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       // Honeypot tripped → drop it silently, submit nothing.
@@ -260,22 +260,29 @@
       if (submit) submit.disabled = true;
       if (label) label.textContent = 'กำลังส่ง...';
 
-      // No backend is wired up yet. Replace this block with the real call:
-      //   const res = await fetch('/api/contact', {
-      //     method: 'POST', body: new FormData(form)
-      //   });
-      // and branch on `res.ok` for the ok/err status below.
-      window.setTimeout(() => {
+      try {
+        const formData = new FormData(form);
+        const endpoint = (window.wpThemeUri || '/').replace(/\/+$/, '') + '/send_contact.php';
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: formData
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          form.reset();
+          required.forEach(({ input }) => setFieldError(input, false));
+          showStatus('ok', json.message || 'ขอบคุณครับ เราได้รับข้อมูลของคุณแล้ว ทีมผู้เชี่ยวชาญจะติดต่อกลับโดยเร็วที่สุด');
+          if (status) status.scrollIntoView({ block: 'nearest' });
+        } else {
+          showStatus('err', json.error || 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+        }
+      } catch (err) {
+        showStatus('err', 'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง');
+      } finally {
         if (submit) submit.disabled = false;
         if (label) label.textContent = originalLabel;
-        form.reset();
-        required.forEach(({ input }) => setFieldError(input, false));
-        showStatus(
-          'ok',
-          'ขอบคุณครับ เราได้รับข้อมูลของคุณแล้ว ทีมวิศวกรจะติดต่อกลับภายใน 1 วันทำการ'
-        );
-        if (status) status.scrollIntoView({ block: 'nearest' });
-      }, 900);
+      }
     });
   })();
 })();

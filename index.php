@@ -5,11 +5,24 @@ if (isset($_SERVER['REQUEST_URI']) && preg_match('/\.php\/+$/i', $_SERVER['REQUE
     header("Location: " . $clean_uri, true, 301);
     exit();
 }
+/* Root-absolute, not '.': document-relative asset URLs break on any URL ending
+   in a slash. See the long note on the same helper in about.php. */
+if (!function_exists('synergy_dev_base')) {
+    function synergy_dev_base() {
+        $root = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : '';
+        $root = $root ? str_replace('\\', '/', $root) : '';
+        $here = str_replace('\\', '/', __DIR__);
+        if ($root !== '' && strpos($here, $root) === 0) {
+            return rtrim(substr($here, strlen($root)), '/');
+        }
+        return '';
+    }
+}
 if (!function_exists('get_template_directory_uri')) {
-    function get_template_directory_uri() { return '.'; }
+    function get_template_directory_uri() { return synergy_dev_base(); }
 }
 if (!function_exists('get_stylesheet_directory_uri')) {
-    function get_stylesheet_directory_uri() { return '.'; }
+    function get_stylesheet_directory_uri() { return synergy_dev_base(); }
 }
 if (!function_exists('get_template_directory')) {
     function get_template_directory() { return __DIR__; }
@@ -18,10 +31,10 @@ if (!function_exists('get_stylesheet_directory')) {
     function get_stylesheet_directory() { return __DIR__; }
 }
 if (!function_exists('get_stylesheet_uri')) {
-    function get_stylesheet_uri() { return './style.css'; }
+    function get_stylesheet_uri() { return synergy_dev_base() . '/style.css'; }
 }
 if (!function_exists('home_url')) {
-    function home_url($path = '/') { return '.' . $path; }
+    function home_url($path = '/') { return synergy_dev_base() . '/' . ltrim($path, '/'); }
 }
 if (!function_exists('body_class')) {
     function body_class($class = '') {
@@ -371,7 +384,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <!-- HERO SECTION (Slide 1 & 3) -->
   <section
     id="home-hero"
-    class="relative bg-ink text-white pt-12 pb-24 sm:pt-16 sm:pb-32 lg:pt-20 lg:pb-40 overflow-hidden flex items-center min-h-[720px] sm:min-h-[800px] lg:min-h-[860px]">
+    class="relative bg-ink text-white pt-16 pb-24 sm:pt-20 sm:pb-32 lg:pt-24 lg:pb-36 overflow-hidden flex items-center min-h-screen min-h-[100dvh]">
 
     <!-- Background Image Layer - โครงเดียวกับ about.php / smart-energy.php -->
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -3160,6 +3173,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
     <div id="footer-container" class="bg-ink w-full block"></div>
     <script src="<?php echo synergy_asset('components/scripts.js'); ?>"></script>
+  <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/live-editor.js') : './components/live-editor.js'; ?>"></script>
     <script>
       // ===== BILINGUAL PLACEHOLDER SWITCHER =====
       (function () {

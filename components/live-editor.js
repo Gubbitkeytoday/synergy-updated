@@ -1,7 +1,21 @@
 (function () {
   let isEditing = false;
   let isLoggedIn = localStorage.getItem('synergy_admin_auth') === '1';
-  let pageName = window.location.pathname.includes('about') ? 'about' : 'index';
+  /* Page key for data/content_<page>.json. The old test was
+     `pathname.includes('about') ? 'about' : 'index'`, so every page other than
+     About wrote its edits into content_index.json while still reading them back
+     from its own file - the edits saved successfully and then silently vanished.
+     Derive the slug and map the URL aliases the router accepts. */
+  const PAGE_ALIASES = { services: 'service', privacy: 'privacy-policy', 'front-page': 'index', '': 'index' };
+  /* No whitelist of known pages. There used to be one, and anything not on it
+     fell back to 'index' - which meant a page added later silently wrote its
+     edits into the home page's file. The slug is sanitised to the same
+     character set save_content.php accepts instead, so a new page gets its own
+     data/content_<slug>.json the first time it is saved, with nothing to
+     register anywhere. */
+  const rawSlug = (window.location.pathname.replace(/\/+$/, '').split('/').pop() || '').replace(/\.php$/i, '');
+  const mapped = PAGE_ALIASES[rawSlug] !== undefined ? PAGE_ALIASES[rawSlug] : rawSlug;
+  let pageName = (mapped || 'index').replace(/[^a-z0-9_-]/gi, '').slice(0, 60) || 'index';
   let activeDragEl = null;
   let activeResizeEl = null;
   let resizeDir = '';
@@ -22,7 +36,10 @@
   const sizes = {};
   const imagesData = {};
 
-  const themeUri = window.wpThemeUri || './';
+  /* Fallback is '/', not './': every fetch below (save_content.php, the content
+     JSON) is issued from pages served at /about/, /service/ etc., where './'
+     resolves into that subpath and silently returns page HTML instead. */
+  const themeUri = window.wpThemeUri || '/';
 
   // Inject styles
   const style = document.createElement('style');
@@ -230,6 +247,57 @@
       outline: 2.5px solid #22C55E !important;
       background: rgba(34, 197, 94, 0.1) !important;
       box-shadow: 0 0 16px rgba(34, 197, 94, 0.25) !important;
+    }
+
+    /* ---- Bilingual editing ----
+       Every visitor-facing string is a .lang-th + .lang-en pair and the page
+       hides whichever language is inactive, so edit mode has to reveal both
+       (see the edit-mode reveal block in about.php). Revealed inline they
+       render glued together - "...รวมถึงภาคการแพทย์Synergy Technology Co.,
+       Ltd. was founded..." - and there is no way to see where Thai ends and
+       English begins, which is exactly how one language gets deleted by
+       accident. Stack them as two labelled blocks instead.
+       The TH/EN label is a pseudo-element on purpose: pseudo-elements are not
+       part of innerHTML, so the label can never end up in the saved JSON.
+       The "span" type selector is needed to outrank the page's own
+       "html body.is-live-editing [data-editable] .lang-xx{display:inline}"
+       rule, which is itself !important. (No backticks in this comment: the
+       whole block lives inside a JS template literal.) */
+    html body.is-live-editing [data-editable] span.lang-th,
+    html body.is-live-editing [data-editable] span.lang-en {
+      display: block !important;
+      position: relative;
+      /* Badge sits ABOVE the text, not to its left. The narrowest editable
+         field on this page is a Core Values caption at 125px; a 44px left
+         inset would have left it ~71px of text column. */
+      padding: 22px 10px 7px 10px !important;
+      margin: 5px 0 !important;
+      border-left: 3px solid #16A34A;
+      border-radius: 6px;
+      background: rgba(22, 163, 74, 0.06);
+    }
+    html body.is-live-editing [data-editable] span.lang-en {
+      border-left-color: #2563EB;
+      background: rgba(37, 99, 235, 0.06);
+    }
+    html body.is-live-editing [data-editable] span.lang-th::before,
+    html body.is-live-editing [data-editable] span.lang-en::before {
+      content: 'TH';
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      font: 700 10px/1.5 system-ui, sans-serif;
+      letter-spacing: 0.06em;
+      color: #fff;
+      background: #16A34A;
+      padding: 1px 5px;
+      border-radius: 4px;
+      pointer-events: none;
+      user-select: none;
+    }
+    html body.is-live-editing [data-editable] span.lang-en::before {
+      content: 'EN';
+      background: #2563EB;
     }
 
     body.is-live-editing img:not(.hero-bg-layer img) {
@@ -500,6 +568,9 @@
     <button class="live-edit-toolbar-btn btn-save-edit toolbar-hideable" id="live-save-btn">
       <span style="font-size: 16px;">💾</span> บันทึกทั้งหมด (Save)
     </button>
+    <button class="live-edit-toolbar-btn btn-nav-manage toolbar-hideable" id="live-nav-btn">
+      <span style="font-size: 16px;">🧭</span> จัดการเมนู
+    </button>
     <button class="live-edit-toolbar-btn btn-reset-pos toolbar-hideable" id="live-reset-btn">
       <span style="font-size: 16px;">🔄</span> รีเซ็ต
     </button>
@@ -768,6 +839,130 @@
     </div>
   `;
   document.body.appendChild(loginOverlay);
+
+  /* ------------------------------------------------------------------
+     Menu manager
+
+     The nav is generated by components/scripts.js from a single navItems array,
+     so the panel reads that array back off the rendered navbar rather than
+     duplicating the list here - one source of truth, and a link added to
+     scripts.js later shows up in this panel with no extra work.
+
+     Hiding is presentation only. The page stays reachable by URL, so this is
+     not a way to take something private.
+     ------------------------------------------------------------------ */
+  const navPanel = document.createElement('div');
+  navPanel.className = 'admin-login-overlay';
+  navPanel.id = 'live-nav-panel';
+  navPanel.innerHTML = `
+    <div class="admin-login-modal" style="position:relative; max-width:520px;">
+      <button class="admin-login-close" id="nav-panel-close">✕</button>
+      <h3>🧭 จัดการเมนู (Navigation)</h3>
+      <p>เปิด–ปิดลิงก์ที่แสดงบนแถบเมนูและเมนูมือถือ · ลิงก์ที่ปิดจะไม่แสดง แต่หน้ายังเข้าถึงได้ด้วย URL</p>
+      <div id="nav-panel-list" style="max-height:46vh; overflow-y:auto; margin-bottom:18px;"></div>
+      <div id="nav-panel-error" style="color:#ff6b6b; font-size:12px; margin-bottom:12px; display:none;"></div>
+      <button class="admin-login-btn" id="nav-panel-save">บันทึกเมนู (Save)</button>
+    </div>
+  `;
+  document.body.appendChild(navPanel);
+
+  const navRowStyle =
+    'display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:12px;' +
+    'background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); margin-bottom:8px;';
+
+  /* Reads the live navbar. Desktop links carry data-nav-id, which scripts.js
+     stamps on for exactly this purpose. */
+  function collectNavEntries() {
+    const seen = new Set();
+    const rows = [];
+    document.querySelectorAll('#navbar-container [data-nav-id]').forEach(a => {
+      const id = a.getAttribute('data-nav-id');
+      if (!id || seen.has(id)) return;
+      seen.add(id);
+      rows.push({
+        id,
+        label: (a.textContent || id).replace(/\s+/g, ' ').trim().slice(0, 46),
+        child: id.indexOf('.') !== -1
+      });
+    });
+    return rows;
+  }
+
+  let navHiddenIds = [];
+
+  async function openNavPanel() {
+    const list = document.getElementById('nav-panel-list');
+    const err = document.getElementById('nav-panel-error');
+    err.style.display = 'none';
+
+    try {
+      const res = await fetch(themeUri + 'data/nav_config.json?v=' + Date.now());
+      navHiddenIds = res.ok ? ((await res.json()).hidden || []) : [];
+    } catch (e) {
+      navHiddenIds = [];
+    }
+
+    /* The panel lists what is on screen now. A link that is already hidden is
+       therefore not in the navbar to be read - it is added back from the saved
+       config so it can be switched on again. */
+    const entries = collectNavEntries();
+    const known = new Set(entries.map(e => e.id));
+    navHiddenIds.forEach(id => {
+      if (!known.has(id)) entries.push({ id, label: id, child: id.indexOf('.') !== -1, missing: true });
+    });
+
+    list.innerHTML = entries.length ? entries.map(e => `
+      <label style="${navRowStyle}${e.child ? 'margin-left:22px;' : ''}">
+        <input type="checkbox" data-nav-toggle="${e.id}" ${navHiddenIds.indexOf(e.id) === -1 ? 'checked' : ''}
+               style="width:18px; height:18px; accent-color:#22C55E; cursor:pointer;">
+        <span style="flex:1; font-size:13.5px; font-weight:700; color:#fff;">${e.label}</span>
+        <code style="font-size:11px; color:#8EF060; opacity:.85;">${e.id}</code>
+      </label>`).join('')
+      : '<p style="color:#b9c9c0; font-size:13px;">ไม่พบลิงก์เมนูบนหน้านี้</p>';
+
+    navPanel.style.display = 'flex';
+  }
+
+  document.getElementById('live-nav-btn').addEventListener('click', openNavPanel);
+  document.getElementById('nav-panel-close').addEventListener('click', () => {
+    navPanel.style.display = 'none';
+  });
+  navPanel.addEventListener('click', e => {
+    if (e.target === navPanel) navPanel.style.display = 'none';
+  });
+
+  document.getElementById('nav-panel-save').addEventListener('click', async () => {
+    const btn = document.getElementById('nav-panel-save');
+    const err = document.getElementById('nav-panel-error');
+    const hidden = [...navPanel.querySelectorAll('[data-nav-toggle]')]
+      .filter(cb => !cb.checked)
+      .map(cb => cb.getAttribute('data-nav-toggle'));
+
+    btn.textContent = 'กำลังบันทึก...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(themeUri + 'save_content.php?action=nav_save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ hidden })
+      });
+      const json = await res.json();
+      if (json.success) {
+        navPanel.style.display = 'none';
+        showToast('🧭 บันทึกเมนูเรียบร้อย กำลังโหลดหน้าใหม่...');
+        setTimeout(() => location.reload(), 900);
+      } else {
+        err.textContent = json.error || 'บันทึกไม่สำเร็จ';
+        err.style.display = 'block';
+      }
+    } catch (e) {
+      err.textContent = 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้';
+      err.style.display = 'block';
+    } finally {
+      btn.textContent = 'บันทึกเมนู (Save)';
+      btn.disabled = false;
+    }
+  });
 
   const toast = document.createElement('div');
   toast.className = 'live-edit-toast';
@@ -1249,6 +1444,34 @@
     showToast('🔄 รีเซ็ตกลับตำแหน่งตั้งต้นสมบูรณ์เรียบร้อยแล้ว!');
   });
 
+  /* A contentEditable node is not the markup we wrote - the browser rewrites it
+     while it is being edited. Saving clone.innerHTML raw therefore feeds those
+     rewrites straight into content_*.json, where they become permanent. Two
+     kinds showed up on this page:
+       - style attributes invented by the browser, e.g.
+         style="text-wrap-mode:initial; font-size:1rem; letter-spacing:-0.005em"
+         (and per rule 2 in AGENTS.md an inline font-size loses to the sheet's
+         !important rules anyway, so it is noise that also misleads the reader)
+       - bare wrapper <span>s with no class and no attributes, which the browser
+         nests around fragments of a selection
+     Left in, they accumulate on every save until the field's structure no
+     longer matches the template. Strip both; keep every classed element,
+     because those carry the design system (lang-th / lang-en, dot, icons). */
+  function sanitizeSavedMarkup(root) {
+    root.querySelectorAll('[style]').forEach(el => el.removeAttribute('style'));
+    root.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    root.querySelectorAll('[spellcheck]').forEach(el => el.removeAttribute('spellcheck'));
+
+    // Innermost first, so unwrapping a nest of wrappers collapses fully.
+    const spans = [...root.querySelectorAll('span')].reverse();
+    spans.forEach(span => {
+      if (span.attributes.length === 0) {
+        span.replaceWith(...span.childNodes);
+      }
+    });
+    return root;
+  }
+
   document.getElementById('live-save-btn').addEventListener('click', async () => {
     const fields = {};
     document.querySelectorAll('[data-editable]').forEach(el => {
@@ -1256,6 +1479,7 @@
       if (key) {
         const clone = el.cloneNode(true);
         clone.querySelectorAll('.canva-drag-handle, .canva-anchor-dot, .live-resize-handle, .canva-edge-resize').forEach(child => child.remove());
+        sanitizeSavedMarkup(clone);
 
         fields[key] = clone.innerHTML.trim();
 

@@ -21,7 +21,7 @@
 $sy_title  = isset($sy_title)  ? $sy_title  : 'Synergy Technology';
 $sy_robots = isset($sy_robots) ? $sy_robots : 'index, follow';
 $sy_desc   = isset($sy_desc)   ? $sy_desc   : '';
-$sy_uri    = function_exists('get_template_directory_uri') ? get_template_directory_uri() : '.';
+$sy_uri    = function_exists('get_template_directory_uri') ? get_template_directory_uri() : '';
 ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">

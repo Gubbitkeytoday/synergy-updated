@@ -5,11 +5,33 @@ if (isset($_SERVER['REQUEST_URI']) && preg_match('/\.php\/+$/i', $_SERVER['REQUE
     header("Location: " . $clean_uri, true, 301);
     exit();
 }
+/* Dev-server URL base. These shims only run when WordPress is absent.
+   They used to return '.', i.e. document-relative asset URLs, and that broke
+   every asset on any URL ending in a slash: from /about/ the browser resolves
+   './components/style.css' to /about/components/style.css, which the dev
+   router answers with page HTML at status 200. The stylesheet then parsed to
+   zero rules, scripts.js and live-editor.js never executed, and all 33 images
+   decoded as HTML. The symptoms read as content bugs - both languages showing
+   at once, no live-edit button - not as a bad base URL, so do not "simplify"
+   this back to '.'. Root-absolute paths resolve the same at every URL depth. */
+if (!function_exists('synergy_dev_base')) {
+    function synergy_dev_base() {
+        $root = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : '';
+        $root = $root ? str_replace('\\', '/', $root) : '';
+        $here = str_replace('\\', '/', __DIR__);
+        // '' when the theme folder IS the document root (php -S + router.php),
+        // '/subdir' when it is nested under one (htdocs/synergy-updated).
+        if ($root !== '' && strpos($here, $root) === 0) {
+            return rtrim(substr($here, strlen($root)), '/');
+        }
+        return '';
+    }
+}
 if (!function_exists('get_template_directory_uri')) {
-    function get_template_directory_uri() { return '.'; }
+    function get_template_directory_uri() { return synergy_dev_base(); }
 }
 if (!function_exists('get_stylesheet_directory_uri')) {
-    function get_stylesheet_directory_uri() { return '.'; }
+    function get_stylesheet_directory_uri() { return synergy_dev_base(); }
 }
 if (!function_exists('get_template_directory')) {
     function get_template_directory() { return __DIR__; }
@@ -18,10 +40,10 @@ if (!function_exists('get_stylesheet_directory')) {
     function get_stylesheet_directory() { return __DIR__; }
 }
 if (!function_exists('get_stylesheet_uri')) {
-    function get_stylesheet_uri() { return './style.css'; }
+    function get_stylesheet_uri() { return synergy_dev_base() . '/style.css'; }
 }
 if (!function_exists('home_url')) {
-    function home_url($path = '/') { return '.' . $path; }
+    function home_url($path = '/') { return synergy_dev_base() . '/' . ltrim($path, '/'); }
 }
 if (!function_exists('body_class')) {
     function body_class($class = '') {
@@ -286,13 +308,29 @@ if (file_exists(__DIR__ . '/functions.php')) {
     html body.is-live-editing [data-editable] .lang-th,
     html body.is-live-editing [data-editable] .lang-en{display:inline !important}
 
+    /* ---- Why the hero copy is TWO editable fields, not one ----
+       It reads as one paragraph pair, so the obvious build is a single field
+       with a break inside it. That does not survive: the editor saves a field
+       as clone.innerHTML taken from a live contentEditable node, and the
+       browser rewrites that DOM. Measured on this page, twice:
+         <br><br>                        -> dropped entirely
+         <span class="sy-para">para 2    -> re-nested INSIDE para 1 and its
+                                            class replaced with
+                                            style="text-wrap-mode:initial;
+                                            font-size:1rem;..."
+       Both times the paragraph break silently vanished on the next save.
+       Structure inside an editable field is at the browser's mercy, so the
+       break now lives BETWEEN two fields where the editor cannot reach it.
+       Each field holds text plus its lang-th/lang-en pair and nothing else.
+       Do not merge these back into one field. */
+
     /* The chip stack, which is the source of the SynExta diagram's labels. It is
        display:none above 1180px, i.e. exactly where the diagram is on screen. */
     body.is-live-editing .synexta-stack{display:block !important;width:100%}
   </style>
 
   <!-- HERO SECTION: About SynTech / Engineering Intelligence Since 2008 -->
-  <section id="about-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 overflow-hidden bg-slate-50 min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-start justify-center">
+  <section id="about-hero" class="relative pt-4 pb-8 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-16 text-slate-900 overflow-hidden bg-slate-50 min-h-[560px] sm:min-h-[640px] lg:min-h-[720px] flex items-center justify-center">
     <!-- Background Image Layer (about-hero-bg.png) - No dark filter overlay -->
     <div class="absolute inset-0 z-0 overflow-hidden hero-bg-layer">
       <!-- Focal point moves with the breakpoint. The photo is 1920x691 (2.78:1); a phone
@@ -316,14 +354,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <?php echo synergy_content('hero-title', 'Engineering Intelligence <span class="text-brand-bright drop-shadow-[0_2px_15px_rgba(35,134,45,0.4)]">Since 2008</span>', 'about'); ?>
         </h1>
 
-        <!-- text-left, not text-center — the hero copy went from a 2-line strapline to a
-             620-character company-history paragraph (about 7 lines on a desktop, about 19
-             on a 375px phone). A centred block that long is hard to read: with both edges
-             ragged the eye has to hunt for the start of each new line. The block itself is
-             still centred in the hero via mx-auto, and the h1 above stays centred, so the
-             composition is unchanged — only the paragraph's own alignment. -->
-        <p data-editable="hero-desc" <?php echo synergy_style('hero-desc', 'about'); ?> class="text-sm sm:text-base text-slate-900 font-medium leading-relaxed max-w-4xl text-left mx-auto">
-          <?php echo synergy_content('hero-desc', '<span class="lang-th">บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด ก่อตั้งขึ้นในปี พ.ศ. 2551 (ค.ศ. 2008) โดยเป็นธุรกิจที่คนไทยถือหุ้น 100% เริ่มต้นจากการให้บริการแบบครบวงจร (One Stop Services) ครอบคลุมการบริหารจัดการด้านการออกแบบและการผลิตเทคโนโลยีทั้งด้านฮาร์ดแวร์และซอฟต์แวร์ ตั้งแต่การสร้างต้นแบบ (Prototype) จนถึงการผลิตเชิงมวล (Mass Production) สำหรับอุตสาหกรรมยานยนต์ ระบบไฟส่องสว่าง ระบบโซลาร์โฮมซิสเต็ม (Solar Home System) และอุตสาหกรรมอุปกรณ์อิเล็กทรอนิกส์ บริษัทได้พัฒนาอย่างต่อเนื่องโดยนำเทคโนโลยี IoT และ AI มาประยุกต์ใช้เพื่อขยายสู่ผลิตภัณฑ์ Smart Solutions เพื่อตอบสนองความต้องการด้านการพัฒนาเมืองอัจฉริยะ (Smart City) และภาคอุตสาหกรรม เกษตรกรรม การค้าและพาณิชยกรรม รวมถึงภาคการแพทย์</span><span class="lang-en">Synergy Technology Co., Ltd. was founded in 2008 (B.E. 2551) as a 100% Thai-owned business, starting with comprehensive One Stop Services covering the management of technology design and production — both hardware and software — from Prototype to Mass Production for the automotive, lighting, Solar Home System, and electronic equipment industries. The company has continuously developed by applying IoT and AI technologies to expand into Smart Solutions products, addressing the needs of Smart City development as well as the industrial, agricultural, trade and commerce, and medical sectors.</span>', 'about'); ?>
+        <p data-editable="hero-desc" <?php echo synergy_style('hero-desc', 'about'); ?> class="text-sm sm:text-base text-slate-900 font-medium leading-relaxed max-w-4xl text-center mx-auto">
+          <?php echo synergy_content('hero-desc', '<span class="lang-th"><strong>บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด</strong> ก่อตั้งขึ้นในปี พ.ศ. 2551 (ค.ศ. 2008) โดยเป็นธุรกิจที่คนไทยถือหุ้น 100% เริ่มต้นจากการให้บริการแบบครบวงจร (One Stop Services) ครอบคลุมการบริหารจัดการด้านการออกแบบและการผลิตเทคโนโลยีทั้งด้านฮาร์ดแวร์และซอฟต์แวร์ ตั้งแต่การสร้างต้นแบบ (Prototype) จนถึงการผลิตเชิงมวล (Mass Production) สำหรับอุตสาหกรรมยานยนต์ ระบบไฟส่องสว่าง ระบบโซลาร์โฮมซิสเต็ม (Solar Home System) และอุตสาหกรรมอุปกรณ์อิเล็กทรอนิกส์ บริษัทได้พัฒนาอย่างต่อเนื่องโดยนำเทคโนโลยี IoT และ AI มาประยุกต์ใช้เพื่อขยายสู่ผลิตภัณฑ์ Smart Solutions เพื่อตอบสนองความต้องการด้านการพัฒนาเมืองอัจฉริยะ (Smart City) และภาคอุตสาหกรรม เกษตรกรรม การค้าและพาณิชยกรรม รวมถึงภาคการแพทย์</span><span class="lang-en"><strong>Synergy Technology Co., Ltd.</strong> was founded in 2008 (B.E. 2551) as a 100% Thai-owned business, starting with comprehensive One Stop Services covering the management of technology design and production — both hardware and software — from Prototype to Mass Production for the automotive, lighting, Solar Home System, and electronic equipment industries. The company has continuously developed by applying IoT and AI technologies to expand into Smart Solutions products, addressing the needs of Smart City development as well as the industrial, agricultural, trade and commerce, and medical sectors.</span>', 'about'); ?>
         </p>
 
         <!-- Buttons Row (Placed further down near bottom center)
@@ -331,7 +363,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
              buttons down the tall hero when the copy above was two lines; the new
              paragraph fills that space itself. Left as it was, the hero grew past
              900px on a phone and the text covered the whole background image. -->
-        <div class="flex flex-wrap items-center justify-center gap-4 pt-10 sm:pt-14 lg:pt-20 w-full">
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-6 sm:pt-8 lg:pt-10 w-full">
           <a data-editable="hero-btn1" <?php echo synergy_style('hero-btn1', 'about'); ?> href="<?php echo home_url('/'); ?>#solutions" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-7 py-3.5 rounded-xl font-extrabold text-sm uppercase tracking-wider hover:bg-emerald-600 transition-all duration-200 shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
             <?php echo synergy_content('hero-btn1', '<span class="lang-th">สำรวจโซลูชันของเรา</span><span class="lang-en">Explore Our Solutions</span><i class="fa-solid fa-arrow-right text-xs ml-1"></i>', 'about'); ?>
           </a>
@@ -360,15 +392,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- Section Header -->
       <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
         <!-- Eyebrow + Green dash line -->
-        <span class="text-xs sm:text-sm font-extrabold text-[#0d5c3a] uppercase tracking-widest block mb-1">
-          <span class="lang-th">OUR FOUNDATION</span>
-          <span class="lang-en">OUR FOUNDATION</span>
+        <span data-editable="principles-eyebrow" <?php echo synergy_style('principles-eyebrow', 'about'); ?> class="text-xs sm:text-sm font-extrabold text-[#0d5c3a] uppercase tracking-widest block mb-1">
+          <?php echo synergy_content('principles-eyebrow', '<span class="lang-th">OUR FOUNDATION</span><span class="lang-en">OUR FOUNDATION</span>', 'about'); ?>
         </span>
         <div class="w-8 h-1 bg-[#0d5c3a] rounded-full mx-auto mb-5"></div>
 
         <!-- Main Title -->
-        <h2 class="font-display font-extrabold text-2xl sm:text-3xl lg:text-[36px] leading-tight text-slate-900 tracking-tight whitespace-nowrap">
-          Engineering Intelligence <span class="text-[#0d5c3a]">Starts with Strong Principles</span>
+        <h2 data-editable="principles-title" <?php echo synergy_style('principles-title', 'about'); ?> class="font-display font-extrabold text-2xl sm:text-3xl lg:text-[36px] leading-tight text-slate-900 tracking-tight whitespace-nowrap">
+          <?php echo synergy_content('principles-title', 'Engineering Intelligence <span class="text-[#0d5c3a]">Starts with Strong Principles</span>', 'about'); ?>
         </h2>
       </div>
 
@@ -379,7 +410,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="relative bg-white rounded-[28px] overflow-hidden border border-slate-200/80 shadow-lg shadow-slate-200/40 flex flex-col justify-between group min-h-[320px] sm:min-h-[340px] transition-all duration-300 hover:shadow-xl hover:border-emerald-300">
           <!-- Card Background Image -->
           <div class="absolute inset-0 z-0">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/2026-syngroup-company-profile.png" alt="Vision Background" class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-105">
+            <img data-editable-img="vision_bg" src="<?php echo esc_url(synergy_content('vision_bg_img', get_template_directory_uri() . '/image/2026-syngroup-company-profile.png', 'about')); ?>" alt="Vision Background" class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-105">
             <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/30 sm:to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent sm:hidden"></div>
           </div>
@@ -392,13 +423,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <div class="w-12 h-12 rounded-full bg-emerald-50 text-[#0d5c3a] border border-emerald-100/80 flex items-center justify-center shrink-0 shadow-xs">
                   <i class="fa-solid fa-bullseye text-xl"></i>
                 </div>
-                <span class="font-extrabold text-[#0d5c3a] text-xl sm:text-2xl uppercase tracking-wider">VISION</span>
+                <span data-editable="vision-title" <?php echo synergy_style('vision-title', 'about'); ?> class="font-extrabold text-[#0d5c3a] text-xl sm:text-2xl uppercase tracking-wider"><?php echo synergy_content('vision-title', 'VISION', 'about'); ?></span>
               </div>
 
               <!-- Description -->
-              <p class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed max-w-md">
-                <span class="lang-th">มุ่งเป็นผู้นำนวัตกรรมด้าน <span class="text-[#0d5c3a] font-bold">Smart Electronics และ AIoT Solutions</span> แบบครบวงจร เพื่อสร้างผลกระทบเชิงบวกต่อธุรกิจอย่างยั่งยืน</span>
-                <span class="lang-en">To be a leader in end-to-end <span class="text-[#0d5c3a] font-bold">Smart Electronics and AIoT</span> innovations, driving sustainable business impact.</span>
+              <p data-editable="vision-desc" <?php echo synergy_style('vision-desc', 'about'); ?> class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed max-w-md">
+                <?php echo synergy_content('vision-desc', '<span class="lang-th">มุ่งเป็นผู้นำนวัตกรรมด้าน <span class="text-[#0d5c3a] font-bold">Smart Electronics และ AIoT Solutions</span> แบบครบวงจร เพื่อสร้างผลกระทบเชิงบวกต่อธุรกิจอย่างยั่งยืน</span><span class="lang-en">To be a leader in end-to-end <span class="text-[#0d5c3a] font-bold">Smart Electronics and AIoT</span> innovations, driving sustainable business impact.</span>', 'about'); ?>
               </p>
             </div>
           </div>
@@ -408,7 +438,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="relative bg-white rounded-[28px] overflow-hidden border border-slate-200/80 shadow-lg shadow-slate-200/40 flex flex-col justify-between group min-h-[320px] sm:min-h-[340px] transition-all duration-300 hover:shadow-xl hover:border-emerald-300">
           <!-- Card Background Image -->
           <div class="absolute inset-0 z-0">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/mission_bg_engineer.png" alt="Mission Background" class="w-full h-full object-cover object-right-bottom transition-transform duration-700 group-hover:scale-105">
+            <img data-editable-img="mission_bg" src="<?php echo esc_url(synergy_content('mission_bg_img', get_template_directory_uri() . '/image/mission_bg_engineer.png', 'about')); ?>" alt="Mission Background" class="w-full h-full object-cover object-right-bottom transition-transform duration-700 group-hover:scale-105">
             <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/30 sm:to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent sm:hidden"></div>
           </div>
@@ -421,13 +451,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <div class="w-12 h-12 rounded-full bg-[#0d5c3a] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#0d5c3a]/20">
                   <i class="fa-solid fa-bullseye text-xl"></i>
                 </div>
-                <span class="font-extrabold text-[#0d5c3a] text-xl sm:text-2xl uppercase tracking-wider">MISSION</span>
+                <span data-editable="mission-title" <?php echo synergy_style('mission-title', 'about'); ?> class="font-extrabold text-[#0d5c3a] text-xl sm:text-2xl uppercase tracking-wider"><?php echo synergy_content('mission-title', 'MISSION', 'about'); ?></span>
               </div>
 
               <!-- Description -->
-              <p class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed max-w-md">
-                <span class="lang-th">เป็นพันธมิตรแบบครบวงจรด้าน <span class="text-[#0d5c3a] font-bold">Smart Electronics และ AIoT Technology</span> ตั้งแต่การสร้างนวัตกรรม การออกแบบ การพัฒนาผลิตภัณฑ์ใหม่เข้าสู่การผลิต (NPI) ไปจนถึงการผลิตแบบ Mass Customization และการบริการหลังการขายที่เชื่อถือได้ ซึ่งสร้างคุณค่าที่ยั่งยืนและการเติบโตให้แก่ภาครัฐและภาคเอกชนทั่วโลก</span>
-                <span class="lang-en">To be a trusted end-to-end partner in <span class="text-[#0d5c3a] font-bold">Smart Electronics and AIoT Technology</span> — spanning innovation, design, New Product Introduction (NPI), Mass Customization, and reliable after-sales services — delivering sustainable value and growth for public and private sectors worldwide.</span>
+              <p data-editable="mission-desc" <?php echo synergy_style('mission-desc', 'about'); ?> class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed max-w-md">
+                <?php echo synergy_content('mission-desc', '<span class="lang-th">เป็นพันธมิตรแบบครบวงจรด้าน <span class="text-[#0d5c3a] font-bold">Smart Electronics และ AIoT Technology</span> ตั้งแต่การสร้างนวัตกรรม การออกแบบ การพัฒนาผลิตภัณฑ์ใหม่เข้าสู่การผลิต (NPI) ไปจนถึงการผลิตแบบ Mass Customization และการบริการหลังการขายที่เชื่อถือได้ ซึ่งสร้างคุณค่าที่ยั่งยืนและการเติบโตให้แก่ภาครัฐและภาคเอกชนทั่วโลก</span><span class="lang-en">To be a trusted end-to-end partner in <span class="text-[#0d5c3a] font-bold">Smart Electronics and AIoT Technology</span> — spanning innovation, design, New Product Introduction (NPI), Mass Customization, and reliable after-sales services — delivering sustainable value and growth for public and private sectors worldwide.</span>', 'about'); ?>
               </p>
             </div>
           </div>
@@ -443,10 +472,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div>
             <!-- Header -->
             <div class="text-center mb-6 sm:mb-8">
-              <h3 class="font-extrabold text-xl sm:text-2xl text-[#0d5c3a] uppercase tracking-wider mb-1">CORE VALUES</h3>
-              <p class="text-slate-500 text-xs sm:text-sm font-medium">
-                <span class="lang-th">คุณค่าที่เราเชื่อและยึดถือในการทำงาน</span>
-                <span class="lang-en">Values we believe in and hold firmly in our work</span>
+              <h3 data-editable="values-title" <?php echo synergy_style('values-title', 'about'); ?> class="font-extrabold text-xl sm:text-2xl text-[#0d5c3a] uppercase tracking-wider mb-1"><?php echo synergy_content('values-title', 'CORE VALUES', 'about'); ?></h3>
+              <p data-editable="values-sub" <?php echo synergy_style('values-sub', 'about'); ?> class="text-slate-500 text-xs sm:text-sm font-medium">
+                <?php echo synergy_content('values-sub', '<span class="lang-th">คุณค่าที่เราเชื่อและยึดถือในการทำงาน</span><span class="lang-en">Values we believe in and hold firmly in our work</span>', 'about'); ?>
               </p>
             </div>
 
@@ -459,10 +487,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <i class="fa-solid fa-mountain text-lg"></i>
                   <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">P</span>
                 </div>
-                <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Possibility</h5>
-                <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">เชื่อว่าทุกโจทย์มีทางออก</span>
-                  <span class="lang-en">Believe every challenge has a solution.</span>
+                <h5 data-editable="value-name1" <?php echo synergy_style('value-name1', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5"><?php echo synergy_content('value-name1', 'Possibility', 'about'); ?></h5>
+                <p data-editable="value-desc1" <?php echo synergy_style('value-desc1', 'about'); ?> class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
+                  <?php echo synergy_content('value-desc1', '<span class="lang-th">เชื่อว่าทุกโจทย์มีทางออก</span><span class="lang-en">Believe every challenge has a solution.</span>', 'about'); ?>
                 </p>
               </div>
 
@@ -472,10 +499,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <i class="fa-regular fa-user text-lg"></i>
                   <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">O</span>
                 </div>
-                <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Ownership</h5>
-                <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">รับผิดชอบงานเสมือนเจ้าของ</span>
-                  <span class="lang-en">Take responsibility like an owner.</span>
+                <h5 data-editable="value-name2" <?php echo synergy_style('value-name2', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5"><?php echo synergy_content('value-name2', 'Ownership', 'about'); ?></h5>
+                <p data-editable="value-desc2" <?php echo synergy_style('value-desc2', 'about'); ?> class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
+                  <?php echo synergy_content('value-desc2', '<span class="lang-th">รับผิดชอบงานเสมือนเจ้าของ</span><span class="lang-en">Take responsibility like an owner.</span>', 'about'); ?>
                 </p>
               </div>
 
@@ -485,10 +511,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <i class="fa-solid fa-users text-lg"></i>
                   <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">S</span>
                 </div>
-                <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Successor</h5>
-                <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">สร้างคนรุ่นต่อไปให้เติบโต</span>
-                  <span class="lang-en">Grow the next generation.</span>
+                <h5 data-editable="value-name3" <?php echo synergy_style('value-name3', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5"><?php echo synergy_content('value-name3', 'Successor', 'about'); ?></h5>
+                <p data-editable="value-desc3" <?php echo synergy_style('value-desc3', 'about'); ?> class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
+                  <?php echo synergy_content('value-desc3', '<span class="lang-th">สร้างคนรุ่นต่อไปให้เติบโต</span><span class="lang-en">Grow the next generation.</span>', 'about'); ?>
                 </p>
               </div>
 
@@ -498,10 +523,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <i class="fa-regular fa-handshake text-lg"></i>
                   <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">S</span>
                 </div>
-                <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Sincere</h5>
-                <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">จริงใจต่อลูกค้าและทีม</span>
-                  <span class="lang-en">Be genuine with customers and team.</span>
+                <h5 data-editable="value-name4" <?php echo synergy_style('value-name4', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5"><?php echo synergy_content('value-name4', 'Sincere', 'about'); ?></h5>
+                <p data-editable="value-desc4" <?php echo synergy_style('value-desc4', 'about'); ?> class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
+                  <?php echo synergy_content('value-desc4', '<span class="lang-th">จริงใจต่อลูกค้าและทีม</span><span class="lang-en">Be genuine with customers and team.</span>', 'about'); ?>
                 </p>
               </div>
 
@@ -511,10 +535,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <i class="fa-regular fa-lightbulb text-lg"></i>
                   <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">I</span>
                 </div>
-                <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Ideation</h5>
-                <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">กล้าคิด กล้าสร้างสรรค์</span>
-                  <span class="lang-en">Dare to think and create.</span>
+                <h5 data-editable="value-name5" <?php echo synergy_style('value-name5', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5"><?php echo synergy_content('value-name5', 'Ideation', 'about'); ?></h5>
+                <p data-editable="value-desc5" <?php echo synergy_style('value-desc5', 'about'); ?> class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
+                  <?php echo synergy_content('value-desc5', '<span class="lang-th">กล้าคิด กล้าสร้างสรรค์</span><span class="lang-en">Dare to think and create.</span>', 'about'); ?>
                 </p>
               </div>
 
@@ -524,10 +547,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <i class="fa-solid fa-chart-line text-lg"></i>
                   <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">B</span>
                 </div>
-                <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Be Better</h5>
-                <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">พัฒนาให้ดีขึ้นทุกวัน</span>
-                  <span class="lang-en">Improve every day.</span>
+                <h5 data-editable="value-name6" <?php echo synergy_style('value-name6', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5"><?php echo synergy_content('value-name6', 'Be Better', 'about'); ?></h5>
+                <p data-editable="value-desc6" <?php echo synergy_style('value-desc6', 'about'); ?> class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
+                  <?php echo synergy_content('value-desc6', '<span class="lang-th">พัฒนาให้ดีขึ้นทุกวัน</span><span class="lang-en">Improve every day.</span>', 'about'); ?>
                 </p>
               </div>
 
@@ -537,10 +559,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <i class="fa-solid fa-graduation-cap text-lg"></i>
                   <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">L</span>
                 </div>
-                <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Learner</h5>
-                <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">เรียนรู้ไม่หยุดนิ่ง</span>
-                  <span class="lang-en">Never stop learning.</span>
+                <h5 data-editable="value-name7" <?php echo synergy_style('value-name7', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5"><?php echo synergy_content('value-name7', 'Learner', 'about'); ?></h5>
+                <p data-editable="value-desc7" <?php echo synergy_style('value-desc7', 'about'); ?> class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
+                  <?php echo synergy_content('value-desc7', '<span class="lang-th">เรียนรู้ไม่หยุดนิ่ง</span><span class="lang-en">Never stop learning.</span>', 'about'); ?>
                 </p>
               </div>
 
@@ -550,10 +571,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <i class="fa-regular fa-user text-lg"></i>
                   <span aria-hidden="true" class="absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#0d5c3a] text-white text-[10px] font-extrabold flex items-center justify-center shadow-sm leading-none">E</span>
                 </div>
-                <h5 class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5">Empathy</h5>
-                <p class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
-                  <span class="lang-th">เข้าใจลูกค้าและเพื่อนร่วมงาน</span>
-                  <span class="lang-en">Understand customers and colleagues.</span>
+                <h5 data-editable="value-name8" <?php echo synergy_style('value-name8', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-800 mb-0.5"><?php echo synergy_content('value-name8', 'Empathy', 'about'); ?></h5>
+                <p data-editable="value-desc8" <?php echo synergy_style('value-desc8', 'about'); ?> class="text-[11px] leading-tight text-slate-500 max-w-[125px]">
+                  <?php echo synergy_content('value-desc8', '<span class="lang-th">เข้าใจลูกค้าและเพื่อนร่วมงาน</span><span class="lang-en">Understand customers and colleagues.</span>', 'about'); ?>
                 </p>
               </div>
 
@@ -566,9 +586,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div>
             <!-- Header -->
             <div class="text-center mb-6">
-              <h3 class="font-extrabold text-xl sm:text-2xl text-[#0d5c3a] uppercase tracking-wider mb-1">OUR DNA</h3>
-              <p class="text-slate-500 text-xs sm:text-sm font-medium">
-                The Principles That Drive Every Solution
+              <h3 data-editable="dna-title" <?php echo synergy_style('dna-title', 'about'); ?> class="font-extrabold text-xl sm:text-2xl text-[#0d5c3a] uppercase tracking-wider mb-1"><?php echo synergy_content('dna-title', 'OUR DNA', 'about'); ?></h3>
+              <p data-editable="dna-sub" <?php echo synergy_style('dna-sub', 'about'); ?> class="text-slate-500 text-xs sm:text-sm font-medium">
+                <?php echo synergy_content('dna-sub', 'The Principles That Drive Every Solution', 'about'); ?>
               </p>
             </div>
 
@@ -582,13 +602,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 </div>
                 <div>
                   <div class="flex items-center gap-2 mb-1">
-                    <span class="text-[11px] font-extrabold text-[#0d5c3a] uppercase tracking-wider">INNOVATIVE</span>
+                    <span data-editable="dna-tag1" <?php echo synergy_style('dna-tag1', 'about'); ?> class="text-[11px] font-extrabold text-[#0d5c3a] uppercase tracking-wider"><?php echo synergy_content('dna-tag1', 'INNOVATIVE', 'about'); ?></span>
                     <span class="text-slate-300">•</span>
-                    <h5 class="font-bold text-xs sm:text-sm text-slate-900">We Never Stop Innovating</h5>
+                    <h5 data-editable="dna-item-title1" <?php echo synergy_style('dna-item-title1', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-900"><?php echo synergy_content('dna-item-title1', 'We Never Stop Innovating', 'about'); ?></h5>
                   </div>
-                  <p class="text-xs text-slate-600 leading-relaxed">
-                    <span class="lang-th">เราพัฒนาเทคโนโลยีอย่างต่อเนื่อง ตั้งแต่อุปกรณ์อิเล็กทรอนิกส์ไปจนถึงแพลตฟอร์ม AI เพื่อสร้างนวัตกรรมที่ตอบโจทย์อนาคตของธุรกิจ</span>
-                    <span class="lang-en">From electronics engineering to AI-powered platforms, we continuously create technologies that solve tomorrow's challenges.</span>
+                  <p data-editable="dna-item-desc1" <?php echo synergy_style('dna-item-desc1', 'about'); ?> class="text-xs text-slate-600 leading-relaxed">
+                    <?php echo synergy_content('dna-item-desc1', '<span class="lang-th">เราพัฒนาเทคโนโลยีอย่างต่อเนื่อง ตั้งแต่อุปกรณ์อิเล็กทรอนิกส์ไปจนถึงแพลตฟอร์ม AI เพื่อสร้างนวัตกรรมที่ตอบโจทย์อนาคตของธุรกิจ</span><span class="lang-en">From electronics engineering to AI-powered platforms, we continuously create technologies that solve tomorrow\'s challenges.</span>', 'about'); ?>
                   </p>
                 </div>
               </div>
@@ -600,13 +619,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 </div>
                 <div>
                   <div class="flex items-center gap-2 mb-1">
-                    <span class="text-[11px] font-extrabold text-[#0d5c3a] uppercase tracking-wider">TRUSTED</span>
+                    <span data-editable="dna-tag2" <?php echo synergy_style('dna-tag2', 'about'); ?> class="text-[11px] font-extrabold text-[#0d5c3a] uppercase tracking-wider"><?php echo synergy_content('dna-tag2', 'TRUSTED', 'about'); ?></span>
                     <span class="text-slate-300">•</span>
-                    <h5 class="font-bold text-xs sm:text-sm text-slate-900">Built on Engineering Excellence</h5>
+                    <h5 data-editable="dna-item-title2" <?php echo synergy_style('dna-item-title2', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-900"><?php echo synergy_content('dna-item-title2', 'Built on Engineering Excellence', 'about'); ?></h5>
                   </div>
-                  <p class="text-xs text-slate-600 leading-relaxed">
-                    <span class="lang-th">ทุกโซลูชันถูกสร้างขึ้นบนพื้นฐานของวิศวกรรมที่เชื่อถือได้ คุณภาพที่พิสูจน์ได้ และความมุ่งมั่นในการเป็นพันธมิตรระยะยาว</span>
-                    <span class="lang-en">Our customers trust us because every solution is backed by proven engineering, quality, and long-term commitment.</span>
+                  <p data-editable="dna-item-desc2" <?php echo synergy_style('dna-item-desc2', 'about'); ?> class="text-xs text-slate-600 leading-relaxed">
+                    <?php echo synergy_content('dna-item-desc2', '<span class="lang-th">ทุกโซลูชันถูกสร้างขึ้นบนพื้นฐานของวิศวกรรมที่เชื่อถือได้ คุณภาพที่พิสูจน์ได้ และความมุ่งมั่นในการเป็นพันธมิตรระยะยาว</span><span class="lang-en">Our customers trust us because every solution is backed by proven engineering, quality, and long-term commitment.</span>', 'about'); ?>
                   </p>
                 </div>
               </div>
@@ -618,13 +636,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 </div>
                 <div>
                   <div class="flex items-center gap-2 mb-1">
-                    <span class="text-[11px] font-extrabold text-[#0d5c3a] uppercase tracking-wider">IMPACTFUL</span>
+                    <span data-editable="dna-tag3" <?php echo synergy_style('dna-tag3', 'about'); ?> class="text-[11px] font-extrabold text-[#0d5c3a] uppercase tracking-wider"><?php echo synergy_content('dna-tag3', 'IMPACTFUL', 'about'); ?></span>
                     <span class="text-slate-300">•</span>
-                    <h5 class="font-bold text-xs sm:text-sm text-slate-900">Technology That Creates Business Impact</h5>
+                    <h5 data-editable="dna-item-title3" <?php echo synergy_style('dna-item-title3', 'about'); ?> class="font-bold text-xs sm:text-sm text-slate-900"><?php echo synergy_content('dna-item-title3', 'Technology That Creates Business Impact', 'about'); ?></h5>
                   </div>
-                  <p class="text-xs text-slate-600 leading-relaxed">
-                    <span class="lang-th">เราไม่ได้สร้างเทคโนโลยีเพื่อเทคโนโลยี แต่สร้างผลลัพธ์ที่ช่วยเพิ่มประสิทธิภาพ ลดต้นทุน และสร้างการเติบโตอย่างยั่งยืน</span>
-                    <span class="lang-en">We don't build technology for technology's sake. We engineer solutions that improve productivity, reduce costs, and enable sustainable growth.</span>
+                  <p data-editable="dna-item-desc3" <?php echo synergy_style('dna-item-desc3', 'about'); ?> class="text-xs text-slate-600 leading-relaxed">
+                    <?php echo synergy_content('dna-item-desc3', '<span class="lang-th">เราไม่ได้สร้างเทคโนโลยีเพื่อเทคโนโลยี แต่สร้างผลลัพธ์ที่ช่วยเพิ่มประสิทธิภาพ ลดต้นทุน และสร้างการเติบโตอย่างยั่งยืน</span><span class="lang-en">We don\'t build technology for technology\'s sake. We engineer solutions that improve productivity, reduce costs, and enable sustainable growth.</span>', 'about'); ?>
                   </p>
                 </div>
               </div>
@@ -641,10 +658,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="w-12 h-12 rounded-full bg-[#0d5c3a] text-white flex items-center justify-center mx-auto mb-4 shadow-md shadow-[#0d5c3a]/20">
             <i class="fa-solid fa-handshake-angle text-xl"></i>
           </div>
-          <h3 class="font-extrabold text-xl sm:text-2xl text-[#0d5c3a] uppercase tracking-wider mb-3">COMMITMENT</h3>
-          <p class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed">
-            <span class="lang-th">เรามุ่งมั่นส่งมอบผลิตภัณฑ์และบริการที่ดีที่สุด สร้างความสัมพันธ์อันดีในระยะยาว และขับเคลื่อนผลกระทบเชิงบวกอย่างยั่งยืนต่อลูกค้า บุคลากร และสังคม ผ่านคุณภาพ นวัตกรรม และการปรับปรุงอย่างต่อเนื่อง</span>
-            <span class="lang-en">We are committed to delivering the best products and services, building long-term partnerships, and driving sustainable impact for our customers, people, and society through quality, innovation, and continuous improvement.</span>
+          <h3 data-editable="commit-title" <?php echo synergy_style('commit-title', 'about'); ?> class="font-extrabold text-xl sm:text-2xl text-[#0d5c3a] uppercase tracking-wider mb-3"><?php echo synergy_content('commit-title', 'COMMITMENT', 'about'); ?></h3>
+          <p data-editable="commit-desc" <?php echo synergy_style('commit-desc', 'about'); ?> class="text-slate-600 text-sm sm:text-base font-normal leading-relaxed">
+            <?php echo synergy_content('commit-desc', '<span class="lang-th">เรามุ่งมั่นส่งมอบผลิตภัณฑ์และบริการที่ดีที่สุด สร้างความสัมพันธ์อันดีในระยะยาว และขับเคลื่อนผลกระทบเชิงบวกอย่างยั่งยืนต่อลูกค้า บุคลากร และสังคม ผ่านคุณภาพ นวัตกรรม และการปรับปรุงอย่างต่อเนื่อง</span><span class="lang-en">We are committed to delivering the best products and services, building long-term partnerships, and driving sustainable impact for our customers, people, and society through quality, innovation, and continuous improvement.</span>', 'about'); ?>
           </p>
         </div>
       </div>

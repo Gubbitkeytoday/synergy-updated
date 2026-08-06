@@ -1,0 +1,1663 @@
+/* ==========================================================================
+   SYNEXTA ENERGY PLATFORM - interactive section on smart-energy.php
+   ==========================================================================
+
+   Adapted from the standalone prototype. Three things had to change before it
+   could live inside the site, and undoing any of them breaks something:
+
+   1. SCOPE. The prototype was a whole page: it set `* { margin:0; padding:0 }`
+      and styled `body` directly, and it uses names as generic as .feature-card,
+      .device-card, .modal-backdrop and .nav-tab. Dropped into a shared
+      stylesheet those would hit the navbar, the footer and every other section.
+      Everything below is therefore scoped to #energy-platform, and the reset is
+      scoped with it.
+
+   2. !important ON TYPE. components/style.css locks the site type scale with
+      !important on bare element selectors - `p, li, td, th { font-size:
+      1.075rem !important }` and a font-family on h1-h6 (see rule 2 in
+      AGENTS.md). A plain `font-size: 12px` here loses to that and the whole
+      compact dashboard look collapses. Every font-size, line-height and
+      font-family below carries !important for that reason - it is not cargo
+      cult.
+
+   3. FLUID CENTRE STAGE. The prototype hard-coded 520x440px for the 3D stage
+      and 310px/240px side columns. Below ~1100px that overflowed the viewport
+      horizontally. Widths are now capped with max-width/min() so the section
+      fits from 320px up.
+   ========================================================================== */
+
+#energy-platform {
+  --ep-green: #00A86B;
+  --ep-emerald: #059669;
+  --ep-mint: #10B981;
+  --ep-mint-bg: #E6F7F0;
+  --ep-soft-bg: #F0FDF4;
+  --ep-border: rgba(16, 185, 129, 0.2);
+  --ep-ink: #0F172A;
+  --ep-sub: #475569;
+  --ep-light: #64748B;
+  /* Text-safe green. The brand green #00A86B is 2.9:1 on white and 2.8:1 on the
+     mint tint - both fail the 4.5:1 the project requires (rule 3 in AGENTS.md).
+     #00A86B stays for fills, borders, icons and pins, where the ratio does not
+     apply; anything that is READ uses this instead. */
+  --ep-green-text: #04704A;
+  --ep-radius-md: 14px;
+  --ep-radius-lg: 20px;
+  --ep-radius-xl: 28px;
+}
+
+/* Scoped reset. The prototype's global `*` reset would have zeroed margins
+   site-wide, including inside the navbar and footer components. */
+#energy-platform *,
+#energy-platform *::before,
+#energy-platform *::after {
+  box-sizing: border-box;
+}
+
+/* Thai has no inter-word spaces, so the site-wide `word-break: break-word`
+   on body treats a whole sentence as one long word and hyphenates mid-syllable,
+   detaching vowels from their consonants (rule 3 in AGENTS.md). */
+#energy-platform,
+#energy-platform p,
+#energy-platform h2,
+#energy-platform h3,
+#energy-platform h4,
+#energy-platform span {
+  word-break: normal !important;
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   Shell
+   -------------------------------------------------------------------------- */
+/* The prototype wrapped everything in a white card floating on a tinted page.
+   Inside this site that card sits on an already near-white section, so it read
+   as a box drawn around the content for no reason while costing ~64px of width
+   and boxing the 3D stage in. Frame removed: the inner cards (features,
+   devices, deployment, screenshots) are white and now carry the depth
+   themselves against the section tint, which is what gives the section its
+   shape. Keep .platform-card as the positioning context - the dialogs and the
+   hint are anchored to it. */
+#energy-platform .platform-card {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  position: relative;
+  /* visible, not hidden: hotspot labels sit above the model and would be
+     clipped at the top edge of the stage. */
+  overflow: visible;
+}
+
+/* --------------------------------------------------------------------------
+   Header + tabs
+   -------------------------------------------------------------------------- */
+#energy-platform .app-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 4px;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+#energy-platform .nav-tabs {
+  display: flex;
+  align-items: center;
+  /* flex-start, NOT center. On a scrollable flex container, centring makes the
+     overflow spill out of BOTH ends, and the part that spills past the start
+     edge cannot be scrolled back to - scrollLeft is already 0 there. Measured
+     on a 375px viewport: scrollLeft read 0 while the first tab sat at -200px,
+     so "ภาพรวม" and "แดชบอร์ด" were not merely off screen, they were
+     unreachable. The row is centred by .nav-tabs-wrap instead, which is not a
+     scroll container and so has no such trap. */
+  justify-content: flex-start;
+  /* Tightened from the prototype's 6px. Seven tabs at 6px gap plus 18px of
+     padding each read as a thin row of far-apart words rather than one
+     control; the space between items should be smaller than the space inside
+     them, not equal to it. */
+  gap: 3px;
+  /* White, not the prototype's #F8FAFC: with the surrounding card gone the bar
+     now sits straight on the section's #f4f7f5, and #F8FAFC against that is
+     indistinguishable - the row stopped reading as a control at all. */
+  background: #FFFFFF;
+  padding: 5px;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+  user-select: none;
+  /* Seven tabs do not fit on a phone. Scroll them rather than wrap, so the row
+     stays one visual control and the card never grows a horizontal scrollbar. */
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: relative;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+#energy-platform .nav-tabs::-webkit-scrollbar { display: none; }
+
+/* start, not center: centring every tab means the row can never rest with the
+   first tab flush against the left edge, so it always looks slightly scrolled
+   even before the user touches it. */
+#energy-platform .nav-tab { scroll-snap-align: start; }
+
+/* ---- Scroll affordance ----
+   Measured on a 375px viewport: the row is 605px wide inside a 341px box, so
+   two of the seven tabs are on screen and 264px sit outside it. With the
+   scrollbar hidden and no other cue, the row simply looked like it ended after
+   the second tab - the rest read as missing rather than as scrolled away.
+   The fade is applied by JS through these classes, not unconditionally: a
+   permanent fade would dim the last tab even on a desktop where the whole row
+   already fits and nothing can scroll. */
+#energy-platform .nav-tabs.can-scroll-right {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 34px), transparent 100%);
+          mask-image: linear-gradient(to right, #000 calc(100% - 34px), transparent 100%);
+}
+#energy-platform .nav-tabs.can-scroll-left {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 34px);
+          mask-image: linear-gradient(to right, transparent 0, #000 34px);
+}
+#energy-platform .nav-tabs.can-scroll-left.can-scroll-right {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 34px, #000 calc(100% - 34px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 34px, #000 calc(100% - 34px), transparent 100%);
+}
+
+/* A chevron sitting over the faded edge, so the cue is not colour alone -
+   a fade can be missed, an arrow cannot. Pointer-events off: it is a hint,
+   and swiping over it must still scroll the row. */
+#energy-platform .nav-tabs-wrap {
+  position: relative;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#energy-platform .nav-scroll-cue {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--ep-green-text);
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+#energy-platform .nav-scroll-cue--right { right: -4px; }
+#energy-platform .nav-scroll-cue--left { left: -4px; }
+#energy-platform .nav-tabs-wrap.can-scroll-right .nav-scroll-cue--right,
+#energy-platform .nav-tabs-wrap.can-scroll-left .nav-scroll-cue--left { display: flex; }
+
+#energy-platform .nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: none;
+  /* Less horizontal padding, more type. The prototype had it the other way
+     round - 14px labels inside 18px padding - which is what made the row look
+     simultaneously sparse and undersized. */
+  padding: 11px 14px;
+  border-radius: 11px;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  /* 600, not 500: Thai at this size looks washed out at 500 (rule 3). */
+  font-weight: 600;
+  color: var(--ep-sub);
+  cursor: pointer;
+  transition: color .25s ease, background-color .25s ease, box-shadow .25s ease;
+  position: relative;
+  white-space: nowrap;
+  flex: none;
+}
+
+#energy-platform .tab-icon {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  pointer-events: none;
+  /* 1.75 against a 15px label reads as an icon paired with text; at 2px it
+     competes with the word next to it. */
+  stroke-width: 1.75;
+}
+
+/* Thai needs roughly a third more size than Latin for the same legibility, and
+   16px is the project's floor for it (rule 3 in AGENTS.md). The tab labels were
+   at 14px, which is under that floor and is most of why the row read as small. */
+html[lang="th"] #energy-platform .nav-tab { font-size: 16px !important; }
+
+#energy-platform .nav-tab span { pointer-events: none; }
+
+#energy-platform .nav-tab:hover {
+  color: var(--ep-green-text);
+  background: rgba(230, 247, 240, 0.6);
+}
+
+/* The active pill was white on a #F8FAFC bar. Now the bar itself is white, so
+   the selected tab has to be tinted instead or it disappears. */
+#energy-platform .nav-tab.active {
+  color: var(--ep-green-text);
+  font-weight: 700;
+  background: var(--ep-mint-bg);
+  box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.28);
+}
+
+/* Keyboard focus must be visible: these tabs are real controls. */
+#energy-platform .nav-tab:focus-visible {
+  outline: 2px solid var(--ep-green);
+  outline-offset: 2px;
+}
+
+/* The prototype marked the active tab twice: a filled pill AND an underline
+   hanging 4px below it. Those are two different tab idioms, and here the
+   underline landed on the bar's own rounded bottom edge and cut across it.
+   The tinted pill plus the weight and colour change is the whole signal now.
+   The element is still created by the script; hiding it here keeps that
+   harmless rather than adding a second place to edit. */
+#energy-platform .tab-indicator { display: none; }
+
+#energy-platform .nav-down-arrow {
+  margin-top: 6px;
+  width: 28px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ep-bounce-short 2s infinite ease-in-out;
+}
+
+#energy-platform .nav-down-arrow svg {
+  width: 24px;
+  height: 22px;
+  filter: drop-shadow(0 3px 6px rgba(0, 168, 107, 0.35));
+}
+
+@keyframes ep-bounce-short {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+
+/* Respect the OS setting; this arrow and the hotspot pulse loop forever. */
+@media (prefers-reduced-motion: reduce) {
+  #energy-platform .nav-down-arrow { animation: none; }
+  #energy-platform .tab-view { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Tab panels
+   -------------------------------------------------------------------------- */
+#energy-platform .content-container { min-height: 560px; }
+
+#energy-platform .tab-view {
+  display: none;
+  animation: ep-fade-in .3s ease;
+}
+
+#energy-platform .tab-view.active { display: block; }
+
+@keyframes ep-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Top pitch header + 2-column architecture below
+   -------------------------------------------------------------------------- */
+#energy-platform .top-pitch-layout {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+#energy-platform .top-pitch-layout .feature-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#energy-platform .grid-architecture {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 260px);
+  gap: 24px;
+  align-items: stretch;
+}
+
+#energy-platform .left-pitch-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+#energy-platform .badge-capsule {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(16px, 1.5vw, 19px) !important;
+  line-height: 1.4 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.8px;
+  color: #047857 !important;
+  background: linear-gradient(135deg, rgba(230, 247, 240, 0.98) 0%, rgba(209, 250, 229, 0.92) 100%) !important;
+  border: 2px solid rgba(16, 185, 129, 0.45) !important;
+  padding: 10px 28px !important;
+  border-radius: 9999px !important;
+  margin-bottom: 20px !important;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.16), inset 0 1.5px 3px #FFFFFF !important;
+  transition: all .25s ease;
+}
+
+#energy-platform .badge-capsule:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(16, 185, 129, 0.75) !important;
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.25), inset 0 1.5px 3px #FFFFFF !important;
+}
+
+#energy-platform .main-heading {
+  font-size: clamp(23px, 2.1vw, 32px) !important;
+  line-height: 1.25 !important;
+  font-weight: 800;
+  color: var(--ep-ink);
+  margin-bottom: 14px;
+  letter-spacing: -0.5px !important;
+}
+
+#energy-platform .heading-highlight { color: var(--ep-green-text); }
+
+/* The headline sits directly on the feature list: the lede paragraph that used
+   to run between them was removed on request. */
+#energy-platform .main-heading { margin-bottom: 18px; }
+
+#energy-platform .feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#energy-platform .feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px;
+  border-radius: var(--ep-radius-md);
+  background: #FFFFFF;
+  border: 1px solid #F1F5F9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+#energy-platform .feature-card:hover {
+  border-color: var(--ep-border);
+  box-shadow: 0 8px 20px rgba(0, 168, 107, 0.1);
+  transform: translateY(-2px);
+}
+
+#energy-platform .feature-icon-box {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  background: linear-gradient(135deg, rgba(230, 247, 240, 0.9) 0%, rgba(240, 253, 244, 0.6) 100%);
+  border: 1.5px solid rgba(16, 185, 129, 0.25);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 168, 107, 0.08), inset 0 1px 2px #FFFFFF;
+  transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color .25s ease, background .25s ease;
+}
+
+#energy-platform .feature-card:hover .feature-icon-box {
+  transform: scale(1.08);
+  border-color: var(--ep-green);
+  background: linear-gradient(135deg, #E6F7F0 0%, #D1F2E4 100%);
+  box-shadow: 0 8px 20px rgba(0, 168, 107, 0.2), inset 0 1px 2px #FFFFFF;
+}
+
+#energy-platform .feature-svg-icon {
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 2px 6px rgba(0, 168, 107, 0.3));
+}
+
+#energy-platform .feature-title {
+  font-size: 14.5px !important;
+  line-height: 1.4 !important;
+  font-weight: 700;
+  color: var(--ep-ink);
+  margin-bottom: 4px;
+}
+
+#energy-platform .feature-sub {
+  font-size: 12.5px !important;
+  line-height: 1.55 !important;
+  color: var(--ep-light);
+}
+
+#energy-platform .pitch-footer-line {
+  width: 50px;
+  height: 4px;
+  background: var(--ep-green);
+  border-radius: 2px;
+  margin-top: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   Centre column: 3D stage + field devices
+   -------------------------------------------------------------------------- */
+#energy-platform .center-engine-column {
+  position: relative;
+  border-radius: var(--ep-radius-lg);
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  /* Match the tallest column so the stage above has real height to expand into
+     rather than only its own content height. */
+  height: 100%;
+}
+
+/* The prototype pinned this to a flat 520x440. Two problems: below ~1100px the
+   fixed width pushed the card wider than the viewport, and above it the stage
+   sat in a column measured at 759px, leaving 239px of empty space either side
+   with the model rendered small in the middle. It now fills the column instead:
+   width 100%, and flex:1 so it also takes whatever vertical room the field
+   devices below do not use. min-height keeps it from collapsing in the
+   single-column layout, where the flex parent has no spare height to hand out. */
+#energy-platform .central-architecture-stage {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  /* Raised from 34vw once the card frame came off: the stage is the focal
+     point of the section and was reading as cramped at the old height. */
+  min-height: clamp(320px, 42vw, 680px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#energy-platform .custom-center-3d-model,
+#energy-platform .stage-poster {
+  width: 100%;
+  height: 100%;
+  --poster-color: transparent;
+  background-color: transparent;
+  outline: none;
+  filter: drop-shadow(0 14px 35px rgba(0, 168, 107, 0.2));
+}
+
+/* Shown until the viewer library and the 1.9 MB model have loaded. */
+#energy-platform .stage-poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--ep-light);
+  font-size: 12.5px !important;
+  filter: none;
+}
+
+#energy-platform .stage-poster-ring {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 3px solid rgba(16, 185, 129, 0.25);
+  border-top-color: var(--ep-green);
+  animation: ep-spin 0.9s linear infinite;
+}
+
+@keyframes ep-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  #energy-platform .stage-poster-ring { animation-duration: 3s; }
+}
+
+/* --------------------------------------------------------------------------
+   Rooftop solar annotation
+
+   One anchor, and its readout card is always open - no hover, no click. A
+   hover-only card would simply not exist on touch, and the figure is the
+   point of the whole visual.
+
+   model-viewer positions the element whose slot is hotspot-* at a point in
+   model space. That element is the ORIGIN here: the dot sits on it, and the
+   elbow and the card hang off it, so the whole annotation tracks the panels as
+   the building rotates.
+
+   The card is pointer-events:none so it never swallows a drag - the user can
+   start rotating with the pointer over the card.
+   -------------------------------------------------------------------------- */
+#energy-platform {
+  --ep-anno-line: #E07A2F;
+  --ep-anno-load: #0F6FB5;
+  /* Darker than the reference's gold: #B8860B measured 3.11:1 on the metric
+     tile, which only passes because 21px bold counts as large text. This clears
+     4.5:1 outright and still reads as the solar/amber accent. */
+  --ep-anno-solar: #8A6206;
+}
+
+#energy-platform .ep-anno {
+  position: relative;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+#energy-platform .ep-anno-dot {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ep-anno-line);
+  border: 2.5px solid #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(224, 122, 47, .35), 0 2px 8px rgba(15, 23, 42, .3);
+}
+
+/* Bottom-left corner of the SVG sits on the anchor, so the path's start point
+   (6,71) lands within a few px of the dot. */
+#energy-platform .ep-anno-line {
+  position: absolute;
+  left: -6px;
+  bottom: -7px;
+  width: 116px;
+  height: 78px;
+  overflow: visible;
+}
+
+/* The elbow ends 54px above the anchor: the SVG's bottom sits at -7px and the
+   path's final y is 17 of its 78 height, so 78 - 17 - 7 = 54. With
+   translateY(50%) the `bottom` value IS the card's centre line, so bottom:54px
+   puts the card centre exactly on the end of the line at any card height. */
+#energy-platform .ep-anno-card {
+  position: absolute;
+  left: 114px;
+  bottom: 54px;
+  transform: translateY(50%);
+  width: 252px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px -8px rgba(15, 23, 42, .22), 0 2px 8px rgba(15, 23, 42, .06);
+  padding: 12px;
+}
+
+#energy-platform .ep-anno-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+
+#energy-platform .ep-anno-icon {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 9px;
+  background: var(--ep-mint-bg);
+  color: var(--ep-green-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#energy-platform .ep-anno-icon svg { width: 17px; height: 17px; }
+
+#energy-platform .ep-anno-title {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  font-weight: 700;
+  color: var(--ep-green-text);
+}
+
+#energy-platform .ep-anno-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+#energy-platform .ep-anno-metric {
+  border-radius: 10px;
+  padding: 8px 9px;
+  background: #F6FBF8;
+  border: 1px solid #E6F0EA;
+}
+
+#energy-platform .ep-anno-metric-label {
+  font-size: 10.5px !important;
+  line-height: 1.35 !important;
+  font-weight: 600;
+  color: var(--ep-light);
+  margin-bottom: 3px;
+}
+
+#energy-platform .ep-anno-metric-value {
+  font-size: 21px !important;
+  line-height: 1.15 !important;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ep-anno-load);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+#energy-platform .ep-anno-metric--solar .ep-anno-metric-value { color: var(--ep-anno-solar); }
+
+#energy-platform .ep-anno-metric-unit {
+  font-size: 11px !important;
+  line-height: 1 !important;
+  font-weight: 700;
+  color: var(--ep-sub);
+}
+
+#energy-platform .ep-anno-stamp {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid #F1F5F9;
+  font-size: 10.5px !important;
+  line-height: 1.4 !important;
+  color: var(--ep-light);
+}
+
+/* Thai needs the extra size at these small steps - see the Thai block below. */
+html[lang="th"] #energy-platform .ep-anno-metric-label,
+html[lang="th"] #energy-platform .ep-anno-stamp { font-size: 11.5px !important; }
+html[lang="th"] #energy-platform .ep-anno-title { font-size: 15px !important; }
+
+/* The annotation is ~370px wide with the elbow. That does not fit beside a
+   340px stage, so below the 3-column layout it shrinks from the anchor point
+   outwards; the dot stays exactly where it is. */
+@media (max-width: 1024px) {
+  #energy-platform .ep-anno { transform: scale(.82); transform-origin: 0 0; }
+}
+
+/* On a phone the stage is ~340px wide and the elbow alone eats a third of it,
+   so the card ran off the right edge. Below 640px the layout changes shape
+   instead of shrinking further: the card sits centred directly above the dot on
+   a short vertical stem, which fits at any anchor position near the middle of
+   the model. */
+@media (max-width: 640px) {
+  #energy-platform .ep-anno { transform: scale(.72); transform-origin: 50% 100%; }
+
+  #energy-platform .ep-anno-line { display: none; }
+
+  #energy-platform .ep-anno-dot::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    width: 2px;
+    height: 18px;
+    margin-bottom: 2px;
+    transform: translateX(-50%);
+    background: var(--ep-anno-line);
+    border-radius: 2px;
+  }
+
+  #energy-platform .ep-anno-card {
+    left: 0;
+    bottom: 26px;
+    transform: translateX(-50%);
+    width: 226px;
+  }
+}
+
+/* Hint that the model is interactive. Without it the pins read as decoration. */
+#energy-platform .stage-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid var(--ep-border);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  font-size: 11.5px !important;
+  line-height: 1.4 !important;
+  color: var(--ep-sub);
+  pointer-events: none;
+  z-index: 4;
+  white-space: nowrap;
+  max-width: calc(100% - 16px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[lang="th"] #energy-platform .stage-hint { font-size: 12.5px !important; }
+
+/* Placement mode readout - only rendered when the URL asks for it. */
+#energy-platform .ep-hotspot-devbox {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 20;
+  background: rgba(9, 30, 19, 0.94);
+  color: #8EF060;
+  border: 1px solid #22C55E;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: 600 11.5px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+  max-width: 320px;
+  user-select: all;
+}
+
+#energy-platform .field-devices-container {
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#energy-platform .field-section-banner {
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  max-width: 100%;
+}
+
+#energy-platform .banner-text {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  font-weight: 700;
+  color: var(--ep-ink);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 100%);
+  border: 1.5px solid var(--ep-border);
+  padding: 5px 24px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 168, 107, 0.1);
+}
+
+#energy-platform .banner-connector-stem {
+  width: 2px;
+  height: 10px;
+  background: linear-gradient(to bottom, var(--ep-green), var(--ep-mint));
+  margin: 0 auto;
+}
+
+#energy-platform .field-energy-bus {
+  width: 100%;
+  position: relative;
+  margin-bottom: 8px;
+  margin-top: -2px;
+}
+
+#energy-platform .bus-main-line {
+  position: absolute;
+  top: 0;
+  left: 8.33%;
+  right: 8.33%;
+  height: 2px;
+  background: linear-gradient(to right,
+    rgba(16, 185, 129, 0.15) 0%,
+    var(--ep-mint) 20%,
+    var(--ep-green) 50%,
+    var(--ep-mint) 80%,
+    rgba(16, 185, 129, 0.15) 100%);
+  border-radius: 2px;
+}
+
+#energy-platform .bus-nodes-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+#energy-platform .bus-node-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#energy-platform .bus-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--ep-green);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 168, 107, 0.6);
+  margin-top: -2.5px;
+}
+
+#energy-platform .bus-drop-line {
+  width: 1.5px;
+  height: 8px;
+  background: linear-gradient(to bottom, var(--ep-mint), rgba(16, 185, 129, 0.2));
+}
+
+#energy-platform .devices-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+#energy-platform .device-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--ep-radius-md);
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  cursor: pointer;
+  /* Real button, so reset the UA chrome rather than fight it. */
+  font: inherit;
+  text-align: center;
+  width: 100%;
+}
+
+#energy-platform .device-card:hover {
+  border-color: var(--ep-green);
+  box-shadow: 0 8px 22px rgba(0, 168, 107, 0.15);
+  transform: translateY(-3px);
+}
+
+#energy-platform .device-card:focus-visible {
+  outline: 2px solid var(--ep-green);
+  outline-offset: 2px;
+}
+
+#energy-platform .device-img-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+#energy-platform .device-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: transparent;
+  transition: transform .25s ease;
+}
+
+#energy-platform .device-card:hover .device-img { transform: scale(1.08); }
+
+#energy-platform .device-name {
+  font-size: 10.5px !important;
+  line-height: 1.25 !important;
+  font-weight: 700;
+  color: var(--ep-ink);
+  text-align: center;
+  margin-bottom: 6px;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#energy-platform .device-subicon-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ep-soft-bg);
+  border: 1px solid var(--ep-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+#energy-platform .device-subicon-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Right column: deployment options
+   -------------------------------------------------------------------------- */
+#energy-platform .right-deployment-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-width: 0;
+}
+
+#energy-platform .deployment-cards-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Decorative only, and it is positioned against the fixed 388px stack height,
+   so it is hidden once the layout stops being three columns. */
+#energy-platform .stack-connector-svg {
+  position: absolute;
+  left: -58px;
+  top: 0;
+  width: 60px;
+  height: 388px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#energy-platform .deployment-card-square {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: var(--ep-radius-lg);
+  width: 150px;
+  height: 145px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  position: relative;
+  z-index: 2;
+}
+
+#energy-platform .deployment-card-square:hover {
+  border-color: var(--ep-green);
+  box-shadow: 0 10px 24px rgba(0, 168, 107, 0.16);
+  transform: translateY(-3px);
+}
+
+#energy-platform .deploy-img-box {
+  width: 75px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+#energy-platform .deploy-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: transparent;
+}
+
+#energy-platform .deploy-label {
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  font-weight: 700;
+  color: var(--ep-ink);
+  text-align: center;
+}
+
+#energy-platform .deploy-vertical-dash {
+  width: 1.5px;
+  height: 24px;
+  border-left: 2px dashed rgba(0, 168, 107, 0.4);
+}
+
+#energy-platform .divider-or-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00A86B 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 168, 107, 0.35);
+  margin: 2px 0;
+  z-index: 2;
+  flex: none;
+}
+
+#energy-platform .divider-or-circle span {
+  font-size: 13.5px !important;
+  line-height: 1 !important;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.5px;
+}
+
+/* --------------------------------------------------------------------------
+   Secondary tab panels
+   -------------------------------------------------------------------------- */
+#energy-platform .view-header { margin-bottom: 20px; }
+
+#energy-platform .view-header h3 {
+  font-size: clamp(18px, 1.6vw, 22px) !important;
+  line-height: 1.3 !important;
+  font-weight: 800;
+  color: var(--ep-ink);
+  margin-bottom: 4px;
+}
+
+#energy-platform .view-header p {
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: var(--ep-sub);
+}
+
+#energy-platform .sites-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#energy-platform .site-card-item {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 20px;
+  border-radius: var(--ep-radius-md);
+}
+
+#energy-platform .site-card-item h4 {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  font-weight: 700;
+  color: var(--ep-ink);
+  margin-bottom: 6px;
+}
+
+#energy-platform .site-status {
+  color: var(--ep-green-text);
+  font-weight: 700;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+#energy-platform .report-box {
+  background: var(--ep-soft-bg);
+  padding: 22px;
+  border-radius: var(--ep-radius-md);
+  border: 1px solid var(--ep-border);
+}
+
+#energy-platform .report-box p {
+  font-size: 13.5px !important;
+  line-height: 1.65 !important;
+  color: var(--ep-sub);
+}
+
+/* --------------------------------------------------------------------------
+   Product screenshots
+
+   Each tab shows the real screen for that module. They are ~1400px wide and
+   render at ~760px, so detail is legible on a desktop but not on a phone -
+   hence the click-to-enlarge. The window chrome is deliberate: it frames the
+   image as an application screen rather than letting it read as a photo of the
+   page it is sitting on.
+   -------------------------------------------------------------------------- */
+#energy-platform .screen-frame {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: var(--ep-radius-lg);
+  overflow: hidden;
+  background: #FFFFFF;
+  box-shadow: 0 12px 36px -10px rgba(15, 23, 42, 0.12);
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+#energy-platform .screen-frame:hover {
+  border-color: var(--ep-border);
+  box-shadow: 0 18px 48px -12px rgba(0, 168, 107, 0.22);
+}
+
+/* In Overview the frame follows the architecture diagram, so it needs a gap the
+   other tabs (where it follows a heading) do not. */
+#energy-platform #view-overview .screen-frame { margin-top: 28px; }
+
+#energy-platform .screen-chrome {
+  display: none !important;
+}
+
+#energy-platform .screen-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #E2E8F0;
+  flex: none;
+}
+#energy-platform .screen-dot:nth-child(1) { background: #FCA5A5; }
+#energy-platform .screen-dot:nth-child(2) { background: #FCD34D; }
+#energy-platform .screen-dot:nth-child(3) { background: #86EFAC; }
+
+#energy-platform .screen-chrome-label {
+  margin-left: 6px;
+  font-size: 11.5px !important;
+  line-height: 1.4 !important;
+  font-weight: 600;
+  color: var(--ep-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* A real button so it is reachable by keyboard; the UA chrome is reset because
+   the image is the entire control. */
+#energy-platform .screen-shot-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  font: inherit;
+}
+
+#energy-platform .screen-shot-btn:focus-visible {
+  outline: 2px solid var(--ep-green);
+  outline-offset: -2px;
+}
+
+#energy-platform .screen-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#energy-platform .screen-zoom-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border-top: 1px solid #F1F5F9;
+  font-size: 11.5px !important;
+  line-height: 1.4 !important;
+  color: var(--ep-light);
+  background: #FFFFFF;
+}
+
+/* Lightbox for the enlarged screenshot. */
+#energy-platform .shot-lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9100;
+  padding: clamp(12px, 3vw, 40px);
+}
+
+#energy-platform .shot-lightbox.show {
+  display: flex;
+  animation: ep-fade-in .2s ease;
+}
+
+#energy-platform .shot-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  background: #FFFFFF;
+}
+
+#energy-platform .shot-lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(15, 23, 42, 0.6);
+  color: #FFFFFF;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#energy-platform .shot-lightbox-close:hover { background: rgba(15, 23, 42, 0.85); }
+#energy-platform .shot-lightbox-close:focus-visible {
+  outline: 2px solid var(--ep-green);
+  outline-offset: 2px;
+}
+
+/* Demo figures are illustrative, and saying so is not optional on a page that
+   otherwise makes factual claims. */
+#energy-platform .demo-note {
+  margin-top: 14px;
+  font-size: 11.5px !important;
+  line-height: 1.5 !important;
+  color: var(--ep-light);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   Footer benefits strip
+   -------------------------------------------------------------------------- */
+#energy-platform .app-footer-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--ep-radius-lg);
+  padding: 16px 20px;
+  margin-top: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+}
+
+#energy-platform .benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+#energy-platform .benefit-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background: var(--ep-soft-bg);
+  border: 1px solid var(--ep-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#energy-platform .benefit-icon-wrapper svg {
+  width: 20px;
+  height: 20px;
+}
+
+#energy-platform .co2-badge-text {
+  font-size: 11px !important;
+  line-height: 1 !important;
+  font-weight: 800;
+  color: var(--ep-green-text);
+}
+
+#energy-platform .benefit-title {
+  font-size: 13.5px !important;
+  line-height: 1.35 !important;
+  font-weight: 700;
+  color: var(--ep-ink);
+  margin-bottom: 2px;
+}
+
+#energy-platform .benefit-desc {
+  font-size: 11.5px !important;
+  line-height: 1.45 !important;
+  color: var(--ep-light);
+}
+
+/* --------------------------------------------------------------------------
+   Telemetry dialog
+   -------------------------------------------------------------------------- */
+#energy-platform .modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  /* dvh, not vh: on mobile vh is the toolbar-hidden height, so a vh-sized
+     overlay is taller than the visible screen. */
+  height: 100dvh;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+  padding: 16px;
+}
+
+#energy-platform .modal-backdrop.show {
+  display: flex;
+  animation: ep-fade-in .25s ease;
+}
+
+#energy-platform .modal-card {
+  background: #FFFFFF;
+  width: 100%;
+  max-width: 540px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  border-radius: var(--ep-radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  position: relative;
+}
+
+#energy-platform .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  border-bottom: 1px solid #F1F5F9;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+#energy-platform .modal-header h3 {
+  font-size: 16.5px !important;
+  line-height: 1.4 !important;
+  font-weight: 700;
+  color: var(--ep-ink);
+}
+
+#energy-platform .close-btn {
+  background: none;
+  border: none;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  color: var(--ep-light);
+  cursor: pointer;
+  /* 44px hit target - a 22px glyph is not tappable. */
+  width: 44px;
+  height: 44px;
+  margin: -10px -10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  flex: none;
+}
+
+#energy-platform .close-btn:hover {
+  color: var(--ep-ink);
+  background: #F1F5F9;
+}
+
+#energy-platform .close-btn:focus-visible {
+  outline: 2px solid var(--ep-green);
+  outline-offset: 2px;
+}
+
+#energy-platform .telemetry-info p {
+  margin: 0 0 9px;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: var(--ep-sub);
+}
+
+#energy-platform .telemetry-info strong { color: var(--ep-ink); }
+
+/* --------------------------------------------------------------------------
+   Thai typography
+
+   The prototype's px sizes were set looking at Latin. Thai needs roughly 30-40%
+   more size for the same legibility - its consonant height reads like a cap
+   height, and vowels and tone marks stack above and below, so they fill in and
+   become unreadable at small sizes. It also wants a looser line so those stacked
+   marks do not collide with the line above (rule 3 in AGENTS.md).
+
+   Only the Thai-bearing running text is raised; the compact dashboard look and
+   every Latin label keep the prototype's values. This is a deliberate deviation
+   from the prototype's px numbers - do not "restore" them without checking Thai
+   at 100% zoom first.
+   -------------------------------------------------------------------------- */
+html[lang="th"] #energy-platform .feature-sub {
+  font-size: 13.5px !important;
+  line-height: 1.75 !important;
+}
+
+html[lang="th"] #energy-platform .benefit-desc {
+  font-size: 12.5px !important;
+  line-height: 1.6 !important;
+}
+
+html[lang="th"] #energy-platform .benefit-title,
+html[lang="th"] #energy-platform .banner-text {
+  font-size: 14px !important;
+}
+
+html[lang="th"] #energy-platform .demo-note {
+  font-size: 12.5px !important;
+  line-height: 1.65 !important;
+}
+
+html[lang="th"] #energy-platform .view-header p,
+html[lang="th"] #energy-platform .report-box p,
+html[lang="th"] #energy-platform .telemetry-info p {
+  line-height: 1.8 !important;
+}
+
+/* Latin runs tighter than Thai at the same size; give English the prototype's
+   line-height back rather than inheriting the Thai one. */
+html[lang="en"] #energy-platform .view-header p,
+html[lang="en"] #energy-platform .report-box p,
+html[lang="en"] #energy-platform .telemetry-info p {
+  line-height: 1.6 !important;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Thai type floor
+
+   The compact sizes above are a deliberate "application UI" device and they
+   hold up on a desktop, where the reader is far enough into the section to
+   expect dashboard density. On a phone they stop being a device and start
+   being unreadable: 12.5px Thai puts the tone mark, the vowel and the
+   consonant inside about nine pixels of vertical space.
+
+   So the density stays on desktop and only the phone gets the floor (rule 3 in
+   AGENTS.md). Latin keeps the original sizes - it does not have the stacking
+   problem and enlarging it would only make the cards taller.
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  html[lang="th"] #energy-platform .feature-title { font-size: 16px !important; }
+  html[lang="th"] #energy-platform .feature-sub {
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+  }
+  html[lang="th"] #energy-platform .benefit-title { font-size: 16px !important; }
+  html[lang="th"] #energy-platform .benefit-desc {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+  html[lang="th"] #energy-platform .banner-text { font-size: 16px !important; }
+  html[lang="th"] #energy-platform .deploy-label { font-size: 16px !important; }
+  html[lang="th"] #energy-platform .view-header p,
+  html[lang="th"] #energy-platform .report-box p,
+  html[lang="th"] #energy-platform .site-card-item h4 { font-size: 16px !important; }
+  /* Secondary chrome - the drag hint, the demo disclaimer and the screenshot
+     caption. Lifted to 14px rather than 16: they are asides, and at 16 they
+     start competing with the content they sit under. Still well clear of the
+     12.5px they were at. */
+  html[lang="th"] #energy-platform .stage-hint,
+  html[lang="th"] #energy-platform .demo-note,
+  html[lang="th"] #energy-platform .screen-zoom-hint,
+  html[lang="th"] #energy-platform .screen-chrome-label,
+  html[lang="th"] #energy-platform .stage-poster { font-size: 14px !important; }
+  /* The 3D readout card scales with the annotation, so its own sizes are
+     multiplied by that transform - these are pre-scale values chosen to land
+     near 16px on screen. */
+  html[lang="th"] #energy-platform .ep-anno-title { font-size: 19px !important; }
+  html[lang="th"] #energy-platform .ep-anno-metric-label { font-size: 16px !important; }
+  html[lang="th"] #energy-platform .ep-anno-stamp { font-size: 15px !important; }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1280px) {
+  #energy-platform .top-pitch-layout .feature-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #energy-platform .grid-architecture {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 240px);
+    gap: 16px;
+  }
+  #energy-platform .deployment-card-square { width: 138px; height: 136px; }
+  #energy-platform .stack-connector-svg { display: none; }
+}
+
+@media (max-width: 1024px) {
+  #energy-platform .top-pitch-layout .feature-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #energy-platform .grid-architecture { grid-template-columns: minmax(0, 1fr); }
+  /* Once the centre column spans the full card it is ~890px wide with no
+     column beside it to borrow height from, so filling the width would letterbox
+     the building into a 2.5:1 strip. Cap the width and give it a real height
+     instead, still centred. */
+  #energy-platform .central-architecture-stage {
+    max-width: 620px;
+    min-height: clamp(320px, 52vw, 480px);
+  }
+  #energy-platform .stack-connector-svg { display: none; }
+  #energy-platform .right-deployment-column { padding-top: 8px; }
+  /* Two stacked cards read as a column on desktop; side by side reads better
+     once they are the only thing on the row. */
+  #energy-platform .deployment-cards-stack { flex-direction: row; gap: 4px; }
+  #energy-platform .deploy-vertical-dash {
+    width: 24px;
+    height: 1.5px;
+    border-left: none;
+    border-top: 2px dashed rgba(0, 168, 107, 0.4);
+  }
+  #energy-platform .app-footer-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #energy-platform .sites-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #energy-platform .content-container { min-height: 0; }
+}
+
+@media (max-width: 640px) {
+  /* ---- Two rows, not a scroller ----
+     Scrolling worked, but it still asks the visitor to discover that five of
+     the seven tabs exist. Wrapping shows all of them at once, which is what a
+     tab bar is for.
+
+     Seven tabs cannot fit two rows while the icon sits BESIDE the label: the
+     longest, "วิเคราะห์ข้อมูล", needs about 150px that way, and four of those do
+     not fit a 341px row. Stacking the icon above the label drops each tab to a
+     quarter of the row, giving 4 + 3. The second row centres itself because the
+     container is centred and there is nothing left to fill it.
+
+     Scrolling, snapping and the edge fades are all switched off here - there is
+     nothing left to scroll, and a mask over a wrapped grid would just dim the
+     bottom-right tab. */
+  #energy-platform .nav-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px;
+    overflow: visible;
+    scroll-snap-type: none;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  #energy-platform .nav-tabs.can-scroll-left,
+  #energy-platform .nav-tabs.can-scroll-right {
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  #energy-platform .nav-tabs-wrap .nav-scroll-cue { display: none !important; }
+
+  #energy-platform .nav-tab {
+    flex: 0 0 calc(25% - 3px);
+    /* A flex item defaults to min-width:auto, which lets it grow past its
+       basis when the content will not fit. "การแจ้งเตือน" and "วิเคราะห์ข้อมูล" did
+       exactly that and pushed themselves onto their own rows, giving 4+2+1
+       instead of 4+3. Zero lets the declared quarter-width win and the label
+       wrap inside it. */
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 9px 3px;
+    /* The label has to be allowed to take two lines inside a quarter-width
+       tab; the desktop rule pins it to one. */
+    white-space: normal;
+    text-align: center;
+    font-size: 13.5px !important;
+    line-height: 1.25 !important;
+    min-height: 60px;
+  }
+  /* Thai is set a step larger than the Latin label, as everywhere else on this
+     page. 15px rather than the 16px body floor: these are control labels in a
+     quarter-width cell, and 16 forces a third line on "วิเคราะห์ข้อมูล". */
+  html[lang="th"] #energy-platform .nav-tab { font-size: 15px !important; }
+
+  #energy-platform .tab-icon { width: 19px; height: 19px; }
+
+  /* ---- Feature cards: one per row ----
+     The pitch list steps 4 -> 2 columns at 1280 and again at 1024, but nothing
+     took it to one, so a 390px phone was still showing two 171px cards. Inside
+     each, the 48px icon, its 14px gap and 28px of padding ate 90px and left the
+     title 79px of column - titles broke to four lines and the descriptions to
+     as many as twelve, several of them about five Thai characters wide. Card
+     heights came out at 450px and 291px in the same row.
+
+     One per row gives the text 268px: one-line titles, two- or three-line
+     descriptions, and cards that match. */
+  #energy-platform .top-pitch-layout .feature-list,
+  #energy-platform .feature-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  #energy-platform .feature-card {
+    align-items: center;
+    padding: 13px;
+    gap: 13px;
+  }
+  /* The icon well no longer needs to hold its own against a stacked block of
+     text, so it comes down a size and stops crowding the copy. */
+  #energy-platform .feature-icon-box {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 12px;
+    padding: 7px;
+  }
+  #energy-platform .feature-svg-icon { width: 24px; height: 24px; }
+  html[lang="th"] #energy-platform .feature-title { font-size: 15.5px !important; }
+  html[lang="th"] #energy-platform .feature-sub {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+  }
+  #energy-platform .devices-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* The bus line spans six columns; with three per row it no longer lines up. */
+  #energy-platform .field-energy-bus { display: none; }
+  #energy-platform .app-footer-strip { grid-template-columns: minmax(0, 1fr); }
+  #energy-platform .sites-grid { grid-template-columns: minmax(0, 1fr); }
+  #energy-platform .device-img-wrapper { width: 52px; height: 52px; }
+}
+
+@media (max-width: 380px) {
+  #energy-platform .deployment-cards-stack { flex-direction: column; }
+  #energy-platform .deploy-vertical-dash {
+    width: 1.5px;
+    height: 20px;
+    border-left: 2px dashed rgba(0, 168, 107, 0.4);
+    border-top: none;
+  }
+}

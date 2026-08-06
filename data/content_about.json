@@ -1,87 +1,482 @@
 {
-  "hero-title": "Engineering Intelligence <span class=\"text-brand-bright drop-shadow-[0_2px_15px_rgba(35,134,45,0.4)]\">Since 2008</span>",
-  "hero-title_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "hero-desc": "<span class=\"lang-th\">บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด ก่อตั้งขึ้นในปี พ.ศ. 2551 (ค.ศ. 2008) โดยเป็นธุรกิจที่คนไทยถือหุ้น 100% เริ่มต้นจากการให้บริการแบบครบวงจร (One Stop Services) ครอบคลุมการบริหารจัดการด้านการออกแบบและการผลิตเทคโนโลยีทั้งด้านฮาร์ดแวร์และซอฟต์แวร์ ตั้งแต่การสร้างต้นแบบ (Prototype) จนถึงการผลิตเชิงมวล (Mass Production) สำหรับอุตสาหกรรมยานยนต์ ระบบไฟส่องสว่าง ระบบโซลาร์โฮมซิสเต็ม (Solar Home System) และอุตสาหกรรมอุปกรณ์อิเล็กทรอนิกส์ บริษัทได้พัฒนาอย่างต่อเนื่องโดยนำเทคโนโลยี IoT และ AI มาประยุกต์ใช้เพื่อขยายสู่ผลิตภัณฑ์ Smart Solutions เพื่อตอบสนองความต้องการด้านการพัฒนาเมืองอัจฉริยะ (Smart City) และภาคอุตสาหกรรม เกษตรกรรม การค้าและพาณิชยกรรม รวมถึงภาคการแพทย์</span><span class=\"lang-en\">Synergy Technology Co., Ltd. was founded in 2008 (B.E. 2551) as a 100% Thai-owned business, starting with comprehensive One Stop Services covering the management of technology design and production — both hardware and software — from Prototype to Mass Production for the automotive, lighting, Solar Home System, and electronic equipment industries. The company has continuously developed by applying IoT and AI technologies to expand into Smart Solutions products, addressing the needs of Smart City development as well as the industrial, agricultural, trade and commerce, and medical sectors.</span>",
-  "hero-desc_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "hero-btn1": "<span class=\"lang-th\">สำรวจโซลูชันของเรา</span><span class=\"lang-en\">Explore Our Solutions</span><i class=\"fa-solid fa-arrow-right text-xs ml-1\"></i>",
-  "hero-btn1_pos": {
-    "x": 0,
-    "y": 174
-  },
-  "hero-btn2": "<i class=\"fa-regular fa-bookmark text-xs text-gold-bright mr-1\"></i><span class=\"lang-th\">พูดคุยกับทีมผู้เชี่ยวชาญ</span><span class=\"lang-en\">Talk to Our Experts</span>",
-  "hero-btn2_pos": {
-    "x": 0,
-    "y": 174
-  },
-  "build-title": "What We Build",
-  "build-tag1": "<span class=\"dot\"></span>INNOVATIVE",
-  "build-item-title1": "Custom Engineering",
-  "build-item-desc1": "<span class=\"lang-th\">พัฒนา Hardware, Embedded, AI และ Platform ตามความต้องการของธุรกิจ</span><span class=\"lang-en\">Hardware, embedded, AI, and platform development tailored to your business needs.</span>",
-  "build-tag2": "<span class=\"dot\"></span>INNOVATIVE",
-  "build-item-title2": "Smart Agriculture",
-  "build-item-desc2": "<span class=\"lang-th\">บริหารจัดการการเกษตรด้วยข้อมูล เพื่อเพิ่มผลผลิตและใช้ทรัพยากรอย่างคุ้มค่า</span><span class=\"lang-en\">Data-driven precision agriculture and environmental monitoring for better yield and resource efficiency.</span>",
-  "build-tag3": "<span class=\"dot\"></span>IMPACTFUL",
-  "build-item-title3": "Smart Energy",
-  "build-item-desc3": "<span class=\"lang-th\">บริหารจัดการพลังงานแบบ Real-time เพื่อประหยัดพลังงานและเพิ่มประสิทธิภาพ</span><span class=\"lang-en\">Real-time energy monitoring and automation to optimize power consumption and efficiency.</span>",
-  "build-tag4": "<span class=\"dot\"></span>IMPACTFUL",
-  "build-item-title4": "Smart Factory",
-  "build-item-desc4": "<span class=\"lang-th\">เชื่อมต่อข้อมูลและเครื่องจักร เพื่อยกระดับประสิทธิภาพการผลิตด้วย Smart Factory</span><span class=\"lang-en\">Connecting data and machinery to elevate manufacturing productivity with Smart Factory.</span>",
-  "build-title_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-tag1_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-item-title1_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-item-desc1_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-tag2_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-item-title2_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-item-desc2_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-tag3_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-item-title3_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-item-desc3_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-tag4_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-item-title4_pos": {
-    "x": 0,
-    "y": 0
-  },
-  "build-item-desc4_pos": {
-    "x": 0,
-    "y": 0
-  }
+    "hero-title":  "Engineering Intelligence \u003cspan class=\"text-brand-bright drop-shadow-[0_2px_15px_rgba(35,134,45,0.4)]\"\u003eSince 2008\u003c/span\u003e",
+    "hero-title_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "hero-desc":  "\u003cspan class=\"lang-th\"\u003e\u003cstrong\u003eบริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด\u003c/strong\u003e ก่อตั้งขึ้นในปี พ.ศ. 2551 (ค.ศ. 2008) โดยเป็นธุรกิจที่คนไทยถือหุ้น 100% เริ่มต้นจากการให้บริการแบบครบวงจร (One Stop Services) ครอบคลุมการบริหารจัดการด้านการออกแบบและการผลิตเทคโนโลยีทั้งด้านฮาร์ดแวร์และซอฟต์แวร์ ตั้งแต่การสร้างต้นแบบ (Prototype) จนถึงการผลิตเชิงมวล (Mass Production) สำหรับอุตสาหกรรมยานยนต์ ระบบไฟส่องสว่าง ระบบโซลาร์โฮมซิสเต็ม (Solar Home System) และอุตสาหกรรมอุปกรณ์อิเล็กทรอนิกส์ บริษัทได้พัฒนาอย่างต่อเนื่องโดยนำเทคโนโลยี IoT และ AI มาประยุกต์ใช้เพื่อขยายสู่ผลิตภัณฑ์ Smart Solutions เพื่อตอบสนองความต้องการด้านการพัฒนาเมืองอัจฉริยะ (Smart City) และภาคอุตสาหกรรม เกษตรกรรม การค้าและพาณิชยกรรม รวมถึงภาคการแพทย์\u003c/span\u003e\u003cspan class=\"lang-en\"\u003e\u003cstrong\u003eSynergy Technology Co., Ltd.\u003c/strong\u003e was founded in 2008 (B.E. 2551) as a 100% Thai-owned business, starting with comprehensive One Stop Services covering the management of technology design and production — both hardware and software — from Prototype to Mass Production for the automotive, lighting, Solar Home System, and electronic equipment industries. The company has continuously developed by applying IoT and AI technologies to expand into Smart Solutions products, addressing the needs of Smart City development as well as the industrial, agricultural, trade and commerce, and medical sectors.\u003c/span\u003e",
+    "hero-desc_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "hero-btn1":  "\u003cspan class=\"lang-th\"\u003eสำรวจโซลูชันของเรา\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eExplore Our Solutions\u003c/span\u003e\u003ci class=\"fa-solid fa-arrow-right text-xs ml-1\"\u003e\u003c/i\u003e",
+    "hero-btn1_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "hero-btn2":  "\u003ci class=\"fa-regular fa-bookmark text-xs text-gold-bright mr-1\"\u003e\u003c/i\u003e\u003cspan class=\"lang-th\"\u003eพูดคุยกับทีมผู้เชี่ยวชาญ\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eTalk to Our Experts\u003c/span\u003e",
+    "hero-btn2_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "build-title":  "What We Build",
+    "build-tag1":  "\u003cspan class=\"dot\"\u003e\u003c/span\u003eINNOVATIVE",
+    "build-item-title1":  "Custom Engineering",
+    "build-item-desc1":  "\u003cspan class=\"lang-th\"\u003eพัฒนา Hardware, Embedded, AI และ Platform ตามความต้องการของธุรกิจ\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eHardware, embedded, AI, and platform development tailored to your business needs.\u003c/span\u003e",
+    "build-tag2":  "\u003cspan class=\"dot\"\u003e\u003c/span\u003eINNOVATIVE",
+    "build-item-title2":  "Smart Agriculture",
+    "build-item-desc2":  "\u003cspan class=\"lang-th\"\u003eบริหารจัดการการเกษตรด้วยข้อมูล เพื่อเพิ่มผลผลิตและใช้ทรัพยากรอย่างคุ้มค่า\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eData-driven precision agriculture and environmental monitoring for better yield and resource efficiency.\u003c/span\u003e",
+    "build-tag3":  "\u003cspan class=\"dot\"\u003e\u003c/span\u003eIMPACTFUL",
+    "build-item-title3":  "Smart Energy",
+    "build-item-desc3":  "\u003cspan class=\"lang-th\"\u003eบริหารจัดการพลังงานแบบ Real-time เพื่อประหยัดพลังงานและเพิ่มประสิทธิภาพ\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eReal-time energy monitoring and automation to optimize power consumption and efficiency.\u003c/span\u003e",
+    "build-tag4":  "\u003cspan class=\"dot\"\u003e\u003c/span\u003eIMPACTFUL",
+    "build-item-title4":  "Smart Factory",
+    "build-item-desc4":  "\u003cspan class=\"lang-th\"\u003eเชื่อมต่อข้อมูลและเครื่องจักร เพื่อยกระดับประสิทธิภาพการผลิตด้วย Smart Factory\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eConnecting data and machinery to elevate manufacturing productivity with Smart Factory.\u003c/span\u003e",
+    "build-title_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "build-tag1_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "build-item-title1_pos":  {
+                                  "x":  0,
+                                  "y":  0
+                              },
+    "build-item-desc1_pos":  {
+                                 "x":  0,
+                                 "y":  0
+                             },
+    "build-tag2_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "build-item-title2_pos":  {
+                                  "x":  0,
+                                  "y":  0
+                              },
+    "build-item-desc2_pos":  {
+                                 "x":  0,
+                                 "y":  0
+                             },
+    "build-tag3_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "build-item-title3_pos":  {
+                                  "x":  0,
+                                  "y":  0
+                              },
+    "build-item-desc3_pos":  {
+                                 "x":  0,
+                                 "y":  0
+                             },
+    "build-tag4_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "build-item-title4_pos":  {
+                                  "x":  0,
+                                  "y":  0
+                              },
+    "build-item-desc4_pos":  {
+                                 "x":  0,
+                                 "y":  0
+                             },
+    "principles-title":  "Engineering Intelligence \u003cspan class=\"text-[#0d5c3a]\"\u003eStarts with Strong Principles\u003c/span\u003e",
+    "principles-title_pos":  {
+                                 "x":  0,
+                                 "y":  0
+                             },
+    "vision-title":  "VISION",
+    "vision-title_pos":  {
+                             "x":  0,
+                             "y":  0
+                         },
+    "vision-desc":  "\u003cspan class=\"lang-th\"\u003eมุ่งเป็นผู้นำนวัตกรรมด้าน \u003cspan class=\"text-[#0d5c3a] font-bold\"\u003eSmart Electronics และ AIoT Solutions\u003c/span\u003e แบบครบวงจร เพื่อสร้างผลกระทบเชิงบวกต่อธุรกิจอย่างยั่งยืน\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eTo be a leader in end-to-end \u003cspan class=\"text-[#0d5c3a] font-bold\"\u003eSmart Electronics and AIoT\u003c/span\u003e innovations, driving sustainable business impact.\u003c/span\u003e",
+    "vision-desc_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "mission-title":  "MISSION",
+    "mission-title_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "mission-desc":  "\u003cspan class=\"lang-th\"\u003eเป็นพันธมิตรแบบครบวงจรด้าน \u003cspan class=\"text-[#0d5c3a] font-bold\"\u003eSmart Electronics และ AIoT Technology\u003c/span\u003e ตั้งแต่การสร้างนวัตกรรม การออกแบบ การพัฒนาผลิตภัณฑ์ใหม่เข้าสู่การผลิต (NPI) ไปจนถึงการผลิตแบบ Mass Customization และการบริการหลังการขายที่เชื่อถือได้ ซึ่งสร้างคุณค่าที่ยั่งยืนและการเติบโตให้แก่ภาครัฐและภาคเอกชนทั่วโลก\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eTo be a trusted end-to-end partner in \u003cspan class=\"text-[#0d5c3a] font-bold\"\u003eSmart Electronics and AIoT Technology\u003c/span\u003e — spanning innovation, design, New Product Introduction (NPI), Mass Customization, and reliable after-sales services — delivering sustainable value and growth for public and private sectors worldwide.\u003c/span\u003e",
+    "mission-desc_pos":  {
+                             "x":  0,
+                             "y":  0
+                         },
+    "values-title":  "CORE VALUES",
+    "values-title_pos":  {
+                             "x":  0,
+                             "y":  0
+                         },
+    "values-sub":  "\u003cspan class=\"lang-th\"\u003eคุณค่าที่เราเชื่อและยึดถือในการทำงาน\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eValues we believe in and hold firmly in our work\u003c/span\u003e",
+    "values-sub_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "dna-title":  "OUR DNA",
+    "dna-title_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "dna-sub":  "The Principles That Drive Every Solution",
+    "dna-sub_pos":  {
+                        "x":  0,
+                        "y":  0
+                    },
+    "journey-eyebrow":  "\u003cspan class=\"lang-th\"\u003eเส้นทางความสำเร็จของเรา\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eOur Journey\u003c/span\u003e",
+    "journey-eyebrow_pos":  {
+                                "x":  0,
+                                "y":  0
+                            },
+    "journey-title":  "\u003cspan class=\"lang-th\"\u003eจากงานวิศวกรรมสู่โซลูชันอัจฉริยะ\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eFrom Engineering to Smart Solutions\u003c/span\u003e",
+    "journey-title_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-year1":  "2008",
+    "journey-year1_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-name1":  "\u003cspan class=\"lang-th\"\u003eก่อตั้งบริษัท\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eFounded Synergy Technology\u003c/span\u003e",
+    "journey-name1_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-desc1":  "\u003cspan class=\"lang-th\"\u003eก่อตั้งบริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eEstablished Synergy Technology Co., Ltd. as an engineering and electronics company.\u003c/span\u003e",
+    "journey-desc1_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-year2":  "2010",
+    "journey-year2_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-name2":  "\u003cspan class=\"lang-th\"\u003eก้าวสู่อุตสาหกรรมยานยนต์\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eEntered Automotive Industry\u003c/span\u003e",
+    "journey-name2_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-desc2":  "\u003cspan class=\"lang-th\"\u003eขยายธุรกิจสู่อุตสาหกรรมยานยนต์ และได้รับการรับรองมาตรฐาน ISO 9001\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eExpanded into automotive electronics and achieved ISO 9001 certification.\u003c/span\u003e",
+    "journey-desc2_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-year3":  "2014",
+    "journey-year3_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-name3":  "\u003cspan class=\"lang-th\"\u003eขยายศักยภาพด้าน R\u0026amp;D และการผลิต\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eExpanded R\u0026amp;D \u0026amp; Manufacturing\u003c/span\u003e",
+    "journey-name3_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-desc3":  "\u003cspan class=\"lang-th\"\u003eพัฒนาศักยภาพด้านวิจัย พัฒนา และการผลิต พร้อมยกระดับสู่มาตรฐาน IATF 16949\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eStrengthened R\u0026amp;D and mass production capabilities for the automotive industry, aligned with IATF 16949 standards.\u003c/span\u003e",
+    "journey-desc3_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-year4":  "2018",
+    "journey-year4_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-name4":  "\u003cspan class=\"lang-th\"\u003eขยายสู่ IoT Smart Solutions\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eLaunched IoT Smart Solutions\u003c/span\u003e",
+    "journey-name4_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-desc4":  "\u003cspan class=\"lang-th\"\u003eพัฒนาโซลูชัน IoT และ AIoT สำหรับภาคอุตสาหกรรมและธุรกิจ\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eExpanded into IoT, AIoT, and smart solutions for industrial applications.\u003c/span\u003e",
+    "journey-desc4_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-year5":  "2022",
+    "journey-year5_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-name5":  "\u003cspan class=\"lang-th\"\u003eSmart Industry Solutions\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eSmart Industry Solutions\u003c/span\u003e",
+    "journey-name5_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-desc5":  "\u003cspan class=\"lang-th\"\u003eขยายธุรกิจสู่โซลูชันอัจฉริยะสำหรับโรงงาน พลังงาน และการเกษตร\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eExpanded into smart solutions for manufacturing, energy, and agriculture.\u003c/span\u003e",
+    "journey-desc5_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-year6":  "Today",
+    "journey-year6_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-name6":  "\u003cspan class=\"lang-th\"\u003eSynExta Intelligence Engine\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eSynExta Intelligence Engine\u003c/span\u003e",
+    "journey-name6_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-desc6":  "\u003cspan class=\"lang-th\"\u003eแพลตฟอร์มอัจฉริยะ เชื่อมต่ออุปกรณ์ ข้อมูล และ AI เพื่อขับเคลื่อน Smart Solutions\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eConnecting devices, data, and AI to power intelligent solutions.\u003c/span\u003e",
+    "journey-desc6_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-year7":  "Tomorrow",
+    "journey-year7_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-name7":  "\u003cspan class=\"lang-th\"\u003eEngineering Intelligence Company\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eEngineering Intelligence Company\u003c/span\u003e",
+    "journey-name7_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "journey-desc7":  "\u003cspan class=\"lang-th\"\u003eผสานวิศวกรรม ข้อมูล และ AI เพื่อสร้างผลลัพธ์ทางธุรกิจที่ยั่งยืน\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eIntegrating engineering, data, and AI for sustainable business impact.\u003c/span\u003e",
+    "journey-desc7_pos":  {
+                              "x":  0,
+                              "y":  0
+                          },
+    "sx-eyebrow":  "The Intelligence Engine",
+    "sx-eyebrow_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "sx-title":  "One Engine. Endless Possibilities.",
+    "sx-title_pos":  {
+                         "x":  0,
+                         "y":  0
+                     },
+    "sx-lede":  "\u003cspan class=\"lang-th\"\u003eSynExta เปลี่ยนผ่านงานวิศวกรรมสู่โซลูชันธุรกิจอัจฉริยะแบบครบวงจร\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eSynExta transforms engineering into intelligent business solutions.\u003c/span\u003e",
+    "sx-lede_pos":  {
+                        "x":  0,
+                        "y":  0
+                    },
+    "sx-inputs-title":  "Inputs",
+    "sx-inputs-title_pos":  {
+                                "x":  0,
+                                "y":  0
+                            },
+    "sx-in1":  "Hardware",
+    "sx-in1_pos":  {
+                       "x":  0,
+                       "y":  0
+                   },
+    "sx-in2":  "Embedded\u003cbr\u003eSystems",
+    "sx-in2_pos":  {
+                       "x":  0,
+                       "y":  0
+                   },
+    "sx-in3":  "IoT Devices",
+    "sx-in3_pos":  {
+                       "x":  0,
+                       "y":  0
+                   },
+    "sx-in4":  "Firmware",
+    "sx-in4_pos":  {
+                       "x":  0,
+                       "y":  0
+                   },
+    "sx-in5":  "Sensors",
+    "sx-in5_pos":  {
+                       "x":  0,
+                       "y":  0
+                   },
+    "sx-in6":  "Machines",
+    "sx-in6_pos":  {
+                       "x":  0,
+                       "y":  0
+                   },
+    "sx-hub-sub":  "Intelligence Engine",
+    "sx-hub-sub_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "sx-outcomes-title":  "Outcomes",
+    "sx-outcomes-title_pos":  {
+                                  "x":  0,
+                                  "y":  0
+                              },
+    "sx-out1":  "Smart Factory",
+    "sx-out1_pos":  {
+                        "x":  0,
+                        "y":  0
+                    },
+    "sx-out2":  "Smart Energy",
+    "sx-out2_pos":  {
+                        "x":  0,
+                        "y":  0
+                    },
+    "sx-out3":  "Smart Agriculture",
+    "sx-out3_pos":  {
+                        "x":  0,
+                        "y":  0
+                    },
+    "trust-title":  "Why Businesses Trust Synergy",
+    "trust-title_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-icon1":  "\u003ci class=\"fa-solid fa-compass-drafting\" aria-hidden=\"true\"\u003e\u003c/i\u003e",
+    "trust-icon1_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-h1":  "Engineering First",
+    "trust-h1_pos":  {
+                         "x":  0,
+                         "y":  0
+                     },
+    "trust-desc1":  "We solve engineering challenges before building solutions.",
+    "trust-desc1_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-dna1":  "TRUSTED",
+    "trust-dna1_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "trust-icon2":  "\u003ci class=\"fa-solid fa-gears\" aria-hidden=\"true\"\u003e\u003c/i\u003e",
+    "trust-icon2_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-h2":  "End-to-End Development",
+    "trust-h2_pos":  {
+                         "x":  0,
+                         "y":  0
+                     },
+    "trust-desc2":  "From hardware design to AI platform and deployment.",
+    "trust-desc2_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-dna2":  "IMPACTFUL",
+    "trust-dna2_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "trust-icon3":  "\u003ci class=\"fa-solid fa-screwdriver-wrench\" aria-hidden=\"true\"\u003e\u003c/i\u003e",
+    "trust-icon3_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-h3":  "Custom Innovation",
+    "trust-h3_pos":  {
+                         "x":  0,
+                         "y":  0
+                     },
+    "trust-desc3":  "We design and develop solutions around your unique business needs.",
+    "trust-desc3_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-dna3":  "INNOVATIVE",
+    "trust-dna3_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "trust-icon4":  "\u003ci class=\"fa-solid fa-microchip\" aria-hidden=\"true\"\u003e\u003c/i\u003e",
+    "trust-icon4_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-h4":  "Manufacturing Expertise",
+    "trust-h4_pos":  {
+                         "x":  0,
+                         "y":  0
+                     },
+    "trust-desc4":  "In-house PCB assembly, testing, and quality control.",
+    "trust-desc4_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-dna4":  "TRUSTED",
+    "trust-dna4_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "trust-icon5":  "\u003ci class=\"fa-solid fa-brain\" aria-hidden=\"true\"\u003e\u003c/i\u003e",
+    "trust-icon5_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-h5":  "AI-Driven Intelligence",
+    "trust-h5_pos":  {
+                         "x":  0,
+                         "y":  0
+                     },
+    "trust-desc5":  "AI and analytics turn data into actionable insights.",
+    "trust-desc5_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-dna5":  "INNOVATIVE",
+    "trust-dna5_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "trust-icon6":  "\u003ci class=\"fa-solid fa-handshake\" aria-hidden=\"true\"\u003e\u003c/i\u003e",
+    "trust-icon6_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-h6":  "Long-term Partnership",
+    "trust-h6_pos":  {
+                         "x":  0,
+                         "y":  0
+                     },
+    "trust-desc6":  "We stay with you to ensure continuous success.",
+    "trust-desc6_pos":  {
+                            "x":  0,
+                            "y":  0
+                        },
+    "trust-dna6":  "IMPACTFUL",
+    "trust-dna6_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "cert-title":  "Trust \u0026amp; Recognition",
+    "cert-title_pos":  {
+                           "x":  0,
+                           "y":  0
+                       },
+    "cert-cap4":  "National Innovation Agency",
+    "cert-cap4_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "cert-cap5":  "21st TCC Best Awards",
+    "cert-cap5_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "cert-cap6":  "22nd TCC Best Awards",
+    "cert-cap6_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "cert-cap7":  "IATF 16949",
+    "cert-cap7_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "cert-cap8":  "IPC-A-610F Class 2",
+    "cert-cap8_pos":  {
+                          "x":  0,
+                          "y":  0
+                      },
+    "hero-desc2":  "\u003cspan class=\"lang-th\"\u003eบริษัทได้พัฒนาอย่างต่อเนื่องโดยนำเทคโนโลยี IoT และ AI มาประยุกต์ใช้เพื่อขยายสู่ผลิตภัณฑ์ Smart Solutions เพื่อตอบสนองความต้องการด้านการพัฒนาเมืองอัจฉริยะ (Smart City) และภาคอุตสาหกรรม เกษตรกรรม การค้าและพาณิชยกรรม รวมถึงภาคการแพทย์\u003c/span\u003e\u003cspan class=\"lang-en\"\u003eThe company has continuously developed by applying IoT and AI technologies to expand into Smart Solutions products, addressing the needs of Smart City development as well as the industrial, agricultural, trade and commerce, and medical sectors.\u003c/span\u003e",
+    "hero-desc2_pos":  {
+                           "x":  0,
+                           "y":  0
+                       }
 }

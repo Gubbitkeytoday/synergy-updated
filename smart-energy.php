@@ -5,11 +5,24 @@ if (isset($_SERVER['REQUEST_URI']) && preg_match('/\.php\/+$/i', $_SERVER['REQUE
     header("Location: " . $clean_uri, true, 301);
     exit();
 }
+/* Root-absolute, not '.': document-relative asset URLs break on any URL ending
+   in a slash. See the long note on the same helper in about.php. */
+if (!function_exists('synergy_dev_base')) {
+    function synergy_dev_base() {
+        $root = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : '';
+        $root = $root ? str_replace('\\', '/', $root) : '';
+        $here = str_replace('\\', '/', __DIR__);
+        if ($root !== '' && strpos($here, $root) === 0) {
+            return rtrim(substr($here, strlen($root)), '/');
+        }
+        return '';
+    }
+}
 if (!function_exists('get_template_directory_uri')) {
-    function get_template_directory_uri() { return '.'; }
+    function get_template_directory_uri() { return synergy_dev_base(); }
 }
 if (!function_exists('get_stylesheet_directory_uri')) {
-    function get_stylesheet_directory_uri() { return '.'; }
+    function get_stylesheet_directory_uri() { return synergy_dev_base(); }
 }
 if (!function_exists('get_template_directory')) {
     function get_template_directory() { return __DIR__; }
@@ -18,10 +31,10 @@ if (!function_exists('get_stylesheet_directory')) {
     function get_stylesheet_directory() { return __DIR__; }
 }
 if (!function_exists('get_stylesheet_uri')) {
-    function get_stylesheet_uri() { return './style.css'; }
+    function get_stylesheet_uri() { return synergy_dev_base() . '/style.css'; }
 }
 if (!function_exists('home_url')) {
-    function home_url($path = '/') { return '.' . $path; }
+    function home_url($path = '/') { return synergy_dev_base() . '/' . ltrim($path, '/'); }
 }
 if (!function_exists('body_class')) {
     function body_class($class = '') {
@@ -94,6 +107,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="<?php echo function_exists('synergy_asset') ? synergy_asset('components/style.css') : './components/style.css'; ?>">
 
+  <!-- Interactive platform section. Loaded after style.css so its scoped rules
+       come later in the cascade; it still needs !important on type because
+       style.css uses !important on bare element selectors. -->
+  <link rel="stylesheet" href="<?php echo function_exists('synergy_asset') ? synergy_asset('components/energy-platform.css') : './components/energy-platform.css'; ?>">
+
   <style>
     body {
       font-family: 'SukhumvitSet', 'Inter', 'Sarabun', sans-serif;
@@ -135,7 +153,13 @@ if (file_exists(__DIR__ . '/functions.php')) {
     #energy-hero .se-eyebrow { color: #4ade80; }
     /* สูตร h2 กลางของทั้งไซต์: 22px @390 / 40px @1440 / 44px @1920 (ตรงกับ index.php และ about.php) */
     .se-h2 { font-size: clamp(22px, 2.78vw, 44px) !important; line-height: 1.2 !important; font-weight: 800; }
-    .se-lede { font-size: 1.075rem !important; line-height: 1.7 !important; }   /* = text-base 18.3 -> 19.9px */
+    /* keep-all / overflow-wrap:normal like .se-card-p below. The two longest Thai
+       paragraphs on the page are ledes - the hero and the CTA - and body sets
+       word-break:break-word, which treats a spaceless Thai sentence as one long
+       word and hyphenates it mid-syllable, stranding vowels and tone marks away
+       from their consonant (rule 3 in AGENTS.md). The card classes were already
+       fixed; .se-lede had been missed. */
+    .se-lede { font-size: 1.075rem !important; line-height: 1.7 !important; overflow-wrap: normal; word-break: keep-all; }   /* = text-base 18.3 -> 19.9px */
     /* คำโปรยใน hero ใช้ขนาด/น้ำหนักเดียวกับ hero ของ about.php (20px / 500) */
     #energy-hero .se-lede { font-size: 1.25rem !important; font-weight: 500 !important; }  /* = text-lg 21.2 -> 23.1px */
     .se-card-t { font-size: 1.075rem !important; line-height: 1.35 !important; font-weight: 800; }   /* = text-base, bold */
@@ -153,10 +177,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
       display: flex; align-items: center;
     }
     .se-card-t.se-titlebox--center { justify-content: center; }
-    .se-c6, .se-c5 { --se-title-lines: 3; }  /* 6/5 across: the longest titles need three */
-    @media (max-width: 1599px) {
-      .se-c6 { --se-title-lines: 2; }           /* 3 across from here: two lines is enough */
-    }
+    .se-c5 { --se-title-lines: 3; }  /* 5 across: the longest titles need three */
+    /* .se-c6 is 3-across at every width now, so two lines is the right reserve;
+       the old three-line reserve left dead space above every description. */
+    .se-c6 { --se-title-lines: 2; }
     @media (max-width: 1180px) {
       .se-c5 { --se-title-lines: 2; }
     }
@@ -206,14 +230,24 @@ if (file_exists(__DIR__ . '/functions.php')) {
     .se-c6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     .se-c8 { grid-template-columns: repeat(8, minmax(0, 1fr)); }
 
-    /* The 6-up outcome row only works when a cell is wide enough for its title. At
-       1265px it measured 182px per cell, where the longest titles ran to four lines and
-       no two-line reserve could align them. Six across is therefore held back until
-       1600px, where a cell is ~250px; below that the row reads better as 3 + 3 than as
-       six cramped columns. */
-    @media(max-width:1599px) {
-      .se-c6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
+    /* The outcome row is never six across any more, at any width. Measured at
+       1739px, where six-up was supposed to be comfortable: the cell was 252px,
+       but these cards put the icon BESIDE the text, so the 44px icon plus its
+       gap and the card padding left the text column just 140px. At the 16px
+       floor Thai needs, 140px is about seven characters - the titles broke to
+       three lines and the descriptions to four, all of them ragged one-word
+       lines. Rule 3 in AGENTS.md warns about exactly this: a grid packed too
+       tight for Thai shatters the copy.
+       Three across (2 x 3) is what the same cards already did below 1600px, and
+       it measured clean there - 2-line titles, 2-line descriptions, equal
+       heights. Keeping one layout at every width also means the section stops
+       transforming as the window grows. */
+    .se-c6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    /* Capped so the cards keep the proportions that measured well rather than
+       stretching to ~540px of mostly empty card on a wide monitor. 1360px puts a
+       cell at ~440px, the width the 1440px viewport already produced. */
+    #energy-outcomes .se-grid { max-width: 1360px; margin-inline: auto; }
     @media(max-width:1180px) {
       .se-c8 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .se-c5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -483,6 +517,225 @@ if (file_exists(__DIR__ . '/functions.php')) {
       .sea-devs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
+    /* ==========================================================================
+       MOBILE THAI TYPE FLOOR
+
+       Rule 3 in AGENTS.md puts the floor for Thai at 16px, and on a phone that
+       is not a nicety: Thai stacks vowels above and tone marks above those, so
+       below 16px the marks close up and a reader loses the difference between
+       ไ ใ and ï. Measured on a 375px viewport, this page had 82 Thai nodes under
+       the floor - eyebrows and every card description sat at 14.88px, because
+       components/style.css maps text-xs to 0.875rem !important and the Tailwind
+       text-[11px] on those cards never had a chance.
+
+       Root is 17px here, so 1rem clears the floor. Latin is left where it was:
+       English does not need the extra size and growing it would push the cards
+       taller for nothing.
+       ========================================================================== */
+    @media (max-width: 640px) {
+      html[lang="th"] .se-eyebrow,
+      html[lang="th"] #energy-challenges p,
+      html[lang="th"] #energy-flow p {
+        font-size: 1rem !important;
+        line-height: 1.75 !important;
+      }
+      /* The eyebrow is a short all-caps label, so it wants the size but not the
+         paragraph leading. */
+      html[lang="th"] .se-eyebrow { line-height: 1.5 !important; }
+
+      /* ---- Capability cards go horizontal on a phone ----
+         They are icon-above-label cards, which needs a wide cell. Two of them
+         across a 320px screen left a 92px label column, and the Thai names -
+         "ระบบควบคุมการเปิด–ปิดไฟอัตโนมัติ" and friends - shattered into three to
+         six lines each.
+         Turning the card on its side puts the icon beside the text instead of
+         above it, so one card per row hands the label the full width. It also
+         makes the list shorter than the two-column version was, because the
+         cards stop being tall enough to hold a six-line title. */
+      #energy-capabilities .grid { grid-template-columns: minmax(0, 1fr); }
+      #energy-capabilities .grid > div {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        gap: 14px;
+        padding: 14px;
+      }
+      /* first child is the round icon well */
+      #energy-capabilities .grid > div > div:first-child {
+        width: 58px;
+        height: 58px;
+        flex: none;
+        margin-bottom: 0;
+        padding: 11px;
+      }
+      #energy-capabilities .grid > div > :last-child { text-align: left; }
+
+      /* ---- Challenge cards go horizontal too ----
+         Measured at 390px: two across left each card 171px wide and its
+         paragraph 126px - about eight Thai characters a line. The six
+         descriptions ran four and five lines each and ended on stubs of 28px,
+         39px, 54px, 57px and 65px. That is the "ตกบรรทัด" this page was showing.
+
+         The card is icon / title / description as three siblings, so a simple
+         flex-row would stand all three side by side. A 2x2 grid with the icon
+         spanning both rows puts the picture on the left and stacks the text
+         beside it, which is what the layout actually wants. */
+      #energy-challenges .grid { grid-template-columns: minmax(0, 1fr); }
+      #energy-challenges .grid > div {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas: "icon title" "icon desc";
+        align-items: center;
+        justify-items: start;
+        text-align: left;
+        column-gap: 15px;
+        row-gap: 3px;
+        padding: 15px;
+      }
+      #energy-challenges .grid > div > div:first-child {
+        grid-area: icon;
+        width: 62px;
+        height: 62px;
+        margin-bottom: 0;
+      }
+      #energy-challenges .grid > div > h3 { grid-area: title; }
+      #energy-challenges .grid > div > p  { grid-area: desc; }
+
+      /* ---- Line breaking ----
+         balance evens the lines of a short heading instead of leaving one word
+         alone underneath; pretty stops a paragraph ending on a single stub.
+         Both degrade to normal wrapping where unsupported, so there is nothing
+         to fall back from. */
+      h1, h2, h3, h4, .se-h2, .main-heading { text-wrap: balance; }
+      p, .se-card-p, .se-lede { text-wrap: pretty; }
+
+      /* ---- Headings must never be able to spill ----
+         Thai is written without spaces between words, so a headline like
+         "ปัญหาด้านพลังงานที่ธุรกิจส่วนใหญ่กำลังเผชิญ" is one 43-character token as
+         far as the layout engine is concerned. Engines that ship a Thai
+         dictionary (Chrome, Safari) segment it and wrap beautifully - which is
+         why this looks fine on a desktop. Engines that do not, combined with the
+         word-break:keep-all this page sets on headings, have nowhere legal to
+         break and push the text straight out of its box.
+
+         normal lets the engine break wherever it legitimately can, and
+         overflow-wrap:anywhere is the safety net underneath: it only ever
+         applies when a token genuinely cannot fit, so on a browser that
+         segments Thai properly nothing changes at all, and on one that does not
+         the heading wraps instead of running off the screen. */
+      h1, h2, h3, h4, h5, .se-h2, .se-eyebrow, .main-heading {
+        word-break: normal;
+        overflow-wrap: anywhere;
+        hyphens: none;
+      }
+
+      /* ==========================================================================
+         MASTER TYPOGRAPHY STANDARDIZATION
+         ========================================================================== */
+      .se-eyebrow {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        font-weight: 800 !important;
+        letter-spacing: 1px !important;
+        color: #047857 !important;
+        text-transform: uppercase !important;
+      }
+      
+      .se-h2, #energy-challenges h2, #energy-flow h2, #energy-capabilities h2, #energy-outcomes h2 {
+        font-size: clamp(22px, 2.7vw, 36px) !important;
+        line-height: 1.25 !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.02em !important;
+      }
+
+      #energy-hero h1 {
+        font-size: clamp(26px, 3.8vw, 54px) !important;
+        line-height: 1.18 !important;
+      }
+
+      html[lang="th"] body,
+      html[lang="th"] p,
+      html[lang="th"] .se-lede,
+      html[lang="th"] .feature-sub {
+        font-size: 15.5px !important;
+        line-height: 1.75 !important;
+      }
+    }
+    /* ==========================================================================
+       HERO — WHITE SCRIM + DARK COPY
+
+       The hero used a black left-to-right scrim with white copy. That works
+       until the headline's highlight colour is #23862D, a DARK green, which it
+       is - and it sat over the brightest part of the sunset photo. Measured
+       around 1.6:1. Dark text cannot be rescued by darkening the backdrop, so
+       the scrim is now white and the copy is dark: the same arrangement the
+       about.php hero already uses.
+
+       Colours below all clear 4.5:1 on white. The CTA button is untouched - it
+       paints its own green background and its white label is already fine.
+       ========================================================================== */
+    .se-hero-scrim {
+      /* Peak dialled back 10% from the first pass so more of the photograph
+         reads through behind the copy.
+
+         The stops then had to move right. Sampling the actual photo pixels
+         under each line and blending them with the gradient showed the worst
+         contrast was not in the middle of the text but at the END of the long
+         lines, around x=920 of a 1425px hero - 65% across, where the fade had
+         already fallen to alpha 0.37. The subtitle measured 1.28:1 there.
+         The copy column runs to 66%, so the white now holds to 68% and only
+         then falls away, clearing the dashboard photo by 88%. */
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.87) 0%,
+        rgba(255, 255, 255, 0.85) 55%,
+        rgba(255, 255, 255, 0.70) 68%,
+        rgba(255, 255, 255, 0) 88%
+      );
+    }
+
+    /* Below the 3-column breakpoint the copy is full width, so a left-to-right
+       fade would leave the end of every line unbacked. Top-down instead, which
+       keeps the lower part of the photo visible. */
+    @media (max-width: 1023px) {
+      .se-hero-scrim {
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.86) 0%,
+          rgba(255, 255, 255, 0.84) 62%,
+          rgba(255, 255, 255, 0.70) 100%
+        );
+      }
+    }
+
+    /* The section still carries Tailwind's text-white, and the dotted overlay
+       above the scrim was tuned for a dark backdrop. */
+    #energy-hero { color: #3A4A41; }
+    /* One step darker than the page's other green label. The eyebrow is 16px
+       and bold, but still under the 18.66px at which WCAG counts text as
+       "large", so it needs the full 4.5:1 rather than the 3:1 the headline
+       beside it gets. Sampled against the lightest-scrim end of its own line it
+       measured 4.1 at #04704A. */
+    #energy-hero .se-eyebrow,
+    #energy-hero .se-eyebrow .lang-th,
+    #energy-hero .se-eyebrow .lang-en { color: #046040 !important; }   /* 5.1:1 measured */
+    #energy-hero h1 { color: #0B1F16 !important; }                      /* 16.9:1 */
+    #energy-hero h1 .text-brand-bright { color: #23862D !important; }   /* 5.2:1 */
+    #energy-hero .se-lede,
+    #energy-hero .se-lede .lang-th,
+    #energy-hero .se-lede .lang-en { color: #1F6B43 !important; }       /* 6.4:1 */
+    #energy-hero .text-slate-300,
+    #energy-hero .text-slate-300 span { color: #3A4A41 !important; }    /* 8.9:1 */
+    /* The subtitle under the headline was text-emerald-400 (#34D399), which is
+       a light green meant for a dark backdrop - it measured 1.8:1 once the
+       scrim turned white. */
+    #energy-hero .text-emerald-400,
+    #energy-hero .text-emerald-400 .lang-th,
+    #energy-hero .text-emerald-400 .lang-en { color: #1F6B43 !important; }  /* 6.4:1 */
+    /* Green dot grid at 15% was drawn to glow on near-black; on white it turns
+       into visible speckle across the headline. */
+    #energy-hero .bg-\[radial-gradient\(\#23862D_1px\2c transparent_1px\)\] { opacity: .06; }
   </style>
 
   <script>
@@ -500,8 +753,38 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <section id="energy-hero" class="relative pt-12 pb-24 sm:pt-16 sm:pb-32 lg:pt-20 lg:pb-40 text-white overflow-hidden bg-[#0a1118] min-h-[720px] sm:min-h-[800px] lg:min-h-[860px] flex items-center">
     <!-- Background Image Layer -->
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      <img loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-center" src="<?php echo get_template_directory_uri(); ?>/images/hero-smart-energy.jpg" alt="Smart Energy Management Background">
-      <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+      <?php
+      /* The hero photo is the LCP element, so on a phone it is the single
+         biggest thing standing between the visitor and a painted page. The
+         full-size file is 1672px / 345 KB and a 390px screen was downloading
+         all of it. The 800px variant is 73 KB and covers phones and small
+         tablets at 2x.
+
+         srcset is only offered while the image is still the shipped default -
+         once an admin replaces it through the live editor there is no matching
+         small variant to point at, and guessing a filename would 404. */
+      $se_hero_default = get_template_directory_uri() . '/images/hero-smart-energy.jpg';
+      $se_hero_src     = synergy_content('hero_bg_img', $se_hero_default, 'smart-energy');
+      $se_hero_srcset  = ($se_hero_src === $se_hero_default)
+        ? get_template_directory_uri() . '/images/hero-smart-energy-800.jpg 800w, ' . $se_hero_default . ' 1672w'
+        : '';
+      ?>
+      <img id="smart-energy-hero-bg-img" data-editable-img="hero_bg" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-center"
+           src="<?php echo esc_url($se_hero_src); ?>"
+           <?php if ($se_hero_srcset): ?>srcset="<?php echo esc_attr($se_hero_srcset); ?>" sizes="100vw"<?php endif; ?>
+           alt="Smart Energy Management Background">
+      <?php
+      /* White scrim over the left half of the hero.
+         It replaces a black one. The headline's highlighted half is #23862D, a
+         dark green, and the photo behind it is a bright sunset sky - measured
+         at 1.6:1 in places, which is why that line looked washed out. Darkening
+         the photo could not fix it: the text is dark, so it needs a LIGHT
+         backing, not a darker one.
+         Stops are tuned to where the copy actually ends. The text column runs to
+         66% of the hero width, so the white holds to ~55% and is gone by 78% -
+         the dashboard photo on the right stays untouched. */
+      ?>
+      <div class="absolute inset-0 se-hero-scrim"></div>
     </div>
     <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#23862D_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none z-0"></div>
 
@@ -509,37 +792,29 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- คอลัมน์เดียว หลังเอาภาพ dashboard ออก จำกัดความกว้างที่ max-w-3xl เท่า hero ของ about.php -->
       <div class="max-w-3xl">
           <!-- Label -->
-          <p class="se-eyebrow mb-3">
-            <span class="lang-th">ENERGY INTELLIGENCE</span>
-            <span class="lang-en">ENERGY INTELLIGENCE</span>
+          <p data-editable="hero-eyebrow" <?php echo synergy_style('hero-eyebrow', 'smart-energy'); ?> class="se-eyebrow mb-3">
+            <?php echo synergy_content('hero-eyebrow', '<span class="lang-th">ENERGY Management</span><span class="lang-en">ENERGY Management</span>', 'smart-energy'); ?>
           </p>
           
-          <!-- หัวข้อหลัก (Locked in English) -->
-          <h1 class="font-display font-extrabold text-white tracking-tight" style="font-size:clamp(30px,4.17vw,60px);line-height:1.15">
-            Power Your Business with<br>
-            <span class="text-brand-bright">Smart Energy Management</span>
+          <!-- หัวข้อหลัก -->
+          <h1 data-editable="hero-title" <?php echo synergy_style('hero-title', 'smart-energy'); ?> class="font-display font-extrabold text-white tracking-tight text-2xl sm:text-4xl lg:text-[54px] leading-tight sm:leading-none" style="text-wrap: balance;">
+            <?php echo synergy_content('hero-title', '<span class="lang-th">ขับเคลื่อนธุรกิจด้วย <span class="text-brand-bright inline-block sm:inline">ระบบบริหารจัดการพลังงานอัจฉริยะ</span></span><span class="lang-en">Power Your Business with <span class="text-brand-bright inline-block sm:inline">Smart Energy Management</span></span>', 'smart-energy'); ?>
           </h1>
 
-          <div class="mt-2 text-emerald-400 font-semibold tracking-wide se-lede">
-            One Platform for Complete Energy Visibility
+          <!-- Subtitle -->
+          <div data-editable="hero-subtitle" <?php echo synergy_style('hero-subtitle', 'smart-energy'); ?> class="mt-3 text-emerald-400 font-semibold tracking-wide text-sm sm:text-lg lg:text-xl" style="text-wrap: balance;">
+            <?php echo synergy_content('hero-subtitle', '<span class="lang-th">แพลตฟอร์มเดียว เพื่อการบริหารจัดการพลังงานอย่างครบวงจร</span><span class="lang-en">One Platform for Smart Energy Management</span>', 'smart-energy'); ?>
           </div>
 
           <!-- คำอธิบาย -->
-          <p class="se-lede text-slate-300 font-light mt-5 max-w-2xl">
-            <span class="lang-th">
-              SynExta คือแพลตฟอร์ม Smart Energy Management ที่ช่วยบริหารจัดการการใช้พลังงานและการผลิตไฟฟ้าจาก Solar Rooftop แบบ Real-time รองรับการเชื่อมต่อกับ Inverter ได้หลายแบรนด์ พร้อมควบคุมอุปกรณ์ไฟฟ้า กำหนดเวลาเปิด–ปิดอัตโนมัติ แจ้งเตือนเมื่ออุปกรณ์ผิดปกติ และเชื่อมโยงข้อมูลจากทุกไซต์งานไว้ในแพลตฟอร์มเดียว
-            </span>
-            <span class="lang-en">
-              Monitor, control, and optimize your energy consumption and solar generation from a single intelligent platform. SynExta seamlessly integrates with multiple inverter brands, supports real-time monitoring, automated energy control, and enterprise-wide energy management across factories, commercial buildings, and multi-site businesses.
-            </span>
+          <p data-editable="hero-desc" <?php echo synergy_style('hero-desc', 'smart-energy'); ?> class="se-lede text-slate-300 font-light mt-5 max-w-3xl sm:max-w-4xl leading-relaxed text-sm sm:text-base lg:text-lg" style="text-wrap: pretty; word-break: normal !important;">
+            <?php echo synergy_content('hero-desc', '<span class="lang-th">บริหารจัดการข้อมูลพลังงานและระบบสาธารณูปโภคขององค์กร ทั้งอาคาร โรงงาน <span class="inline-block">สาขาแฟรนไชส์</span> ในหลายพื้นที่ได้ในที่เดียว โดยสามารถติดตามการใช้ไฟฟ้า การผลิตพลังงาน ระบบอื่นๆ ทั้งภายในและภายนอกอาคาร รวมถึงอุปกรณ์ IoT ต่างๆ ได้แบบ Real-time ผ่าน Platform เดียว พร้อมระบบแจ้งเตือน การกำหนดสิทธิ์ผู้ใช้งาน และข้อมูลเชิงลึกที่ช่วยเพิ่มประสิทธิภาพการดำเนินงาน <span class="inline-block">และลดต้นทุนพลังงาน</span></span><span class="lang-en">Manage energy and utility data across buildings, factories, franchise branches, and multiple sites from a single platform. Monitor electricity consumption, energy generation, indoor and outdoor building facilities, and IoT devices in real time through one centralized dashboard. Stay informed with instant alerts, role-based user access, and actionable insights that improve operational efficiency and reduce energy costs.</span>', 'smart-energy'); ?>
           </p>
 
           <!-- ปุ่ม -->
           <div class="mt-8 flex flex-wrap gap-4">
-            <a href="<?php echo home_url('/'); ?>#contact" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5 se-cta-label">
-              <i class="fa-solid fa-paper-plane text-xs"></i>
-              <span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span>
-              <span class="lang-en">Talk to Our Experts</span>
+            <a data-editable="hero-btn1" <?php echo synergy_style('hero-btn1', 'smart-energy'); ?> href="<?php echo home_url('/'); ?>#contact" class="inline-flex items-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5 se-cta-label">
+              <?php echo synergy_content('hero-btn1', '<i class="fa-solid fa-paper-plane text-xs mr-2"></i><span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span><span class="lang-en">Talk to Our Experts</span>', 'smart-energy'); ?>
             </a>
           </div>
       </div>
@@ -554,7 +829,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <span class="lang-en">TRUSTED FOR ENERGY MANAGEMENT</span>
       </p>
       <!-- หัวข้อ -->
-      <h2 class="se-h2 font-display text-ink text-center mb-8">
+      <h2 class="se-h2 font-display text-ink text-center mb-8 whitespace-nowrap">
         <span class="lang-th">โซลูชันที่ตอบโจทย์ธุรกิจด้านพลังงาน</span>
         <span class="lang-en">Trusted by Energy Leaders</span>
       </h2>
@@ -564,6 +839,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <img src="<?php echo get_template_directory_uri(); ?>/images/nida-logo.jpg" alt="NIDA Smart Energy Project" title="NIDA Project" loading="lazy">
         <img src="<?php echo get_template_directory_uri(); ?>/image/SANSIRI.png" alt="SANSIRI" title="San Siri" loading="lazy">
         <img src="<?php echo get_template_directory_uri(); ?>/image/Valuation_Engineering.png" alt="Valuation Engineering" title="VALUATION ENGINEERING" loading="lazy">
+        <img src="<?php echo get_template_directory_uri(); ?>/image/syntech_sandbox.png" alt="Syntech Sandbox" title="SYNTECH SANDBOX" loading="lazy">
       </div>
     </div>
   </section>
@@ -576,101 +852,77 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <span class="lang-en">ENERGY CHALLENGES WE SOLVE</span>
       </p>
       <!-- หัวข้อ -->
-      <h2 class="se-h2 font-display text-ink text-center mb-9 sm:mb-12">
+      <h2 class="font-display text-ink text-center mb-8 sm:mb-12 text-xl sm:text-2xl md:text-3xl lg:text-[34px] font-extrabold tracking-tight" style="text-wrap: balance;">
         <span class="lang-th">ปัญหาด้านพลังงานที่ธุรกิจส่วนใหญ่กำลังเผชิญ</span>
         <span class="lang-en">Challenges We Help You Solve</span>
       </h2>
       <!-- 6 Cards Grid (Exact match with reference image) -->
       <div class="se-tight grid auto-rows-fr grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
 
-        <!-- Card 1: No Real-Time Energy Visibility -->
+        <!-- Card 1: No Energy Visibility -->
         <div class="bg-white border border-slate-200/70 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col items-center text-center group">
           <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_canva_1.png" alt="No Real-Time Energy Visibility" class="w-full h-full object-contain drop-shadow-sm">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_1.png" alt="No Energy Visibility" class="w-full h-full object-contain drop-shadow-sm">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight">
-            <span class="lang-th">มองไม่เห็นข้อมูลการใช้พลังงานแบบ Real-time</span>
-            <span class="lang-en">No Real-Time<br>Energy Visibility</span>
-          </h3>
-          <p class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed">
-            <span class="lang-th">ไม่สามารถติดตามการใช้ไฟฟ้าและการผลิตไฟจาก Solar ได้ทันที ทำให้ตัดสินใจได้ช้า</span>
-            <span class="lang-en">Unable to monitor electricity usage and solar production in real time.</span>
-          </p>
+          <h3 data-editable="energy-challenges-h3-1" <?php echo synergy_style('energy-challenges-h3-1', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-1', '<span class="lang-th">มองไม่เห็นต้นทุนพลังงาน</span>
+            <span class="lang-en">No Energy<br>Visibility</span>', 'smart-energy'); ?></h3>
+          <p data-editable="energy-challenges-p-1" <?php echo synergy_style('energy-challenges-p-1', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-1', '<span class="lang-th">ขาดข้อมูลแบบ Real-time ทำให้วิเคราะห์และควบคุมการใช้พลังงานได้ยาก</span>
+            <span class="lang-en">Limited real-time visibility makes energy optimization difficult.</span>', 'smart-energy'); ?></p>
         </div>
 
-        <!-- Card 2: Multiple Inverter Brands -->
+        <!-- Card 2: Fragmented Energy Data -->
         <div class="bg-white border border-slate-200/70 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col items-center text-center group">
           <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_canva_2.png" alt="Multiple Inverter Brands" class="w-full h-full object-contain drop-shadow-sm">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_2.png" alt="Fragmented Energy Data" class="w-full h-full object-contain drop-shadow-sm">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight">
-            <span class="lang-th">ใช้ Inverter หลายแบรนด์</span>
-            <span class="lang-en">Multiple Inverter<br>Brands</span>
-          </h3>
-          <p class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed">
-            <span class="lang-th">แต่ละแบรนด์มีระบบ Monitoring แยกกัน ทำให้บริหารจัดการข้อมูลได้ยาก</span>
-            <span class="lang-en">Different monitoring systems make solar management complicated.</span>
-          </p>
+          <h3 data-editable="energy-challenges-h3-2" <?php echo synergy_style('energy-challenges-h3-2', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-2', '<span class="lang-th">ข้อมูลแยกหลายระบบ</span>
+            <span class="lang-en">Fragmented<br>Energy Data</span>', 'smart-energy'); ?></h3>
+          <p data-editable="energy-challenges-p-2" <?php echo synergy_style('energy-challenges-p-2', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-2', '<span class="lang-th">Solar, Inverter และมิเตอร์ใช้หลายแพลตฟอร์ม ทำให้ข้อมูลกระจัดกระจาย</span>
+            <span class="lang-en">Energy data is scattered across multiple devices and platforms.</span>', 'smart-energy'); ?></p>
         </div>
 
-        <!-- Card 3: Multiple Sites -->
+        <!-- Card 3: Complex Multi-site Operations -->
         <div class="bg-white border border-slate-200/70 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col items-center text-center group">
           <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_canva_3.png" alt="Multiple Sites" class="w-full h-full object-contain drop-shadow-sm">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_3.png" alt="Complex Multi-site Operations" class="w-full h-full object-contain drop-shadow-sm">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight">
-            <span class="lang-th">มีหลายโรงงานหรือหลายสาขา</span>
-            <span class="lang-en">Multiple Sites</span>
-          </h3>
-          <p class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed">
-            <span class="lang-th">ต้องเปิดหลายระบบเพื่อดูข้อมูลของแต่ละไซต์ ทำให้เสียเวลาและควบคุมได้ยาก</span>
-            <span class="lang-en">Managing dozens or hundreds of branches from different platforms.</span>
-          </p>
+          <h3 data-editable="energy-challenges-h3-3" <?php echo synergy_style('energy-challenges-h3-3', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-3', '<span class="lang-th">หลายไซต์ บริหารยาก</span>
+            <span class="lang-en">Complex Multi-site<br>Operations</span>', 'smart-energy'); ?></h3>
+          <p data-editable="energy-challenges-p-3" <?php echo synergy_style('energy-challenges-p-3', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-3', '<span class="lang-th">โรงงาน อาคาร หรือหลายสาขา ต้องเปิดหลายระบบเพื่อติดตามข้อมูล</span>
+            <span class="lang-en">Managing multiple facilities through different systems is inefficient.</span>', 'smart-energy'); ?></p>
         </div>
 
-        <!-- Card 4: High Electricity Cost -->
+        <!-- Card 4: Rising Energy Costs -->
         <div class="bg-white border border-slate-200/70 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col items-center text-center group">
           <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_canva_4.png" alt="High Electricity Cost" class="w-full h-full object-contain drop-shadow-sm">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_4.png" alt="Rising Energy Costs" class="w-full h-full object-contain drop-shadow-sm">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight">
-            <span class="lang-th">ค่าไฟฟ้าสูงขึ้นอย่างต่อเนื่อง</span>
-            <span class="lang-en">High Electricity<br>Cost</span>
-          </h3>
-          <p class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed">
-            <span class="lang-th">ไม่ทราบว่าพลังงานถูกใช้ในส่วนใดมากที่สุด จึงไม่สามารถลดต้นทุนได้อย่างมีประสิทธิภาพ</span>
-            <span class="lang-en">Lack of insight into energy usage increases operating expenses.</span>
-          </p>
+          <h3 data-editable="energy-challenges-h3-4" <?php echo synergy_style('energy-challenges-h3-4', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-4', '<span class="lang-th">ค่าไฟสูง ควบคุมไม่ได้</span>
+            <span class="lang-en">Rising Energy<br>Costs</span>', 'smart-energy'); ?></h3>
+          <p data-editable="energy-challenges-p-4" <?php echo synergy_style('energy-challenges-p-4', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-4', '<span class="lang-th">ไม่ทราบว่าพลังงานถูกใช้ที่จุดใดมากที่สุด จึงลดต้นทุนได้ไม่เต็มประสิทธิภาพ</span>
+            <span class="lang-en">Without clear insights, reducing energy costs becomes challenging.</span>', 'smart-energy'); ?></p>
         </div>
 
-        <!-- Card 5: Late Equipment Failure Detection -->
+        <!-- Card 5: Delayed Fault Detection -->
         <div class="bg-white border border-slate-200/70 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col items-center text-center group">
           <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_canva_5.png" alt="Late Equipment Failure Detection" class="w-full h-full object-contain drop-shadow-sm">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_5.png" alt="Delayed Fault Detection" class="w-full h-full object-contain drop-shadow-sm">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight">
-            <span class="lang-th">อุปกรณ์เสียแต่รู้ตัวช้า</span>
-            <span class="lang-en">Late Equipment<br>Failure Detection</span>
-          </h3>
-          <p class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed">
-            <span class="lang-th">Inverter หรืออุปกรณ์ไฟฟ้ามีปัญหา แต่ไม่มีระบบแจ้งเตือน ทำให้สูญเสียโอกาสในการผลิตไฟฟ้า</span>
-            <span class="lang-en">Equipment problems are discovered after production losses occur.</span>
-          </p>
+          <h3 data-editable="energy-challenges-h3-5" <?php echo synergy_style('energy-challenges-h3-5', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-5', '<span class="lang-th">รู้ปัญหาช้า</span>
+            <span class="lang-en">Delayed Fault<br>Detection</span>', 'smart-energy'); ?></h3>
+          <p data-editable="energy-challenges-p-5" <?php echo synergy_style('energy-challenges-p-5', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-5', '<span class="lang-th">อุปกรณ์ผิดปกติแต่ไม่มีการแจ้งเตือน ทำให้เกิด Downtime และสูญเสียโอกาส</span>
+            <span class="lang-en">Equipment issues are detected too late without automated alerts.</span>', 'smart-energy'); ?></p>
         </div>
 
-        <!-- Card 6: Limited User Management -->
+        <!-- Card 6: Complex Access Management -->
         <div class="bg-white border border-slate-200/70 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col items-center text-center group">
           <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_canva_6.png" alt="Limited User Management" class="w-full h-full object-contain drop-shadow-sm">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_6.png" alt="Complex Access Management" class="w-full h-full object-contain drop-shadow-sm">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight">
-            <span class="lang-th">จัดการสิทธิ์ผู้ใช้งานได้ยาก</span>
-            <span class="lang-en">Limited User<br>Management</span>
-          </h3>
-          <p class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed">
-            <span class="lang-th">ไม่สามารถกำหนดสิทธิ์ให้เจ้าของกิจการ ผู้ติดตั้ง และผู้จัดการแต่ละสาขาเข้าถึงข้อมูลเฉพาะที่เกี่ยวข้องได้</span>
-            <span class="lang-en">Difficult to control access for installers, owners and branch managers.</span>
-          </p>
+          <h3 data-editable="energy-challenges-h3-6" <?php echo synergy_style('energy-challenges-h3-6', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-6', '<span class="lang-th">สิทธิ์ผู้ใช้ซับซ้อน</span>
+            <span class="lang-en">Complex Access<br>Management</span>', 'smart-energy'); ?></h3>
+          <p data-editable="energy-challenges-p-6" <?php echo synergy_style('energy-challenges-p-6', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-6', '<span class="lang-th">จัดการสิทธิ์การเข้าถึงข้อมูลของแต่ละองค์กรหรือแต่ละสาขาได้ยาก</span>
+            <span class="lang-en">Managing user roles across sites and organizations is time-consuming.</span>', 'smart-energy'); ?></p>
         </div>
 
       </div>
@@ -690,884 +942,914 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <span class="lang-en">From Energy Data to Intelligent Decisions</span>
       </h2>
 
-      <!-- 6 Steps Grid (Exact match with reference image) -->
-      <div class="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 gap-4 sm:gap-5">
-        
-        <!-- Step 01: Connect -->
-        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group">
-          <div>
-            <!-- Top Step Badge -->
-            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-extrabold flex items-center justify-center text-xs mb-4 shadow-sm">
-              01
+      <!-- 4 Steps Flow Grid (Exact match with reference image) -->
+      <div class="relative">
+        <!-- Connecting Green Dotted Line (Desktop) -->
+        <div class="hidden lg:block absolute top-[72px] left-[12.5%] right-[12.5%] h-0.5 border-b-2 border-dashed border-[#0d5c3a]/50 z-0"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 relative z-10">
+          
+          <!-- Step 01: SYNC -->
+          <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
+            <!-- Chevron Connector (Desktop) -->
+            <div class="hidden lg:flex items-center justify-center w-8 h-8 rounded-full bg-[#0d5c3a] text-white text-xs shadow-md border-2 border-white absolute -right-5 top-[56px] z-20">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div>
+              <!-- S-Logo Graphic (No Outer Circle) -->
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_3.png" alt="01 SYNC" class="w-full h-full object-contain">
+              </div>
+
+              <!-- Header Titles -->
+              <div class="text-[#0d5c3a] font-extrabold text-sm sm:text-base text-center">01</div>
+              <h3 class="text-[#0d5c3a] font-display font-extrabold text-2xl sm:text-3xl text-center tracking-tight mb-1">
+                SYNC
+              </h3>
+              <p data-editable="energy-flow-p-1" <?php echo synergy_style('energy-flow-p-1', 'smart-energy'); ?> class="text-slate-900 font-bold text-sm sm:text-base text-center mb-2"><?php echo synergy_content('energy-flow-p-1', '<span class="lang-th">Connect Everything</span>
+                <span class="lang-en">Connect Everything</span>', 'smart-energy'); ?></p>
+              <p data-editable="energy-flow-p-2" <?php echo synergy_style('energy-flow-p-2', 'smart-energy'); ?> class="text-slate-500 text-xs sm:text-[13px] leading-relaxed text-center mb-5 min-h-[44px] px-1"><?php echo synergy_content('energy-flow-p-2', '<span class="lang-th">เชื่อมต่อทุกอุปกรณ์และระบบ<br>จากหลากหลายแหล่งข้อมูล</span>
+                <span class="lang-en">Connect all devices and systems from diverse sources.</span>', 'smart-energy'); ?></p>
             </div>
 
-            <!-- 3D Graphic Image -->
-            <div class="w-full h-28 sm:h-32 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_canva/step_1.png" alt="01 Connect" class="max-w-full max-h-full object-contain drop-shadow-sm">
+            <!-- Bottom Items List -->
+            <div>
+              <div class="w-full h-px bg-slate-100 mb-4"></div>
+              <div class="flex flex-col gap-2.5">
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-solar-panel text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Solar Inverter</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-bullseye text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Smart Meter</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-bolt text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span class="lang-th">Electrical System</span>
+                  <span class="lang-en">Electrical System</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-wifi text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>IoT Sensors</span>
+                </div>
+              </div>
             </div>
-
-            <!-- Title & Description -->
-            <h3 class="font-extrabold text-slate-900 text-base mb-2 tracking-tight">
-              <span class="lang-th">01 Connect</span>
-              <span class="lang-en">01 Connect</span>
-            </h3>
-            <p class="text-xs text-slate-500 font-normal leading-relaxed">
-              <span class="lang-th">เชื่อมต่อ Solar Inverter, Energy Meter, ระบบไฟฟ้า และอุปกรณ์ IoT Sensors</span>
-              <span class="lang-en">Connect Solar Inverters, Energy Meters, Building Devices, and IoT Sensors.</span>
-            </p>
           </div>
 
-          <!-- Bottom Tags -->
-          <div>
-            <div class="w-12 h-0.5 bg-emerald-300 rounded-full my-3.5"></div>
-            <div class="flex flex-col gap-2">
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-solar-panel text-emerald-600 text-xs"></i>
-                <span>Solar Inverter</span>
+          <!-- Step 02: STREAM -->
+          <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
+            <!-- Chevron Connector (Desktop) -->
+            <div class="hidden lg:flex items-center justify-center w-8 h-8 rounded-full bg-[#0d5c3a] text-white text-xs shadow-md border-2 border-white absolute -right-5 top-[56px] z-20">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div>
+              <!-- S-Logo Graphic (No Outer Circle) -->
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_1.png" alt="02 STREAM" class="w-full h-full object-contain">
               </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-bolt text-emerald-600 text-xs"></i>
-                <span>Energy Meter</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-plug text-emerald-600 text-xs"></i>
-                <span class="lang-th">ระบบไฟฟ้า</span><span class="lang-en">Building System</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-wifi text-emerald-600 text-xs"></i>
-                <span>IoT Sensors</span>
+
+              <!-- Header Titles -->
+              <div class="text-[#0d5c3a] font-extrabold text-sm sm:text-base text-center">02</div>
+              <h3 class="text-[#0d5c3a] font-display font-extrabold text-2xl sm:text-3xl text-center tracking-tight mb-1">
+                STREAM
+              </h3>
+              <p data-editable="energy-flow-p-3" <?php echo synergy_style('energy-flow-p-3', 'smart-energy'); ?> class="text-slate-900 font-bold text-sm sm:text-base text-center mb-2"><?php echo synergy_content('energy-flow-p-3', '<span class="lang-th">Stream & Monitor</span>
+                <span class="lang-en">Stream & Monitor</span>', 'smart-energy'); ?></p>
+              <p data-editable="energy-flow-p-4" <?php echo synergy_style('energy-flow-p-4', 'smart-energy'); ?> class="text-slate-500 text-xs sm:text-[13px] leading-relaxed text-center mb-5 min-h-[44px] px-1"><?php echo synergy_content('energy-flow-p-4', '<span class="lang-th">รวบรวมและแสดงข้อมูลแบบ Real-time<br>ให้เห็นภาพรวมของทุกไซต์งาน</span>
+                <span class="lang-en">Aggregate and visualize real-time data across all site locations.</span>', 'smart-energy'); ?></p>
+            </div>
+
+            <!-- Bottom Items List -->
+            <div>
+              <div class="w-full h-px bg-slate-100 mb-4"></div>
+              <div class="flex flex-col gap-2.5">
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-regular fa-clock text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Real-time Data</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-city text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Multi-site View</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-desktop text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Centralized Dashboard</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-regular fa-bell text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Alerts & Notifications</span>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- Step 03: STEER -->
+          <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
+            <!-- Chevron Connector (Desktop) -->
+            <div class="hidden lg:flex items-center justify-center w-8 h-8 rounded-full bg-[#0d5c3a] text-white text-xs shadow-md border-2 border-white absolute -right-5 top-[56px] z-20">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div>
+              <!-- S-Logo Graphic (No Outer Circle) -->
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_4.png" alt="03 STEER" class="w-full h-full object-contain">
+              </div>
+
+              <!-- Header Titles -->
+              <div class="text-[#0d5c3a] font-extrabold text-sm sm:text-base text-center">03</div>
+              <h3 class="text-[#0d5c3a] font-display font-extrabold text-2xl sm:text-3xl text-center tracking-tight mb-1">
+                STEER
+              </h3>
+              <p data-editable="energy-flow-p-5" <?php echo synergy_style('energy-flow-p-5', 'smart-energy'); ?> class="text-slate-900 font-bold text-sm sm:text-base text-center mb-2"><?php echo synergy_content('energy-flow-p-5', '<span class="lang-th">Control & Integrate</span>
+                <span class="lang-en">Control & Integrate</span>', 'smart-energy'); ?></p>
+              <p data-editable="energy-flow-p-6" <?php echo synergy_style('energy-flow-p-6', 'smart-energy'); ?> class="text-slate-500 text-xs sm:text-[13px] leading-relaxed text-center mb-5 min-h-[44px] px-1"><?php echo synergy_content('energy-flow-p-6', '<span class="lang-th">ควบคุมการทำงานอัตโนมัติ<br>และเชื่อมต่อระบบธุรกิจอย่างไร้รอยต่อ</span>
+                <span class="lang-en">Automate operations and seamlessly integrate business systems.</span>', 'smart-energy'); ?></p>
+            </div>
+
+            <!-- Bottom Items List -->
+            <div>
+              <div class="w-full h-px bg-slate-100 mb-4"></div>
+              <div class="flex flex-col gap-2.5">
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-sliders text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Device Control</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-regular fa-calendar-check text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Schedules & Automation</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-chart-line text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Load Management</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-link text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>System Integration</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 04: SOLVE -->
+          <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
+            <div>
+              <!-- S-Logo Graphic (No Outer Circle) -->
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_2.png" alt="04 SOLVE" class="w-full h-full object-contain">
+              </div>
+
+              <!-- Header Titles -->
+              <div class="text-[#0d5c3a] font-extrabold text-sm sm:text-base text-center">04</div>
+              <h3 class="text-[#0d5c3a] font-display font-extrabold text-2xl sm:text-3xl text-center tracking-tight mb-1">
+                SOLVE
+              </h3>
+              <p data-editable="energy-flow-p-7" <?php echo synergy_style('energy-flow-p-7', 'smart-energy'); ?> class="text-slate-900 font-bold text-sm sm:text-base text-center mb-2"><?php echo synergy_content('energy-flow-p-7', '<span class="lang-th">Analyze & Optimize</span>
+                <span class="lang-en">Analyze & Optimize</span>', 'smart-energy'); ?></p>
+              <p data-editable="energy-flow-p-8" <?php echo synergy_style('energy-flow-p-8', 'smart-energy'); ?> class="text-slate-500 text-xs sm:text-[13px] leading-relaxed text-center mb-5 min-h-[44px] px-1"><?php echo synergy_content('energy-flow-p-8', '<span class="lang-th">วิเคราะห์ข้อมูลเชิงลึกด้วย AI<br>เพื่อเพิ่มประสิทธิภาพและลดต้นทุนพลังงาน</span>
+                <span class="lang-en">In-depth AI analysis to optimize efficiency and cut energy costs.</span>', 'smart-energy'); ?></p>
+            </div>
+
+            <!-- Bottom Items List -->
+            <div>
+              <div class="w-full h-px bg-slate-100 mb-4"></div>
+              <div class="flex flex-col gap-2.5">
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-brain text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>AI Insights</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-chart-area text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Predictive Analytics</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-leaf text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Energy Optimization</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-coins text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Cost Reduction</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
-
-        <!-- Step 02: Collect -->
-        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group">
-          <div>
-            <!-- Top Step Badge -->
-            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-extrabold flex items-center justify-center text-xs mb-4 shadow-sm">
-              02
-            </div>
-
-            <!-- 3D Graphic Image -->
-            <div class="w-full h-28 sm:h-32 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_canva/step_2.png" alt="02 Collect" class="max-w-full max-h-full object-contain drop-shadow-sm">
-            </div>
-
-            <!-- Title & Description -->
-            <h3 class="font-extrabold text-slate-900 text-base mb-2 tracking-tight">
-              <span class="lang-th">02 Collect</span>
-              <span class="lang-en">02 Collect</span>
-            </h3>
-            <p class="text-xs text-slate-500 font-normal leading-relaxed">
-              <span class="lang-th">รวบรวมข้อมูลการผลิตไฟและการใช้พลังงานจากทุกไซต์เข้าสู่แพลตฟอร์มเดียว</span>
-              <span class="lang-en">Collect real-time energy data from every site into one platform.</span>
-            </p>
-          </div>
-
-          <!-- Bottom Tags -->
-          <div>
-            <div class="w-12 h-0.5 bg-emerald-300 rounded-full my-3.5"></div>
-            <div class="flex flex-col gap-2">
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-regular fa-clock text-emerald-600 text-xs"></i>
-                <span>Real-time Data</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-sitemap text-emerald-600 text-xs"></i>
-                <span>Multi-site Aggregation</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 03: Visualize -->
-        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group">
-          <div>
-            <!-- Top Step Badge -->
-            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-extrabold flex items-center justify-center text-xs mb-4 shadow-sm">
-              03
-            </div>
-
-            <!-- 3D Graphic Image -->
-            <div class="w-full h-28 sm:h-32 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_canva/step_3.png" alt="03 Visualize" class="max-w-full max-h-full object-contain drop-shadow-sm">
-            </div>
-
-            <!-- Title & Description -->
-            <h3 class="font-extrabold text-slate-900 text-base mb-2 tracking-tight">
-              <span class="lang-th">03 Visualize</span>
-              <span class="lang-en">03 Visualize</span>
-            </h3>
-            <p class="text-xs text-slate-500 font-normal leading-relaxed">
-              <span class="lang-th">Dashboard, รายงาน, Energy KPIs และระบบการแจ้งเตือนแบบ Real-time</span>
-              <span class="lang-en">Dashboard, Reports, Alerts, Energy KPIs — all in real-time.</span>
-            </p>
-          </div>
-
-          <!-- Bottom Tags -->
-          <div>
-            <div class="w-12 h-0.5 bg-emerald-300 rounded-full my-3.5"></div>
-            <div class="flex flex-col gap-2">
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-table-cells-large text-emerald-600 text-xs"></i>
-                <span>Dashboard</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-regular fa-file-lines text-emerald-600 text-xs"></i>
-                <span class="lang-th">รายงาน</span><span class="lang-en">Reports</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-bullseye text-emerald-600 text-xs"></i>
-                <span>KPI</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-regular fa-bell text-emerald-600 text-xs"></i>
-                <span class="lang-th">แจ้งเตือน Real-time</span><span class="lang-en">Real-time Alerts</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 04: Optimize -->
-        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group">
-          <div>
-            <!-- Top Step Badge -->
-            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-extrabold flex items-center justify-center text-xs mb-4 shadow-sm">
-              04
-            </div>
-
-            <!-- 3D Graphic Image -->
-            <div class="w-full h-28 sm:h-32 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_canva/step_4.png" alt="04 Optimize" class="max-w-full max-h-full object-contain drop-shadow-sm">
-            </div>
-
-            <!-- Title & Description -->
-            <h3 class="font-extrabold text-slate-900 text-base mb-2 tracking-tight">
-              <span class="lang-th">04 Optimize</span>
-              <span class="lang-en">04 Optimize</span>
-            </h3>
-            <p class="text-xs text-slate-500 font-normal leading-relaxed">
-              <span class="lang-th">สั่งเปิด–ปิดอุปกรณ์ไฟฟ้า กำหนดเวลาการทำงาน และบริหารโหลดไฟฟ้าอัตโนมัติ</span>
-              <span class="lang-en">Lighting Automation, Schedule Control, and Load Management.</span>
-            </p>
-          </div>
-
-          <!-- Bottom Tags -->
-          <div>
-            <div class="w-12 h-0.5 bg-emerald-300 rounded-full my-3.5"></div>
-            <div class="flex flex-col gap-2">
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-power-off text-emerald-600 text-xs"></i>
-                <span class="lang-th">เปิด-ปิดอุปกรณ์</span><span class="lang-en">Device Switch</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-regular fa-clock text-emerald-600 text-xs"></i>
-                <span class="lang-th">กำหนดเวลาการทำงาน</span><span class="lang-en">Schedule Control</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-chart-line text-emerald-600 text-xs"></i>
-                <span>Load Management</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 05: Integrate -->
-        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group">
-          <div>
-            <!-- Top Step Badge -->
-            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-extrabold flex items-center justify-center text-xs mb-4 shadow-sm">
-              05
-            </div>
-
-            <!-- 3D Graphic Image -->
-            <div class="w-full h-28 sm:h-32 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_canva/step_5.png" alt="05 Integrate" class="max-w-full max-h-full object-contain drop-shadow-sm">
-            </div>
-
-            <!-- Title & Description -->
-            <h3 class="font-extrabold text-slate-900 text-base mb-2 tracking-tight">
-              <span class="lang-th">05 Integrate</span>
-              <span class="lang-en">05 Integrate</span>
-            </h3>
-            <p class="text-xs text-slate-500 font-normal leading-relaxed">
-              <span class="lang-th">เชื่อมต่อ ERP, BMS, SCADA และระบบภายนอกองค์กรผ่าน Open API</span>
-              <span class="lang-en">Connect ERP, BMS, SCADA and external systems via API.</span>
-            </p>
-          </div>
-
-          <!-- Bottom Tags -->
-          <div>
-            <div class="w-12 h-0.5 bg-emerald-300 rounded-full my-3.5"></div>
-            <div class="flex flex-col gap-2">
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-regular fa-folder text-emerald-600 text-xs"></i>
-                <span>ERP</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-building text-emerald-600 text-xs"></i>
-                <span>BMS</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-desktop text-emerald-600 text-xs"></i>
-                <span>SCADA</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-code text-emerald-600 text-xs"></i>
-                <span>API</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 06: Grow with AI -->
-        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group">
-          <div>
-            <!-- Top Step Badge -->
-            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-extrabold flex items-center justify-center text-xs mb-4 shadow-sm">
-              06
-            </div>
-
-            <!-- 3D Graphic Image -->
-            <div class="w-full h-28 sm:h-32 mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_canva/step_6.png" alt="06 Grow with AI" class="max-w-full max-h-full object-contain drop-shadow-sm">
-            </div>
-
-            <!-- Title & Description -->
-            <h3 class="font-extrabold text-slate-900 text-base mb-2 tracking-tight">
-              <span class="lang-th">06 Grow with AI</span>
-              <span class="lang-en">06 Grow with AI</span>
-            </h3>
-            <p class="text-xs text-slate-500 font-normal leading-relaxed">
-              <span class="lang-th">คำแนะนำจาก AI ในการประหยัดพลังงาน และวิเคราะห์คาดการณ์ล่วงหน้า</span>
-              <span class="lang-en">AI Recommendations, Energy Saving Suggestions, and Predictive Analytics.</span>
-            </p>
-          </div>
-
-          <!-- Bottom Tags -->
-          <div>
-            <div class="w-12 h-0.5 bg-emerald-300 rounded-full my-3.5"></div>
-            <div class="flex flex-col gap-2">
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-wand-magic-sparkles text-emerald-600 text-xs"></i>
-                <span>AI Recommendations</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-leaf text-emerald-600 text-xs"></i>
-                <span>Energy Saving Suggestions</span>
-              </div>
-              <div class="bg-emerald-50/80 text-slate-700 border border-emerald-100/80 rounded-lg px-2.5 py-1.5 text-[11px] font-medium flex items-center gap-2">
-                <i class="fa-solid fa-chart-line text-emerald-600 text-xs"></i>
-                <span>Predictive Analytics</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
   <!-- ================= 5. สถาปัตยกรรมแพลตฟอร์ม SYNEXTA ENERGY ================= -->
+  <!-- ================= 5. แพลตฟอร์มบริหารพลังงาน (INTERACTIVE PLATFORM) =================
+       Markup, CSS and JS for this section live together:
+         components/energy-platform.css
+         components/energy-platform.js
+       Both are scoped to #energy-platform. The class names in here are generic
+       (.feature-card, .device-card, .nav-tab, .modal-backdrop) and would collide
+       with the rest of the site if that scope were ever removed.
+
+       The Thai copy comes from the redesigned prototype; the English is carried
+       over from the previous version of this section, so every string is still a
+       lang-th + lang-en pair (rule 4 in AGENTS.md). -->
   <section id="energy-platform" class="py-12 sm:py-16 bg-[#f4f7f5] border-y border-slate-200/80" style="scroll-margin-top:96px">
     <div class="se-shell">
+      <div class="platform-card">
 
-      <!-- MASTER CARD CANVAS -->
-      <div class="bg-white rounded-[28px] border border-slate-200/90 p-5 sm:p-8 shadow-xl shadow-slate-200/50 relative overflow-hidden">
-        
-        <!-- BRAND HEADER INSIDE CONTAINER -->
-        <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center text-white shadow-sm">
-              <!-- SYNEXTA LEAF / ENERGY ICON -->
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- TOP: pitch + capabilities (Above Tab Bar) -->
+        <section class="left-pitch-column top-pitch-layout mb-8">
+          <div class="top-pitch-header text-center mb-6">
+            <div class="mb-4 flex justify-center">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/LOGO SYNEXTA.png" alt="SynExta Logo" class="h-10 sm:h-12 w-auto object-contain drop-shadow-sm">
+            </div>
+            <h2 data-editable="energy-platform-h2-1" <?php echo synergy_style('energy-platform-h2-1', 'smart-energy'); ?> class="main-heading font-display text-center sm:whitespace-nowrap"><?php echo synergy_content('energy-platform-h2-1', '<span class="lang-th">เทคโนโลยีหลักที่ขับเคลื่อน<br class="sm:hidden"> <span class="heading-highlight">Smart Energy Management</span></span><span class="lang-en">The Intelligence Behind<br class="sm:hidden"> <span class="heading-highlight">Smart Energy Management</span></span>', 'smart-energy'); ?></h2>
+          </div>
+
+          <div class="feature-list">
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <svg viewBox="0 0 32 32" fill="none" class="feature-svg-icon" aria-hidden="true">
+                  <defs><linearGradient id="ep-boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#00A86B"/>
+                  </linearGradient></defs>
+                  <path d="M18 3L6 17h8l-2 12 14-14h-8l2-12z" fill="url(#ep-boltGrad)" stroke="#059669" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M16 7l-7.5 9.5H14l-1.5 8.5 9-9H16.5l1.5-9z" fill="#FFFFFF" opacity="0.3"/>
+                </svg>
+              </div>
+              <div class="feature-text">
+                <h3 class="feature-title">
+                  <span class="lang-th">รองรับ Inverter หลายแบรนด์</span>
+                  <span class="lang-en">Multi-brand Inverter Support</span>
+                </h3>
+                <p class="feature-sub">
+                  <span class="lang-th">เชื่อมต่ออินเวอร์เตอร์แบรนด์ชั้นนำ Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis และแบรนด์อื่น ๆ</span>
+                  <span class="lang-en">Connect top inverter brands: Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis and more.</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <svg viewBox="0 0 32 32" fill="none" class="feature-svg-icon" aria-hidden="true">
+                  <defs><linearGradient id="ep-barGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#00A86B"/><stop offset="100%" stop-color="#34D399"/>
+                  </linearGradient></defs>
+                  <rect x="5" y="18" width="5" height="9" rx="1.5" fill="url(#ep-barGrad)"/>
+                  <rect x="13.5" y="12" width="5" height="15" rx="1.5" fill="url(#ep-barGrad)"/>
+                  <rect x="22" y="6" width="5" height="21" rx="1.5" fill="url(#ep-barGrad)"/>
+                  <path d="M5 16l8-6 6 4 8-9" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="27" cy="5" r="2.5" fill="#10B981" stroke="#FFFFFF" stroke-width="1"/>
+                </svg>
+              </div>
+              <div class="feature-text">
+                <h3 class="feature-title">
+                  <span class="lang-th">บริหารจัดการหลายไซต์</span>
+                  <span class="lang-en">Multi-site Management</span>
+                </h3>
+                <p class="feature-sub">
+                  <span class="lang-th">ติดตามการใช้งานโรงงาน สาขา และระบบ Solar ได้แบบ Real-time จากศูนย์กลางเดียว</span>
+                  <span class="lang-en">Monitor factories, branches, and Solar systems in real-time from a central hub.</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <svg viewBox="0 0 32 32" fill="none" class="feature-svg-icon" aria-hidden="true">
+                  <defs><linearGradient id="ep-cloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#059669"/>
+                  </linearGradient></defs>
+                  <path d="M23 23H9a5.5 5.5 0 0 1-.8-10.9A7.5 7.5 0 0 1 23 10a5.5 5.5 0 0 1 0 11z" fill="url(#ep-cloudGrad)"/>
+                  <circle cx="16" cy="17" r="2.5" fill="#FFFFFF"/>
+                  <path d="M16 11.5v2M16 20v2M10.5 17h2M19.5 17h2" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="feature-text">
+                <h3 class="feature-title">
+                  <span class="lang-th">ติดตั้งได้ยืดหยุ่น</span>
+                  <span class="lang-en">Flexible Deployment</span>
+                </h3>
+                <p class="feature-sub">
+                  <span class="lang-th">เลือกติดตั้งแบบ Cloud, On-Premise หรือ Hybrid ได้ตามนโยบายด้าน IT</span>
+                  <span class="lang-en">Deploy on Cloud, On-Premise, or Hybrid based on IT policies.</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon-box">
+                <svg viewBox="0 0 32 32" fill="none" class="feature-svg-icon" aria-hidden="true">
+                  <defs><linearGradient id="ep-shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#00A86B"/>
+                  </linearGradient></defs>
+                  <path d="M16 4l10 4v8c0 7.5-5.5 11.5-10 13.5C11.5 27.5 6 23.5 6 16V8l10-4z" fill="url(#ep-shieldGrad)" stroke="#059669" stroke-width="1.2"/>
+                  <path d="M11.5 16.5l3.5 3.5 6.5-6.5" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="feature-text">
+                <h3 class="feature-title">
+                  <span class="lang-th">เชื่อมต่อระบบอัตโนมัติ</span>
+                  <span class="lang-en">Automated Open API</span>
+                </h3>
+                <p class="feature-sub">
+                  <span class="lang-th">เชื่อมต่อกับ ERP, BMS, CMMS และระบบอื่น ๆ ขององค์กรได้ผ่าน Open API</span>
+                  <span class="lang-en">Integrate with ERP, BMS, CMMS, and enterprise systems via Open API.</span>
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ---------- Tab bar ---------- -->
+        <header class="app-header">
+          <div class="nav-tabs" role="tablist" aria-label="SynExta Energy Platform">
+
+            <button type="button" class="nav-tab active" role="tab" aria-selected="true" aria-controls="view-overview" id="tab-overview" data-tab="overview">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
+              </svg>
+              <span><span class="lang-th">ภาพรวม</span><span class="lang-en">Overview</span></span>
+              <div class="tab-indicator"></div>
+            </button>
+
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="view-dashboard" id="tab-dashboard" data-tab="dashboard">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <line x1="3" y1="9" x2="21" y2="9"/>
+                <line x1="9" y1="21" x2="9" y2="9"/>
+              </svg>
+              <span><span class="lang-th">แดชบอร์ด</span><span class="lang-en">Dashboard</span></span>
+            </button>
+
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="view-sites" id="tab-sites" data-tab="sites">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M3 21h18M3 7v14M13 3v18M13 11h8v10M7 11h2M7 15h2"/>
+              </svg>
+              <span><span class="lang-th">ไซต์งาน</span><span class="lang-en">Sites</span></span>
+            </button>
+
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="view-reports" id="tab-reports" data-tab="reports">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <span><span class="lang-th">รายงาน</span><span class="lang-en">Reports</span></span>
+            </button>
+
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="view-alerts" id="tab-alerts" data-tab="alerts">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+              <span><span class="lang-th">การแจ้งเตือน</span><span class="lang-en">Alerts</span></span>
+            </button>
+
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="view-analytics" id="tab-analytics" data-tab="analytics">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/><polyline points="3 8 9 3 15 9 21 3"/>
+              </svg>
+              <span><span class="lang-th">วิเคราะห์ข้อมูล</span><span class="lang-en">Analytics</span></span>
+            </button>
+
+            <button type="button" class="nav-tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="view-users" id="tab-users" data-tab="users">
+              <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span><span class="lang-th">ผู้ใช้งาน</span><span class="lang-en">Users</span></span>
+            </button>
+
+          </div>
+        </header>
+
+        <!-- ---------- Panels ---------- -->
+        <div class="content-container">
+
+          <!-- OVERVIEW -->
+          <div id="view-overview" class="tab-view active" role="tabpanel" aria-labelledby="tab-overview">
+
+            <div class="grid-architecture">
+
+              <!-- CENTER: 3D core + field devices -->
+              <section class="center-engine-column">
+
+                <!-- The viewer library and the .glb are attached by
+                     energy-platform.js once the section nears the viewport;
+                     until then this shows the poster below. -->
+                <div class="central-architecture-stage"
+                     data-model-src="<?php echo function_exists('synergy_asset') ? synergy_asset('models/syntech_building.glb') : './models/syntech_building.glb'; ?>"
+                     data-viewer-src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"
+                     data-model-alt="SynExta Energy - 3D building model">
+                  <div class="stage-poster">
+                    <div class="stage-poster-ring" aria-hidden="true"></div>
+                    <span><span class="lang-th">กำลังโหลดโมเดล 3 มิติ</span><span class="lang-en">Loading 3D model</span></span>
+                  </div>
+                </div>
+
+                <div class="field-devices-container">
+
+                  <div class="field-section-banner">
+                    <span class="banner-text">
+                      <span class="lang-th">เชื่อมต่ออุปกรณ์และระบบภาคสนาม</span>
+                      <span class="lang-en">Field Equipment &amp; System Integration</span>
+                    </span>
+                    <div class="banner-connector-stem"></div>
+                  </div>
+
+                  <div class="field-energy-bus" aria-hidden="true">
+                    <div class="bus-main-line"></div>
+                    <div class="bus-nodes-row">
+                      <div class="bus-node-item"><span class="bus-dot"></span><div class="bus-drop-line"></div></div>
+                      <div class="bus-node-item"><span class="bus-dot"></span><div class="bus-drop-line"></div></div>
+                      <div class="bus-node-item"><span class="bus-dot"></span><div class="bus-drop-line"></div></div>
+                      <div class="bus-node-item"><span class="bus-dot"></span><div class="bus-drop-line"></div></div>
+                      <div class="bus-node-item"><span class="bus-dot"></span><div class="bus-drop-line"></div></div>
+                      <div class="bus-node-item"><span class="bus-dot"></span><div class="bus-drop-line"></div></div>
+                    </div>
+                  </div>
+
+                  <div class="devices-row">
+
+                    <button type="button" class="device-card" data-device="solar-inverter">
+                      <span class="device-img-wrapper">
+                        <img src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/solar_inverter.jpg') : './image/smart-energy/platform/solar_inverter.jpg'; ?>" alt="" class="device-img" loading="lazy" decoding="async">
+                      </span>
+                      <span class="device-name">Solar Inverter</span>
+                      <span class="device-subicon-badge" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
+                          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                        </svg>
+                      </span>
+                    </button>
+
+                    <button type="button" class="device-card" data-device="energy-meter">
+                      <span class="device-img-wrapper">
+                        <img src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/energy_meter.jpg') : './image/smart-energy/platform/energy_meter.jpg'; ?>" alt="" class="device-img" loading="lazy" decoding="async">
+                      </span>
+                      <span class="device-name">Energy Meter</span>
+                      <span class="device-subicon-badge" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
+                          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                      </span>
+                    </button>
+
+                    <button type="button" class="device-card" data-device="lighting-controller">
+                      <span class="device-img-wrapper">
+                        <img src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/lighting.jpg') : './image/smart-energy/platform/lighting.jpg'; ?>" alt="" class="device-img" loading="lazy" decoding="async">
+                      </span>
+                      <span class="device-name">Lighting Controller</span>
+                      <span class="device-subicon-badge" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
+                          <path d="M9 18h6"/><path d="M10 22h4"/>
+                          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1.55.6 2.95 1.5 4 .76.76 1.23 1.52 1.41 2.5"/>
+                        </svg>
+                      </span>
+                    </button>
+
+                    <button type="button" class="device-card" data-device="hvac">
+                      <span class="device-img-wrapper">
+                        <img src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/hvac.jpg') : './image/smart-energy/platform/hvac.jpg'; ?>" alt="" class="device-img" loading="lazy" decoding="async">
+                      </span>
+                      <span class="device-name">HVAC</span>
+                      <span class="device-subicon-badge" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
+                          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                      </span>
+                    </button>
+
+                    <button type="button" class="device-card" data-device="ev-charger">
+                      <span class="device-img-wrapper">
+                        <img src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/ev_charger.jpg') : './image/smart-energy/platform/ev_charger.jpg'; ?>" alt="" class="device-img" loading="lazy" decoding="async">
+                      </span>
+                      <span class="device-name">EV Charger</span>
+                      <span class="device-subicon-badge" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
+                          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                      </span>
+                    </button>
+
+                    <button type="button" class="device-card" data-device="iot-sensor">
+                      <span class="device-img-wrapper">
+                        <img src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/iot_sensor.jpg') : './image/smart-energy/platform/iot_sensor.jpg'; ?>" alt="" class="device-img" loading="lazy" decoding="async">
+                      </span>
+                      <span class="device-name">IoT Sensor</span>
+                      <span class="device-subicon-badge" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
+                          <path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>
+                        </svg>
+                      </span>
+                    </button>
+
+                  </div>
+                </div>
+
+              </section>
+
+              <!-- RIGHT: deployment options -->
+              <section class="right-deployment-column">
+                <div class="deployment-cards-stack">
+
+                  <svg class="stack-connector-svg" viewBox="0 0 60 388" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="ep-flowGradRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#10B981" stop-opacity="0.5"/>
+                        <stop offset="100%" stop-color="#00A86B" stop-opacity="1"/>
+                      </linearGradient>
+                      <marker id="ep-arrowRight" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#00A86B"/>
+                      </marker>
+                    </defs>
+                    <path d="M 0 194 H 25 V 72.5 H 56" fill="none" stroke="url(#ep-flowGradRight)" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#ep-arrowRight)"/>
+                    <path d="M 0 194 H 25 V 315.5 H 56" fill="none" stroke="url(#ep-flowGradRight)" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#ep-arrowRight)"/>
+                    <circle cx="2" cy="194" r="3.5" fill="#00A86B"/>
+                    <circle cx="25" cy="194" r="3.5" fill="#10B981"/>
+                  </svg>
+
+                  <div class="deployment-card-square">
+                    <div class="deploy-img-box">
+                      <img src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/cloud.jpg') : './image/smart-energy/platform/cloud.jpg'; ?>" alt="" class="deploy-img" loading="lazy" decoding="async">
+                    </div>
+                    <span class="deploy-label"><span class="lang-th">คลาวด์</span><span class="lang-en">Cloud</span></span>
+                  </div>
+
+                  <div class="deploy-vertical-dash"></div>
+                  <div class="divider-or-circle"><span>OR</span></div>
+                  <div class="deploy-vertical-dash"></div>
+
+                  <div class="deployment-card-square">
+                    <div class="deploy-img-box">
+                      <img src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/onpremise.jpg') : './image/smart-energy/platform/onpremise.jpg'; ?>" alt="" class="deploy-img" loading="lazy" decoding="async">
+                    </div>
+                    <span class="deploy-label"><span class="lang-th">ภายในองค์กร</span><span class="lang-en">On-Premise</span></span>
+                  </div>
+
+                </div>
+              </section>
+
+            </div>
+          </div>
+
+          <!-- DASHBOARD -->
+          <div id="view-dashboard" class="tab-view" role="tabpanel" aria-labelledby="tab-dashboard">
+            <div class="view-header">
+              <h3><span class="lang-th">แดชบอร์ดระบบ</span><span class="lang-en">System Dashboard</span></h3>
+              <p>
+                <span class="lang-th">ติดตามข้อมูลพลังงานรวม การผลิตไฟจาก Solar การลดคาร์บอน และสถานะอุปกรณ์แบบ Real-time</span>
+                <span class="lang-en">Monitor total energy, solar generation, carbon reduction, and real-time equipment status.</span>
+              </p>
+            </div>
+            <div class="screen-frame">
+              <div class="screen-chrome" aria-hidden="true">
+                <span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span>
+                <span class="screen-chrome-label">SynExta Energy · <span class="lang-th">แดชบอร์ด</span><span class="lang-en">Dashboard</span></span>
+              </div>
+              <button type="button" class="screen-shot-btn" data-shot-alt="Dashboard overview">
+                <img class="screen-shot" width="1388" height="1041" loading="lazy" decoding="async"
+                     src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/screens/overview.png') : './image/smart-energy/platform/screens/overview.png'; ?>"
+                     alt="หน้าจอแดชบอร์ดของแพลตฟอร์ม แสดงจำนวนไซต์งาน พลังงานรวม การลดคาร์บอน กราฟการผลิตและการใช้พลังงานรายวัน และแผนที่ไซต์งาน">
+              </button>
+              <div class="screen-zoom-hint">🔍 <span class="lang-th">คลิกที่ภาพเพื่อดูขนาดเต็ม</span><span class="lang-en">Click the image to enlarge</span></div>
+            </div>
+            <p data-editable="energy-platform-p-1" <?php echo synergy_style('energy-platform-p-1', 'smart-energy'); ?> class="demo-note"><?php echo synergy_content('energy-platform-p-1', 'ℹ️
+              <span class="lang-th">ตัวเลขในหน้าจอตัวอย่างนี้เป็นข้อมูลจำลองเพื่อสาธิตการทำงาน</span>
+              <span class="lang-en">Figures shown in these screens are sample data for demonstration.</span>', 'smart-energy'); ?></p>
+          </div>
+
+          <!-- SITES -->
+          <div id="view-sites" class="tab-view" role="tabpanel" aria-labelledby="tab-sites">
+            <div class="view-header">
+              <h3><span class="lang-th">ไซต์งานทั้งหมด</span><span class="lang-en">All Sites &amp; Facilities</span></h3>
+              <p>
+                <span class="lang-th">ติดตามและบริหารจัดการไซต์งาน โครงการโซลาร์ และอาคารในเครือข่าย</span>
+                <span class="lang-en">Track and manage sites, solar projects, and buildings across the network.</span>
+              </p>
+            </div>
+            <div class="screen-frame">
+              <div class="screen-chrome" aria-hidden="true">
+                <span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span>
+                <span class="screen-chrome-label">SynExta Energy · <span class="lang-th">ไซต์งาน</span><span class="lang-en">Sites</span></span>
+              </div>
+              <button type="button" class="screen-shot-btn" data-shot-alt="Sites map">
+                <img class="screen-shot" width="1693" height="1017" loading="lazy" decoding="async"
+                     src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/screens/sites.png') : './image/smart-energy/platform/screens/sites.png'; ?>"
+                     alt="หน้าจอไซต์งาน แสดงแผนที่ตำแหน่งไซต์ทั่วประเทศ จำนวนอุปกรณ์ทั้งหมด สถานะออนไลน์ ออฟไลน์ และรายการซ่อมบำรุง">
+              </button>
+              <div class="screen-zoom-hint">🔍 <span class="lang-th">คลิกที่ภาพเพื่อดูขนาดเต็ม</span><span class="lang-en">Click the image to enlarge</span></div>
+            </div>
+            <p data-editable="energy-platform-p-2" <?php echo synergy_style('energy-platform-p-2', 'smart-energy'); ?> class="demo-note"><?php echo synergy_content('energy-platform-p-2', 'ℹ️
+              <span class="lang-th">ตัวเลขในหน้าตัวอย่างนี้เป็นข้อมูลจำลองเพื่อสาธิตการทำงาน</span>
+              <span class="lang-en">Figures shown here are sample data for demonstration.</span>', 'smart-energy'); ?></p>
+          </div>
+
+          <!-- REPORTS -->
+          <div id="view-reports" class="tab-view" role="tabpanel" aria-labelledby="tab-reports">
+            <div class="view-header">
+              <h3><span class="lang-th">รายงานพลังงานและคาร์บอน</span><span class="lang-en">Energy &amp; ESG Reports</span></h3>
+              <p>
+                <span class="lang-th">ดาวน์โหลดรายงานภาพรวมการใช้พลังงาน รายงานลด CO₂ และการปฏิบัติตามมาตรฐาน ESG</span>
+                <span class="lang-en">Download energy overview reports, CO₂ reduction summaries, and ESG compliance documents.</span>
+              </p>
+            </div>
+            <div class="screen-frame">
+              <div class="screen-chrome" aria-hidden="true">
+                <span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span>
+                <span class="screen-chrome-label">SynExta Energy · <span class="lang-th">รายงาน</span><span class="lang-en">Reports</span></span>
+              </div>
+              <button type="button" class="screen-shot-btn" data-shot-alt="Reports list">
+                <img class="screen-shot" width="1318" height="988" loading="lazy" decoding="async"
+                     src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/screens/reports.png') : './image/smart-energy/platform/screens/reports.png'; ?>"
+                     alt="หน้าจอรายงาน แสดงรายการรายงานพลังงานรายวัน รายเดือน รายงานการปล่อย CO₂ และ Peak Demand พร้อมสถานะและปุ่มดาวน์โหลด">
+              </button>
+              <div class="screen-zoom-hint">🔍 <span class="lang-th">คลิกที่ภาพเพื่อดูขนาดเต็ม</span><span class="lang-en">Click the image to enlarge</span></div>
+            </div>
+            <p data-editable="energy-platform-p-3" <?php echo synergy_style('energy-platform-p-3', 'smart-energy'); ?> class="demo-note"><?php echo synergy_content('energy-platform-p-3', 'ℹ️
+              <span class="lang-th">ตัวเลขในหน้าตัวอย่างนี้เป็นข้อมูลจำลองเพื่อสาธิตการทำงาน</span>
+              <span class="lang-en">Figures shown here are sample data for demonstration.</span>', 'smart-energy'); ?></p>
+          </div>
+
+          <!-- ALERTS -->
+          <div id="view-alerts" class="tab-view" role="tabpanel" aria-labelledby="tab-alerts">
+            <div class="view-header">
+              <h3><span class="lang-th">การแจ้งเตือนระบบ</span><span class="lang-en">System Alerts &amp; Diagnostics</span></h3>
+              <p>
+                <span class="lang-th">รายการแจ้งเตือนจากอุปกรณ์ Inverter, Meter และ IoT Sensor</span>
+                <span class="lang-en">Alerts from inverters, meters, and IoT sensors.</span>
+              </p>
+            </div>
+            <div class="screen-frame">
+              <div class="screen-chrome" aria-hidden="true">
+                <span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span>
+                <span class="screen-chrome-label">SynExta Energy · <span class="lang-th">การแจ้งเตือน</span><span class="lang-en">Alerts</span></span>
+              </div>
+              <button type="button" class="screen-shot-btn" data-shot-alt="Alerts table">
+                <img class="screen-shot" width="1331" height="998" loading="lazy" decoding="async"
+                     src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/screens/alerts.png') : './image/smart-energy/platform/screens/alerts.png'; ?>"
+                     alt="หน้าจอการแจ้งเตือน แยกตามระดับความรุนแรง วิกฤต สูง ปานกลาง ต่ำ พร้อมตารางรายการแจ้งเตือนของแต่ละไซต์และอุปกรณ์">
+              </button>
+              <div class="screen-zoom-hint">🔍 <span class="lang-th">คลิกที่ภาพเพื่อดูขนาดเต็ม</span><span class="lang-en">Click the image to enlarge</span></div>
+            </div>
+            <p data-editable="energy-platform-p-4" <?php echo synergy_style('energy-platform-p-4', 'smart-energy'); ?> class="demo-note"><?php echo synergy_content('energy-platform-p-4', 'ℹ️
+              <span class="lang-th">ตัวเลขในหน้าตัวอย่างนี้เป็นข้อมูลจำลองเพื่อสาธิตการทำงาน</span>
+              <span class="lang-en">Figures shown here are sample data for demonstration.</span>', 'smart-energy'); ?></p>
+          </div>
+
+          <!-- ANALYTICS -->
+          <div id="view-analytics" class="tab-view" role="tabpanel" aria-labelledby="tab-analytics">
+            <div class="view-header">
+              <h3><span class="lang-th">การวิเคราะห์ข้อมูลขั้นสูง</span><span class="lang-en">Advanced Analytics &amp; Forecast</span></h3>
+              <p>
+                <span class="lang-th">วิเคราะห์แนวโน้มการผลิตไฟฟ้าจากโซลาร์เซลล์และการพยากรณ์การใช้พลังงานด้วย AI</span>
+                <span class="lang-en">Analyze solar generation trends and forecast energy demand with AI.</span>
+              </p>
+            </div>
+            <div class="screen-frame">
+              <div class="screen-chrome" aria-hidden="true">
+                <span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span>
+                <span class="screen-chrome-label">SynExta Energy · <span class="lang-th">วิเคราะห์ข้อมูล</span><span class="lang-en">Analytics</span></span>
+              </div>
+              <button type="button" class="screen-shot-btn" data-shot-alt="Analytics dashboard">
+                <img class="screen-shot" width="1399" height="1050" loading="lazy" decoding="async"
+                     src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/screens/analytics.png') : './image/smart-energy/platform/screens/analytics.png'; ?>"
+                     alt="หน้าจอวิเคราะห์ข้อมูล แสดงแนวโน้มพลังงานรายวัน สัดส่วนพลังงานผลิตและพลังงานใช้ การวิเคราะห์ Peak Demand และตัวชี้วัดประสิทธิภาพระบบ">
+              </button>
+              <div class="screen-zoom-hint">🔍 <span class="lang-th">คลิกที่ภาพเพื่อดูขนาดเต็ม</span><span class="lang-en">Click the image to enlarge</span></div>
+            </div>
+            <p data-editable="energy-platform-p-5" <?php echo synergy_style('energy-platform-p-5', 'smart-energy'); ?> class="demo-note"><?php echo synergy_content('energy-platform-p-5', 'ℹ️
+              <span class="lang-th">ตัวเลขในหน้าตัวอย่างนี้เป็นข้อมูลจำลองเพื่อสาธิตการทำงาน</span>
+              <span class="lang-en">Figures shown here are sample data for demonstration.</span>', 'smart-energy'); ?></p>
+          </div>
+
+          <!-- USERS -->
+          <div id="view-users" class="tab-view" role="tabpanel" aria-labelledby="tab-users">
+            <div class="view-header">
+              <h3><span class="lang-th">การจัดการผู้ใช้งานและสิทธิ์</span><span class="lang-en">User Management &amp; Roles</span></h3>
+              <p>
+                <span class="lang-th">ตั้งค่าสิทธิ์การเข้าถึงสำหรับผู้ดูแลระบบ วิศวกร และผู้บริหาร</span>
+                <span class="lang-en">Configure access rights for administrators, engineers, and executives.</span>
+              </p>
+            </div>
+            <div class="screen-frame">
+              <div class="screen-chrome" aria-hidden="true">
+                <span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span>
+                <span class="screen-chrome-label">SynExta Energy · <span class="lang-th">ผู้ใช้งาน</span><span class="lang-en">Users</span></span>
+              </div>
+              <button type="button" class="screen-shot-btn" data-shot-alt="User management">
+                <img class="screen-shot" width="1422" height="1061" loading="lazy" decoding="async"
+                     src="<?php echo function_exists('synergy_asset') ? synergy_asset('image/smart-energy/platform/screens/users.png') : './image/smart-energy/platform/screens/users.png'; ?>"
+                     alt="หน้าจอจัดการผู้ใช้งาน แสดงจำนวนผู้ใช้ในระบบ และตารางรายชื่อผู้ใช้พร้อมองค์กร บทบาท และสถานะการใช้งาน">
+              </button>
+              <div class="screen-zoom-hint">🔍 <span class="lang-th">คลิกที่ภาพเพื่อดูขนาดเต็ม</span><span class="lang-en">Click the image to enlarge</span></div>
+            </div>
+            <p data-editable="energy-platform-p-6" <?php echo synergy_style('energy-platform-p-6', 'smart-energy'); ?> class="demo-note"><?php echo synergy_content('energy-platform-p-6', 'ℹ️
+              <span class="lang-th">ตัวเลขในหน้าจอตัวอย่างนี้เป็นข้อมูลจำลองเพื่อสาธิตการทำงาน</span>
+              <span class="lang-en">Figures shown in these screens are sample data for demonstration.</span>', 'smart-energy'); ?></p>
+          </div>
+
+        </div>
+
+        <!-- ---------- Benefits strip ---------- -->
+        <div class="app-footer-strip">
+
+          <div class="benefit-item">
+            <div class="benefit-icon-wrapper" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
                 <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
                 <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
               </svg>
             </div>
-            <span class="font-display font-extrabold text-slate-800 text-sm sm:text-base tracking-wider">SYNEXTA ENERGY</span>
-          </div>
-        </div>
-
-        <!-- MAIN 3-COLUMN ARCHITECTURE LAYOUT -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch relative">
-
-          <!-- ═══════════ LEFT COLUMN: HEADLINE + 4 FEATURE CARDS ═══════════ -->
-          <div class="lg:col-span-3 flex flex-col justify-between space-y-4">
-            <div>
-              <p class="text-[#059669] font-bold text-[11px] sm:text-xs tracking-widest uppercase mb-2 block">
-                <span class="lang-th">ALL-IN-ONE ENERGY PLATFORM</span>
-                <span class="lang-en">ALL-IN-ONE ENERGY PLATFORM</span>
-              </p>
-              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight mb-3 font-display">
-                <span class="lang-th">แพลตฟอร์มเดียว<br>บริหารพลังงาน<br><span class="text-[#059669]">ทุกไซต์งาน</span></span>
-                <span class="lang-en">One Platform.<br>Manage Energy.<br><span class="text-[#059669]">Every Site.</span></span>
-              </h2>
-              <p class="text-slate-500 text-xs sm:text-sm leading-relaxed mb-4">
-                <span class="lang-th">เชื่อมต่อ ควบคุม และวิเคราะห์การใช้พลังงานด้วยเทคโนโลยี AI เพื่อประสิทธิภาพสูงสุด</span>
-                <span class="lang-en">Connect, control, and analyze energy consumption with AI technology for maximum efficiency.</span>
-              </p>
-            </div>
-
-            <!-- 4 FEATURE ITEMS -->
-            <div class="space-y-3">
-              <!-- Feature 1 -->
-              <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex items-start gap-3 hover:shadow-md transition">
-                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-bold text-slate-800 text-xs sm:text-sm mb-0.5">
-                    <span class="lang-th">รองรับ Inverter หลายแบรนด์</span>
-                    <span class="lang-en">Multi-brand Inverter Support</span>
-                  </h3>
-                  <p class="text-slate-500 text-[11px] leading-relaxed">
-                    <span class="lang-th">เชื่อมต่ออินเวอร์เตอร์แบรนด์ชั้นนำ Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis และแบรนด์อื่น ๆ</span>
-                    <span class="lang-en">Connect top inverter brands: Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis and more.</span>
-                  </p>
-                </div>
-              </div>
-
-              <!-- Feature 2 -->
-              <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex items-start gap-3 hover:shadow-md transition">
-                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-bold text-slate-800 text-xs sm:text-sm mb-0.5">
-                    <span class="lang-th">บริหารจัดการหลายไซต์</span>
-                    <span class="lang-en">Multi-site Management</span>
-                  </h3>
-                  <p class="text-slate-500 text-[11px] leading-relaxed">
-                    <span class="lang-th">ติดตามการใช้งานโรงงาน สาขา และระบบ Solar ได้แบบเรียลไทม์ จากศูนย์กลางเดียว</span>
-                    <span class="lang-en">Monitor factories, branches, and Solar systems in real-time from a central hub.</span>
-                  </p>
-                </div>
-              </div>
-
-              <!-- Feature 3 -->
-              <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex items-start gap-3 hover:shadow-md transition">
-                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-bold text-slate-800 text-xs sm:text-sm mb-0.5">
-                    <span class="lang-th">ติดตั้งได้ยืดหยุ่น</span>
-                    <span class="lang-en">Flexible Deployment</span>
-                  </h3>
-                  <p class="text-slate-500 text-[11px] leading-relaxed">
-                    <span class="lang-th">เลือกติดตั้งแบบ Cloud, On-Premise หรือ Hybrid ได้ตามนโยบายด้าน IT</span>
-                    <span class="lang-en">Deploy on Cloud, On-Premise, or Hybrid based on IT policies.</span>
-                  </p>
-                </div>
-              </div>
-
-              <!-- Feature 4 -->
-              <div class="bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex items-start gap-3 hover:shadow-md transition">
-                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0 mt-0.5">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-bold text-slate-800 text-xs sm:text-sm mb-0.5">
-                    <span class="lang-th">เชื่อมต่อระบบอัตโนมัติ</span>
-                    <span class="lang-en">Automated Open API</span>
-                  </h3>
-                  <p class="text-slate-500 text-[11px] leading-relaxed">
-                    <span class="lang-th">เชื่อมต่อกับ ERP, BMS, CMMS และระบบอื่น ๆ ขององค์กร ได้ผ่าน Open API</span>
-                    <span class="lang-en">Integrate with ERP, BMS, CMMS, and enterprise systems via Open API.</span>
-                  </p>
-                </div>
-              </div>
+            <div class="benefit-content">
+              <h4 class="benefit-title"><span class="lang-th">ลดต้นทุนพลังงาน</span><span class="lang-en">Reduce Energy Costs</span></h4>
+              <p class="benefit-desc"><span class="lang-th">เพิ่มประสิทธิภาพการใช้พลังงาน</span><span class="lang-en">Maximize energy efficiency.</span></p>
             </div>
           </div>
 
-          <!-- ═══════════ CENTER COLUMN: TOP NAV + CORE RADIAL DIAGRAM + EQUIPMENT ═══════════ -->
-          <div class="lg:col-span-6 bg-[#f3f7f5] rounded-3xl p-4 sm:p-6 border border-slate-200/60 flex flex-col justify-between relative overflow-hidden">
-            
-            <!-- TOP NAV BAR PILL -->
-            <div class="bg-white rounded-2xl p-2.5 shadow-sm border border-slate-100 grid grid-cols-6 gap-1 text-center mb-4">
-              <div class="flex flex-col items-center justify-center cursor-pointer group relative pb-1">
-                <div class="w-7 h-7 rounded-lg bg-emerald-50 text-[#059669] flex items-center justify-center mb-1">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                </div>
-                <span class="text-[10px] sm:text-xs font-bold text-[#059669]"><span class="lang-th">ภาพรวม</span><span class="lang-en">Overview</span></span>
-                <div class="absolute bottom-0 w-6 h-0.5 bg-[#059669] rounded-full"></div>
-              </div>
-
-              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
-                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8l7-4 7 4v13"/></svg>
-                </div>
-                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">ไซต์งาน</span><span class="lang-en">Sites</span></span>
-              </div>
-
-              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
-                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                </div>
-                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">รายงาน</span><span class="lang-en">Reports</span></span>
-              </div>
-
-              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
-                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                </div>
-                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">การแจ้งเตือน</span><span class="lang-en">Alerts</span></span>
-              </div>
-
-              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
-                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                </div>
-                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">วิเคราะห์ข้อมูล</span><span class="lang-en">Analytics</span></span>
-              </div>
-
-              <div class="flex flex-col items-center justify-center cursor-pointer group text-slate-500 hover:text-slate-800">
-                <div class="w-7 h-7 rounded-lg text-slate-400 group-hover:text-slate-600 flex items-center justify-center mb-1">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </div>
-                <span class="text-[10px] sm:text-xs font-medium"><span class="lang-th">ผู้ใช้งาน</span><span class="lang-en">Users</span></span>
-              </div>
-            </div>
-
-            <!-- CENTRAL RADIAL ENGINE DIAGRAM -->
-            <div class="relative py-6 my-auto flex items-center justify-center">
-              
-              <!-- Radial Gradient Halo Background -->
-              <div class="absolute inset-0 bg-radial from-emerald-500/10 via-emerald-300/5 to-transparent rounded-full pointer-events-none"></div>
-
-              <!-- Concentric Dashed Orbit Circle -->
-              <div class="w-[280px] h-[280px] sm:w-[310px] sm:h-[310px] rounded-full border-2 border-dashed border-emerald-300/70 relative flex items-center justify-center shadow-inner">
-                
-                <!-- Orbit Decorative Light Dots -->
-                <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
-                <div class="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
-                <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
-                <div class="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></div>
-
-                <!-- 1. TOP NODE: AI Analytics -->
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-white rounded-2xl px-3 py-1.5 border border-slate-200/80 shadow-md flex items-center gap-1.5 z-10 hover:scale-105 transition">
-                  <div class="w-4 h-4 text-[#059669]">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"/></svg>
-                  </div>
-                  <span class="text-[11px] font-bold text-slate-800">AI Analytics</span>
-                </div>
-
-                <!-- 2. RIGHT NODE: Energy Analytics -->
-                <div class="absolute top-1/2 -right-5 -translate-y-1/2 bg-white rounded-2xl px-3 py-1.5 border border-slate-200/80 shadow-md flex items-center gap-1.5 z-10 hover:scale-105 transition">
-                  <div class="w-4 h-4 text-[#059669]">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-                  </div>
-                  <span class="text-[11px] font-bold text-slate-800">Energy Analytics</span>
-                </div>
-
-                <!-- 3. BOTTOM NODE: Alert Engine -->
-                <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-2xl px-3 py-1.5 border border-slate-200/80 shadow-md flex items-center gap-1.5 z-10 hover:scale-105 transition">
-                  <div class="w-4 h-4 text-[#059669]">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                  </div>
-                  <span class="text-[11px] font-bold text-slate-800">Alert Engine</span>
-                </div>
-
-                <!-- 4. LEFT NODE: Rule Engine -->
-                <div class="absolute top-1/2 -left-5 -translate-y-1/2 bg-white rounded-2xl px-3 py-1.5 border border-slate-200/80 shadow-md flex items-center gap-1.5 z-10 hover:scale-105 transition">
-                  <div class="w-4 h-4 text-[#059669]">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9"/><line x1="12" y1="14" x2="12" y2="15"/></svg>
-                  </div>
-                  <span class="text-[11px] font-bold text-slate-800">Rule Engine</span>
-                </div>
-
-                <!-- CENTER HUB SPHERE & LABELS -->
-                <div class="flex flex-col items-center justify-center text-center relative z-0">
-                  <div class="text-[11px] sm:text-xs font-extrabold text-slate-900 mb-0.5 tracking-tight leading-tight">
-                    <div>SynExta</div>
-                    <div>Energy Engine</div>
-                  </div>
-                  <!-- Glowing 3D AI Core Image -->
-                  <div class="relative w-24 h-24 sm:w-32 sm:h-32 my-0.5">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-ai-core-3d.png" alt="SynExta AI Core" class="w-full h-full object-contain filter drop-shadow-[0_6px_14px_rgba(16,185,129,0.3)]">
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- FIELD CONNECTIVITY LABEL BRIDGES -->
-            <div class="text-center my-2.5 relative z-10">
-              <div class="inline-flex items-center gap-2 bg-emerald-800 text-white text-[10px] sm:text-xs font-bold px-3.5 py-1 rounded-full shadow-md">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="lang-th">เชื่อมต่ออุปกรณ์และระบบภาคสนาม</span>
-                <span class="lang-en">Field Equipment & System Integration</span>
-              </div>
-            </div>
-
-            <!-- 6 FIELD EQUIPMENT CARDS -->
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-2 border-t border-slate-200/60">
-              <!-- Equipment 1 -->
-              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
-                <div class="h-10 flex items-center justify-center mb-1">
-                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/solar-inverter.png" alt="Solar Inverter" class="max-h-full w-auto object-contain">
-                </div>
-                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">Solar Inverter</div>
-                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
-                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                </div>
-              </div>
-
-              <!-- Equipment 2 -->
-              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
-                <div class="h-10 flex items-center justify-center mb-1">
-                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/energy-meter.png" alt="Energy Meter" class="max-h-full w-auto object-contain">
-                </div>
-                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">Energy Meter</div>
-                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
-                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                </div>
-              </div>
-
-              <!-- Equipment 3 -->
-              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
-                <div class="h-10 flex items-center justify-center mb-1">
-                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/lighting-controller.png" alt="Lighting Controller" class="max-h-full w-auto object-contain">
-                </div>
-                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">Lighting Controller</div>
-                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
-                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M15.09 14A6 6 0 0 0 18 9 6 6 0 0 0 6 9a6 6 0 0 0 2.91 5z"/></svg>
-                </div>
-              </div>
-
-              <!-- Equipment 4 -->
-              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
-                <div class="h-10 flex items-center justify-center mb-1">
-                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/hvac.png" alt="HVAC" class="max-h-full w-auto object-contain">
-                </div>
-                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">HVAC</div>
-                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
-                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 12a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4z"/></svg>
-                </div>
-              </div>
-
-              <!-- Equipment 5 -->
-              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
-                <div class="h-10 flex items-center justify-center mb-1">
-                  <img src="<?php echo get_template_directory_uri(); ?>/image/energy-arch/ev-charger.png" alt="EV Charger" class="max-h-full w-auto object-contain">
-                </div>
-                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">EV Charger</div>
-                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
-                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-1.1 0-2 .9-2 2v7c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
-                </div>
-              </div>
-
-              <!-- Equipment 6 -->
-              <div class="bg-white rounded-2xl p-2 border border-slate-100 shadow-sm text-center flex flex-col items-center justify-between hover:shadow-md transition">
-                <div class="h-10 flex items-center justify-center mb-1 text-[#059669]">
-                  <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg>
-                </div>
-                <div class="text-[10px] font-bold text-slate-800 leading-tight mb-1">IoT Sensor</div>
-                <div class="w-4 h-4 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center">
-                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-                </div>
-              </div>
-
+          <div class="benefit-item">
+            <div class="benefit-icon-wrapper" aria-hidden="true"><div class="co2-badge-text">CO₂</div></div>
+            <div class="benefit-content">
+              <h4 class="benefit-title"><span class="lang-th">ลดการปล่อยคาร์บอน</span><span class="lang-en">Reduce Carbon Emissions</span></h4>
+              <p class="benefit-desc"><span class="lang-th">สอดคล้องเป้าหมาย Net Zero</span><span class="lang-en">Align with Net Zero goals.</span></p>
             </div>
           </div>
 
-          <!-- ═══════════ RIGHT COLUMN: DEPLOYMENT OPTIONS ═══════════ -->
-          <div class="lg:col-span-3 flex flex-col justify-between space-y-3">
-            
-            <div class="text-center mb-2">
-              <span class="font-bold text-slate-800 text-xs sm:text-sm">
-                <span class="lang-th">เลือกการติดตั้งที่เหมาะกับคุณ</span>
-                <span class="lang-en">Choose Deployment Fit for You</span>
-              </span>
+          <div class="benefit-item">
+            <div class="benefit-icon-wrapper" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+              </svg>
             </div>
-
-            <!-- DEPLOYMENT CARDS -->
-            <div class="space-y-3 my-auto">
-              
-              <!-- 1. CLOUD -->
-              <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 hover:border-emerald-500/40 hover:shadow-md transition text-center relative overflow-hidden group">
-                <div class="w-16 h-16 mx-auto mb-1 relative">
-                  <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-cloud-3d.png" alt="Cloud Deployment" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
-                </div>
-                <h3 class="font-extrabold text-slate-900 text-sm">Cloud</h3>
-                <p class="text-slate-500 text-[11px] mt-0.5 leading-snug">
-                  <span class="lang-th">โครงสร้างคลาวด์ ปลอดภัยและขยายตัว ได้ไม่จำกัด</span>
-                  <span class="lang-en">Secure and infinitely scalable cloud infrastructure.</span>
-                </p>
-              </div>
-
-              <!-- OR BADGE SEPARATOR -->
-              <div class="w-7 h-7 rounded-full bg-emerald-800 text-white font-bold text-[10px] flex items-center justify-center mx-auto shadow-sm border border-emerald-600">
-                <span class="lang-th">หรือ</span>
-                <span class="lang-en">OR</span>
-              </div>
-
-              <!-- 2. ON-PREMISE -->
-              <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 hover:border-emerald-500/40 hover:shadow-md transition text-center relative overflow-hidden group">
-                <div class="w-16 h-16 mx-auto mb-1 relative">
-                  <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-onprem-3d.png" alt="On-Premise Deployment" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
-                </div>
-                <h3 class="font-extrabold text-slate-900 text-sm">On-Premise</h3>
-                <p class="text-slate-500 text-[11px] mt-0.5 leading-snug">
-                  <span class="lang-th">เซิร์ฟเวอร์ภายใน เครือข่ายองค์กร ควบคุมข้อมูลได้เต็มที่</span>
-                  <span class="lang-en">Local internal server with full data control.</span>
-                </p>
-              </div>
-
-              <!-- 3. HYBRID -->
-              <div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 hover:border-emerald-500/40 hover:shadow-md transition text-center relative overflow-hidden group">
-                <div class="w-16 h-16 mx-auto mb-1 relative">
-                  <img src="<?php echo get_template_directory_uri(); ?>/image/synexta-hybrid-3d.png" alt="Hybrid Deployment" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
-                </div>
-                <h3 class="font-extrabold text-slate-900 text-sm">Hybrid</h3>
-                <p class="text-slate-500 text-[11px] mt-0.5 leading-snug">
-                  <span class="lang-th">ผสานข้อดีของ Cloud และ On-Premise ยืดหยุ่น ปลอดภัย</span>
-                  <span class="lang-en">Combine benefits of Cloud and On-Premise.</span>
-                </p>
-              </div>
-
+            <div class="benefit-content">
+              <h4 class="benefit-title"><span class="lang-th">ปลอดภัย เชื่อถือได้</span><span class="lang-en">Safe &amp; Reliable</span></h4>
+              <p class="benefit-desc"><span class="lang-th">ด้วยมาตรฐานความปลอดภัยระดับสากล</span><span class="lang-en">International standard security.</span></p>
             </div>
+          </div>
 
+          <div class="benefit-item">
+            <div class="benefit-icon-wrapper" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
+                <rect x="4" y="14" width="4" height="7" rx="1"/><rect x="10" y="10" width="4" height="11" rx="1"/>
+                <rect x="16" y="6" width="4" height="15" rx="1"/><polyline points="4 8 10 3 16 7 22 2"/>
+              </svg>
+            </div>
+            <div class="benefit-content">
+              <h4 class="benefit-title"><span class="lang-th">ขยายธุรกิจได้ไม่จำกัด</span><span class="lang-en">Infinitely Scalable</span></h4>
+              <p class="benefit-desc"><span class="lang-th">รองรับการเติบโตในอนาคต</span><span class="lang-en">Ready for future growth.</span></p>
+            </div>
           </div>
 
         </div>
 
-        <!-- ═══════════ BOTTOM BANNER: 4 KEY BENEFIT POINTS ═══════════ -->
-        <div class="w-full bg-white rounded-2xl p-4 shadow-sm border border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 items-center">
-          
-          <!-- Benefit 1 -->
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-            </div>
-            <div>
-              <div class="font-bold text-slate-800 text-xs sm:text-sm">
-                <span class="lang-th">ลดต้นทุนพลังงาน</span>
-                <span class="lang-en">Reduce Energy Costs</span>
-              </div>
-              <div class="text-slate-500 text-[11px] sm:text-xs">
-                <span class="lang-th">เพิ่มประสิทธิภาพการใช้พลังงาน</span>
-                <span class="lang-en">Maximize Energy Efficiency</span>
-              </div>
-            </div>
-          </div>
+        <!-- ---------- Screenshot lightbox ---------- -->
+        <div class="shot-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged screenshot">
+          <button type="button" class="shot-lightbox-close" aria-label="Close">&times;</button>
+          <img alt="">
+        </div>
 
-          <!-- Benefit 2 -->
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0">
-              <span class="font-extrabold text-xs text-[#059669]">CO₂</span>
+        <!-- ---------- Telemetry dialog ---------- -->
+        <div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="ep-modal-title">
+          <div class="modal-card">
+            <div class="modal-header">
+              <h3 id="ep-modal-title">Device Telemetry</h3>
+              <button type="button" class="close-btn" aria-label="Close">&times;</button>
             </div>
-            <div>
-              <div class="font-bold text-slate-800 text-xs sm:text-sm">
-                <span class="lang-th">ลดการปล่อยคาร์บอน</span>
-                <span class="lang-en">Reduce Carbon Emissions</span>
-              </div>
-              <div class="text-slate-500 text-[11px] sm:text-xs">
-                <span class="lang-th">สอดคล้องเป้าหมาย Net Zero</span>
-                <span class="lang-en">Align with Net Zero Goals</span>
-              </div>
-            </div>
+            <div id="ep-modal-content"></div>
           </div>
-
-          <!-- Benefit 3 -->
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            </div>
-            <div>
-              <div class="font-bold text-slate-800 text-xs sm:text-sm">
-                <span class="lang-th">ปลอดภัย เชื่อถือได้</span>
-                <span class="lang-en">Safe &amp; Reliable</span>
-              </div>
-              <div class="text-slate-500 text-[11px] sm:text-xs">
-                <span class="lang-th">ด้วยมาตรฐานระดับสากล และระบบความปลอดภัยสูง</span>
-                <span class="lang-en">International standard security.</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Benefit 4 -->
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-[#059669] flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-            </div>
-            <div>
-              <div class="font-bold text-slate-800 text-xs sm:text-sm">
-                <span class="lang-th">ขยายธุรกิจได้ไม่จำกัด</span>
-                <span class="lang-en">Infinitely Scalable</span>
-              </div>
-              <div class="text-slate-500 text-[11px] sm:text-xs">
-                <span class="lang-th">รองรับการเติบโตในอนาคต</span>
-                <span class="lang-en">Ready for future growth.</span>
-              </div>
-            </div>
-          </div>
-
         </div>
 
       </div>
-
     </div>
   </section>
 
   <!-- ================= 6. ความสามารถของระบบ SMART ENERGY MANAGEMENT ================= -->
   <section id="energy-capabilities" class="py-14 sm:py-20 bg-white" style="scroll-margin-top:96px">
     <div class="se-shell">
-      <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="text-center max-w-4xl mx-auto mb-12">
         <p class="se-eyebrow mb-2">
           <span class="lang-th">ความสามารถของระบบ</span>
           <span class="lang-en">SMART ENERGY CAPABILITIES</span>
         </p>
         <!-- หัวข้อ -->
-        <h2 class="se-h2 font-display text-ink">
+        <h2 class="se-h2 font-display text-ink sm:whitespace-nowrap">
           <span class="lang-th">ความสามารถของระบบ Smart Energy Management</span>
           <span class="lang-en">Smart Energy Management Capabilities</span>
         </h2>
       </div>
 
-      <!-- 12 CARDS GRID -->
-      <div class="se-tight grid auto-rows-fr grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-4 sm:gap-6">
+      <!-- 12 CARDS GRID (6 Columns per row = 2 Rows on Desktop) -->
+      <div class="grid auto-rows-fr grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3.5 sm:gap-4 max-w-full mx-auto">
 
         <!-- 1. ติดตามการผลิตไฟ Solar -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-solar-panel"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_1.png" alt="Solar Monitoring" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">ระบบติดตามการผลิตไฟฟ้าจาก Solar Rooftop</span>
-            <span class="lang-en">Solar Monitoring</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-1" <?php echo synergy_style('energy-capabilities-h3-1', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-1', '<span class="lang-th">ระบบติดตามการผลิตไฟฟ้าจาก Solar Rooftop</span>
+            <span class="lang-en">Solar Monitoring</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 2. รองรับ Inverter หลายแบรนด์ -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-plug"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_2.png" alt="Multi-Brand Inverter" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">รองรับ Inverter หลายแบรนด์</span>
-            <span class="lang-en">Multi-Brand Inverter</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-2" <?php echo synergy_style('energy-capabilities-h3-2', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-2', '<span class="lang-th">รองรับ Inverter หลายแบรนด์</span>
+            <span class="lang-en">Multi-Brand Inverter</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 3. Dashboard พลังงานแบบ Real-time -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-chart-pie"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_3.png" alt="Energy Dashboard" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">Dashboard พลังงานแบบ Real-time</span>
-            <span class="lang-en">Energy Dashboard</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-3" <?php echo synergy_style('energy-capabilities-h3-3', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-3', '<span class="lang-th">Dashboard พลังงานแบบ Real-time</span>
+            <span class="lang-en">Energy Dashboard</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 4. ระบบติดตามการใช้พลังงาน -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-gauge-high"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_4.png" alt="Real-Time Monitoring" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">ระบบติดตามการใช้พลังงาน</span>
-            <span class="lang-en">Real-Time Monitoring</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-4" <?php echo synergy_style('energy-capabilities-h3-4', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-4', '<span class="lang-th">ระบบติดตามการใช้พลังงาน</span>
+            <span class="lang-en">Real-Time Monitoring</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 5. ระบบควบคุมเปิด-ปิดไฟอัตโนมัติ -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-regular fa-lightbulb"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_5.png" alt="Lighting Automation" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">ระบบควบคุมการเปิด–ปิดไฟอัตโนมัติ</span>
-            <span class="lang-en">Lighting Automation</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-5" <?php echo synergy_style('energy-capabilities-h3-5', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-5', '<span class="lang-th">ระบบควบคุมการเปิด–ปิดไฟอัตโนมัติ</span>
+            <span class="lang-en">Lighting Automation</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 6. ระบบกำหนดเวลาเปิด-ปิดอุปกรณ์ไฟฟ้า -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-clock"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_6.png" alt="Energy Scheduling" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">ระบบกำหนดเวลาเปิด–ปิดอุปกรณ์ไฟฟ้า</span>
-            <span class="lang-en">Energy Scheduling</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-6" <?php echo synergy_style('energy-capabilities-h3-6', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-6', '<span class="lang-th">ระบบกำหนดเวลาเปิด–ปิดอุปกรณ์ไฟฟ้า</span>
+            <span class="lang-en">Energy Scheduling</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 7. ระบบแจ้งเตือนเมื่ออุปกรณ์ผิดปกติ -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-bell"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_7.png" alt="Alert Notification" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">ระบบแจ้งเตือนเมื่ออุปกรณ์ผิดปกติ</span>
-            <span class="lang-en">Alert Notification</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-7" <?php echo synergy_style('energy-capabilities-h3-7', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-7', '<span class="lang-th">ระบบแจ้งเตือนเมื่ออุปกรณ์ผิดปกติ</span>
+            <span class="lang-en">Alert Notification</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 8. วิเคราะห์ข้อมูลการใช้พลังงาน -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-chart-line"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_8.png" alt="Energy Analytics" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">วิเคราะห์ข้อมูลการใช้พลังงาน</span>
-            <span class="lang-en">Energy Analytics</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-8" <?php echo synergy_style('energy-capabilities-h3-8', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-8', '<span class="lang-th">วิเคราะห์ข้อมูลการใช้พลังงาน</span>
+            <span class="lang-en">Energy Analytics</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 9. บริหารจัดการหลายโรงงานหรือหลายสาขา -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-building-user"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_9.png" alt="Multi-Site Management" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">บริหารจัดการหลายโรงงานหรือหลายสาขา</span>
-            <span class="lang-en">Multi-Site Management</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-9" <?php echo synergy_style('energy-capabilities-h3-9', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-9', '<span class="lang-th">บริหารจัดการหลายโรงงานหรือหลายสาขา</span>
+            <span class="lang-en">Multi-Site Management</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 10. กำหนดสิทธิ์ผู้ใช้งาน -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-user-shield"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col justify-between items-center text-center group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_10.png" alt="Role-Based Access Control" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">กำหนดสิทธิ์ผู้ใช้งาน (Role-Based Access Control)</span>
-            <span class="lang-en">Role-Based Access Control</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-10" <?php echo synergy_style('energy-capabilities-h3-10', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-10', '<span class="lang-th">กำหนดสิทธิ์ผู้ใช้งาน (Role-Based Access Control)</span>
+            <span class="lang-en">Role-Based Access Control</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 11. รองรับ Cloud และ On-Premise -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-cloud-sun"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_11.png" alt="Cloud & On-Premise" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">รองรับ Cloud และ On-Premise</span>
-            <span class="lang-en">Cloud &amp; On-Premise</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-11" <?php echo synergy_style('energy-capabilities-h3-11', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-11', '<span class="lang-th">รองรับ Cloud และ On-Premise</span>
+            <span class="lang-en">Cloud &amp; On-Premise</span>', 'smart-energy'); ?></h3>
         </div>
 
         <!-- 12. เชื่อมต่อระบบ ERP และ BMS ผ่าน API -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center group">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-brand flex items-center justify-center text-2xl mb-3.5 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-code"></i>
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-emerald-500 hover:shadow-lg transition-all flex flex-col items-center text-center justify-between group">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#f0f8f4] flex items-center justify-center p-1.5 mb-4 group-hover:scale-105 transition-transform duration-300">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/cap_icon_12.png" alt="Open API Integration" class="w-full h-full object-contain">
           </div>
-          <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mb-1">
-            <span class="lang-th">เชื่อมต่อระบบ ERP และ BMS ผ่าน API</span>
-            <span class="lang-en">Open API Integration</span>
-          </h3>
+          <h3 data-editable="energy-capabilities-h3-12" <?php echo synergy_style('energy-capabilities-h3-12', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-1"><?php echo synergy_content('energy-capabilities-h3-12', '<span class="lang-th">เชื่อมต่อระบบ ERP และ BMS ผ่าน API</span>
+            <span class="lang-en">Open API Integration</span>', 'smart-energy'); ?></h3>
         </div>
 
       </div>
@@ -1582,82 +1864,191 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <span class="lang-en">BUSINESS OUTCOMES</span>
       </p>
       <!-- หัวข้อ -->
-      <h2 class="se-h2 font-display text-ink text-center mb-10">
+      <h2 class="se-h2 font-display text-ink text-center mb-10 whitespace-nowrap">
         <span class="lang-th">ผลลัพธ์ที่วัดผลได้จริง</span>
         <span class="lang-en">Business Outcomes That Matter</span>
       </h2>
 
-      <div class="se-grid se-c6" style="gap:clamp(12px,1.4vw,20px)">
-        
-        <!-- 1. ลดค่าไฟฟ้า -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
-          <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-arrow-trend-down"></i></span>
+      <!-- 6 OUTCOMES CARDS GRID -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- 01. ตัดสินใจได้รวดเร็วขึ้น -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:border-emerald-500 hover:shadow-md transition-all flex flex-col justify-between group">
           <div>
-            <div class="se-card-t se-titlebox text-ink mb-1">
-              <span class="lang-th">ลดค่าไฟฟ้า</span>
-              <span class="lang-en">Reduce Electricity Cost</span>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#e8f5ec] flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/outcome_icon_1.png" alt="Faster Decision-Making" class="w-full h-full object-contain">
+              </div>
+              <div class="flex-1 pt-1">
+                <span class="text-emerald-700 font-extrabold text-lg sm:text-xl block mb-1">01</span>
+                <h3 class="font-extrabold text-slate-900 text-base sm:text-lg leading-snug">
+                  <span class="lang-th">ตัดสินใจได้รวดเร็วขึ้น</span>
+                  <span class="lang-en">Faster Decision-Making</span>
+                </h3>
+                <div class="w-10 h-0.5 bg-emerald-700/60 my-2"></div>
+              </div>
             </div>
-            <p class="se-card-p text-muted"><span class="lang-th">ลดค่าใช้จ่ายด้านพลังงานขององค์กรอย่างยั่งยืน</span><span class="lang-en">Lower overall operational energy costs.</span></p>
+            <p data-editable="energy-outcomes-p-1" <?php echo synergy_style('energy-outcomes-p-1', 'smart-energy'); ?> class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed mb-4"><?php echo synergy_content('energy-outcomes-p-1', '<span class="lang-th">เชื่อมโยงข้อมูลทุกระบบแบบ Real-time ช่วยให้เห็นสถานการณ์ปัจจุบันชัดเจน และตัดสินใจบนข้อมูลจริง ไม่ใช่การคาดเดา</span>
+              <span class="lang-en">Connect real-time data across all systems to gain clear situational awareness and make data-driven decisions.</span>', 'smart-energy'); ?></p>
+          </div>
+          <div class="bg-[#f2f9f5] rounded-xl p-3 sm:p-3.5 flex items-center gap-3.5 border border-emerald-100/80">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-xs flex items-center justify-center text-emerald-600 text-base sm:text-lg shrink-0 border border-emerald-100">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <span class="text-slate-800 text-xs sm:text-sm font-semibold leading-snug">
+              <span class="lang-th">ลดเวลาการตัดสินใจจากหลายชั่วโมง เหลือไม่กี่นาที</span>
+              <span class="lang-en">Reduce decision time from hours to minutes</span>
+            </span>
           </div>
         </div>
 
-        <!-- 2. เพิ่มประสิทธิภาพการผลิตไฟจาก Solar -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
-          <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-solar-panel"></i></span>
+        <!-- 02. มองเห็นต้นทุนพลังงานชัดเจนขึ้น -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:border-emerald-500 hover:shadow-md transition-all flex flex-col justify-between group">
           <div>
-            <div class="se-card-t se-titlebox text-ink mb-1">
-              <span class="lang-th">เพิ่มประสิทธิภาพการผลิตไฟจาก Solar</span>
-              <span class="lang-en">Increase Solar Performance</span>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#e8f5ec] flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/outcome_icon_2.png" alt="Clear Energy Cost Visibility" class="w-full h-full object-contain">
+              </div>
+              <div class="flex-1 pt-1">
+                <span class="text-emerald-700 font-extrabold text-lg sm:text-xl block mb-1">02</span>
+                <h3 class="font-extrabold text-slate-900 text-base sm:text-lg leading-snug">
+                  <span class="lang-th">มองเห็นต้นทุนพลังงานชัดเจนขึ้น</span>
+                  <span class="lang-en">Clear Energy Cost Visibility</span>
+                </h3>
+                <div class="w-10 h-0.5 bg-emerald-700/60 my-2"></div>
+              </div>
             </div>
-            <p class="se-card-p text-muted"><span class="lang-th">เพิ่มประสิทธิภาพการผลิตและการใช้งานไฟฟ้าโซลาร์เซลล์สูงสุด</span><span class="lang-en">Maximize solar generation efficiency.</span></p>
+            <p data-editable="energy-outcomes-p-2" <?php echo synergy_style('energy-outcomes-p-2', 'smart-energy'); ?> class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed mb-4"><?php echo synergy_content('energy-outcomes-p-2', '<span class="lang-th">ติดตามการใช้พลังงานในแต่ละอาคาร เครื่องจักร หรือไซต์งาน เพื่อวิเคราะห์ต้นทุนและหาจุดที่ควรปรับปรุง</span>
+              <span class="lang-en">Track energy usage by building, machine, or site to analyze costs and pinpoint areas for improvement.</span>', 'smart-energy'); ?></p>
+          </div>
+          <div class="bg-[#f2f9f5] rounded-xl p-3 sm:p-3.5 flex items-center gap-3.5 border border-emerald-100/80">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-xs flex items-center justify-center text-emerald-600 text-base sm:text-lg shrink-0 border border-emerald-100">
+              <i class="fa-solid fa-chart-pie"></i>
+            </div>
+            <span class="text-slate-800 text-xs sm:text-sm font-semibold leading-snug">
+              <span class="lang-th">เห็นโครงสร้างต้นทุนพลังงานได้อย่างรายละเอียด</span>
+              <span class="lang-en">Gain granular visibility into energy cost structures</span>
+            </span>
           </div>
         </div>
 
-        <!-- 3. ลดการสูญเสียพลังงาน -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
-          <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-leaf"></i></span>
+        <!-- 03. เพิ่มประสิทธิภาพการดำเนินงาน -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:border-emerald-500 hover:shadow-md transition-all flex flex-col justify-between group">
           <div>
-            <div class="se-card-t se-titlebox text-ink mb-1">
-              <span class="lang-th">ลดการสูญเสียพลังงาน</span>
-              <span class="lang-en">Reduce Energy Waste</span>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#e8f5ec] flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/outcome_icon_3.png" alt="Operational Efficiency" class="w-full h-full object-contain">
+              </div>
+              <div class="flex-1 pt-1">
+                <span class="text-emerald-700 font-extrabold text-lg sm:text-xl block mb-1">03</span>
+                <h3 class="font-extrabold text-slate-900 text-base sm:text-lg leading-snug">
+                  <span class="lang-th">เพิ่มประสิทธิภาพการดำเนินงาน</span>
+                  <span class="lang-en">Operational Efficiency</span>
+                </h3>
+                <div class="w-10 h-0.5 bg-emerald-700/60 my-2"></div>
+              </div>
             </div>
-            <p class="se-card-p text-muted"><span class="lang-th">ควบคุมการใช้พลังงานเพื่อป้องกันการสูญเสียโดยไม่จำเป็น</span><span class="lang-en">Eliminate unnecessary power consumption.</span></p>
+            <p data-editable="energy-outcomes-p-3" <?php echo synergy_style('energy-outcomes-p-3', 'smart-energy'); ?> class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed mb-4"><?php echo synergy_content('energy-outcomes-p-3', '<span class="lang-th">ใช้ข้อมูลช่วยวางแผน ควบคุม และจัดการการใช้พลังงานอย่างเหมาะสมตลอดเวลา</span>
+              <span class="lang-en">Utilize data insights to plan, control, and optimize energy consumption continuously.</span>', 'smart-energy'); ?></p>
+          </div>
+          <div class="bg-[#f2f9f5] rounded-xl p-3 sm:p-3.5 flex items-center gap-3.5 border border-emerald-100/80">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-xs flex items-center justify-center text-emerald-600 text-base sm:text-lg shrink-0 border border-emerald-100">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+            <span class="text-slate-800 text-xs sm:text-sm font-semibold leading-snug">
+              <span class="lang-th">เพิ่มประสิทธิภาพการใช้พลังงานและทรัพยากรโดยรวม</span>
+              <span class="lang-en">Maximize overall energy and resource productivity</span>
+            </span>
           </div>
         </div>
 
-        <!-- 4. ติดตามข้อมูลแบบ Real-time -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
-          <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-eye"></i></span>
+        <!-- 04. บริหารหลายไซต์ได้ง่ายขึ้น -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:border-emerald-500 hover:shadow-md transition-all flex flex-col justify-between group">
           <div>
-            <div class="se-card-t se-titlebox text-ink mb-1">
-              <span class="lang-th">ติดตามข้อมูลแบบ Real-time</span>
-              <span class="lang-en">Real-Time Visibility</span>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#e8f5ec] flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/outcome_icon_4.png" alt="Multi-Site Management" class="w-full h-full object-contain">
+              </div>
+              <div class="flex-1 pt-1">
+                <span class="text-emerald-700 font-extrabold text-lg sm:text-xl block mb-1">04</span>
+                <h3 class="font-extrabold text-slate-900 text-base sm:text-lg leading-snug">
+                  <span class="lang-th">บริหารหลายไซต์ได้ง่ายขึ้น</span>
+                  <span class="lang-en">Multi-Site Management</span>
+                </h3>
+                <div class="w-10 h-0.5 bg-emerald-700/60 my-2"></div>
+              </div>
             </div>
-            <p class="se-card-p text-muted"><span class="lang-th">มองเห็นสถานะการใช้ไฟฟ้าและการผลิตไฟได้ทันทีตลอด 24 ชม.</span><span class="lang-en">Complete instant clarity into energy metrics.</span></p>
+            <p data-editable="energy-outcomes-p-4" <?php echo synergy_style('energy-outcomes-p-4', 'smart-energy'); ?> class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed mb-4"><?php echo synergy_content('energy-outcomes-p-4', '<span class="lang-th">รวบรวมข้อมูลจากทุกอาคาร โรงงาน และสาขาไว้ใน Dashboard เดียว</span>
+              <span class="lang-en">Centralize operational data across all buildings, factories, and branches into one dashboard.</span>', 'smart-energy'); ?></p>
+          </div>
+          <div class="bg-[#f2f9f5] rounded-xl p-3 sm:p-3.5 flex items-center gap-3.5 border border-emerald-100/80">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-xs flex items-center justify-center text-emerald-600 text-base sm:text-lg shrink-0 border border-emerald-100">
+              <i class="fa-solid fa-desktop"></i>
+            </div>
+            <span class="text-slate-800 text-xs sm:text-sm font-semibold leading-snug">
+              <span class="lang-th">ลดเวลาในการรวบรวมและจัดทำรายงานจากหลายวัน เหลือไม่กี่นาที</span>
+              <span class="lang-en">Reduce reporting aggregation time from days to minutes</span>
+            </span>
           </div>
         </div>
 
-        <!-- 5. บริหารจัดการทุกไซต์จากศูนย์กลาง -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
-          <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-network-wired"></i></span>
+        <!-- 05. ลดความเสี่ยงจากความผิดปกติ -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:border-emerald-500 hover:shadow-md transition-all flex flex-col justify-between group">
           <div>
-            <div class="se-card-t se-titlebox text-ink mb-1">
-              <span class="lang-th">บริหารจัดการทุกไซต์จากศูนย์กลาง</span>
-              <span class="lang-en">Manage Unlimited Sites</span>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#e8f5ec] flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/outcome_icon_5.png" alt="Risk Mitigation" class="w-full h-full object-contain">
+              </div>
+              <div class="flex-1 pt-1">
+                <span class="text-emerald-700 font-extrabold text-lg sm:text-xl block mb-1">05</span>
+                <h3 class="font-extrabold text-slate-900 text-base sm:text-lg leading-snug">
+                  <span class="lang-th">ลดความเสี่ยงจากความผิดปกติ</span>
+                  <span class="lang-en">Risk Mitigation</span>
+                </h3>
+                <div class="w-10 h-0.5 bg-emerald-700/60 my-2"></div>
+              </div>
             </div>
-            <p class="se-card-p text-muted"><span class="lang-th">ควบคุมทุกโรงงานและทุกสาขาผ่านแดชบอร์ดเดียว</span><span class="lang-en">Scale management across all locations.</span></p>
+            <p data-editable="energy-outcomes-p-5" <?php echo synergy_style('energy-outcomes-p-5', 'smart-energy'); ?> class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed mb-4"><?php echo synergy_content('energy-outcomes-p-5', '<span class="lang-th">ตรวจพบเหตุการณ์ผิดปกติและแจ้งเตือนได้รวดเร็ว ช่วยให้แก้ไขปัญหาได้ทันเวลา ลดความเสียหายที่อาจเกิดขึ้น</span>
+              <span class="lang-en">Detect anomalies and trigger instant alerts to resolve issues promptly and prevent costly downtime.</span>', 'smart-energy'); ?></p>
+          </div>
+          <div class="bg-[#f2f9f5] rounded-xl p-3 sm:p-3.5 flex items-center gap-3.5 border border-emerald-100/80">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-xs flex items-center justify-center text-emerald-600 text-base sm:text-lg shrink-0 border border-emerald-100">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <span class="text-slate-800 text-xs sm:text-sm font-semibold leading-snug">
+              <span class="lang-th">ลดเวลาการรับรู้ปัญหาจากหลายชั่วโมง เหลือไม่กี่นาที</span>
+              <span class="lang-en">Reduce incident response time from hours to minutes</span>
+            </span>
           </div>
         </div>
 
-        <!-- 6. แก้ไขปัญหาได้รวดเร็วยิ่งขึ้น -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 flex items-start gap-4 shadow-sm hover:border-brand transition-all">
-          <span class="w-11 h-11 rounded-xl bg-brand/10 flex items-center justify-center flex-none text-brand font-bold text-lg"><i class="fa-solid fa-wrench"></i></span>
+        <!-- 06. พร้อมต่อยอดด้วย AI -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:border-emerald-500 hover:shadow-md transition-all flex flex-col justify-between group">
           <div>
-            <div class="se-card-t se-titlebox text-ink mb-1">
-              <span class="lang-th">แก้ไขปัญหาได้รวดเร็วยิ่งขึ้น</span>
-              <span class="lang-en">Faster Issue Resolution</span>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#e8f5ec] flex items-center justify-center shrink-0 p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/outcome_icon_6.png" alt="AI Innovation Ready" class="w-full h-full object-contain">
+              </div>
+              <div class="flex-1 pt-1">
+                <span class="text-emerald-700 font-extrabold text-lg sm:text-xl block mb-1">06</span>
+                <h3 class="font-extrabold text-slate-900 text-base sm:text-lg leading-snug">
+                  <span class="lang-th">พร้อมต่อยอดด้วย AI</span>
+                  <span class="lang-en">AI Innovation Ready</span>
+                </h3>
+                <div class="w-10 h-0.5 bg-emerald-700/60 my-2"></div>
+              </div>
             </div>
-            <p class="se-card-p text-muted"><span class="lang-th">ระบบแจ้งเตือนความผิดปกติเพื่อการบำรุงรักษาอย่างทันท่วงที</span><span class="lang-en">Detect and fix anomalies quickly.</span></p>
+            <p data-editable="energy-outcomes-p-6" <?php echo synergy_style('energy-outcomes-p-6', 'smart-energy'); ?> class="text-slate-600 text-xs sm:text-sm font-normal leading-relaxed mb-4"><?php echo synergy_content('energy-outcomes-p-6', '<span class="lang-th">ใช้ข้อมูลสะสมเพื่อวิเคราะห์แนวโน้ม และรองรับระบบ AI สำหรับการวางแผนและแนะนำแนวทางประหยัดพลังงาน</span>
+              <span class="lang-en">Leverage accumulated data for trend analysis and AI-driven optimization recommendations.</span>', 'smart-energy'); ?></p>
+          </div>
+          <div class="bg-[#f2f9f5] rounded-xl p-3 sm:p-3.5 flex items-center gap-3.5 border border-emerald-100/80">
+            <div class="w-10 h-10 rounded-xl bg-white shadow-xs flex items-center justify-center text-emerald-600 text-base sm:text-lg shrink-0 border border-emerald-100">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <span class="text-slate-800 text-xs sm:text-sm font-semibold leading-snug">
+              <span class="lang-th">พร้อมเพิ่มศักยภาพองค์กรด้วยเทคโนโลยีในอนาคต</span>
+              <span class="lang-en">Ready to empower your business with future technology</span>
+            </span>
           </div>
         </div>
 
@@ -1683,18 +2074,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 1. บริษัทรับติดตั้ง Solar Rooftop -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/solar_asset_mgmt.png" alt="บริษัทรับติดตั้ง Solar Rooftop บริหารระบบ Solar ทุกโครงการจากแพลตฟอร์มเดียว">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/audience_solar_epc.png" alt="บริษัทรับติดตั้ง Solar Rooftop">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t se-titlebox text-ink mb-2">
-                <span class="lang-th">บริษัทรับติดตั้ง Solar Rooftop</span>
-                <span class="lang-en">Solar EPC</span>
-              </div>
-              <p class="se-card-p text-muted">
-                <span class="lang-th">บริหารจัดการระบบ Solar ของลูกค้าทุกโครงการจากแพลตฟอร์มเดียว รองรับ Inverter หลายแบรนด์ พร้อมกำหนดสิทธิ์ให้เจ้าของโครงการเข้าถึงข้อมูลของตนเอง</span>
-                <span class="lang-en">Provide one monitoring platform for every customer. Supports multi-brand inverters and customer permission management.</span>
-              </p>
+              <div data-editable="energy-audience-title-1" <?php echo synergy_style('energy-audience-title-1', 'smart-energy'); ?> class="se-card-t se-titlebox text-ink mb-2"><?php echo synergy_content('energy-audience-title-1', '<span class="lang-th">บริษัทรับติดตั้ง Solar Rooftop</span>
+                <span class="lang-en">Solar EPC</span>', 'smart-energy'); ?></div>
+              <p data-editable="energy-audience-p-1" <?php echo synergy_style('energy-audience-p-1', 'smart-energy'); ?> class="se-card-p text-muted"><?php echo synergy_content('energy-audience-p-1', '<span class="lang-th">บริหารจัดการระบบ Solar ของลูกค้าทุกโครงการจากแพลตฟอร์มเดียว รองรับ Inverter หลายแบรนด์ พร้อมกำหนดสิทธิ์ให้เจ้าของโครงการเข้าถึงข้อมูลของตนเอง</span>
+                <span class="lang-en">Provide one monitoring platform for every customer. Supports multi-brand inverters and customer permission management.</span>', 'smart-energy'); ?></p>
             </div>
           </div>
         </div>
@@ -1702,18 +2089,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 2. โรงงานอุตสาหกรรม -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/factory-hero-automotive.jpg" alt="โรงงานอุตสาหกรรม ติดตามการใช้ไฟฟ้าและควบคุมอุปกรณ์แบบ Real-time">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/audience_factory.png" alt="โรงงานอุตสาหกรรม">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t se-titlebox text-ink mb-2">
-                <span class="lang-th">โรงงานอุตสาหกรรม</span>
-                <span class="lang-en">Manufacturing</span>
-              </div>
-              <p class="se-card-p text-muted">
-                <span class="lang-th">ติดตามการใช้ไฟฟ้า การผลิตไฟจาก Solar และควบคุมอุปกรณ์ไฟฟ้าแบบ Real-time เพื่อช่วยลดต้นทุนด้านพลังงาน</span>
-                <span class="lang-en">Monitor factory energy and solar generation in real time to reduce operational electricity expenses.</span>
-              </p>
+              <div data-editable="energy-audience-title-2" <?php echo synergy_style('energy-audience-title-2', 'smart-energy'); ?> class="se-card-t se-titlebox text-ink mb-2"><?php echo synergy_content('energy-audience-title-2', '<span class="lang-th">โรงงานอุตสาหกรรม</span>
+                <span class="lang-en">Manufacturing</span>', 'smart-energy'); ?></div>
+              <p data-editable="energy-audience-p-2" <?php echo synergy_style('energy-audience-p-2', 'smart-energy'); ?> class="se-card-p text-muted"><?php echo synergy_content('energy-audience-p-2', '<span class="lang-th">ติดตามการใช้ไฟฟ้า การผลิตไฟจาก Solar และควบคุมอุปกรณ์ไฟฟ้าแบบ Real-time เพื่อช่วยลดต้นทุนด้านพลังงาน</span>
+                <span class="lang-en">Monitor factory energy and solar generation in real time to reduce operational electricity expenses.</span>', 'smart-energy'); ?></p>
             </div>
           </div>
         </div>
@@ -1721,18 +2104,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 3. อาคารสำนักงาน -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/cases/nida.jpg" alt="อาคารสำนักงาน ติดตามการใช้พลังงานรายอาคารจากศูนย์กลาง">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/audience_office_building.png" alt="อาคารสำนักงาน">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t se-titlebox text-ink mb-2">
-                <span class="lang-th">อาคารสำนักงาน</span>
-                <span class="lang-en">Commercial Buildings</span>
-              </div>
-              <p class="se-card-p text-muted">
-                <span class="lang-th">ควบคุมระบบแสงสว่างและอุปกรณ์ไฟฟ้า กำหนดเวลาเปิด–ปิดอัตโนมัติ และติดตามการใช้พลังงานของทั้งอาคาร</span>
-                <span class="lang-en">Optimize electricity consumption automatically with smart lighting and automated schedule controls.</span>
-              </p>
+              <div data-editable="energy-audience-title-3" <?php echo synergy_style('energy-audience-title-3', 'smart-energy'); ?> class="se-card-t se-titlebox text-ink mb-2"><?php echo synergy_content('energy-audience-title-3', '<span class="lang-th">อาคารสำนักงาน</span>
+                <span class="lang-en">Commercial Buildings</span>', 'smart-energy'); ?></div>
+              <p data-editable="energy-audience-p-3" <?php echo synergy_style('energy-audience-p-3', 'smart-energy'); ?> class="se-card-p text-muted"><?php echo synergy_content('energy-audience-p-3', '<span class="lang-th">ควบคุมระบบแสงสว่างและอุปกรณ์ไฟฟ้า กำหนดเวลาเปิด–ปิดอัตโนมัติ และติดตามการใช้พลังงานของทั้งอาคาร</span>
+                <span class="lang-en">Optimize electricity consumption automatically with smart lighting and automated schedule controls.</span>', 'smart-energy'); ?></p>
             </div>
           </div>
         </div>
@@ -1740,18 +2119,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 4. ธุรกิจค้าปลีกและร้านแฟรนไชส์ -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/energy-remote-monitoring.png" alt="ธุรกิจค้าปลีกและร้านแฟรนไชส์ สำนักงานใหญ่ติดตามทุกสาขาจากศูนย์กลาง">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/audience_retail_franchise.png" alt="ธุรกิจค้าปลีกและร้านแฟรนไชส์">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t se-titlebox text-ink mb-2">
-                <span class="lang-th">ธุรกิจค้าปลีกและร้านแฟรนไชส์</span>
-                <span class="lang-en">Retail &amp; Franchise</span>
-              </div>
-              <p class="se-card-p text-muted">
-                <span class="lang-th">สำนักงานใหญ่สามารถติดตามข้อมูลการใช้พลังงานและการผลิตไฟฟ้าของทุกสาขาได้จากศูนย์กลาง พร้อมกำหนดสิทธิ์ให้ผู้จัดการแต่ละสาขาเข้าถึงเฉพาะข้อมูลของตนเอง</span>
-                <span class="lang-en">Monitor all branches from headquarters while allowing branch managers to access only their own locations.</span>
-              </p>
+              <div data-editable="energy-audience-title-4" <?php echo synergy_style('energy-audience-title-4', 'smart-energy'); ?> class="se-card-t se-titlebox text-ink mb-2"><?php echo synergy_content('energy-audience-title-4', '<span class="lang-th">ธุรกิจค้าปลีกและร้านแฟรนไชส์</span>
+                <span class="lang-en">Retail &amp; Franchise</span>', 'smart-energy'); ?></div>
+              <p data-editable="energy-audience-p-4" <?php echo synergy_style('energy-audience-p-4', 'smart-energy'); ?> class="se-card-p text-muted"><?php echo synergy_content('energy-audience-p-4', '<span class="lang-th">สำนักงานใหญ่สามารถติดตามข้อมูลการใช้พลังงานและการผลิตไฟฟ้าของทุกสาขาได้จากศูนย์กลาง พร้อมกำหนดสิทธิ์ให้ผู้จัดการแต่ละสาขาเข้าถึงเฉพาะข้อมูลของตนเอง</span>
+                <span class="lang-en">Monitor all branches from headquarters while allowing branch managers to access only their own locations.</span>', 'smart-energy'); ?></p>
             </div>
           </div>
         </div>
@@ -1759,18 +2134,14 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- 5. เจ้าของโครงการอสังหาริมทรัพย์ -->
         <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-brand hover:shadow-lg transition-all flex flex-col">
           <div class="w-full bg-slate-100 overflow-hidden" style="aspect-ratio:16/11">
-            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/cases/valuation.jpg" alt="เจ้าของโครงการอสังหาริมทรัพย์ บริหารพลังงานหลายอาคารจากแพลตฟอร์มเดียว">
+            <img loading="lazy" decoding="async" class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/image/solutions/audience_property_developer.png" alt="เจ้าของโครงการอสังหาริมทรัพย์">
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <div class="se-card-t se-titlebox text-ink mb-2">
-                <span class="lang-th">เจ้าของโครงการอสังหาริมทรัพย์</span>
-                <span class="lang-en">Property Developers</span>
-              </div>
-              <p class="se-card-p text-muted">
-                <span class="lang-th">บริหารจัดการพลังงานของหลายอาคาร หลายโครงการ และติดตามข้อมูลได้จากแพลตฟอร์มเดียว</span>
-                <span class="lang-en">Centralized energy management for every building and property development project.</span>
-              </p>
+              <div data-editable="energy-audience-title-5" <?php echo synergy_style('energy-audience-title-5', 'smart-energy'); ?> class="se-card-t se-titlebox text-ink mb-2"><?php echo synergy_content('energy-audience-title-5', '<span class="lang-th">เจ้าของโครงการอสังหาริมทรัพย์</span>
+                <span class="lang-en">Property Developers</span>', 'smart-energy'); ?></div>
+              <p data-editable="energy-audience-p-5" <?php echo synergy_style('energy-audience-p-5', 'smart-energy'); ?> class="se-card-p text-muted"><?php echo synergy_content('energy-audience-p-5', '<span class="lang-th">บริหารจัดการพลังงานของหลายอาคาร หลายโครงการ และติดตามข้อมูลได้จากแพลตฟอร์มเดียว</span>
+                <span class="lang-en">Centralized energy management for every building and property development project.</span>', 'smart-energy'); ?></p>
             </div>
           </div>
         </div>
@@ -1800,7 +2171,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <span class="lang-en">Power Your Business with<br><span class="text-brand-bright">Smart Energy Management</span></span>
             </h2>
             <p class="se-lede text-slate-200 mt-5 max-w-2xl">
-              <span class="lang-th">แพลตฟอร์มเดียวสำหรับบริหารจัดการพลังงานและระบบ Solar ครบวงจร</span>
+              <span class="lang-th">เชื่อมต่อข้อมูลจากทุกระบบพลังงานไว้ในแพลตฟอร์มเดียว เพื่อการติดตาม วิเคราะห์ และบริหารจัดการอย่างมีประสิทธิภาพ</span>
+              <!-- English not supplied with the new Thai. Kept as-is rather than
+                   translated: rule 5.1 in AGENTS.md treats the two languages as
+                   parallel copy, not word-for-word, and this line still says the
+                   same thing. Replace if a specific English is wanted. -->
               <span class="lang-en">One Platform for Complete Energy Visibility</span>
             </p>
           </div>
@@ -1811,12 +2186,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <i class="fa-solid fa-comments"></i>
               <span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span>
               <span class="lang-en">Talk to Our Experts</span>
-            </a>
-            <a href="#energy-platform"
-               class="se-cta-label inline-flex items-center justify-center gap-2.5 border border-white/30 bg-white/5 text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-white/10 hover:border-white/50 transition-all">
-              <i class="fa-solid fa-diagram-project"></i>
-              <span class="lang-th">ดูสถาปัตยกรรมระบบ</span>
-              <span class="lang-en">See the Architecture</span>
             </a>
           </div>
         </div>
@@ -1829,6 +2198,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
   <!-- Scripts -->
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
+  <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/live-editor.js') : './components/live-editor.js'; ?>"></script>
+  <script defer src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/energy-platform.js') : './components/energy-platform.js'; ?>"></script>
 
 <?php include __DIR__ . '/components/cookie-consent.php'; ?>
   <?php wp_footer(); ?>

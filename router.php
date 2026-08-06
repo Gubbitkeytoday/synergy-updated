@@ -7,6 +7,20 @@ if ($path !== '/' && file_exists(__DIR__ . $path) && !is_dir(__DIR__ . $path)) {
     return false;
 }
 
+/* A request for a file that does not exist must 404, not fall through to a page
+   template. Without this, a mis-resolved asset URL such as
+   /about/components/style.css answered with the About page HTML at status 200:
+   the stylesheet parsed to zero rules and the scripts never ran, which looks
+   like a CSS/JS bug rather than a 404. Anything with a file extension that is
+   not .php/.html is an asset request. */
+if (preg_match('/\.([a-z0-9]{2,5})$/i', $path, $m)
+    && !in_array(strtolower($m[1]), ['php', 'html'], true)) {
+    http_response_code(404);
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "404 Not Found: " . $path . "\n";
+    exit;
+}
+
 // Clean trailing slash
 $cleanPath = rtrim($path, '/');
 

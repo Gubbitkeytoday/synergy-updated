@@ -1,4 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* async because the nav visibility config has to be in hand BEFORE the navbar
+   is built - rendering first and hiding afterwards would flash the hidden links
+   on every page load. The only await is that one fetch, right above the navbar
+   render, so everything else keeps its original ordering. */
+document.addEventListener('DOMContentLoaded', async () => {
   const savedLang = localStorage.getItem('preferred-language') || 'th';
   document.documentElement.setAttribute('lang', savedLang);
   const isWordPress = typeof window.wpThemeUri !== 'undefined' || typeof window.wpThemeUrl !== 'undefined';
@@ -204,73 +208,76 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   const solutionHref = (file) => `${rootPrefix}solutions/${file}`;
 
-  // ─── NAV STRUCTURE ───────────────────────────────────────────
+  /* ─── NAV STRUCTURE ───────────────────────────────────────────
+     Every entry carries an `id`. That id is what the admin menu manager stores
+     in data/nav_config.json when a link is switched off, so it has to stay put:
+     renaming an id un-hides whatever was hidden under the old one. Labels,
+     hrefs and order can change freely.                                       */
   const navItems = [
-    { label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
+    { id: 'home', label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
+    { id: 'smart-energy', label: '<span class="lang-th">Smart Energy</span><span class="lang-en">Smart Energy</span>', href: pageHref('smart-energy.php'), page: 'smart-energy.php' },
+    { id: 'smart-factory', label: '<span class="lang-th">Smart Factory</span><span class="lang-en">Smart Factory</span>', href: pageHref('smart-factory.php'), page: 'smart-factory.php' },
     {
-      label: '<span class="lang-th">โซลูชัน</span><span class="lang-en">Solutions</span>',
-      href: homeHref('#solutions'),
-      page: 'index.html',
-      section: 'solutions',
-      megaCol: [
-        {
-          heading: 'Smart Solutions',
-          icon: 'fa-solid fa-layer-group',
-          items: [
-            { label: '<span class="lang-th">1. Smart Factory</span><span class="lang-en">1. Smart Factory</span>', href: homeHref('#solutions') },
-            { label: '<span class="lang-th">2. Smart Energy</span><span class="lang-en">2. Smart Energy</span>', href: pageHref('smart-energy.php') },
-            { label: '<span class="lang-th">3. Smart Agriculture</span><span class="lang-en">3. Smart Agriculture</span>', href: homeHref('#solutions') }
-          ]
-        }
-      ]
-    },
-    {
+      id: 'services',
       label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>',
       href: pageHref('service.php'),
       page: 'service.php',
       megaCol: [
         {
-          heading: 'Engineering & Manufacturing Services',
+          heading: '',
           icon: 'fa-solid fa-microchip',
           items: [
             {
-              label: '<span class="lang-th">1. R&D & Hardware Engineering</span><span class="lang-en">1. R&D & Hardware Engineering</span>',
-              href: `${pageHref('service.php')}#capabilities`
-            },
-            {
-              label: '<span class="lang-th">2. Turnkey Manufacturing (OEM/ODM)</span><span class="lang-en">2. Turnkey Manufacturing (OEM/ODM)</span>',
-              href: `${pageHref('service.php')}#process`
-            },
-            {
-              label: '<span class="lang-th">3. Quality & Standards Certification</span><span class="lang-en">3. Quality & Standards Certification</span>',
-              href: `${pageHref('service.php')}#why-us`
-            },
-            {
-              label: '<span class="lang-th">4. Smart Solution Integration</span><span class="lang-en">4. Smart Solution Integration</span>',
-              href: `${pageHref('service.php')}#capabilities`
+              id: 'services.turnkey',
+              label: '<span class="lang-th">Turnkey Hardware Engineering & Manufacturing</span><span class="lang-en">Turnkey Hardware Engineering & Manufacturing</span>',
+              href: pageHref('service.php')
             }
           ]
         }
       ]
     },
-    { label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' },
-    { label: '<span class="lang-th">เกี่ยวกับเรา</span><span class="lang-en">About Us</span>', href: pageHref('about.php'), page: 'about.php' }
+    { id: 'case-studies', label: '<span class="lang-th">ผลงานจริง</span><span class="lang-en">Case Studies</span>', href: homeHref('#success-stories'), page: 'index.html', section: 'success-stories' },
+    { id: 'about', label: '<span class="lang-th">เกี่ยวกับเรา</span><span class="lang-en">About Us</span>', href: pageHref('about.php'), page: 'about.php' }
   ];
+
+  /* Hidden-link config, written by the admin menu manager in live-editor.js.
+     Read straight off the static JSON so a visitor pays a file read, not a PHP
+     request. window.synergyNavHidden lets a page inject it server-side later
+     without changing anything here. */
+  let navHidden = Array.isArray(window.synergyNavHidden) ? window.synergyNavHidden : [];
+  const isNavHidden = (id) => !!id && navHidden.indexOf(id) !== -1;
+
+  const visibleNavItems = () => navItems
+    .filter(item => !isNavHidden(item.id))
+    .map(item => {
+      if (!item.megaCol) return item;
+      // A hidden child must not leave an empty dropdown behind, so columns are
+      // filtered first and emptied columns dropped with them.
+      const megaCol = item.megaCol
+        .map(col => Object.assign({}, col, { items: col.items.filter(sub => !isNavHidden(sub.id)) }))
+        .filter(col => col.items.length);
+      return megaCol.length ? Object.assign({}, item, { megaCol }) : (() => {
+        const flat = Object.assign({}, item);
+        delete flat.megaCol;
+        return flat;
+      })();
+    });
 
 
   // ─── RENDER mega-menu (desktop) ─────────────────────────────
   const renderMegaMenu = (item) => {
     const cols = item.megaCol.map(col => `
       <div class="min-w-[200px] flex-1">
+        ${col.heading ? `
         <div class="flex items-center gap-2 mb-3 pb-2.5 border-b border-slate-100/80">
           <div class="w-6 h-6 rounded-lg bg-brand/5 border border-brand/10 flex items-center justify-center shrink-0">
             <i class="${col.icon} text-brand text-xs"></i>
           </div>
           <span class="text-xs font-800 text-brand uppercase tracking-wider">${col.heading}</span>
-        </div>
+        </div>` : ''}
         <div class="space-y-1">
           ${col.items.map(sub => `
-            <a href="${sub.href}" data-nav-link class="flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-50 hover:border-slate-100 border border-transparent transition duration-200 group">
+            <a href="${sub.href}" data-nav-link data-nav-id="${sub.id || ''}" class="flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-50 hover:border-slate-100 border border-transparent transition duration-200 group">
               <span class="text-[13px] font-700 text-ink group-hover:text-brand leading-snug transition-colors">${sub.label}</span>
             </a>`).join('')}
         </div>
@@ -280,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const w = n === 1 ? 'w-[310px]' : n === 2 ? 'w-[520px]' : 'w-[760px]';
     return `
       <div class="nav-dropdown-wrap relative group py-2">
-        <a href="${item.href}" data-nav-link data-page="${item.page || ''}" data-section="${item.section || ''}" data-sol-tab="${item.isSolTab || ''}"
+        <a href="${item.href}" data-nav-link data-nav-id="${item.id || ''}" data-page="${item.page || ''}" data-section="${item.section || ''}" data-sol-tab="${item.isSolTab || ''}"
           class="nav-link text-ink hover:text-brand transition-colors duration-200 flex items-center gap-1.5 font-bold tracking-wide">
           ${item.label}
           <i class="fa-solid fa-chevron-down text-[8px] text-muted group-hover:text-brand transition-transform duration-300 group-hover:rotate-180"></i>
@@ -297,24 +304,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const subLinks = item.megaCol.flatMap(col =>
       col.items.map(sub => `
         <a href="${sub.href}" class="py-2 pl-4 border-l-2 border-slate-100 text-body hover:text-brand hover:border-brand transition-all text-xs flex gap-2.5 items-center">
-          <i class="${col.icon} text-brand text-[10px] w-3"></i>
+          <!-- sub.icon first: a column can hold several entries that need
+               different icons (Smart Factory vs Smart Energy), and the column
+               icon is only the fallback. -->
+          <i class="${sub.icon || col.icon} text-brand text-[10px] w-3"></i>
           <span class="font-bold text-[12.5px]">${sub.label}</span>
         </a>`)
     ).join('');
     return `
       <div class="flex flex-col gap-1 border-b border-slate-100/60 pb-2">
-        <a href="${item.href}" data-nav-link data-page="${item.page || ''}" data-section="${item.section || ''}" data-sol-tab="${item.isSolTab || ''}" class="nav-link text-ink hover:text-brand transition py-2 font-800 text-xs">${item.label}</a>
+        <a href="${item.href}" data-nav-link data-nav-id="${item.id || ''}" data-page="${item.page || ''}" data-section="${item.section || ''}" data-sol-tab="${item.isSolTab || ''}" class="nav-link text-ink hover:text-brand transition py-2 font-800 text-xs">${item.label}</a>
         <div class="flex flex-col gap-1.5 pl-2">${subLinks}</div>
       </div>`;
   };
 
   const renderNavLinks = (mobile = false) =>
-    navItems.map(item => {
+    visibleNavItems().map(item => {
       if (!mobile && item.megaCol) return renderMegaMenu(item);
       if (mobile && item.megaCol) return renderMobileMenu(item);
       const active = item.page && item.page === pageName && !item.section ? ' text-brand !font-900 border-b-2 border-brand' : '';
-      return `<a href="${item.href}" data-nav-link data-page="${item.page || ''}" data-section="${item.section || ''}" data-sol-tab="${item.isSolTab || ''}" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 ${mobile ? 'border-b border-slate-100/60 font-800 text-xs pb-3' : 'font-bold tracking-wide'}${active}">${item.label}</a>`;
+      return `<a href="${item.href}" data-nav-link data-nav-id="${item.id || ''}" data-page="${item.page || ''}" data-section="${item.section || ''}" data-sol-tab="${item.isSolTab || ''}" class="nav-link text-ink hover:text-brand transition-colors duration-200 py-2 ${mobile ? 'border-b border-slate-100/60 font-800 text-xs pb-3' : 'font-bold tracking-wide'}${active}">${item.label}</a>`;
     }).join('');
+
+  /* Never let this stall the page: a missing file, a slow disk or a proxy that
+     swallows the request all fall through to "hide nothing", which is the safe
+     default for a menu. */
+  if (!window.synergyNavHidden) {
+    try {
+      const cfg = await Promise.race([
+        fetch(`${rootPrefix}data/nav_config.json?v=${Date.now()}`).then(r => (r.ok ? r.json() : null)),
+        new Promise(resolve => setTimeout(() => resolve(null), 1500))
+      ]);
+      if (cfg && Array.isArray(cfg.hidden)) navHidden = cfg.hidden;
+    } catch (e) { /* keep every link visible */ }
+  }
 
   const navbarContainer = document.getElementById('navbar-container');
   if (navbarContainer) {
@@ -400,8 +423,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="lang-en">Solutions</span>
               </h4>
               <ul class="space-y-2.5 text-xs text-white/60">
-                <li><a href="${homeHref('#solutions')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Factory (โรงงานอัจฉริยะ)</span><span class="lang-en">Smart Factory</span></a></li>
-                <li><a href="${homeHref('#solutions')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Energy (พลังงานอัจฉริยะ)</span><span class="lang-en">Smart Energy</span></a></li>
+                <!-- These two have real pages now, so they link to them rather
+                     than bouncing to the solutions list on the home page.
+                     Smart Agriculture below still has no page in this project. -->
+                <li><a href="${pageHref('smart-factory.php')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Factory (โรงงานอัจฉริยะ)</span><span class="lang-en">Smart Factory</span></a></li>
+                <li><a href="${pageHref('smart-energy.php')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Energy (พลังงานอัจฉริยะ)</span><span class="lang-en">Smart Energy</span></a></li>
                 <li><a href="${homeHref('#solutions')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Agriculture (เกษตรอัจฉริยะ)</span><span class="lang-en">Smart Agriculture</span></a></li>
                 <li><a href="${homeHref('#end-to-end')}" class="hover:text-white transition-colors"><span class="lang-th">บริการ OEM / ODM Manufacturing</span><span class="lang-en">OEM / ODM Manufacturing</span></a></li>
                 <li><a href="${homeHref('#end-to-end')}" class="hover:text-white transition-colors"><span class="lang-th">บริการวิศวกรรม R&D</span><span class="lang-en">R&D Engineering Services</span></a></li>

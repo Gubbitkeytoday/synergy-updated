@@ -1,0 +1,14 @@
+[
+    {
+        "id": "msg_6a7458df20ee9",
+        "date": "2026-08-06 09:50:23",
+        "name": "วงศธร ฉาบสีทอง",
+        "company": "Synergy Test",
+        "email": "wongsatorn@example.com",
+        "phone": "081-234-5678",
+        "message": "ทดสอบการส่งข้อความผ่านหน้าเว็บจริง",
+        "consent_contact": true,
+        "consent_marketing": true,
+        "ip": "127.0.0.1"
+    }
+]

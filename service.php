@@ -5,11 +5,24 @@ if (isset($_SERVER['REQUEST_URI']) && preg_match('/\.php\/+$/i', $_SERVER['REQUE
     header("Location: " . $clean_uri, true, 301);
     exit();
 }
+/* Root-absolute, not '.': document-relative asset URLs break on any URL ending
+   in a slash. See the long note on the same helper in about.php. */
+if (!function_exists('synergy_dev_base')) {
+    function synergy_dev_base() {
+        $root = isset($_SERVER['DOCUMENT_ROOT']) ? realpath($_SERVER['DOCUMENT_ROOT']) : '';
+        $root = $root ? str_replace('\\', '/', $root) : '';
+        $here = str_replace('\\', '/', __DIR__);
+        if ($root !== '' && strpos($here, $root) === 0) {
+            return rtrim(substr($here, strlen($root)), '/');
+        }
+        return '';
+    }
+}
 if (!function_exists('get_template_directory_uri')) {
-    function get_template_directory_uri() { return '.'; }
+    function get_template_directory_uri() { return synergy_dev_base(); }
 }
 if (!function_exists('get_stylesheet_directory_uri')) {
-    function get_stylesheet_directory_uri() { return '.'; }
+    function get_stylesheet_directory_uri() { return synergy_dev_base(); }
 }
 if (!function_exists('get_template_directory')) {
     function get_template_directory() { return __DIR__; }
@@ -18,10 +31,10 @@ if (!function_exists('get_stylesheet_directory')) {
     function get_stylesheet_directory() { return __DIR__; }
 }
 if (!function_exists('get_stylesheet_uri')) {
-    function get_stylesheet_uri() { return './style.css'; }
+    function get_stylesheet_uri() { return synergy_dev_base() . '/style.css'; }
 }
 if (!function_exists('home_url')) {
-    function home_url($path = '/') { return '.' . $path; }
+    function home_url($path = '/') { return synergy_dev_base() . '/' . ltrim($path, '/'); }
 }
 if (!function_exists('body_class')) {
     function body_class($class = '') {
