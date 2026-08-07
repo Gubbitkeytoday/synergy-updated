@@ -1618,169 +1618,7 @@ if (!function_exists('sa_picture')) {
   </section>
 
 
-  <!-- =============================================
-       WHO IS THIS FOR — 5 audience photo cards
-       ============================================= -->
-  <section id="agri-audience" aria-labelledby="agri-audience-title" class="py-16 sm:py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-5 sm:px-6">
 
-      <!-- Header -->
-      <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 sa-reveal">
-        <div class="inline-flex items-center gap-2 justify-center mb-4">
-          <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
-          <span class="text-brand svc-kicker"><span class="lang-th">โซลูชันนี้เหมาะกับใคร</span><span class="lang-en">Who Is This Solution For?</span></span>
-        </div>
-        <h2 id="agri-audience-title" class="font-display svc-h2 text-ink tracking-tight mb-5">
-          <span class="lang-th">ออกแบบเพื่อทุกภาคส่วนของการเกษตร</span>
-          <span class="lang-en">Built for Every Agricultural Sector</span>
-        </h2>
-        <p class="svc-lede text-body">
-          <span class="lang-th">รองรับทุกกลุ่มผู้ใช้งาน ตอบโจทย์ทุกความต้องการของธุรกิจการเกษตรยุคใหม่</span>
-          <span class="lang-en">Designed to support every stakeholder across the agricultural ecosystem with a scalable smart farming platform.</span>
-        </p>
-      </div>
-
-      <!-- 5-column photo cards.
-           The card bodies are justify-start, not justify-between. With the headings
-           now locked to two lines, justify-start puts all five descriptions on the
-           same baseline; justify-between pinned them to the card floor instead, so
-           the one card with a three-line description started 33px above the rest and
-           the row read as misaligned. Slack now collects at the bottom, out of sight. -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 sa-reveal">
-
-        <!-- Card 1 -->
-        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
-          <div class="h-44 sm:h-48 overflow-hidden w-full">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_farmer.jpg" alt="เกษตรกรและฟาร์มเอกชน" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
-          </div>
-          <div class="p-5 flex flex-col items-center flex-grow justify-start">
-            <div>
-              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
-                <span class="lang-th">เกษตรกรและฟาร์มเอกชน</span>
-                <span class="lang-en">Farmers &amp; Private Farms</span>
-              </h3>
-              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
-            </div>
-            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
-              <span class="lang-th">ติดตามข้อมูลภาคสนามแบบ Real-time ควบคุมระบบน้ำและอุปกรณ์ พร้อมบริหารจัดการฟาร์มผ่าน Dashboard เดียว</span>
-              <span class="lang-en">Monitor field conditions in real time, control irrigation systems and devices, and manage farm operations through one centralized dashboard.</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
-          <div class="h-44 sm:h-48 overflow-hidden w-full">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_coop.jpg" alt="สหกรณ์และผู้รวบรวมผลผลิต" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
-          </div>
-          <div class="p-5 flex flex-col items-center flex-grow justify-start">
-            <div>
-              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
-                <?php /* The <br> sat straight after "&" with no space, so the accessible
-                         name and anything copied off the page came out "Cooperatives
-                         &Agribusiness". The five cards now wrap naturally and are held to
-                         the same height by .sa-aud-h3 instead of hand-placed breaks. */ ?>
-                <span class="lang-th">สหกรณ์และผู้รวบรวมผลผลิต</span>
-                <span class="lang-en">Cooperatives &amp; Agribusiness</span>
-              </h3>
-              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
-            </div>
-            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
-              <span class="lang-th">บริหารจัดการหลายพื้นที่เพาะปลูก ติดตามข้อมูลสมาชิกแบบ Real-time และเพิ่มประสิทธิภาพการดำเนินงาน</span>
-              <span class="lang-en">Manage multiple farming areas, monitor member operations in real time, and improve operational efficiency.</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
-          <div class="h-44 sm:h-48 overflow-hidden w-full">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_gov.jpg" alt="หน่วยงานภาครัฐ" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
-          </div>
-          <div class="p-5 flex flex-col items-center flex-grow justify-start">
-            <div>
-              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
-                <span class="lang-th">หน่วยงานภาครัฐ</span>
-                <?php /* "(GPS)" was here. On an IoT agriculture page that abbreviation
-                         reads as Global Positioning System, and the Thai side has no
-                         abbreviation at all. Dropped. */ ?>
-                <span class="lang-en">Government &amp; Public Sector</span>
-              </h3>
-              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
-            </div>
-            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
-              <span class="lang-th">รองรับโครงการเกษตรขนาดใหญ่ ติดตามข้อมูลหลายพื้นที่จากศูนย์กลาง และสนับสนุนการบริหารจัดการเชิงนโยบาย</span>
-              <span class="lang-en">Support large-scale agricultural projects with centralized monitoring and data-driven policy management.</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
-          <div class="h-44 sm:h-48 overflow-hidden w-full">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_research.jpg" alt="มหาวิทยาลัยและศูนย์วิจัย" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
-          </div>
-          <div class="p-5 flex flex-col items-center flex-grow justify-start">
-            <div>
-              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
-                <span class="lang-th">มหาวิทยาลัยและศูนย์วิจัย</span>
-                <span class="lang-en">Universities &amp; Research Centers</span>
-              </h3>
-              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
-            </div>
-            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
-              <span class="lang-th">เหมาะสำหรับแปลงทดลอง งานวิจัย และการเก็บข้อมูลภาคสนาม เพื่อพัฒนานวัตกรรมการเกษตร</span>
-              <span class="lang-en">Ideal for research plots, field experiments, and agricultural data collection to support innovation.</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
-          <div class="h-44 sm:h-48 overflow-hidden w-full">
-            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_enterprise.jpg" alt="โครงการเกษตรขนาดใหญ่" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
-          </div>
-          <div class="p-5 flex flex-col items-center flex-grow justify-start">
-            <div>
-              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
-                <span class="lang-th">โครงการเกษตรขนาดใหญ่</span>
-                <span class="lang-en">Large-scale Agricultural Projects</span>
-              </h3>
-              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
-            </div>
-            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
-              <span class="lang-th">รองรับตั้งแต่แปลงทดลองจนถึงพื้นที่ขนาดใหญ่ ด้วย LoRaWAN และการบริหารหลายพื้นที่จากศูนย์กลาง</span>
-              <span class="lang-en">Scale from pilot plots to enterprise-scale agricultural projects with LoRaWAN connectivity and centralized management.</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-        <!-- Footer highlights. Four short claims that apply to every audience
-             above, so they sit under the row rather than repeating in each
-             card. Outside the five-column card grid: as a sixth grid item it
-             was squeezed into one 223px column. -->
-        <ul class="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sa-reveal">
-          <li class="flex items-center gap-3 bg-[#f4f7f5] border border-slate-200/70 rounded-2xl px-4 py-3.5">
-            <i class="fa-solid fa-arrows-up-down-left-right text-brand shrink-0" aria-hidden="true"></i>
-            <span class="svc-caption text-ink font-medium leading-snug"><span class="lang-th">รองรับทุกขนาดพื้นที่</span><span class="lang-en">Scalable for Every Farm Size</span></span>
-          </li>
-          <li class="flex items-center gap-3 bg-[#f4f7f5] border border-slate-200/70 rounded-2xl px-4 py-3.5">
-            <i class="fa-solid fa-microchip text-brand shrink-0" aria-hidden="true"></i>
-            <span class="svc-caption text-ink font-medium leading-snug"><span class="lang-th">เชื่อมต่ออุปกรณ์หลากหลาย</span><span class="lang-en">Connect Multiple Devices</span></span>
-          </li>
-          <li class="flex items-center gap-3 bg-[#f4f7f5] border border-slate-200/70 rounded-2xl px-4 py-3.5">
-            <i class="fa-solid fa-circle-check text-brand shrink-0" aria-hidden="true"></i>
-            <span class="svc-caption text-ink font-medium leading-snug"><span class="lang-th">ข้อมูลแม่นยำ เชื่อถือได้</span><span class="lang-en">Accurate &amp; Reliable Data</span></span>
-          </li>
-          <li class="flex items-center gap-3 bg-[#f4f7f5] border border-slate-200/70 rounded-2xl px-4 py-3.5">
-            <i class="fa-solid fa-seedling text-brand shrink-0" aria-hidden="true"></i>
-            <span class="svc-caption text-ink font-medium leading-snug"><span class="lang-th">พร้อมขยายในอนาคต</span><span class="lang-en">Ready to Scale</span></span>
-          </li>
-        </ul>
-
-    </div>
-  </section>
 
   <!-- =============================================
        PLATFORM CAPABILITIES — 2×6 icon grid
@@ -2107,15 +1945,157 @@ if (!function_exists('sa_picture')) {
     </div>
   </section>
 
-    <!-- CTA -->
-    <!-- WHO IT IS FOR
-         The page described the system at length without ever saying who it
-         suits, so a reader had to work out "is this for me" on their own. The
-         four groups are the application areas the IoT Solar Node section
-         already lists - nothing new is claimed here. -->
-    
+  <!-- =============================================
+       WHO IS THIS FOR — 5 audience photo cards
+       ============================================= -->
+  <section id="agri-audience" aria-labelledby="agri-audience-title" class="py-16 sm:py-20 bg-surface border-t border-slate-200/70">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6">
 
-    <section id="agri-cta" class="py-12 sm:py-16 bg-white" style="scroll-margin-top:96px">
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 sa-reveal">
+        <div class="inline-flex items-center gap-2 justify-center mb-4">
+          <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
+          <span class="text-brand svc-kicker"><span class="lang-th">โซลูชันนี้เหมาะกับใคร</span><span class="lang-en">Who Is This Solution For?</span></span>
+        </div>
+        <h2 id="agri-audience-title" class="font-display svc-h2 text-ink tracking-tight mb-5">
+          <span class="lang-th">ออกแบบเพื่อทุกภาคส่วนของการเกษตร</span>
+          <span class="lang-en">Built for Every Agricultural Sector</span>
+        </h2>
+        <p class="svc-lede text-body">
+          <span class="lang-th">รองรับทุกกลุ่มผู้ใช้งาน ตอบโจทย์ทุกความต้องการของธุรกิจการเกษตรยุคใหม่</span>
+          <span class="lang-en">Designed to support every stakeholder across the agricultural ecosystem with a scalable smart farming platform.</span>
+        </p>
+      </div>
+
+      <!-- 5-column photo cards. -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 sa-reveal">
+
+        <!-- Card 1 -->
+        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
+          <div class="h-44 sm:h-48 overflow-hidden w-full">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_farmer.jpg" alt="เกษตรกรและฟาร์มเอกชน" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
+          </div>
+          <div class="p-5 flex flex-col items-center flex-grow justify-start">
+            <div>
+              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
+                <span class="lang-th">เกษตรกรและฟาร์มเอกชน</span>
+                <span class="lang-en">Farmers &amp; Private Farms</span>
+              </h3>
+              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
+            </div>
+            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
+              <span class="lang-th">ติดตามข้อมูลภาคสนามแบบ Real-time ควบคุมระบบน้ำและอุปกรณ์ พร้อมบริหารจัดการฟาร์มผ่าน Dashboard เดียว</span>
+              <span class="lang-en">Monitor field conditions in real time, control irrigation systems and devices, and manage farm operations through one centralized dashboard.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
+          <div class="h-44 sm:h-48 overflow-hidden w-full">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_coop.jpg" alt="สหกรณ์และผู้รวบรวมผลผลิต" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
+          </div>
+          <div class="p-5 flex flex-col items-center flex-grow justify-start">
+            <div>
+              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
+                <span class="lang-th">สหกรณ์และผู้รวบรวมผลผลิต</span>
+                <span class="lang-en">Cooperatives &amp; Agribusiness</span>
+              </h3>
+              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
+            </div>
+            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
+              <span class="lang-th">บริหารจัดการหลายพื้นที่เพาะปลูก ติดตามข้อมูลสมาชิกแบบ Real-time และเพิ่มประสิทธิภาพการดำเนินงาน</span>
+              <span class="lang-en">Manage multiple farming areas, monitor member operations in real time, and improve operational efficiency.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
+          <div class="h-44 sm:h-48 overflow-hidden w-full">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_gov.jpg" alt="หน่วยงานภาครัฐ" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
+          </div>
+          <div class="p-5 flex flex-col items-center flex-grow justify-start">
+            <div>
+              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
+                <span class="lang-th">หน่วยงานภาครัฐ</span>
+                <span class="lang-en">Government &amp; Public Sector</span>
+              </h3>
+              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
+            </div>
+            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
+              <span class="lang-th">รองรับโครงการเกษตรขนาดใหญ่ ติดตามข้อมูลหลายพื้นที่จากศูนย์กลาง และสนับสนุนการบริหารจัดการเชิงนโยบาย</span>
+              <span class="lang-en">Support large-scale agricultural projects with centralized monitoring and data-driven policy management.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
+          <div class="h-44 sm:h-48 overflow-hidden w-full">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_research.jpg" alt="มหาวิทยาลัยและศูนย์วิจัย" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
+          </div>
+          <div class="p-5 flex flex-col items-center flex-grow justify-start">
+            <div>
+              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
+                <span class="lang-th">มหาวิทยาลัยและศูนย์วิจัย</span>
+                <span class="lang-en">Universities &amp; Research Centers</span>
+              </h3>
+              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
+            </div>
+            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
+              <span class="lang-th">เหมาะสำหรับแปลงทดลอง งานวิจัย และการเก็บข้อมูลภาคสนาม เพื่อพัฒนานวัตกรรมการเกษตร</span>
+              <span class="lang-en">Ideal for research plots, field experiments, and agricultural data collection to support innovation.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="bg-white rounded-[20px] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full overflow-hidden text-center">
+          <div class="h-44 sm:h-48 overflow-hidden w-full">
+            <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/audience_enterprise.jpg" alt="โครงการเกษตรขนาดใหญ่" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
+          </div>
+          <div class="p-5 flex flex-col items-center flex-grow justify-start">
+            <div>
+              <h3 class="svc-label text-ink font-bold mb-2 sa-aud-h3">
+                <span class="lang-th">โครงการเกษตรขนาดใหญ่</span>
+                <span class="lang-en">Large-scale Agricultural Projects</span>
+              </h3>
+              <div class="w-8 h-0.5 bg-brand mx-auto mb-3"></div>
+            </div>
+            <p class="svc-caption text-slate-500 leading-relaxed text-xs sm:text-[13px]">
+              <span class="lang-th">รองรับตั้งแต่แปลงทดลองจนถึงพื้นที่ขนาดใหญ่ ด้วย LoRaWAN และการบริหารหลายพื้นที่จากศูนย์กลาง</span>
+              <span class="lang-en">Scale from pilot plots to enterprise-scale agricultural projects with LoRaWAN connectivity and centralized management.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+        <!-- Footer highlights. -->
+        <ul class="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 sa-reveal">
+          <li class="flex items-center gap-3 bg-white border border-slate-200/70 rounded-2xl px-4 py-3.5 shadow-sm">
+            <i class="fa-solid fa-arrows-up-down-left-right text-brand shrink-0" aria-hidden="true"></i>
+            <span class="svc-caption text-ink font-medium leading-snug"><span class="lang-th">รองรับทุกขนาดพื้นที่</span><span class="lang-en">Scalable for Every Farm Size</span></span>
+          </li>
+          <li class="flex items-center gap-3 bg-white border border-slate-200/70 rounded-2xl px-4 py-3.5 shadow-sm">
+            <i class="fa-solid fa-microchip text-brand shrink-0" aria-hidden="true"></i>
+            <span class="svc-caption text-ink font-medium leading-snug"><span class="lang-th">เชื่อมต่ออุปกรณ์หลากหลาย</span><span class="lang-en">Connect Multiple Devices</span></span>
+          </li>
+          <li class="flex items-center gap-3 bg-white border border-slate-200/70 rounded-2xl px-4 py-3.5 shadow-sm">
+            <i class="fa-solid fa-circle-check text-brand shrink-0" aria-hidden="true"></i>
+            <span class="svc-caption text-ink font-medium leading-snug"><span class="lang-th">ข้อมูลแม่นยำ เชื่อถือได้</span><span class="lang-en">Accurate &amp; Reliable Data</span></span>
+          </li>
+          <li class="flex items-center gap-3 bg-white border border-slate-200/70 rounded-2xl px-4 py-3.5 shadow-sm">
+            <i class="fa-solid fa-seedling text-brand shrink-0" aria-hidden="true"></i>
+            <span class="svc-caption text-ink font-medium leading-snug"><span class="lang-th">พร้อมขยายในอนาคต</span><span class="lang-en">Ready to Scale</span></span>
+          </li>
+        </ul>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="agri-cta" class="py-12 sm:py-16 bg-white" style="scroll-margin-top:96px">
       <div class="max-w-7xl mx-auto px-5 sm:px-6">
         <div class="relative overflow-hidden rounded-[28px] px-6 py-10 sm:px-10 sm:py-14 lg:px-16 text-white"
              style="background:linear-gradient(135deg,#0d4636 0%,#093427 55%,#06261c 100%)">
