@@ -341,7 +341,16 @@ if (file_exists(__DIR__ . '/functions.php')) {
        The tab previews are drawn here rather than shipped as screenshots; see
        the note on sf_dashboard_preview(). Everything is sized in rem/% so the
        cards hold up from 320px to a wide desktop. */
-    .sf-dash-tab { min-height: 76px; cursor: pointer; }
+    /* min-width:0 on both, or the scrolling row never scrolls: a grid/flex item
+       defaults to min-width:auto, so the 7 fixed-width tabs push the whole card
+       to their combined width instead. Measured at a 375px viewport before the
+       fix: the card came out 877px wide and was clipped by the section's
+       overflow-hidden. */
+    .sf-dash { min-width: 0; }
+    .sf-dash-tabs { min-width: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .sf-dash-tabs::-webkit-scrollbar { display: none; }
+    .sf-dash-tab { min-height: 76px; cursor: pointer; flex: 0 0 118px; }
+    @media (min-width: 640px) { .sf-dash-tab { flex: initial; } }
     .sf-dash-tab:hover { border-color: #a7f3d0; background: #f0fdf4; }
     .sf-dash-tab[aria-selected="true"] {
       background: #064e3b; border-color: #064e3b; color: #fff;
@@ -816,7 +825,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
       <div class="grid lg:grid-cols-12 gap-8 lg:gap-6 items-center">
         <!-- Center: layered diagram -->
-        <div class="lg:col-span-9 space-y-2.5">
+        <div class="lg:col-span-9 min-w-0 space-y-2.5">
           <?php
           /* DASHBOARDS & APPLICATIONS
              This replaces the static ERP / MES / SCADA / CRM / CMMS / Other row.
@@ -857,7 +866,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
             <!-- Tabs. Real <button>s in a tablist: they are keyboard reachable,
                  announced as tabs, and arrow keys move between them. -->
-            <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 sm:gap-2.5 text-center" role="tablist" aria-label="Dashboards">
+            <!-- One scrolling row on a phone, a seven-up grid from sm. A four-column
+                 grid was the first try and the labels wrapped so hard the tabs came
+                 out 159px tall in a 66px column. -->
+            <div class="sf-dash-tabs flex sm:grid sm:grid-cols-7 gap-2 sm:gap-2.5 text-center" role="tablist" aria-label="Dashboards">
               <?php foreach ($sf_dashboards as $i => $d): ?>
               <button type="button" role="tab" id="sf-tab-<?php echo $d['id']; ?>"
                       aria-controls="sf-panel-<?php echo $d['id']; ?>"
