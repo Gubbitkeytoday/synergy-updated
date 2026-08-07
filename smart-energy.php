@@ -945,9 +945,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <!-- 4 Steps Flow Grid (Exact match with reference image) -->
       <div class="relative">
         <!-- Connecting Green Dotted Line (Desktop) -->
-        <div class="hidden lg:block absolute top-[72px] left-[12.5%] right-[12.5%] h-0.5 border-b-2 border-dashed border-[#0d5c3a]/50 z-0"></div>
+        <div class="hidden lg:block absolute top-[72px] left-[10%] right-[10%] h-0.5 border-b-2 border-dashed border-[#0d5c3a]/50 z-0"></div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-6 relative z-10">
           
           <!-- Step 01: SYNC -->
           <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
@@ -1093,6 +1093,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
           <!-- Step 04: SOLVE -->
           <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
+            <div class="hidden lg:flex items-center justify-center w-8 h-8 rounded-full bg-[#0d5c3a] text-white text-xs shadow-md border-2 border-white absolute -right-5 top-[56px] z-20">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
             <div>
               <!-- S-Logo Graphic (No Outer Circle) -->
               <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
@@ -1129,6 +1132,49 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
                   <i class="fa-solid fa-coins text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
                   <span>Cost Reduction</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 05: SAFE -->
+          <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
+            <div>
+              <!-- S-Logo Graphic (No Outer Circle) -->
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_5.svg" alt="05 SAFE" class="w-full h-full object-contain">
+              </div>
+
+              <!-- Header Titles -->
+              <div class="text-[#0d5c3a] font-extrabold text-sm sm:text-base text-center">05</div>
+              <h3 class="text-[#0d5c3a] font-display font-extrabold text-2xl sm:text-3xl text-center tracking-tight mb-1">
+                SAFE
+              </h3>
+              <p data-editable="energy-flow-p-9" <?php echo synergy_style('energy-flow-p-9', 'smart-energy'); ?> class="text-slate-900 font-bold text-sm sm:text-base text-center mb-2"><?php echo synergy_content('energy-flow-p-9', '<span class="lang-th">Secure & Reliable</span>
+                <span class="lang-en">Secure &amp; Reliable</span>', 'smart-energy'); ?></p>
+              <p data-editable="energy-flow-p-10" <?php echo synergy_style('energy-flow-p-10', 'smart-energy'); ?> class="text-slate-500 text-xs sm:text-[13px] leading-relaxed text-center mb-5 min-h-[44px] px-1"><?php echo synergy_content('energy-flow-p-10', '<span class="lang-th">ดูแลความปลอดภัยของข้อมูล<br>และความต่อเนื่องของระบบ</span>
+                <span class="lang-en">Keep data protected and the system running without interruption.</span>', 'smart-energy'); ?></p>
+            </div>
+
+            <!-- Bottom Items List -->
+            <div>
+              <div class="w-full h-px bg-slate-100 mb-4"></div>
+              <div class="flex flex-col gap-2.5">
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-user-shield text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Access Control</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-database text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Data Backup</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-clipboard-check text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>Audit Trail</span>
+                </div>
+                <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
+                  <i class="fa-solid fa-heart-pulse text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span>System Health</span>
                 </div>
               </div>
             </div>
