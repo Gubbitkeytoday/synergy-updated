@@ -1018,32 +1018,7 @@ if (!function_exists('sa_picture')) {
       </div>
     </section>
 
-    <!-- OTHER SOLUTIONS -->
-    <section id="agri-related" aria-labelledby="agri-related-title" class="py-16 sm:py-20 bg-white border-t border-gray-100">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6">
-        <h2 id="agri-related-title" class="text-center svc-metric text-muted mb-8"><span class="lang-th">โซลูชันอื่นๆ</span><span class="lang-en">Other Solutions</span></h2>
-        <div class="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
-          <a href="<?php echo home_url('/smart-energy/'); ?>" class="bg-white border border-gray-100 rounded-3xl p-5 sm:p-6 flex items-center gap-5 hover:shadow-bento-hover hover:border-brand/25 transition sa-spring group shadow-bento">
-            <span class="w-12 h-12 rounded-2xl bg-brand-soft text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition shrink-0">
-              <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-            </span>
-            <span>
-              <span class="block svc-label text-ink mb-1">Smart Energy</span>
-              <span class="block svc-caption text-muted"><span class="lang-th">บริหารพลังงานอัจฉริยะในโรงงานและอาคาร</span><span class="lang-en">Intelligent energy management for plants and buildings.</span></span>
-            </span>
-          </a>
-          <a href="<?php echo home_url('/smart-factory/'); ?>" class="bg-white border border-gray-100 rounded-3xl p-5 sm:p-6 flex items-center gap-5 hover:shadow-bento-hover hover:border-brand/25 transition sa-spring group shadow-bento">
-            <span class="w-12 h-12 rounded-2xl bg-brand-soft text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition shrink-0">
-              <i class="fa-solid fa-gears" aria-hidden="true"></i>
-            </span>
-            <span>
-              <span class="block svc-label text-ink mb-1">Smart Factory</span>
-              <span class="block svc-caption text-muted"><span class="lang-th">วิเคราะห์ OEE เครื่องจักรและระบบคลังสินค้าอัตโนมัติ</span><span class="lang-en">Machine OEE analytics and warehouse automation.</span></span>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
+
 
     <!-- CTA -->
     <section id="agri-cta" aria-labelledby="agri-cta-title" class="py-20 sm:py-28 bg-ink text-white relative overflow-hidden">
