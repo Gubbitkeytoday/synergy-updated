@@ -712,61 +712,69 @@ if (!function_exists('sa_picture')) {
           <p data-editable="agri-challenges-p-0" <?php echo synergy_style('agri-challenges-p-0', 'smart-agriculture'); ?> class="svc-lede text-body mx-auto"><?php echo synergy_content('agri-challenges-p-0', '<span class="lang-th">เข้าใจปัญหาที่แท้จริงของเกษตรกร เราพร้อมช่วยให้คุณทำการเกษตรได้อย่างมีประสิทธิภาพและยั่งยืน</span><span class="lang-en">We understand the real challenges farmers face, and deliver solutions for smarter, more sustainable farming.</span>', 'smart-agriculture'); ?></p>
         </div>
 
-        <!-- Six across only from 1536px. The reference layout puts all six in one
-             row, but at this page's 1480px container that is about 228px a card,
-             and Thai needs more width than Latin for the same legibility - the
-             descriptions would break to five or six lines (AGENTS.md rule 3).
-             One up on a phone, two on a tablet, three on a laptop, six on a wide
-             monitor where the row genuinely fits. -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-5 sm:gap-6 items-stretch">
-          <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_1.png" alt="ผลผลิตไม่สม่ำเสมอ" class="w-10 h-10 object-contain">
+        <!-- Flexible Auto Layout: 1 line on desktop (xl:grid-cols-6), auto-wrapping on smaller screens -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 items-stretch">
+
+          <!-- 01 -->
+          <div class="bg-white rounded-[20px] xl:rounded-[24px] p-5 xl:p-4 2xl:p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center border border-slate-100">
+            <div class="w-14 h-14 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-brand-soft flex items-center justify-center mb-3 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_1.png" alt="ผลผลิตไม่สม่ำเสมอ" class="w-9 h-9 xl:w-7 xl:h-7 2xl:w-10 2xl:h-10 object-contain">
             </div>
-            <div class="svc-kicker text-brand mb-1 text-center">01</div>
-            <h3 data-editable="agri-challenges-h3-1" <?php echo synergy_style('agri-challenges-h3-1', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-1', '<span class="lang-th">ผลผลิตไม่สม่ำเสมอ</span><span class="lang-en">Unpredictable Crop Yields</span>', 'smart-agriculture'); ?></h3>
-            <p data-editable="agri-challenges-p-1" <?php echo synergy_style('agri-challenges-p-1', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-1', '<span class="lang-th">ผลผลิตได้รับผลกระทบจากสภาพอากาศและสภาพแวดล้อมที่ควบคุมได้ยาก</span><span class="lang-en">Crop yields are affected by weather and environmental conditions.</span>', 'smart-agriculture'); ?></p>
+            <div class="svc-kicker text-brand font-bold text-sm mb-1">01</div>
+            <h3 data-editable="agri-challenges-h3-1" <?php echo synergy_style('agri-challenges-h3-1', 'smart-agriculture'); ?> class="svc-label text-ink mb-2 font-bold text-base xl:text-sm 2xl:text-base leading-snug"><?php echo synergy_content('agri-challenges-h3-1', '<span class="lang-th">ผลผลิตไม่สม่ำเสมอ</span><span class="lang-en">Unpredictable Crop Yields</span>', 'smart-agriculture'); ?></h3>
+            <p data-editable="agri-challenges-p-1" <?php echo synergy_style('agri-challenges-p-1', 'smart-agriculture'); ?> class="svc-caption text-muted text-xs 2xl:text-sm leading-relaxed"><?php echo synergy_content('agri-challenges-p-1', '<span class="lang-th">ผลผลิตได้รับผลกระทบจากสภาพอากาศและสภาพแวดล้อมที่ควบคุมได้ยาก</span><span class="lang-en">Crop yields are affected by weather and environmental conditions.</span>', 'smart-agriculture'); ?></p>
           </div>
-          <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_2.png" alt="ใช้น้ำและทรัพยากรเกินความจำเป็น" class="w-10 h-10 object-contain">
+
+          <!-- 02 -->
+          <div class="bg-white rounded-[20px] xl:rounded-[24px] p-5 xl:p-4 2xl:p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center border border-slate-100">
+            <div class="w-14 h-14 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-brand-soft flex items-center justify-center mb-3 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_2.png" alt="ใช้น้ำและทรัพยากรเกินความจำเป็น" class="w-9 h-9 xl:w-7 xl:h-7 2xl:w-10 2xl:h-10 object-contain">
             </div>
-            <div class="svc-kicker text-brand mb-1 text-center">02</div>
-            <h3 data-editable="agri-challenges-h3-2" <?php echo synergy_style('agri-challenges-h3-2', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-2', '<span class="lang-th">ใช้น้ำและทรัพยากรเกินความจำเป็น</span><span class="lang-en">Inefficient Resource Usage</span>', 'smart-agriculture'); ?></h3>
-            <p data-editable="agri-challenges-p-2" <?php echo synergy_style('agri-challenges-p-2', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-2', '<span class="lang-th">การให้น้ำ ปุ๋ย และทรัพยากรต่างๆ ขาดข้อมูลที่แม่นยำ ทำให้ต้นทุนสูง</span><span class="lang-en">Excessive use of water, fertilizers, and resources increases costs.</span>', 'smart-agriculture'); ?></p>
+            <div class="svc-kicker text-brand font-bold text-sm mb-1">02</div>
+            <h3 data-editable="agri-challenges-h3-2" <?php echo synergy_style('agri-challenges-h3-2', 'smart-agriculture'); ?> class="svc-label text-ink mb-2 font-bold text-base xl:text-sm 2xl:text-base leading-snug"><?php echo synergy_content('agri-challenges-h3-2', '<span class="lang-th">ใช้น้ำและทรัพยากรเกินความจำเป็น</span><span class="lang-en">Inefficient Resource Usage</span>', 'smart-agriculture'); ?></h3>
+            <p data-editable="agri-challenges-p-2" <?php echo synergy_style('agri-challenges-p-2', 'smart-agriculture'); ?> class="svc-caption text-muted text-xs 2xl:text-sm leading-relaxed"><?php echo synergy_content('agri-challenges-p-2', '<span class="lang-th">การให้น้ำ ปุ๋ย และทรัพยากรต่างๆ ขาดข้อมูลที่แม่นยำ ทำให้ต้นทุนสูงขึ้น</span><span class="lang-en">Excessive use of water, fertilizers, and resources increases costs.</span>', 'smart-agriculture'); ?></p>
           </div>
-          <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_3.png" alt="มองไม่เห็นข้อมูลภาคสนามแบบ Real-time" class="w-10 h-10 object-contain">
+
+          <!-- 03 -->
+          <div class="bg-white rounded-[20px] xl:rounded-[24px] p-5 xl:p-4 2xl:p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center border border-slate-100">
+            <div class="w-14 h-14 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-brand-soft flex items-center justify-center mb-3 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_3.png" alt="มองไม่เห็นข้อมูลภาคสนามแบบ Real-time" class="w-9 h-9 xl:w-7 xl:h-7 2xl:w-10 2xl:h-10 object-contain">
             </div>
-            <div class="svc-kicker text-brand mb-1 text-center">03</div>
-            <h3 data-editable="agri-challenges-h3-3" <?php echo synergy_style('agri-challenges-h3-3', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-3', '<span class="lang-th">มองไม่เห็นข้อมูลภาคสนามแบบ Real-time</span><span class="lang-en">Limited Field Visibility</span>', 'smart-agriculture'); ?></h3>
-            <p data-editable="agri-challenges-p-3" <?php echo synergy_style('agri-challenges-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-3', '<span class="lang-th">ไม่สามารถติดตามสภาพแปลงและพืชผลได้แบบทันที</span><span class="lang-en">Lack of real-time field data makes timely decisions difficult.</span>', 'smart-agriculture'); ?></p>
+            <div class="svc-kicker text-brand font-bold text-sm mb-1">03</div>
+            <h3 data-editable="agri-challenges-h3-3" <?php echo synergy_style('agri-challenges-h3-3', 'smart-agriculture'); ?> class="svc-label text-ink mb-2 font-bold text-base xl:text-sm 2xl:text-base leading-snug"><?php echo synergy_content('agri-challenges-h3-3', '<span class="lang-th">มองไม่เห็นข้อมูลภาคสนามแบบ Real-time</span><span class="lang-en">Limited Field Visibility</span>', 'smart-agriculture'); ?></h3>
+            <p data-editable="agri-challenges-p-3" <?php echo synergy_style('agri-challenges-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted text-xs 2xl:text-sm leading-relaxed"><?php echo synergy_content('agri-challenges-p-3', '<span class="lang-th">ไม่สามารถติดตามสภาพแปลงและพืชผลได้แบบทันที ขาดข้อมูลในการตัดสินใจ</span><span class="lang-en">Lack of real-time field data makes timely decisions difficult.</span>', 'smart-agriculture'); ?></p>
           </div>
-          <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_4.png" alt="บริหารหลายแปลงหรือหลายพื้นที่ได้ยาก" class="w-10 h-10 object-contain">
+
+          <!-- 04 -->
+          <div class="bg-white rounded-[20px] xl:rounded-[24px] p-5 xl:p-4 2xl:p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center border border-slate-100">
+            <div class="w-14 h-14 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-brand-soft flex items-center justify-center mb-3 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_4.png" alt="บริหารหลายแปลงหรือหลายพื้นที่ได้ยาก" class="w-9 h-9 xl:w-7 xl:h-7 2xl:w-10 2xl:h-10 object-contain">
             </div>
-            <div class="svc-kicker text-brand mb-1 text-center">04</div>
-            <h3 data-editable="agri-challenges-h3-4" <?php echo synergy_style('agri-challenges-h3-4', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-4', '<span class="lang-th">บริหารหลายแปลงหรือหลายพื้นที่ได้ยาก</span><span class="lang-en">Complex Multi-site Management</span>', 'smart-agriculture'); ?></h3>
-            <p data-editable="agri-challenges-p-4" <?php echo synergy_style('agri-challenges-p-4', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-4', '<span class="lang-th">ข้อมูลแต่ละพื้นที่แยกกัน ทำให้การบริหารจัดการไม่มีประสิทธิภาพ</span><span class="lang-en">Managing multiple farms or plots is inefficient and time-consuming.</span>', 'smart-agriculture'); ?></p>
+            <div class="svc-kicker text-brand font-bold text-sm mb-1">04</div>
+            <h3 data-editable="agri-challenges-h3-4" <?php echo synergy_style('agri-challenges-h3-4', 'smart-agriculture'); ?> class="svc-label text-ink mb-2 font-bold text-base xl:text-sm 2xl:text-base leading-snug"><?php echo synergy_content('agri-challenges-h3-4', '<span class="lang-th">บริหารหลายแปลงหรือหลายพื้นที่ได้ยาก</span><span class="lang-en">Complex Multi-site Management</span>', 'smart-agriculture'); ?></h3>
+            <p data-editable="agri-challenges-p-4" <?php echo synergy_style('agri-challenges-p-4', 'smart-agriculture'); ?> class="svc-caption text-muted text-xs 2xl:text-sm leading-relaxed"><?php echo synergy_content('agri-challenges-p-4', '<span class="lang-th">การบริหารจัดการหลายฟาร์มหรือหลายแปลงไม่มีประสิทธิภาพและเสียเวลามาก</span><span class="lang-en">Managing multiple farms or plots is inefficient and time-consuming.</span>', 'smart-agriculture'); ?></p>
           </div>
-          <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_5.png" alt="พบปัญหาล่าช้า" class="w-10 h-10 object-contain">
+
+          <!-- 05 -->
+          <div class="bg-white rounded-[20px] xl:rounded-[24px] p-5 xl:p-4 2xl:p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center border border-slate-100">
+            <div class="w-14 h-14 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-brand-soft flex items-center justify-center mb-3 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_5.png" alt="พบปัญหาล่าช้า" class="w-9 h-9 xl:w-7 xl:h-7 2xl:w-10 2xl:h-10 object-contain">
             </div>
-            <div class="svc-kicker text-brand mb-1 text-center">05</div>
-            <h3 data-editable="agri-challenges-h3-5" <?php echo synergy_style('agri-challenges-h3-5', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-5', '<span class="lang-th">พบปัญหาล่าช้า</span><span class="lang-en">Delayed Issue Detection</span>', 'smart-agriculture'); ?></h3>
-            <p data-editable="agri-challenges-p-5" <?php echo synergy_style('agri-challenges-p-5', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-5', '<span class="lang-th">ตรวจพบโรคพืช ศัตรูพืช หรืออุปกรณ์ขัดข้องไม่ทันเวลา</span><span class="lang-en">Pests, diseases, or equipment issues are detected too late to prevent damage.</span>', 'smart-agriculture'); ?></p>
+            <div class="svc-kicker text-brand font-bold text-sm mb-1">05</div>
+            <h3 data-editable="agri-challenges-h3-5" <?php echo synergy_style('agri-challenges-h3-5', 'smart-agriculture'); ?> class="svc-label text-ink mb-2 font-bold text-base xl:text-sm 2xl:text-base leading-snug"><?php echo synergy_content('agri-challenges-h3-5', '<span class="lang-th">พบปัญหาล่าช้า</span><span class="lang-en">Delayed Issue Detection</span>', 'smart-agriculture'); ?></h3>
+            <p data-editable="agri-challenges-p-5" <?php echo synergy_style('agri-challenges-p-5', 'smart-agriculture'); ?> class="svc-caption text-muted text-xs 2xl:text-sm leading-relaxed"><?php echo synergy_content('agri-challenges-p-5', '<span class="lang-th">ตรวจพบโรคพืช ศัตรูพืช หรืออุปกรณ์ขัดข้องล่าช้าเกินกว่าจะป้องกันความเสียหาย</span><span class="lang-en">Pests, diseases, or equipment issues are detected too late to prevent damage.</span>', 'smart-agriculture'); ?></p>
           </div>
-          <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
-              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_6.png" alt="ตัดสินใจจากประสบการณ์มากกว่าข้อมูล" class="w-10 h-10 object-contain">
+
+          <!-- 06 -->
+          <div class="bg-white rounded-[20px] xl:rounded-[24px] p-5 xl:p-4 2xl:p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center border border-slate-100">
+            <div class="w-14 h-14 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16 rounded-2xl bg-brand-soft flex items-center justify-center mb-3 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_6.png" alt="ตัดสินใจจากประสบการณ์มากกว่าข้อมูล" class="w-9 h-9 xl:w-7 xl:h-7 2xl:w-10 2xl:h-10 object-contain">
             </div>
-            <div class="svc-kicker text-brand mb-1 text-center">06</div>
-            <h3 data-editable="agri-challenges-h3-6" <?php echo synergy_style('agri-challenges-h3-6', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-6', '<span class="lang-th">ตัดสินใจจากประสบการณ์มากกว่าข้อมูล</span><span class="lang-en">Limited Data-Driven Decisions</span>', 'smart-agriculture'); ?></h3>
-            <p data-editable="agri-challenges-p-6" <?php echo synergy_style('agri-challenges-p-6', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-6', '<span class="lang-th">ขาดข้อมูลที่เชื่อถือได้ในการวางแผนและตัดสินใจ</span><span class="lang-en">Farming decisions rely on experience instead of accurate data.</span>', 'smart-agriculture'); ?></p>
+            <div class="svc-kicker text-brand font-bold text-sm mb-1">06</div>
+            <h3 data-editable="agri-challenges-h3-6" <?php echo synergy_style('agri-challenges-h3-6', 'smart-agriculture'); ?> class="svc-label text-ink mb-2 font-bold text-base xl:text-sm 2xl:text-base leading-snug"><?php echo synergy_content('agri-challenges-h3-6', '<span class="lang-th">ตัดสินใจจากประสบการณ์มากกว่าข้อมูล</span><span class="lang-en">Limited Data-Driven Decisions</span>', 'smart-agriculture'); ?></h3>
+            <p data-editable="agri-challenges-p-6" <?php echo synergy_style('agri-challenges-p-6', 'smart-agriculture'); ?> class="svc-caption text-muted text-xs 2xl:text-sm leading-relaxed"><?php echo synergy_content('agri-challenges-p-6', '<span class="lang-th">การตัดสินใจทางการเกษตรพึ่งพาประสบการณ์มากกว่าข้อมูลที่แม่นยำ</span><span class="lang-en">Farming decisions rely on experience instead of accurate data.</span>', 'smart-agriculture'); ?></p>
           </div>
+
         </div>
       </div>
     </section>
@@ -901,92 +909,64 @@ if (!function_exists('sa_picture')) {
 
             <div class="feature-card">
               <div class="feature-icon-box">
-                <svg viewBox="0 0 32 32" fill="none" class="feature-svg-icon" aria-hidden="true">
-                  <defs><linearGradient id="ep-boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#10B981"></stop><stop offset="100%" stop-color="#00A86B"></stop>
-                  </linearGradient></defs>
-                  <path d="M18 3L6 17h8l-2 12 14-14h-8l2-12z" fill="url(#ep-boltGrad)" stroke="#059669" stroke-width="1.5" stroke-linejoin="round"></path>
-                  <path d="M16 7l-7.5 9.5H14l-1.5 8.5 9-9H16.5l1.5-9z" fill="#FFFFFF" opacity="0.3"></path>
-                </svg>
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_val_yield.png" alt="Increase Yield" class="w-7 h-7 object-contain">
               </div>
               <div class="feature-text">
                 <h3 class="feature-title">
-                  <span class="lang-th">รองรับ Inverter หลายแบรนด์</span>
-                  <span class="lang-en">Multi-brand Inverter Support</span>
+                  <span class="lang-th">เพิ่มผลผลิตทางการเกษตร</span>
+                  <span class="lang-en">Increase Agricultural Yield</span>
                 </h3>
                 <p class="feature-sub">
-                  <span class="lang-th">เชื่อมต่ออินเวอร์เตอร์แบรนด์ชั้นนำ Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis และแบรนด์อื่น ๆ</span>
-                  <span class="lang-en">Connect top inverter brands: Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis and more.</span>
+                  <span class="lang-th">เพิ่มประสิทธิภาพการเพาะปลูกด้วยข้อมูลจริงจากเซนเซอร์และ AI</span>
+                  <span class="lang-en">Optimize crop performance with real-time data from sensors and AI.</span>
                 </p>
               </div>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon-box">
-                <svg viewBox="0 0 32 32" fill="none" class="feature-svg-icon" aria-hidden="true">
-                  <defs><linearGradient id="ep-barGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-                    <stop offset="0%" stop-color="#00A86B"></stop><stop offset="100%" stop-color="#34D399"></stop>
-                  </linearGradient></defs>
-                  <rect x="5" y="18" width="5" height="9" rx="1.5" fill="url(#ep-barGrad)"></rect>
-                  <rect x="13.5" y="12" width="5" height="15" rx="1.5" fill="url(#ep-barGrad)"></rect>
-                  <rect x="22" y="6" width="5" height="21" rx="1.5" fill="url(#ep-barGrad)"></rect>
-                  <path d="M5 16l8-6 6 4 8-9" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <circle cx="27" cy="5" r="2.5" fill="#10B981" stroke="#FFFFFF" stroke-width="1"></circle>
-                </svg>
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_val_water.png" alt="Efficient Water Usage" class="w-7 h-7 object-contain">
               </div>
               <div class="feature-text">
                 <h3 class="feature-title">
-                  <span class="lang-th">บริหารจัดการหลายไซต์</span>
-                  <span class="lang-en">Multi-site Management</span>
+                  <span class="lang-th">ใช้น้ำอย่างมีประสิทธิภาพ</span>
+                  <span class="lang-en">Efficient Water Usage</span>
                 </h3>
                 <p class="feature-sub">
-                  <span class="lang-th">ติดตามการใช้งานโรงงาน สาขา และระบบ Solar ได้แบบ Real-time จากศูนย์กลางเดียว</span>
-                  <span class="lang-en">Monitor factories, branches, and Solar systems in real-time from a central hub.</span>
+                  <span class="lang-th">ลดการใช้น้ำด้วยระบบควบคุมการให้น้ำแบบแม่นยำ (AWD)</span>
+                  <span class="lang-en">Reduce water usage with precision Alternate Wetting and Drying (AWD) irrigation.</span>
                 </p>
               </div>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon-box">
-                <svg viewBox="0 0 32 32" fill="none" class="feature-svg-icon" aria-hidden="true">
-                  <defs><linearGradient id="ep-cloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#34D399"></stop><stop offset="100%" stop-color="#059669"></stop>
-                  </linearGradient></defs>
-                  <path d="M23 23H9a5.5 5.5 0 0 1-.8-10.9A7.5 7.5 0 0 1 23 10a5.5 5.5 0 0 1 0 11z" fill="url(#ep-cloudGrad)"></path>
-                  <circle cx="16" cy="17" r="2.5" fill="#FFFFFF"></circle>
-                  <path d="M16 11.5v2M16 20v2M10.5 17h2M19.5 17h2" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"></path>
-                </svg>
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_val_mobile.png" alt="Monitor Anywhere" class="w-7 h-7 object-contain">
               </div>
               <div class="feature-text">
                 <h3 class="feature-title">
-                  <span class="lang-th">ติดตั้งได้ยืดหยุ่น</span>
-                  <span class="lang-en">Flexible Deployment</span>
+                  <span class="lang-th">ติดตามได้ทุกที่</span>
+                  <span class="lang-en">Monitor Anywhere</span>
                 </h3>
                 <p class="feature-sub">
-                  <span class="lang-th">เลือกติดตั้งแบบ Cloud, On-Premise หรือ Hybrid ได้ตามนโยบายด้าน IT</span>
-                  <span class="lang-en">Deploy on Cloud, On-Premise, or Hybrid based on IT policies.</span>
+                  <span class="lang-th">เข้าถึงข้อมูลภาคสนามแบบ Real-time ได้ทุกที่ ทุกเวลาผ่านแอปและแดชบอร์ด</span>
+                  <span class="lang-en">Access field operations and sensor data in real-time anytime, anywhere.</span>
                 </p>
               </div>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon-box">
-                <svg viewBox="0 0 32 32" fill="none" class="feature-svg-icon" aria-hidden="true">
-                  <defs><linearGradient id="ep-shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#10B981"></stop><stop offset="100%" stop-color="#00A86B"></stop>
-                  </linearGradient></defs>
-                  <path d="M16 4l10 4v8c0 7.5-5.5 11.5-10 13.5C11.5 27.5 6 23.5 6 16V8l10-4z" fill="url(#ep-shieldGrad)" stroke="#059669" stroke-width="1.2"></path>
-                  <path d="M11.5 16.5l3.5 3.5 6.5-6.5" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_val_scale.png" alt="Scalable for All Farms" class="w-7 h-7 object-contain">
               </div>
               <div class="feature-text">
                 <h3 class="feature-title">
-                  <span class="lang-th">เชื่อมต่อระบบอัตโนมัติ</span>
-                  <span class="lang-en">Automated Open API</span>
+                  <span class="lang-th">รองรับการเติบโตของทุกฟาร์ม</span>
+                  <span class="lang-en">Scalable for All Farms</span>
                 </h3>
                 <p class="feature-sub">
-                  <span class="lang-th">เชื่อมต่อกับ ERP, BMS, CMMS และระบบอื่น ๆ ขององค์กรได้ผ่าน Open API</span>
-                  <span class="lang-en">Integrate with ERP, BMS, CMMS, and enterprise systems via Open API.</span>
+                  <span class="lang-th">ขยายระบบได้ง่ายจากแปลงทดลองขนาดเล็กสู่การใช้งานในฟาร์มขนาดใหญ่</span>
+                  <span class="lang-en">Easily scale from small pilot plots to large enterprise farm management.</span>
                 </p>
               </div>
             </div>
@@ -1094,74 +1074,82 @@ if (!function_exists('sa_picture')) {
 
                   <div class="devices-row">
 
-                    <button type="button" class="device-card" data-device="solar-inverter">
+                    <button type="button" class="device-card" data-device="weather-station">
                       <span class="device-img-wrapper">
-                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-factory/capabilities/icon-inverter.png" alt="Solar Inverter" class="device-img" loading="lazy" decoding="async">
+                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_dev_weather.png" alt="Weather Station" class="device-img" loading="lazy" decoding="async">
                       </span>
-                      <span class="device-name">Solar Inverter</span>
+                      <span class="text-xs text-brand font-semibold mb-0.5 block text-center">01</span>
+                      <span class="device-name text-center"><span class="lang-th">สถานีตรวจวัดสภาพอากาศ</span><span class="lang-en">Weather Station</span></span>
                       <span class="device-subicon-badge" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
-                          <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
-                          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                          <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+                          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line>
                         </svg>
                       </span>
                     </button>
 
-                    <button type="button" class="device-card" data-device="energy-meter">
+                    <button type="button" class="device-card" data-device="soil-sensor">
                       <span class="device-img-wrapper">
-                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-factory/capabilities/icon-meter.png" alt="Energy Meter" class="device-img" loading="lazy" decoding="async">
+                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_dev_soil.png" alt="Soil Sensor" class="device-img" loading="lazy" decoding="async">
                       </span>
-                      <span class="device-name">Energy Meter</span>
+                      <span class="text-xs text-brand font-semibold mb-0.5 block text-center">02</span>
+                      <span class="device-name text-center"><span class="lang-th">เซนเซอร์ดิน</span><span class="lang-en">Soil Sensor</span></span>
                       <span class="device-subicon-badge" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
-                          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line>
                         </svg>
                       </span>
                     </button>
 
-                    <button type="button" class="device-card" data-device="lighting-controller">
+                    <button type="button" class="device-card" data-device="water-quality-sensor">
                       <span class="device-img-wrapper">
-                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-factory/capabilities/icon-lighting.png" alt="Lighting Controller" class="device-img" loading="lazy" decoding="async">
+                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_dev_water.png" alt="Water Quality Sensor" class="device-img" loading="lazy" decoding="async">
                       </span>
-                      <span class="device-name">Lighting Controller</span>
+                      <span class="text-xs text-brand font-semibold mb-0.5 block text-center">03</span>
+                      <span class="device-name text-center"><span class="lang-th">เซนเซอร์คุณภาพน้ำ</span><span class="lang-en">Water Quality Sensor</span></span>
                       <span class="device-subicon-badge" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
-                          <path d="M9 18h6"></path><path d="M10 22h4"></path>
-                          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1.55.6 2.95 1.5 4 .76.76 1.23 1.52 1.41 2.5"></path>
+                          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line>
                         </svg>
                       </span>
                     </button>
 
-                    <button type="button" class="device-card" data-device="hvac">
+                    <button type="button" class="device-card" data-device="smart-irrigation">
                       <span class="device-img-wrapper">
-                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-factory/capabilities/icon-hvac.png" alt="HVAC" class="device-img" loading="lazy" decoding="async">
+                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_dev_irrigation.png" alt="Smart Irrigation" class="device-img" loading="lazy" decoding="async">
                       </span>
-                      <span class="device-name">HVAC</span>
+                      <span class="text-xs text-brand font-semibold mb-0.5 block text-center">04</span>
+                      <span class="device-name text-center"><span class="lang-th">ระบบน้ำอัจฉริยะ</span><span class="lang-en">Smart Irrigation</span></span>
                       <span class="device-subicon-badge" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
-                          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line>
                         </svg>
                       </span>
                     </button>
 
-                    <button type="button" class="device-card" data-device="ev-charger">
+                    <button type="button" class="device-card" data-device="smart-pump">
                       <span class="device-img-wrapper">
-                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-factory/capabilities/icon-ev.png" alt="EV Charger" class="device-img" loading="lazy" decoding="async">
+                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_dev_pump.png" alt="Smart Pump" class="device-img" loading="lazy" decoding="async">
                       </span>
-                      <span class="device-name">EV Charger</span>
+                      <span class="text-xs text-brand font-semibold mb-0.5 block text-center">05</span>
+                      <span class="device-name text-center"><span class="lang-th">ปั๊มน้ำอัจฉริยะ</span><span class="lang-en">Smart Pump</span></span>
                       <span class="device-subicon-badge" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
-                          <rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line>
                         </svg>
                       </span>
                     </button>
 
-                    <button type="button" class="device-card" data-device="iot-sensor">
+                    <button type="button" class="device-card" data-device="iot-gateway">
                       <span class="device-img-wrapper">
-                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-factory/capabilities/icon-iot.png" alt="IoT Sensor" class="device-img" loading="lazy" decoding="async">
+                        <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_dev_gateway.png" alt="IoT Gateway" class="device-img" loading="lazy" decoding="async">
                       </span>
-                      <span class="device-name">IoT Sensor</span>
+                      <span class="text-xs text-brand font-semibold mb-0.5 block text-center">06</span>
+                      <span class="device-name text-center"><span class="lang-th">เกตเวย์ IoT</span><span class="lang-en">IoT Gateway</span></span>
                       <span class="device-subicon-badge" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
                           <path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
@@ -1370,46 +1358,45 @@ if (!function_exists('sa_picture')) {
 
           <div class="benefit-item">
             <div class="benefit-icon-wrapper" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
-                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
-                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
-              </svg>
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_val_yield.png" alt="Increase Yield" class="w-6 h-6 object-contain">
             </div>
             <div class="benefit-content">
-              <h4 class="benefit-title"><span class="lang-th">ลดต้นทุนพลังงาน</span><span class="lang-en">Reduce Energy Costs</span></h4>
-              <p class="benefit-desc"><span class="lang-th">เพิ่มประสิทธิภาพการใช้พลังงาน</span><span class="lang-en">Maximize energy efficiency.</span></p>
-            </div>
-          </div>
-
-          <div class="benefit-item">
-            <div class="benefit-icon-wrapper" aria-hidden="true"><div class="co2-badge-text">CO₂</div></div>
-            <div class="benefit-content">
-              <h4 class="benefit-title"><span class="lang-th">ลดการปล่อยคาร์บอน</span><span class="lang-en">Reduce Carbon Emissions</span></h4>
-              <p class="benefit-desc"><span class="lang-th">สอดคล้องเป้าหมาย Net Zero</span><span class="lang-en">Align with Net Zero goals.</span></p>
+              <h4 class="benefit-title"><span class="lang-th">เพิ่มผลผลิตทางการเกษตร</span><span class="lang-en">Increase Yield</span></h4>
+              <p class="benefit-desc"><span class="lang-th">เพิ่มประสิทธิภาพการเพาะปลูกด้วยข้อมูลจริง</span><span class="lang-en">Optimize crop performance with real data.</span></p>
             </div>
           </div>
 
           <div class="benefit-item">
             <div class="benefit-icon-wrapper" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline>
-              </svg>
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_val_water.png" alt="Efficient Water Usage" class="w-6 h-6 object-contain">
             </div>
             <div class="benefit-content">
-              <h4 class="benefit-title"><span class="lang-th">ปลอดภัย เชื่อถือได้</span><span class="lang-en">Safe &amp; Reliable</span></h4>
-              <p class="benefit-desc"><span class="lang-th">ด้วยมาตรฐานความปลอดภัยระดับสากล</span><span class="lang-en">International standard security.</span></p>
+              <h4 class="benefit-title"><span class="lang-th">ใช้น้ำอย่างมีประสิทธิภาพ</span><span class="lang-en">Efficient Water Usage</span></h4>
+              <p class="benefit-desc"><span class="lang-th">ลดการใช้น้ำด้วยการให้น้ำอย่างแม่นยำ</span><span class="lang-en">Reduce water consumption with precision irrigation.</span></p>
             </div>
           </div>
 
           <div class="benefit-item">
             <div class="benefit-icon-wrapper" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2">
-                <rect x="4" y="14" width="4" height="7" rx="1"></rect><rect x="10" y="10" width="4" height="11" rx="1"></rect>
-                <rect x="16" y="6" width="4" height="15" rx="1"></rect><polyline points="4 8 10 3 16 7 22 2"></polyline>
-              </svg>
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_val_mobile.png" alt="Monitor Anywhere" class="w-6 h-6 object-contain">
             </div>
             <div class="benefit-content">
-              <h4 class="benefit-title"><span class="lang-th">ขยายธุรกิจได้ไม่จำกัด</span><span class="lang-en">Infinitely Scalable</span></h4>
+              <h4 class="benefit-title"><span class="lang-th">ติดตามได้ทุกที่</span><span class="lang-en">Monitor Anywhere</span></h4>
+              <p class="benefit-desc"><span class="lang-th">เข้าถึงข้อมูลภาคสนามแบบ Real-time ได้ทุกที่ ทุกเวลา</span><span class="lang-en">Access field data in real-time anytime, anywhere.</span></p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon-wrapper" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/agri_val_scale.png" alt="Scalable for All Farms" class="w-6 h-6 object-contain">
+            </div>
+            <div class="benefit-content">
+              <h4 class="benefit-title"><span class="lang-th">รองรับการเติบโตของทุกฟาร์ม</span><span class="lang-en">Scalable for All Farms</span></h4>
+              <p class="benefit-desc"><span class="lang-th">ขยายระบบได้ง่ายจากแปลงทดลองสู่การใช้งานขนาดใหญ่</span><span class="lang-en">Easily scale from pilot plots to large-scale operations.</span></p>
+            </div>
+          </div>
+
+        </div>
               <p class="benefit-desc"><span class="lang-th">รองรับการขยายตัวในอนาคต</span><span class="lang-en">Built for future growth.</span></p>
             </div>
           </div>
