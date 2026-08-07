@@ -1021,8 +1021,8 @@ if (!function_exists('sa_picture')) {
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-5 sm:gap-6 items-stretch relative sa-eng-grid">
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
             <div class="hidden xl:flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white absolute -right-4 top-24 z-20 border-2 border-white shadow" aria-hidden="true"><i class="fa-solid fa-chevron-right text-[10px]"></i></div>
-              <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-50 to-brand-soft border border-brand/15 flex items-center justify-center mx-auto mb-5 mt-1 shadow-sm transition-transform hover:scale-105" aria-hidden="true">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_1.png" alt="" class="w-14 h-14 object-contain filter drop-shadow-sm">
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 transition-transform hover:scale-105" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_3.png" alt="01 SYNC" class="w-full h-full object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">01</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">SYNC</h3>
@@ -1038,8 +1038,8 @@ if (!function_exists('sa_picture')) {
           </div>
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
             <div class="hidden xl:flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white absolute -right-4 top-24 z-20 border-2 border-white shadow" aria-hidden="true"><i class="fa-solid fa-chevron-right text-[10px]"></i></div>
-              <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-50 to-brand-soft border border-brand/15 flex items-center justify-center mx-auto mb-5 mt-1 shadow-sm transition-transform hover:scale-105" aria-hidden="true">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_2.png" alt="" class="w-14 h-14 object-contain filter drop-shadow-sm">
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 transition-transform hover:scale-105" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_1.png" alt="02 STREAM" class="w-full h-full object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">02</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">STREAM</h3>
@@ -1054,8 +1054,8 @@ if (!function_exists('sa_picture')) {
           </div>
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
             <div class="hidden xl:flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white absolute -right-4 top-24 z-20 border-2 border-white shadow" aria-hidden="true"><i class="fa-solid fa-chevron-right text-[10px]"></i></div>
-              <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-50 to-brand-soft border border-brand/15 flex items-center justify-center mx-auto mb-5 mt-1 shadow-sm transition-transform hover:scale-105" aria-hidden="true">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_3.png" alt="" class="w-14 h-14 object-contain filter drop-shadow-sm">
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 transition-transform hover:scale-105" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_4.png" alt="03 STEER" class="w-full h-full object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">03</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">STEER</h3>
@@ -1070,8 +1070,8 @@ if (!function_exists('sa_picture')) {
           </div>
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
             <div class="hidden xl:flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white absolute -right-4 top-24 z-20 border-2 border-white shadow" aria-hidden="true"><i class="fa-solid fa-chevron-right text-[10px]"></i></div>
-              <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-50 to-brand-soft border border-brand/15 flex items-center justify-center mx-auto mb-5 mt-1 shadow-sm transition-transform hover:scale-105" aria-hidden="true">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_4.png" alt="" class="w-14 h-14 object-contain filter drop-shadow-sm">
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 transition-transform hover:scale-105" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_2.png" alt="04 SOLVE" class="w-full h-full object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">04</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">SOLVE</h3>
@@ -1085,8 +1085,8 @@ if (!function_exists('sa_picture')) {
               </ul>
           </div>
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
-              <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-50 to-brand-soft border border-brand/15 flex items-center justify-center mx-auto mb-5 mt-1 shadow-sm transition-transform hover:scale-105" aria-hidden="true">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_5.png" alt="" class="w-14 h-14 object-contain filter drop-shadow-sm">
+              <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 transition-transform hover:scale-105" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_5.png" alt="05 SAVE" class="w-full h-full object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">05</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">SAVE</h3>
