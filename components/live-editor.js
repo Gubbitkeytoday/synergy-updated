@@ -1398,7 +1398,7 @@
            click     -> BUTTON act=remove   item count unchanged
        The whole list container is exempt, not just the buttons: dragging a
        marquee across a logo wall selects nothing useful anyway. */
-    if (e.target.closest('[data-editable]') || e.target.closest('.live-edit-toolbar') || e.target.closest('.element-align-bubble') || e.target.closest('.canva-edge-resize') || e.target.closest('.img-modal-card') || e.target.closest('[data-editable-list]') || e.target.closest('.live-list-add-bar')) {
+    if (e.target.closest('[data-editable]') || e.target.closest('.live-edit-toolbar') || e.target.closest('.element-align-bubble') || e.target.closest('.canva-edge-resize') || e.target.closest('.img-modal-card') || e.target.closest('[data-editable-list]') || e.target.closest('.live-list-add-bar') || e.target.closest('[data-editor-passthrough]')) {
       return;
     }
 

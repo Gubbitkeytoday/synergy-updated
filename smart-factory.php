@@ -66,6 +66,127 @@ if (!function_exists('wp_footer')) {
 if (!function_exists('language_attributes')) {
     function language_attributes() { echo 'lang="th"'; }
 }
+if (!function_exists('sf_dashboard_preview')) {
+    /**
+     * The dark preview card shown under each dashboard tab.
+     *
+     * Drawn in markup instead of shipped as screenshots. Seven screenshots would
+     * be roughly a megabyte of raster that blurs on a 2x screen, goes stale the
+     * moment the product UI moves, and cannot be translated - these scale, and
+     * every label in them is ordinary text.
+     *
+     * The figures are illustrative sample data, which is what a product preview
+     * is; they are not read from any live system.
+     */
+    function sf_dashboard_preview($id) {
+        $head = function ($title) {
+            echo '<div class="sf-shot-bar"><span>' . esc_html($title) . '</span><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i></div>';
+        };
+        // A tiny sparkline/area path, reused where a trend is all that is needed.
+        $area = '<svg viewBox="0 0 300 70" preserveAspectRatio="none" class="sf-spark" aria-hidden="true">'
+              . '<defs><linearGradient id="sfg" x1="0" y1="0" x2="0" y2="1">'
+              . '<stop offset="0%" stop-color="#38bdf8" stop-opacity=".55"/><stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>'
+              . '</linearGradient></defs>'
+              . '<path d="M0 52 L30 46 L60 54 L90 30 L120 38 L150 18 L180 32 L210 12 L240 26 L270 16 L300 24 V70 H0 Z" fill="url(#sfg)"/>'
+              . '<path d="M0 52 L30 46 L60 54 L90 30 L120 38 L150 18 L180 32 L210 12 L240 26 L270 16 L300 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'
+              . '</svg>';
+
+        echo '<div class="sf-shot-card">';
+
+        switch ($id) {
+
+            case 'oee':
+                $head('Plant Overview');
+                echo '<div class="sf-row sf-row--gauges">';
+                echo '<div class="sf-donut"><svg viewBox="0 0 42 42" aria-hidden="true">'
+                   . '<circle class="sf-donut-track" cx="21" cy="21" r="16"/>'
+                   . '<circle class="sf-donut-val" cx="21" cy="21" r="16" stroke-dasharray="86 100"/></svg>'
+                   . '<div class="sf-donut-mid"><b>85.6%</b><span>OEE</span></div></div>';
+                foreach (array(array('Availability', '96.4%', 92), array('Performance', '92.1%', 88), array('Quality', '96.0%', 96)) as $g) {
+                    echo '<div class="sf-mini"><svg viewBox="0 0 42 42" aria-hidden="true">'
+                       . '<circle class="sf-donut-track" cx="21" cy="21" r="16"/>'
+                       . '<circle class="sf-donut-val sf-donut-val--amber" cx="21" cy="21" r="16" stroke-dasharray="' . (int) $g[2] . ' 100"/></svg>'
+                       . '<b>' . $g[1] . '</b><span>' . $g[0] . '</span></div>';
+                }
+                echo '</div>' . $area;
+                break;
+
+            case 'machine':
+                $head('Machine Overview');
+                echo '<div class="sf-list">';
+                foreach (array(array('CNC-01', 'Running', 'ok'), array('Press-02', 'Warning', 'warn'), array('Oven-03', 'Stopped', 'bad')) as $m) {
+                    echo '<div class="sf-list-row"><span class="sf-dot sf-dot--' . $m[2] . '"></span>'
+                       . '<span class="sf-list-name">' . $m[0] . '</span>'
+                       . '<span class="sf-tag sf-tag--' . $m[2] . '">' . $m[1] . '</span></div>';
+                }
+                echo '</div>';
+                break;
+
+            case 'production':
+                $head('Production Summary');
+                echo '<div class="sf-row sf-row--stats">'
+                   . '<div class="sf-stat"><span>Today\'s Output</span><b class="sf-num--green">1,245,030</b></div>'
+                   . '<div class="sf-stat"><span>Target</span><b>1,500,000</b></div>'
+                   . '</div>' . $area;
+                break;
+
+            case 'energy':
+                $head('Energy Overview');
+                echo '<div class="sf-row sf-row--stats">'
+                   . '<div class="sf-stat"><span>Total Consumption</span><b class="sf-num--green">75,420 <em>kWh</em></b></div>'
+                   . '<div class="sf-stat"><span>Cost</span><b>234,500 <em>THB</em></b></div>'
+                   . '</div>';
+                echo '<svg viewBox="0 0 300 70" preserveAspectRatio="none" class="sf-spark" aria-hidden="true">';
+                $bars = array(38, 52, 30, 61, 45, 58, 34, 66, 40, 55, 28, 62);
+                foreach ($bars as $i => $h) {
+                    $x = 6 + $i * 24;
+                    echo '<rect x="' . $x . '" y="' . (70 - $h) . '" width="13" height="' . $h . '" rx="3" fill="' . ($i % 2 ? '#22c55e' : '#38bdf8') . '"/>';
+                }
+                echo '</svg>';
+                break;
+
+            case 'alarm':
+                $head('Active Alarms');
+                echo '<div class="sf-list">';
+                foreach (array(array('Machine #3', 'Overload', '2m ago', 'bad'), array('Temperature High', 'Oven Zone 2', '5m ago', 'warn'), array('Pressure Low', 'Air Compressor', '10m ago', 'warn')) as $a) {
+                    echo '<div class="sf-list-row"><span class="sf-badge sf-badge--' . $a[3] . '"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span>'
+                       . '<span class="sf-list-name">' . $a[0] . '<em>' . $a[1] . '</em></span>'
+                       . '<span class="sf-time">' . $a[2] . '</span></div>';
+                }
+                echo '</div>';
+                break;
+
+            case 'maintenance':
+                $head('Maintenance Overview');
+                echo '<div class="sf-row sf-row--stats">'
+                   . '<div class="sf-stat"><span>PM Due This Week</span><b class="sf-num--green">12</b></div>'
+                   . '<div class="sf-stat"><span>Overdue</span><b class="sf-num--red">3</b></div>'
+                   . '</div>';
+                echo '<div class="sf-row sf-row--legend"><div class="sf-donut sf-donut--sm"><svg viewBox="0 0 42 42" aria-hidden="true">'
+                   . '<circle class="sf-donut-track" cx="21" cy="21" r="16"/>'
+                   . '<circle class="sf-donut-val" cx="21" cy="21" r="16" stroke-dasharray="62 100"/>'
+                   . '<circle class="sf-donut-val sf-donut-val--amber" cx="21" cy="21" r="16" stroke-dasharray="22 100" stroke-dashoffset="-62"/>'
+                   . '</svg></div><ul>'
+                   . '<li><span class="sf-dot sf-dot--ok"></span>Completed</li>'
+                   . '<li><span class="sf-dot sf-dot--warn"></span>In Progress</li>'
+                   . '<li><span class="sf-dot sf-dot--muted"></span>Overdue</li>'
+                   . '</ul></div>';
+                break;
+
+            case 'executive':
+            default:
+                $head('Executive KPI');
+                echo '<div class="sf-row sf-row--stats sf-row--3">'
+                   . '<div class="sf-stat"><span>OEE</span><b class="sf-num--green">85.6%</b></div>'
+                   . '<div class="sf-stat"><span>Output</span><b>1.25M</b></div>'
+                   . '<div class="sf-stat"><span>Downtime</span><b class="sf-num--red">2.5%</b></div>'
+                   . '</div>' . $area;
+                break;
+        }
+
+        echo '</div>';
+    }
+}
 if (file_exists(__DIR__ . '/functions.php')) {
     require_once __DIR__ . '/functions.php';
 }
@@ -216,6 +337,82 @@ if (file_exists(__DIR__ . '/functions.php')) {
        wide inside a 649px box - clipped, not wrapped, because the section is
        overflow-hidden. A clamp actually scales, so the line fits from the sm
        breakpoint up. */
+    /* ---- Dashboards & Applications ------------------------------------
+       The tab previews are drawn here rather than shipped as screenshots; see
+       the note on sf_dashboard_preview(). Everything is sized in rem/% so the
+       cards hold up from 320px to a wide desktop. */
+    .sf-dash-tab { min-height: 76px; cursor: pointer; }
+    .sf-dash-tab:hover { border-color: #a7f3d0; background: #f0fdf4; }
+    .sf-dash-tab[aria-selected="true"] {
+      background: #064e3b; border-color: #064e3b; color: #fff;
+      box-shadow: 0 6px 18px rgba(6, 78, 59, 0.25);
+    }
+    .sf-dash-tab:focus-visible { outline: 3px solid #F2C72E; outline-offset: 3px; }
+
+    .sf-shot-card {
+      background: #0b1220; border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px; padding: 12px; color: #e2e8f0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .sf-shot-bar { display: flex; align-items: center; justify-content: space-between;
+      font-size: 11px; color: #94a3b8; letter-spacing: .02em; }
+    .sf-row { display: grid; gap: 10px; align-items: center; }
+    .sf-row--gauges { grid-template-columns: 1.2fr repeat(3, 1fr); }
+    .sf-row--stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sf-row--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .sf-row--legend { grid-template-columns: 74px 1fr; }
+
+    .sf-stat { background: rgba(255,255,255,.04); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+    .sf-stat span { display: block; font-size: 10px; color: #94a3b8; }
+    .sf-stat b { font-size: 16px; font-weight: 800; color: #e2e8f0; white-space: nowrap; }
+    .sf-stat b em { font-style: normal; font-size: 10px; color: #94a3b8; }
+    .sf-num--green { color: #4ade80 !important; }
+    .sf-num--red { color: #f87171 !important; }
+
+    .sf-donut { position: relative; width: 74px; }
+    .sf-donut svg { width: 100%; height: auto; transform: rotate(-90deg); }
+    .sf-donut-track { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 4; }
+    .sf-donut-val { fill: none; stroke: #22c55e; stroke-width: 4; stroke-linecap: round; }
+    .sf-donut-val--amber { stroke: #fbbf24; }
+    .sf-donut-mid { position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; line-height: 1.1; }
+    .sf-donut-mid b { font-size: 14px; font-weight: 800; color: #4ade80; }
+    .sf-donut-mid span { font-size: 9px; color: #94a3b8; }
+
+    .sf-mini { text-align: center; min-width: 0; }
+    .sf-mini svg { width: 38px; height: 38px; transform: rotate(-90deg); }
+    .sf-mini b { display: block; font-size: 11px; font-weight: 800; color: #fbbf24; }
+    .sf-mini span { display: block; font-size: 9px; color: #94a3b8;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .sf-spark { width: 100%; height: 62px; display: block; }
+
+    .sf-list { display: flex; flex-direction: column; gap: 8px; }
+    .sf-list-row { display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.04); border-radius: 10px; padding: 8px 10px; }
+    .sf-list-name { flex: 1; min-width: 0; font-size: 12px; font-weight: 700; color: #e2e8f0; }
+    .sf-list-name em { display: block; font-style: normal; font-size: 10px; font-weight: 400; color: #94a3b8; }
+    .sf-time { font-size: 10px; color: #94a3b8; white-space: nowrap; }
+    .sf-dot { width: 8px; height: 8px; border-radius: 999px; background: #64748b; flex: 0 0 auto; }
+    .sf-dot--ok { background: #22c55e; } .sf-dot--warn { background: #fbbf24; }
+    .sf-dot--bad { background: #ef4444; } .sf-dot--muted { background: #64748b; }
+    .sf-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+    .sf-tag--ok { color: #4ade80; background: rgba(34,197,94,.15); }
+    .sf-tag--warn { color: #fbbf24; background: rgba(251,191,36,.15); }
+    .sf-tag--bad { color: #f87171; background: rgba(239,68,68,.15); }
+    .sf-badge { width: 26px; height: 26px; border-radius: 999px; display: flex;
+      align-items: center; justify-content: center; font-size: 11px; flex: 0 0 auto; }
+    .sf-badge--warn { color: #fbbf24; background: rgba(251,191,36,.15); }
+    .sf-badge--bad { color: #f87171; background: rgba(239,68,68,.15); }
+    .sf-row--legend ul { margin: 0; padding: 0; list-style: none; display: flex;
+      flex-direction: column; gap: 5px; font-size: 11px; color: #cbd5e1; }
+    .sf-row--legend li { display: flex; align-items: center; gap: 8px; }
+
+    @media (max-width: 640px) {
+      .sf-row--gauges { grid-template-columns: 1fr 1fr; }
+      .sf-donut { width: 64px; }
+    }
+
     .sf-arch-h2 { font-size: clamp(22px, 3.4vw, 44px) !important; line-height: 1.2 !important; font-weight: 900; }
 
     .sf-cta-eyebrow { font-size: 0.875rem !important; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
@@ -281,7 +478,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <a href="<?php echo home_url('/'); ?>#contact" class="bg-brand hover:bg-brand-deep text-white font-700 text-xs tracking-wider uppercase px-8 py-4 rounded-xl transition shadow-lg shadow-brand/20">
           <i class="fa-solid fa-paper-plane mr-2"></i><span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span><span class="lang-en">Talk to Our Experts</span>
         </a>
-        <a href="#overview" class="border border-white/20 hover:bg-white/10 text-white font-700 text-xs tracking-wider uppercase px-8 py-4 rounded-xl transition">
+        <a href="#factory-architecture" class="border border-white/20 hover:bg-white/10 text-white font-700 text-xs tracking-wider uppercase px-8 py-4 rounded-xl transition">
           <i class="fa-solid fa-chevron-down mr-2"></i><span class="lang-th">ดูรายละเอียด</span><span class="lang-en">Learn More</span>
         </a>
       </div>
@@ -620,40 +817,73 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="grid lg:grid-cols-12 gap-8 lg:gap-6 items-center">
         <!-- Center: layered diagram -->
         <div class="lg:col-span-9 space-y-2.5">
-          <!-- Business Applications -->
-          <div class="rounded-2xl border border-slate-200/90 bg-white px-5 py-4 shadow-sm">
-            <p class="text-[10px] font-800 text-emerald-700 uppercase tracking-[0.2em] text-center mb-3">BUSINESS APPLICATIONS</p>
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 text-center">
-              <!-- ERP -->
-              <div class="flex flex-col items-center gap-2 py-3 px-2 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 hover:border-emerald-200 transition-colors">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/icons/app_erp.png" alt="ERP" class="w-8 h-8 object-contain">
-                <span class="text-xs font-700">ERP</span>
+          <?php
+          /* DASHBOARDS & APPLICATIONS
+             This replaces the static ERP / MES / SCADA / CRM / CMMS / Other row.
+             The previews are drawn in markup rather than shipped as images: at
+             seven of them a screenshot set would be ~1MB of raster that goes
+             stale the moment the product UI changes, cannot be translated, and
+             blurs on a 2x screen. Built this way they are sharp at any size,
+             both languages work, and the numbers are ordinary text. */
+          $sf_dashboards = array(
+              array('id' => 'oee', 'icon' => 'fa-gauge-high', 'name' => 'OEE Dashboard',
+                    'th' => 'ติดตาม OEE แบบ Real-time เห็นภาพรวมประสิทธิภาพการผลิตของโรงงาน',
+                    'en' => 'Track OEE in real time and see plant-wide production efficiency at a glance.'),
+              array('id' => 'machine', 'icon' => 'fa-industry', 'name' => 'Machine Monitoring',
+                    'th' => 'ตรวจสอบสถานะเครื่องจักรแบบ Real-time ลด Downtime และแจ้งเตือนความผิดปกติ',
+                    'en' => 'Watch machine status in real time, cut downtime and get alerted on anomalies.'),
+              array('id' => 'production', 'icon' => 'fa-chart-column', 'name' => 'Production Dashboard',
+                    'th' => 'ติดตามเป้าหมายการผลิต ผลผลิต และประสิทธิภาพรายไลน์การผลิต',
+                    'en' => 'Follow targets, output and efficiency line by line.'),
+              array('id' => 'energy', 'icon' => 'fa-bolt', 'name' => 'Energy Dashboard',
+                    'th' => 'ตรวจสอบการใช้พลังงานแบบละเอียด ช่วยลดต้นทุนและเพิ่มประสิทธิภาพ',
+                    'en' => 'Break energy use down in detail to cut cost and raise efficiency.'),
+              array('id' => 'alarm', 'icon' => 'fa-bell', 'name' => 'Alarm Center',
+                    'th' => 'รวมการแจ้งเตือนทั้งหมดไว้ที่เดียว ตอบสนองได้รวดเร็ว',
+                    'en' => 'Every alert in one place so the response is quick.'),
+              array('id' => 'maintenance', 'icon' => 'fa-wrench', 'name' => 'Maintenance Dashboard',
+                    'th' => 'วางแผนและติดตามงานบำรุงรักษา ลดการหยุดชะงักและยืดอายุการใช้งาน',
+                    'en' => 'Plan and track maintenance to reduce stoppages and extend asset life.'),
+              array('id' => 'executive', 'icon' => 'fa-user-tie', 'name' => 'Executive Dashboard',
+                    'th' => 'สรุป KPI สำคัญสำหรับผู้บริหาร เห็นภาพรวมธุรกิจแบบ Real-time',
+                    'en' => 'The KPIs leadership needs, with the business in view in real time.'),
+          );
+          ?>
+          <!-- Dashboards & Applications -->
+          <div class="rounded-2xl border border-slate-200/90 bg-white px-4 sm:px-5 py-4 shadow-sm sf-dash" data-editor-passthrough>
+            <p class="text-[10px] font-800 text-emerald-700 uppercase tracking-[0.2em] text-center mb-3">
+              <span class="lang-th">แดชบอร์ดและแอปพลิเคชันที่คุณจะได้ใช้</span><span class="lang-en">Dashboards &amp; Applications You Will See</span>
+            </p>
+
+            <!-- Tabs. Real <button>s in a tablist: they are keyboard reachable,
+                 announced as tabs, and arrow keys move between them. -->
+            <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 sm:gap-2.5 text-center" role="tablist" aria-label="Dashboards">
+              <?php foreach ($sf_dashboards as $i => $d): ?>
+              <button type="button" role="tab" id="sf-tab-<?php echo $d['id']; ?>"
+                      aria-controls="sf-panel-<?php echo $d['id']; ?>"
+                      aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
+                      tabindex="<?php echo $i === 0 ? '0' : '-1'; ?>"
+                      class="sf-dash-tab flex flex-col items-center justify-start gap-2 py-3 px-1.5 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 transition-colors">
+                <i class="fa-solid <?php echo $d['icon']; ?> text-lg" aria-hidden="true"></i>
+                <span class="text-[11px] sm:text-xs font-700 leading-tight"><?php echo esc_html($d['name']); ?></span>
+              </button>
+              <?php endforeach; ?>
+            </div>
+
+            <!-- Panels -->
+            <div class="mt-4">
+              <?php foreach ($sf_dashboards as $i => $d): ?>
+              <div class="sf-dash-panel" role="tabpanel" id="sf-panel-<?php echo $d['id']; ?>"
+                   aria-labelledby="sf-tab-<?php echo $d['id']; ?>" <?php echo $i === 0 ? '' : 'hidden'; ?>>
+                <div class="grid sm:grid-cols-[1.1fr_1fr] gap-4 sm:gap-5 items-center">
+                  <div class="sf-shot"><?php sf_dashboard_preview($d['id']); ?></div>
+                  <div>
+                    <h4 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5"><?php echo esc_html($d['name']); ?></h4>
+                    <p data-editable="factory-dash-<?php echo $d['id']; ?>" <?php echo synergy_style('factory-dash-' . $d['id'], 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-dash-' . $d['id'], '<span class="lang-th">' . $d['th'] . '</span><span class="lang-en">' . $d['en'] . '</span>', 'smart-factory'); ?></p>
+                  </div>
+                </div>
               </div>
-              <!-- MES -->
-              <div class="flex flex-col items-center gap-2 py-3 px-2 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 hover:border-emerald-200 transition-colors">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/icons/app_mes.png" alt="MES" class="w-8 h-8 object-contain">
-                <span class="text-xs font-700">MES</span>
-              </div>
-              <!-- SCADA -->
-              <div class="flex flex-col items-center gap-2 py-3 px-2 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 hover:border-emerald-200 transition-colors">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/icons/app_scada.png" alt="SCADA" class="w-8 h-8 object-contain">
-                <span class="text-xs font-700">SCADA</span>
-              </div>
-              <!-- CRM -->
-              <div class="flex flex-col items-center gap-2 py-3 px-2 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 hover:border-emerald-200 transition-colors">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/icons/app_crm.png" alt="CRM" class="w-8 h-8 object-contain">
-                <span class="text-xs font-700">CRM</span>
-              </div>
-              <!-- CMMS -->
-              <div class="flex flex-col items-center gap-2 py-3 px-2 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 hover:border-emerald-200 transition-colors">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/icons/app_cmms.png" alt="CMMS" class="w-8 h-8 object-contain">
-                <span class="text-xs font-700">CMMS</span>
-              </div>
-              <!-- Other -->
-              <div class="flex flex-col items-center gap-2 py-3 px-2 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 hover:border-emerald-200 transition-colors">
-                <i class="fa-solid fa-table-cells text-emerald-600 text-xl"></i>
-                <span class="text-xs font-700">Other</span>
-              </div>
+              <?php endforeach; ?>
             </div>
           </div>
 
@@ -1018,87 +1248,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
     </div>
   </section>
 
-  <!-- OVERVIEW -->
-  <section id="overview" class="py-24 bg-surface">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid lg:grid-cols-2 gap-16 items-start">
-        <div class="space-y-6">
-          <span class="bg-brand/10 text-brand text-xs font-700 uppercase tracking-widest px-3 py-1 rounded-full inline-block">OT/IT Integration</span>
-          <h2 class="font-display font-800 text-3xl sm:text-4xl text-ink leading-snug">
-            <span class="lang-th">โรงงานอัจฉริยะ<br>ที่เห็นทุกอย่างแบบเรียลไทม์</span>
-            <span class="lang-en">A Smart Factory<br>That Sees Everything in Real Time</span>
-          </h2>
-          <p class="text-sm text-body font-300 leading-relaxed">
-            <span class="lang-th">เชื่อมต่อเซนเซอร์ความร้อน (Thermocouple Type K), อัตราการไหล (Flow rate sensor) และ Load cell เข้ากับบอร์ดเกตเวย์ HandySense ส่งข้อมูลขึ้นคลาวด์ ThingBoard เพื่อประเมินค่า OEE แบบ Real-time</span>
-            <span class="lang-en">Connect thermocouple (Type K), flow rate, and load cell sensors to the HandySense gateway, streaming data to ThingBoard Cloud for real-time OEE analysis.</span>
-          </p>
-          <!-- Sensor list -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-3">
-              <span class="w-8 h-8 rounded-lg bg-brand-soft text-brand flex items-center justify-center shrink-0"><i class="fa-solid fa-temperature-high text-sm"></i></span>
-              <div><p class="text-xs font-700 text-ink">Thermocouple Type K</p><p class="text-[11px] text-muted font-300"><span class="lang-th">วัดอุณหภูมิเครื่องจักรแบบ Real-time</span><span class="lang-en">Real-time machine temperature</span></p></div>
-            </div>
-            <div class="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-3">
-              <span class="w-8 h-8 rounded-lg bg-brand-soft text-brand flex items-center justify-center shrink-0"><i class="fa-solid fa-water text-sm"></i></span>
-              <div><p class="text-xs font-700 text-ink">Flow Rate Sensor</p><p class="text-[11px] text-muted font-300"><span class="lang-th">อัตราการไหลของของเหลวในกระบวนการ</span><span class="lang-en">Process fluid flow rate</span></p></div>
-            </div>
-            <div class="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-3">
-              <span class="w-8 h-8 rounded-lg bg-brand-soft text-brand flex items-center justify-center shrink-0"><i class="fa-solid fa-weight-hanging text-sm"></i></span>
-              <div><p class="text-xs font-700 text-ink">Load Cell</p><p class="text-[11px] text-muted font-300"><span class="lang-th">สถิติแรงกดรับน้ำหนักแม่นยำสูง</span><span class="lang-en">High-precision load measurement</span></p></div>
-            </div>
-            <div class="bg-white border border-gray-100 rounded-xl p-4 flex items-start gap-3">
-              <span class="w-8 h-8 rounded-lg bg-brand-soft text-brand flex items-center justify-center shrink-0"><i class="fa-solid fa-microchip text-sm"></i></span>
-              <div><p class="text-xs font-700 text-ink">HandySense Gateway</p><p class="text-[11px] text-muted font-300"><span class="lang-th">บอร์ดรวบรวมข้อมูลสู่คลาวด์</span><span class="lang-en">Edge gateway to the cloud</span></p></div>
-            </div>
-          </div>
-        </div>
-        <!-- SynWISEMove Card (High-Contrast Refined Design) -->
-        <div class="bg-[#0B2E1E] text-white rounded-3xl overflow-hidden shadow-xl border border-white/5 relative group hover:-translate-y-1.5 spring-duration">
-          <div class="absolute inset-0 opacity-20 pointer-events-none bg-mesh-dark"></div>
-          <div class="w-full h-56 overflow-hidden border-b border-slate-100">
-            <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/solutions/factory-warehouse-automation.png" alt="SynWISEMove Warehouse Automation — AGV robot in facility" class="w-full h-full object-cover" />
-          </div>
-          <div class="p-8 relative z-10">
-            <span class="text-gold-bright text-xs font-bold uppercase tracking-wider block mb-3">SynWISEMove</span>
-            <h3 class="font-display font-bold text-xl text-white mb-4">Warehouse Automation</h3>
-            <p class="text-sm text-white/70 font-light leading-relaxed mb-6">
-              <span class="lang-th">ระบบสมองกลควบคุมประสานงานหุ่นยนต์ลากจูงคลังสินค้าอัตโนมัติ (AGVs, AMRs, Autonomous Forklifts) ควบคุมการเคลื่อนย้ายและป้องกันการชนอย่างมีเสถียรภาพ</span>
-              <span class="lang-en">An orchestration brain coordinating automated fleet robots (AGVs, AMRs, autonomous forklifts) — managing movement and preventing collisions with stability.</span>
-            </p>
-            <div class="space-y-3">
-              <div class="flex items-center gap-3 text-xs sm:text-sm"><i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i><span class="text-white/80 font-light"><span class="lang-th">เพิ่มประสิทธิภาพการสัญจรในคลัง</span><span class="lang-en">Increase productivity</span></span></div>
-              <div class="flex items-center gap-3 text-xs sm:text-sm"><i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i><span class="text-white/80 font-light"><span class="lang-th">ลดอุบัติเหตุจากคนและเครื่องจักร</span><span class="lang-en">Improve safety</span></span></div>
-              <div class="flex items-center gap-3 text-xs sm:text-sm"><i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i><span class="text-white/80 font-light"><span class="lang-th">ขยายขีดความสามารถได้อย่างมั่นใจ</span><span class="lang-en">Scale with confidence</span></span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- OTHER SOLUTIONS -->
-  <section id="factory-related" class="py-16 bg-surface border-t border-gray-100">
-    <div class="max-w-7xl mx-auto px-6">
-      <p class="text-center text-xs text-muted uppercase tracking-wider mb-8 font-700"><span class="lang-th">โซลูชันอื่นๆ</span><span class="lang-en">Other Solutions</span></p>
-      <div class="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-        <a href="<?php echo home_url('/smart-energy/'); ?>" class="bg-white border border-gray-100 rounded-2xl p-5 flex items-center gap-4 hover:shadow-md hover:border-brand/20 transition group">
-          <span class="w-10 h-10 rounded-xl bg-brand-soft text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition"><i class="fa-solid fa-bolt"></i></span>
-          <div><p class="font-700 text-sm text-ink">Smart Energy</p><p class="text-xs text-muted font-300"><span class="lang-th">บริหารพลังงานอัจฉริยะ</span><span class="lang-en">Intelligent energy management</span></p></div>
-        </a>
-        <a href="<?php echo home_url('/'); ?>#solutions" class="bg-white border border-gray-100 rounded-2xl p-5 flex items-center gap-4 hover:shadow-md hover:border-brand/20 transition group">
-          <span class="w-10 h-10 rounded-xl bg-brand-soft text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition"><i class="fa-solid fa-seedling"></i></span>
-          <div><p class="font-700 text-sm text-ink">Smart Agriculture</p><p class="text-xs text-muted font-300"><span class="lang-th">เกษตรอัจฉริยะ & Carbon Credit</span><span class="lang-en">Smart farming & carbon credit</span></p></div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <!-- CLOSING CTA
-       Same treatment as the closing CTA on smart-energy.php: gradient card on a
-       white section, eyebrow over the headline, copy on the left and the action
-       held in its own column on the right so it does not get lost under a wide
-       paragraph. The wording is this page's own. -->
   <section id="factory-cta" class="py-14 sm:py-20 bg-white" style="scroll-margin-top:96px">
     <div class="max-w-7xl mx-auto px-6">
       <div class="relative overflow-hidden rounded-[28px] px-6 py-10 sm:px-10 sm:py-14 lg:px-16 text-white"
@@ -1136,6 +1285,43 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <!-- Scripts -->
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/live-editor.js') : './components/live-editor.js'; ?>"></script>
+
+  <script>
+  /* Dashboard tabs. Small enough to live with the markup it drives.
+     Follows the WAI-ARIA tabs pattern: one tab in the tab order, arrows move
+     between them, Home/End jump to the ends. */
+  (function () {
+    var wrap = document.querySelector('.sf-dash');
+    if (!wrap) return;
+    var tabs = Array.prototype.slice.call(wrap.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+
+    function select(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) { if (on) { panel.removeAttribute('hidden'); } else { panel.setAttribute('hidden', ''); } }
+      });
+      if (focus) tab.focus();
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(tab, false); });
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = tabs[(i + 1) % tabs.length];
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if (e.key === 'Home') next = tabs[0];
+        else if (e.key === 'End') next = tabs[tabs.length - 1];
+        if (!next) return;
+        e.preventDefault();
+        select(next, true);
+      });
+    });
+  })();
+  </script>
 
 <?php include __DIR__ . '/components/cookie-consent.php'; ?>
   <?php wp_footer(); ?>

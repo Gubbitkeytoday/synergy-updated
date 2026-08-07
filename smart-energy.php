@@ -1140,9 +1140,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <!-- Step 05: SAFE -->
           <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
             <div>
-              <!-- S-Logo Graphic (No Outer Circle) -->
+              <!-- S-Logo Graphic -->
               <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_5.svg" alt="05 SAFE" class="w-full h-full object-contain">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_5.png" alt="05 SAFE" class="w-full h-full object-contain">
               </div>
 
               <!-- Header Titles -->
