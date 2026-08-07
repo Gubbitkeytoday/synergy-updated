@@ -551,12 +551,19 @@ if (file_exists(__DIR__ . '/functions.php')) {
            twelve-column grid - which left the headline wrapping over three
            lines and every feature description over four. Full width lets the
            four points sit in one row and gives the diagram the whole grid. -->
-      <div class="max-w-3xl mb-8 sm:mb-10">
-        <span class="text-emerald-700 text-xs font-800 tracking-[0.2em] uppercase block mb-3">SYNEXTA INTELLIGENCE ARCHITECTURE</span>
-              <h2 class="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight leading-tight mb-8">
-                <span class="lang-th">แพลตฟอร์มเดียว<br><span class="text-emerald-700">ควบคุมทุกระบบของโรงงาน</span></span>
-                <span class="lang-en">One Platform.<br><span class="text-emerald-700">Complete Control.</span></span>
-              </h2>
+      <div class="max-w-3xl mx-auto text-center mb-8 sm:mb-10">
+        <!-- The SynExta mark replaces the "SYNEXTA INTELLIGENCE ARCHITECTURE"
+             eyebrow, the same way smart-energy.php opens its platform block.
+             Sized by height so the 1997x227 source scales to the row rather
+             than being letterboxed; width/height keep the heading from jumping
+             while it loads. -->
+        <div class="mb-4 flex justify-center">
+          <img src="<?php echo get_template_directory_uri(); ?>/image/LOGO%20SYNEXTA.png" alt="SynExta" width="1997" height="227" loading="lazy" decoding="async" class="h-8 sm:h-10 w-auto object-contain drop-shadow-sm">
+        </div>
+        <h2 class="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight leading-tight">
+          <span class="lang-th">แพลตฟอร์มเดียว<br><span class="text-emerald-700">ควบคุมทุกระบบของโรงงาน</span></span>
+          <span class="lang-en">One Platform.<br><span class="text-emerald-700">Complete Control.</span></span>
+        </h2>
       </div>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12 sm:mb-14">
