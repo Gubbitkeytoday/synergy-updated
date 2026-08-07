@@ -771,8 +771,8 @@ if (!function_exists('sa_picture')) {
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6 items-stretch relative sa-eng-grid">
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
             <div class="hidden lg:flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white absolute -right-4 top-24 z-20 border-2 border-white shadow" aria-hidden="true"><i class="fa-solid fa-chevron-right text-[10px]"></i></div>
-              <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mx-auto mb-4 mt-1" aria-hidden="true">
-                <i class="fa-solid fa-diagram-project text-2xl"></i>
+              <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mx-auto mb-4 mt-1 overflow-hidden" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_1.png" alt="SYNC" class="w-10 h-10 object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">01</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">SYNC</h3>
@@ -790,8 +790,8 @@ if (!function_exists('sa_picture')) {
           </div>
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
             <div class="hidden lg:flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white absolute -right-4 top-24 z-20 border-2 border-white shadow" aria-hidden="true"><i class="fa-solid fa-chevron-right text-[10px]"></i></div>
-              <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mx-auto mb-4 mt-1" aria-hidden="true">
-                <i class="fa-solid fa-chart-line text-2xl"></i>
+              <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mx-auto mb-4 mt-1 overflow-hidden" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_2.png" alt="STREAM" class="w-10 h-10 object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">02</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">STREAM</h3>
@@ -808,8 +808,8 @@ if (!function_exists('sa_picture')) {
           </div>
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
             <div class="hidden lg:flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white absolute -right-4 top-24 z-20 border-2 border-white shadow" aria-hidden="true"><i class="fa-solid fa-chevron-right text-[10px]"></i></div>
-              <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mx-auto mb-4 mt-1" aria-hidden="true">
-                <i class="fa-solid fa-sliders text-2xl"></i>
+              <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mx-auto mb-4 mt-1 overflow-hidden" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_3.png" alt="STEER" class="w-10 h-10 object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">03</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">STEER</h3>
@@ -826,8 +826,8 @@ if (!function_exists('sa_picture')) {
           </div>
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
             <div class="hidden lg:flex items-center justify-center w-7 h-7 rounded-full bg-brand text-white absolute -right-4 top-24 z-20 border-2 border-white shadow" aria-hidden="true"><i class="fa-solid fa-chevron-right text-[10px]"></i></div>
-              <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mx-auto mb-4 mt-1" aria-hidden="true">
-                <i class="fa-solid fa-brain text-2xl"></i>
+              <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mx-auto mb-4 mt-1 overflow-hidden" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_4.png" alt="SOLVE" class="w-10 h-10 object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">04</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">SOLVE</h3>
@@ -843,8 +843,8 @@ if (!function_exists('sa_picture')) {
             </div>
           </div>
           <div class="relative bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal sa-eng-card">
-              <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mx-auto mb-4 mt-1" aria-hidden="true">
-                <i class="fa-solid fa-shield-halved text-2xl"></i>
+              <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mx-auto mb-4 mt-1 overflow-hidden" aria-hidden="true">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/engine_5.png" alt="SAFE" class="w-10 h-10 object-contain">
               </div>
               <div class="svc-kicker text-brand mb-1 text-center">05</div>
               <h3 class="font-display svc-h3 text-ink tracking-tight mb-1 text-center">SAFE</h3>
