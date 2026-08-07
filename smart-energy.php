@@ -865,7 +865,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_1.png" alt="No Energy Visibility" class="w-full h-full object-contain drop-shadow-sm">
           </div>
           <h3 data-editable="energy-challenges-h3-1" <?php echo synergy_style('energy-challenges-h3-1', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-1', '<span class="lang-th">มองไม่เห็นต้นทุนพลังงาน</span>
-            <span class="lang-en">No Energy<br>Visibility</span>', 'smart-energy'); ?></h3>
+            <span class="lang-en">No Energy <br>Visibility</span>', 'smart-energy'); ?></h3>
           <p data-editable="energy-challenges-p-1" <?php echo synergy_style('energy-challenges-p-1', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-1', '<span class="lang-th">ขาดข้อมูลแบบ Real-time ทำให้วิเคราะห์และควบคุมการใช้พลังงานได้ยาก</span>
             <span class="lang-en">Limited real-time visibility makes energy optimization difficult.</span>', 'smart-energy'); ?></p>
         </div>
@@ -876,7 +876,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_2.png" alt="Fragmented Energy Data" class="w-full h-full object-contain drop-shadow-sm">
           </div>
           <h3 data-editable="energy-challenges-h3-2" <?php echo synergy_style('energy-challenges-h3-2', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-2', '<span class="lang-th">ข้อมูลแยกหลายระบบ</span>
-            <span class="lang-en">Fragmented<br>Energy Data</span>', 'smart-energy'); ?></h3>
+            <span class="lang-en">Fragmented <br>Energy Data</span>', 'smart-energy'); ?></h3>
           <p data-editable="energy-challenges-p-2" <?php echo synergy_style('energy-challenges-p-2', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-2', '<span class="lang-th">Solar, Inverter และมิเตอร์ใช้หลายแพลตฟอร์ม ทำให้ข้อมูลกระจัดกระจาย</span>
             <span class="lang-en">Energy data is scattered across multiple devices and platforms.</span>', 'smart-energy'); ?></p>
         </div>
@@ -887,7 +887,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_3.png" alt="Complex Multi-site Operations" class="w-full h-full object-contain drop-shadow-sm">
           </div>
           <h3 data-editable="energy-challenges-h3-3" <?php echo synergy_style('energy-challenges-h3-3', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-3', '<span class="lang-th">หลายไซต์ บริหารยาก</span>
-            <span class="lang-en">Complex Multi-site<br>Operations</span>', 'smart-energy'); ?></h3>
+            <span class="lang-en">Complex Multi-site <br>Operations</span>', 'smart-energy'); ?></h3>
           <p data-editable="energy-challenges-p-3" <?php echo synergy_style('energy-challenges-p-3', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-3', '<span class="lang-th">โรงงาน อาคาร หรือหลายสาขา ต้องเปิดหลายระบบเพื่อติดตามข้อมูล</span>
             <span class="lang-en">Managing multiple facilities through different systems is inefficient.</span>', 'smart-energy'); ?></p>
         </div>
@@ -898,7 +898,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_4.png" alt="Rising Energy Costs" class="w-full h-full object-contain drop-shadow-sm">
           </div>
           <h3 data-editable="energy-challenges-h3-4" <?php echo synergy_style('energy-challenges-h3-4', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-4', '<span class="lang-th">ค่าไฟสูง ควบคุมไม่ได้</span>
-            <span class="lang-en">Rising Energy<br>Costs</span>', 'smart-energy'); ?></h3>
+            <span class="lang-en">Rising Energy <br>Costs</span>', 'smart-energy'); ?></h3>
           <p data-editable="energy-challenges-p-4" <?php echo synergy_style('energy-challenges-p-4', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-4', '<span class="lang-th">ไม่ทราบว่าพลังงานถูกใช้ที่จุดใดมากที่สุด จึงลดต้นทุนได้ไม่เต็มประสิทธิภาพ</span>
             <span class="lang-en">Without clear insights, reducing energy costs becomes challenging.</span>', 'smart-energy'); ?></p>
         </div>
@@ -909,7 +909,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_5.png" alt="Delayed Fault Detection" class="w-full h-full object-contain drop-shadow-sm">
           </div>
           <h3 data-editable="energy-challenges-h3-5" <?php echo synergy_style('energy-challenges-h3-5', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-5', '<span class="lang-th">รู้ปัญหาช้า</span>
-            <span class="lang-en">Delayed Fault<br>Detection</span>', 'smart-energy'); ?></h3>
+            <span class="lang-en">Delayed Fault <br>Detection</span>', 'smart-energy'); ?></h3>
           <p data-editable="energy-challenges-p-5" <?php echo synergy_style('energy-challenges-p-5', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-5', '<span class="lang-th">อุปกรณ์ผิดปกติแต่ไม่มีการแจ้งเตือน ทำให้เกิด Downtime และสูญเสียโอกาส</span>
             <span class="lang-en">Equipment issues are detected too late without automated alerts.</span>', 'smart-energy'); ?></p>
         </div>
@@ -920,7 +920,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <img src="<?php echo get_template_directory_uri(); ?>/image/challenge_icon_6.png" alt="Complex Access Management" class="w-full h-full object-contain drop-shadow-sm">
           </div>
           <h3 data-editable="energy-challenges-h3-6" <?php echo synergy_style('energy-challenges-h3-6', 'smart-energy'); ?> class="font-extrabold text-slate-900 text-sm sm:text-base mb-2 leading-snug tracking-tight"><?php echo synergy_content('energy-challenges-h3-6', '<span class="lang-th">สิทธิ์ผู้ใช้ซับซ้อน</span>
-            <span class="lang-en">Complex Access<br>Management</span>', 'smart-energy'); ?></h3>
+            <span class="lang-en">Complex Access <br>Management</span>', 'smart-energy'); ?></h3>
           <p data-editable="energy-challenges-p-6" <?php echo synergy_style('energy-challenges-p-6', 'smart-energy'); ?> class="text-[11px] sm:text-xs text-slate-500 font-normal leading-relaxed"><?php echo synergy_content('energy-challenges-p-6', '<span class="lang-th">จัดการสิทธิ์การเข้าถึงข้อมูลของแต่ละองค์กรหรือแต่ละสาขาได้ยาก</span>
             <span class="lang-en">Managing user roles across sites and organizations is time-consuming.</span>', 'smart-energy'); ?></p>
         </div>
@@ -2214,7 +2214,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </p>
             <h2 class="se-h2 font-display text-white">
               <span class="lang-th">บริหารจัดการพลังงานอัจฉริยะ<br><span class="text-brand-bright">เพื่อธุรกิจที่ใช้พลังงานอย่างมีประสิทธิภาพ</span></span>
-              <span class="lang-en">Power Your Business with<br><span class="text-brand-bright">Smart Energy Management</span></span>
+              <span class="lang-en">Power Your Business with <br><span class="text-brand-bright">Smart Energy Management</span></span>
             </h2>
             <p class="se-lede text-slate-200 mt-5 max-w-2xl">
               <span class="lang-th">เชื่อมต่อข้อมูลจากทุกระบบพลังงานไว้ในแพลตฟอร์มเดียว เพื่อการติดตาม วิเคราะห์ และบริหารจัดการอย่างมีประสิทธิภาพ</span>

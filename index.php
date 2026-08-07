@@ -635,7 +635,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <div>
                   <h3 data-editable="home-synergy-h3-3" <?php echo synergy_style('home-synergy-h3-3', 'index'); ?> class="font-display font-800 text-xl sm:text-2xl text-white leading-tight"><?php echo synergy_content('home-synergy-h3-3', '
                     <span class="lang-th">ความเชื่อมั่น<br><span class="text-gold-bright">ที่พิสูจน์ได้</span></span>
-                    <span class="lang-en">Proven<br><span class="text-gold-bright">Excellence</span></span>
+                    <span class="lang-en">Proven <br><span class="text-gold-bright">Excellence</span></span>
                   ', 'index'); ?></h3>
                 </div>
               </div>
@@ -1977,7 +1977,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
                     <i class="fa-solid fa-solar-panel text-brand text-lg"></i>
                   </div>
                   <h5 class="font-display font-800 text-sm text-ink leading-tight">
-                    <span class="lang-th">จัดการพลังงานอัจฉริยะ</span><span class="lang-en">Smart Energy<br>Management</span>
+                    <span class="lang-th">จัดการพลังงานอัจฉริยะ</span><span class="lang-en">Smart Energy <br>Management</span>
                   </h5>
                 </div>
                 <div class="w-1/2 relative bg-gradient-to-br from-emerald-100 to-emerald-50">

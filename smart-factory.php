@@ -453,7 +453,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <span class="text-emerald-700 text-xs font-700 tracking-[0.25em] uppercase"><span class="lang-th">SMART FACTORY SOLUTION</span><span class="lang-en">SMART FACTORY SOLUTION</span></span>
       </div>
       <h1 data-editable="factory-hero-h1-1" <?php echo synergy_style('factory-hero-h1-1', 'smart-factory'); ?> class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-slate-900 tracking-tight leading-tight mb-6"><?php echo synergy_content('factory-hero-h1-1', '<span class="lang-th">ยกระดับโรงงานของคุณสู่<br><span class="text-emerald-600">Smart Factory</span></span>
-        <span class="lang-en">Powering Your<br><span class="text-emerald-600">Smart Factory</span></span>', 'smart-factory'); ?></h1>
+        <span class="lang-en">Powering Your <br><span class="text-emerald-600">Smart Factory</span></span>', 'smart-factory'); ?></h1>
       <p data-editable="factory-hero-p-1" <?php echo synergy_style('factory-hero-p-1', 'smart-factory'); ?> class="text-lg sm:text-xl text-slate-600 font-300 leading-relaxed max-w-2xl mb-10"><?php echo synergy_content('factory-hero-p-1', '<span class="lang-th">เชื่อมต่อข้อมูลจากเครื่องจักรและระบบการผลิตไว้ในแพลตฟอร์มเดียว เพื่อให้ติดตาม วิเคราะห์ และบริหารจัดการโรงงานได้อย่างมีประสิทธิภาพ</span>
         <span class="lang-en">Unify machine and production data in a single platform for real-time visibility, analytics, and smarter manufacturing decisions.</span>', 'smart-factory'); ?></p>
       <div class="flex flex-wrap gap-4">
