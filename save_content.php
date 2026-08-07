@@ -137,17 +137,29 @@ if (isset($_GET['action']) && $_GET['action'] === 'login') {
             }
         }
     } else {
-        $envUser = getenv('SYNERGY_ADMIN_USER');
-        $envHash = getenv('SYNERGY_ADMIN_PASSWORD_HASH');
-        if ($envUser && $envHash) {
+        /* Standalone (php -S router.php, or the Docker image) - no WordPress
+           user table to ask. Credentials come from admin-credentials.php, which
+           is gitignored, or from the environment if that suits the host better.
+           Either way what is stored is a password_hash(), never the password.
+
+           Create the file with:
+               php make-admin-password.php "your-password"
+        */
+        $credFile = __DIR__ . '/admin-credentials.php';
+        $cred = file_exists($credFile) ? include $credFile : null;
+
+        $expectedUser = is_array($cred) && isset($cred['user']) ? $cred['user'] : getenv('SYNERGY_ADMIN_USER');
+        $expectedHash = is_array($cred) && isset($cred['hash']) ? $cred['hash'] : getenv('SYNERGY_ADMIN_PASSWORD_HASH');
+
+        if ($expectedUser && $expectedHash) {
             // hash_equals for the username too: a plain === leaks its length by timing.
-            if (hash_equals($envUser, $user) && password_verify($pass, $envHash)) {
+            if (hash_equals($expectedUser, $user) && password_verify($pass, $expectedHash)) {
                 $is_valid = true;
             }
         } else {
             echo json_encode([
                 'success' => false,
-                'error'   => 'ยังไม่ได้ตั้งค่าการเข้าสู่ระบบ: ต้องรันบน WordPress หรือกำหนด SYNERGY_ADMIN_USER และ SYNERGY_ADMIN_PASSWORD_HASH'
+                'error'   => 'ยังไม่ได้ตั้งค่าการเข้าสู่ระบบสำหรับโหมดทดสอบ: รันคำสั่ง php make-admin-password.php "รหัสที่ต้องการ" แล้วลองใหม่'
             ]);
             exit;
         }
