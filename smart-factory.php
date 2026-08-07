@@ -835,9 +835,6 @@ if (file_exists(__DIR__ . '/functions.php')) {
              blurs on a 2x screen. Built this way they are sharp at any size,
              both languages work, and the numbers are ordinary text. */
           $sf_dashboards = array(
-              array('id' => 'oee', 'icon' => 'fa-gauge-high', 'name' => 'OEE Dashboard',
-                    'th' => 'ติดตาม OEE แบบ Real-time เห็นภาพรวมประสิทธิภาพการผลิตของโรงงาน',
-                    'en' => 'Track OEE in real time and see plant-wide production efficiency at a glance.'),
               array('id' => 'machine', 'icon' => 'fa-industry', 'name' => 'Machine Monitoring',
                     'th' => 'ตรวจสอบสถานะเครื่องจักรแบบ Real-time ลด Downtime และแจ้งเตือนความผิดปกติ',
                     'en' => 'Watch machine status in real time, cut downtime and get alerted on anomalies.'),
@@ -869,7 +866,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <!-- One scrolling row on a phone, a seven-up grid from sm. A four-column
                  grid was the first try and the labels wrapped so hard the tabs came
                  out 159px tall in a 66px column. -->
-            <div class="sf-dash-tabs flex sm:grid sm:grid-cols-7 gap-2 sm:gap-2.5 text-center" role="tablist" aria-label="Dashboards">
+            <div class="sf-dash-tabs flex sm:grid sm:grid-cols-6 gap-2 sm:gap-2.5 text-center" role="tablist" aria-label="Dashboards">
               <?php foreach ($sf_dashboards as $i => $d): ?>
               <button type="button" role="tab" id="sf-tab-<?php echo $d['id']; ?>"
                       aria-controls="sf-panel-<?php echo $d['id']; ?>"
