@@ -752,83 +752,6 @@ if (!function_exists('sa_picture')) {
       </div>
     </section>
 
-    <!-- 01 · OVERVIEW -->
-    <section id="agri-overview" aria-labelledby="agri-overview-title" class="py-12 sm:py-16 sa-mesh">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6">
-        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-
-          <div class="lg:col-span-7 space-y-7">
-            <div class="inline-flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
-              <span class="text-brand svc-kicker"><span class="lang-th">01 · Smart Agriculture Platform</span><span class="lang-en">01 · Smart Agriculture Platform</span></span>
-            </div>
-            <h2 data-editable="agri-overview-h2-1" <?php echo synergy_style('agri-overview-h2-1', 'smart-agriculture'); ?> id="agri-overview-title" class="font-display svc-h2 text-ink tracking-tight"><?php echo synergy_content('agri-overview-h2-1', '
-              <span class="lang-th">ก้าวสู่ระบบเกษตรกรรมแม่นยำสูง<br>จากแนวคิดสู่การใช้งานจริง</span>
-              <span class="lang-en">Precision Agriculture<br>From Concept to Working Farm</span>
-            ', 'smart-agriculture'); ?></h2>
-            <div class="svc-copy text-body space-y-5">
-              <p>
-                <span class="lang-th">โซลูชัน <strong>Smart Agriculture (AIoT LPWAN)</strong> ของเรา เปลี่ยนกระบวนการทางการเกษตรดั้งเดิมให้เป็นดิจิทัลอย่างแท้จริง ด้วย Sensor วิเคราะห์พื้นที่เพาะปลูกแบบเจาะลึกเฉพาะตำแหน่ง</span>
-                <span class="lang-en">Our <strong>Smart Agriculture (AIoT LPWAN)</strong> solution digitises traditional farming end to end, using sensors that analyse each plot position by position.</span>
-              </p>
-              <p>
-                <span class="lang-th">ระบบทำงานผ่านเครือข่ายไร้สายระยะไกลที่ใช้พลังงานต่ำ ส่งข้อมูลสภาพอากาศ (Micro Weather Station) ระดับน้ำ (Flood Warning) และแร่ธาตุในดินขึ้นคลาวด์อัตโนมัติ ช่วยให้คุณลดต้นทุนแรงงานและวางแผนเพาะปลูกได้แม่นยำขึ้น</span>
-                <span class="lang-en">A low-power, long-range wireless network streams micro weather, flood warning and soil nutrient readings to the cloud automatically, so you cut labour cost and plan each crop cycle with confidence.</span>
-              </p>
-            </div>
-
-            <!-- Mini pillars -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 pt-2">
-              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
-                <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
-                  <i class="fa-solid fa-compass"></i>
-                </div>
-                <h3 data-editable="agri-overview-h3-1" <?php echo synergy_style('agri-overview-h3-1', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-1', 'Precision Ag', 'smart-agriculture'); ?></h3>
-                <p data-editable="agri-overview-p-1" <?php echo synergy_style('agri-overview-p-1', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-1', '
-                  <span class="lang-th">วิเคราะห์เฉพาะจุดเพื่อให้ปุ๋ยและน้ำตรงตามความต้องการของพืช</span>
-                  <span class="lang-en">Plot-level analysis so water and fertiliser go exactly where the crop needs them.</span>
-                ', 'smart-agriculture'); ?></p>
-              </div>
-              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
-                <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
-                  <i class="fa-solid fa-cloud-sun"></i>
-                </div>
-                <h3 data-editable="agri-overview-h3-2" <?php echo synergy_style('agri-overview-h3-2', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-2', 'Micro Weather', 'smart-agriculture'); ?></h3>
-                <p data-editable="agri-overview-p-2" <?php echo synergy_style('agri-overview-p-2', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-2', '
-                  <span class="lang-th">ตรวจจับอุณหภูมิ ความชื้น แสงสว่าง และปริมาณฝนเฉพาะแปลง</span>
-                  <span class="lang-en">Per-plot temperature, humidity, light and rainfall readings.</span>
-                ', 'smart-agriculture'); ?></p>
-              </div>
-              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
-                <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
-                  <i class="fa-solid fa-tower-broadcast"></i>
-                </div>
-                <h3 data-editable="agri-overview-h3-3" <?php echo synergy_style('agri-overview-h3-3', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-3', 'LPWAN IoT', 'smart-agriculture'); ?></h3>
-                <p data-editable="agri-overview-p-3" <?php echo synergy_style('agri-overview-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-3', '
-                  <span class="lang-th">เครือข่ายไร้สายระยะไกล ครอบคลุมแปลงเกษตรขนาดใหญ่</span>
-                  <span class="lang-en">Long-range wireless coverage across large farming areas.</span>
-                ', 'smart-agriculture'); ?></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- System graphic -->
-          <div class="lg:col-span-5 relative mt-2 lg:mt-0">
-            <div class="relative rounded-[28px] sm:rounded-[32px] overflow-hidden bg-slate-50 sa-card shadow-2xl h-64 sm:h-80">
-              <?php sa_picture('agri-aiot-lpwan-system', 'AIoT LPWAN system architecture', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
-              <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-brand-deep/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 text-white">
-                <div class="svc-kicker text-gold-bright mb-1"><span class="lang-th">AIoT LPWAN System</span><span class="lang-en">AIoT LPWAN System</span></div>
-                <div data-editable="agri-overview-div-1" <?php echo synergy_style('agri-overview-div-1', 'smart-agriculture'); ?> class="svc-label"><?php echo synergy_content('agri-overview-div-1', '
-                  <span class="lang-th">Sensor ภาคสนาม → Cloud → Dashboard แบบ Real-time</span>
-                  <span class="lang-en">Field Sensors → Cloud → Real-time Dashboard</span>
-                ', 'smart-agriculture'); ?></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
 
     <!-- THE SYNEXTA ENGINE
          Five-step flow, the same shape smart-energy.php uses for SYNC / STREAM /
@@ -944,6 +867,84 @@ if (!function_exists('sa_picture')) {
             <i class="fa-solid fa-seedling text-2xl"></i>
           </span>
           <p data-editable="agri-engine-outcome" <?php echo synergy_style('agri-engine-outcome', 'smart-agriculture'); ?> class="svc-copy text-ink"><?php echo synergy_content('agri-engine-outcome', '<span class="lang-th">เพิ่ม<strong class="text-brand">ผลผลิต</strong> ลดต้นทุน ใช้ทรัพยากรอย่างมีประสิทธิภาพ และทำการเกษตรได้อย่างแม่นยำและยั่งยืน</span><span class="lang-en">Increase <strong class="text-brand">yield</strong>, reduce costs, use resources efficiently, and achieve sustainable precision agriculture.</span>', 'smart-agriculture'); ?></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 · OVERVIEW -->
+    <section id="agri-overview" aria-labelledby="agri-overview-title" class="py-12 sm:py-16 sa-mesh">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+
+          <div class="lg:col-span-7 space-y-7">
+            <div class="inline-flex items-center gap-3">
+              <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
+              <span class="text-brand svc-kicker"><span class="lang-th">01 · Smart Agriculture Platform</span><span class="lang-en">01 · Smart Agriculture Platform</span></span>
+            </div>
+            <h2 data-editable="agri-overview-h2-1" <?php echo synergy_style('agri-overview-h2-1', 'smart-agriculture'); ?> id="agri-overview-title" class="font-display svc-h2 text-ink tracking-tight"><?php echo synergy_content('agri-overview-h2-1', '
+              <span class="lang-th">ก้าวสู่ระบบเกษตรกรรมแม่นยำสูง<br>จากแนวคิดสู่การใช้งานจริง</span>
+              <span class="lang-en">Precision Agriculture<br>From Concept to Working Farm</span>
+            ', 'smart-agriculture'); ?></h2>
+            <div class="svc-copy text-body space-y-5">
+              <p>
+                <span class="lang-th">โซลูชัน <strong>Smart Agriculture (AIoT LPWAN)</strong> ของเรา เปลี่ยนกระบวนการทางการเกษตรดั้งเดิมให้เป็นดิจิทัลอย่างแท้จริง ด้วย Sensor วิเคราะห์พื้นที่เพาะปลูกแบบเจาะลึกเฉพาะตำแหน่ง</span>
+                <span class="lang-en">Our <strong>Smart Agriculture (AIoT LPWAN)</strong> solution digitises traditional farming end to end, using sensors that analyse each plot position by position.</span>
+              </p>
+              <p>
+                <span class="lang-th">ระบบทำงานผ่านเครือข่ายไร้สายระยะไกลที่ใช้พลังงานต่ำ ส่งข้อมูลสภาพอากาศ (Micro Weather Station) ระดับน้ำ (Flood Warning) และแร่ธาตุในดินขึ้นคลาวด์อัตโนมัติ ช่วยให้คุณลดต้นทุนแรงงานและวางแผนเพาะปลูกได้แม่นยำขึ้น</span>
+                <span class="lang-en">A low-power, long-range wireless network streams micro weather, flood warning and soil nutrient readings to the cloud automatically, so you cut labour cost and plan each crop cycle with confidence.</span>
+              </p>
+            </div>
+
+            <!-- Mini pillars -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 pt-2">
+              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
+                <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
+                  <i class="fa-solid fa-compass"></i>
+                </div>
+                <h3 data-editable="agri-overview-h3-1" <?php echo synergy_style('agri-overview-h3-1', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-1', 'Precision Ag', 'smart-agriculture'); ?></h3>
+                <p data-editable="agri-overview-p-1" <?php echo synergy_style('agri-overview-p-1', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-1', '
+                  <span class="lang-th">วิเคราะห์เฉพาะจุดเพื่อให้ปุ๋ยและน้ำตรงตามความต้องการของพืช</span>
+                  <span class="lang-en">Plot-level analysis so water and fertiliser go exactly where the crop needs them.</span>
+                ', 'smart-agriculture'); ?></p>
+              </div>
+              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
+                <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
+                  <i class="fa-solid fa-cloud-sun"></i>
+                </div>
+                <h3 data-editable="agri-overview-h3-2" <?php echo synergy_style('agri-overview-h3-2', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-2', 'Micro Weather', 'smart-agriculture'); ?></h3>
+                <p data-editable="agri-overview-p-2" <?php echo synergy_style('agri-overview-p-2', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-2', '
+                  <span class="lang-th">ตรวจจับอุณหภูมิ ความชื้น แสงสว่าง และปริมาณฝนเฉพาะแปลง</span>
+                  <span class="lang-en">Per-plot temperature, humidity, light and rainfall readings.</span>
+                ', 'smart-agriculture'); ?></p>
+              </div>
+              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
+                <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
+                  <i class="fa-solid fa-tower-broadcast"></i>
+                </div>
+                <h3 data-editable="agri-overview-h3-3" <?php echo synergy_style('agri-overview-h3-3', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-3', 'LPWAN IoT', 'smart-agriculture'); ?></h3>
+                <p data-editable="agri-overview-p-3" <?php echo synergy_style('agri-overview-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-3', '
+                  <span class="lang-th">เครือข่ายไร้สายระยะไกล ครอบคลุมแปลงเกษตรขนาดใหญ่</span>
+                  <span class="lang-en">Long-range wireless coverage across large farming areas.</span>
+                ', 'smart-agriculture'); ?></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- System graphic -->
+          <div class="lg:col-span-5 relative mt-2 lg:mt-0">
+            <div class="relative rounded-[28px] sm:rounded-[32px] overflow-hidden bg-slate-50 sa-card shadow-2xl h-64 sm:h-80">
+              <?php sa_picture('agri-aiot-lpwan-system', 'AIoT LPWAN system architecture', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
+              <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-brand-deep/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 text-white">
+                <div class="svc-kicker text-gold-bright mb-1"><span class="lang-th">AIoT LPWAN System</span><span class="lang-en">AIoT LPWAN System</span></div>
+                <div data-editable="agri-overview-div-1" <?php echo synergy_style('agri-overview-div-1', 'smart-agriculture'); ?> class="svc-label"><?php echo synergy_content('agri-overview-div-1', '
+                  <span class="lang-th">Sensor ภาคสนาม → Cloud → Dashboard แบบ Real-time</span>
+                  <span class="lang-en">Field Sensors → Cloud → Real-time Dashboard</span>
+                ', 'smart-agriculture'); ?></div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
