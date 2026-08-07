@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     { id: 'home', label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
     { id: 'smart-energy', label: '<span class="lang-th">Smart Energy</span><span class="lang-en">Smart Energy</span>', href: pageHref('smart-energy.php'), page: 'smart-energy.php' },
     { id: 'smart-factory', label: '<span class="lang-th">Smart Factory</span><span class="lang-en">Smart Factory</span>', href: pageHref('smart-factory.php'), page: 'smart-factory.php' },
-    { id: 'smart-agriculture', label: '<span class="lang-th">Smart Agriculture</span><span class="lang-en">Smart Agriculture</span>', href: homeHref('#sol-card-smart-agriculture'), page: 'index.html', section: 'sol-card-smart-agriculture' },
+    { id: 'smart-agriculture', label: '<span class="lang-th">Smart Agriculture</span><span class="lang-en">Smart Agriculture</span>', href: pageHref('smart-agriculture.php'), page: 'smart-agriculture.php' },
     {
       id: 'services',
       label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>',
@@ -424,12 +424,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <span class="lang-en">Solutions</span>
               </h4>
               <ul class="space-y-2.5 text-xs text-white/60">
-                <!-- These two have real pages now, so they link to them rather
-                     than bouncing to the solutions list on the home page.
-                     Smart Agriculture below still has no page in this project. -->
+                <!-- All three solutions have real pages now, so they link to
+                     them rather than bouncing to the solutions list on the home
+                     page. -->
                 <li><a href="${pageHref('smart-factory.php')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Factory (โรงงานอัจฉริยะ)</span><span class="lang-en">Smart Factory</span></a></li>
                 <li><a href="${pageHref('smart-energy.php')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Energy (พลังงานอัจฉริยะ)</span><span class="lang-en">Smart Energy</span></a></li>
-                <li><a href="${homeHref('#solutions')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Agriculture (เกษตรอัจฉริยะ)</span><span class="lang-en">Smart Agriculture</span></a></li>
+                <li><a href="${pageHref('smart-agriculture.php')}" class="hover:text-white transition-colors"><span class="lang-th">Smart Agriculture (เกษตรอัจฉริยะ)</span><span class="lang-en">Smart Agriculture</span></a></li>
                 <li><a href="${homeHref('#end-to-end')}" class="hover:text-white transition-colors"><span class="lang-th">บริการ OEM / ODM Manufacturing</span><span class="lang-en">OEM / ODM Manufacturing</span></a></li>
                 <li><a href="${homeHref('#end-to-end')}" class="hover:text-white transition-colors"><span class="lang-th">บริการวิศวกรรม R&D</span><span class="lang-en">R&D Engineering Services</span></a></li>
               </ul>

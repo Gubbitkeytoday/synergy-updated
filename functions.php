@@ -61,7 +61,7 @@ if (!function_exists('synergy_theme_setup')) {
    ============================================================================== */
 if (!function_exists('synergy_static_routes')) {
     function synergy_static_routes() {
-        return array('privacy-policy', 'service', 'about', 'smart-energy');
+        return array('privacy-policy', 'service', 'about', 'smart-energy', 'smart-factory', 'smart-agriculture');
     }
 }
 

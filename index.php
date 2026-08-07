@@ -2334,10 +2334,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <div class="relative h-44 overflow-hidden">
               <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 src="<?php echo get_template_directory_uri(); ?>/image/cases/boxbuild.png
-                " alt="AUTOMOTIVE" loading="lazy" decoding="async">
+                " alt="BOX BUILD" loading="lazy" decoding="async">
               <div class="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"></div>
               <span
-                class="absolute top-3 left-3 bg-slate-700 text-white text-[12px] font-800 px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">AUTOMOTIVE</span>
+                class="absolute top-3 left-3 bg-slate-700 text-white text-[12px] font-800 px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">BOX BUILD</span>
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">Box Build</span>
