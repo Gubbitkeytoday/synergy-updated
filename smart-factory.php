@@ -202,6 +202,19 @@ if (file_exists(__DIR__ . '/functions.php')) {
     .font-500 { font-weight: 500; }
     .font-700 { font-weight: 700; }
     .font-800 { font-weight: 800; }
+
+    /* Tracked caps are a Latin typesetting device. On Thai the extra tracking
+       drags tone marks away from their consonants and uppercase does nothing at
+       all, so the eyebrow labels drop both when the page is in Thai
+       (AGENTS.md rule 3). This became visible once the kicker stopped being the
+       same English string in both languages. */
+    html[lang="th"] .uppercase.tracking-\[0\.2em\],
+    html[lang="th"] .uppercase.tracking-\[0\.25em\],
+    html[lang="th"] .uppercase.tracking-wider,
+    html[lang="th"] .uppercase.tracking-widest {
+      letter-spacing: 0 !important;
+      text-transform: none !important;
+    }
   </style>
 
   <script>
@@ -237,10 +250,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
              act on and the markup stays uniform with the rest of the page. -->
         <span class="text-gold-bright text-xs font-700 tracking-[0.25em] uppercase"><span class="lang-th">ENGINEERING INTELLIGENCE</span><span class="lang-en">ENGINEERING INTELLIGENCE</span></span>
       </div>
-      <h1 data-editable="factory-hero-h1-1" <?php echo synergy_style('factory-hero-h1-1', 'smart-factory'); ?> class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-6"><?php echo synergy_content('factory-hero-h1-1', '<span class="lang-th">ยกระดับโรงงานของคุณด้วย<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">Engineering Intelligence</span></span>
+      <h1 data-editable="factory-hero-h1-1" <?php echo synergy_style('factory-hero-h1-1', 'smart-factory'); ?> class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-6"><?php echo synergy_content('factory-hero-h1-1', '<span class="lang-th">ยกระดับโรงงานของคุณสู่<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">Smart Factory</span></span>
         <span class="lang-en">Powering Your<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">Smart Factory</span></span>', 'smart-factory'); ?></h1>
-      <p data-editable="factory-hero-p-1" <?php echo synergy_style('factory-hero-p-1', 'smart-factory'); ?> class="text-lg sm:text-xl text-white/70 font-300 leading-relaxed max-w-2xl mb-10"><?php echo synergy_content('factory-hero-p-1', '<span class="lang-th">Synergy Technology ให้บริการโซลูชัน Smart Factory แบบครบวงจร ครอบคลุมตั้งแต่การออกแบบและพัฒนาฮาร์ดแวร์ ระบบ Embedded และ Firmware การเชื่อมต่อเครื่องจักรด้วย Industrial IoT (IIoT) ไปจนถึงแพลตฟอร์ม SynExta ที่ช่วยรวบรวม วิเคราะห์ และเชื่อมโยงข้อมูลกับระบบ ERP เพื่อยกระดับการผลิตอย่างมีประสิทธิภาพ</span>
-        <span class="lang-en">End-to-end Smart Factory Solutions from hardware, firmware and IIoT to the SynExta Intelligence Platform with seamless ERP integration. Built, deployed and supported by engineering experts.</span>', 'smart-factory'); ?></p>
+      <p data-editable="factory-hero-p-1" <?php echo synergy_style('factory-hero-p-1', 'smart-factory'); ?> class="text-lg sm:text-xl text-white/70 font-300 leading-relaxed max-w-2xl mb-10"><?php echo synergy_content('factory-hero-p-1', '<span class="lang-th">เชื่อมต่อข้อมูลจากเครื่องจักรและระบบการผลิตไว้ในแพลตฟอร์มเดียว เพื่อการติดตาม วิเคราะห์ และบริหารจัดการโรงงานอย่างมีประสิทธิภาพ</span>
+        <span class="lang-en">Connect machine and production data into a single platform for real-time monitoring, analytics, and efficient factory management.</span>', 'smart-factory'); ?></p>
       <div class="flex flex-wrap gap-4">
         <a href="<?php echo home_url('/'); ?>#contact" class="bg-brand hover:bg-brand-deep text-white font-700 text-xs tracking-wider uppercase px-8 py-4 rounded-xl transition shadow-lg shadow-brand/20">
           <i class="fa-solid fa-paper-plane mr-2"></i><span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span><span class="lang-en">Talk to Our Experts</span>
@@ -301,10 +314,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
     <div class="max-w-7xl mx-auto px-6">
       <div class="mb-10 sm:mb-12">
         <span class="text-emerald-700 text-xs font-800 tracking-[0.2em] uppercase font-display block">
-          <span class="lang-th">CHALLENGES WE HELP YOU SOLVE</span><span class="lang-en">CHALLENGES WE HELP YOU SOLVE</span>
+          <span class="lang-th">ความท้าทายทางธุรกิจ</span><span class="lang-en">BUSINESS CHALLENGES</span>
         </span>
         <h2 class="font-display font-800 text-2xl sm:text-3xl lg:text-4xl text-ink mt-3 tracking-tight">
-          <span class="lang-th">ความท้าทายที่โรงงานส่วนใหญ่กำลังเผชิญ</span><span class="lang-en">Challenges We Help You Solve</span>
+          <span class="lang-th">ปัญหาที่เราช่วยคุณแก้ไข</span><span class="lang-en">Challenges We Help You Solve</span>
         </h2>
       </div>
 
@@ -316,8 +329,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="w-14 h-14 flex items-center justify-center mb-4">
             <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/solutions/challenges/icon-1-chart.svg" alt="Low productivity" class="w-11 h-11 object-contain">
           </div>
-          <h3 data-editable="factory-challenges-h3-1" <?php echo synergy_style('factory-challenges-h3-1', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-1', '<span class="lang-th">การผลิตไม่มีประสิทธิภาพ</span><span class="lang-en">Low Productivity</span>', 'smart-factory'); ?></h3>
-          <p data-editable="factory-challenges-p-1" <?php echo synergy_style('factory-challenges-p-1', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-1', '<span class="lang-th">กระบวนการผลิตที่ไม่ต่อเนื่องและข้อมูลที่ไม่ครบถ้วน ส่งผลให้ประสิทธิภาพการผลิตลดลง</span><span class="lang-en">Unplanned downtime and inefficient processes reduce overall equipment effectiveness.</span>', 'smart-factory'); ?></p>
+          <h3 data-editable="factory-challenges-h3-1" <?php echo synergy_style('factory-challenges-h3-1', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-1', '<span class="lang-th">การผลิตไม่มีประสิทธิภาพ</span><span class="lang-en">Low Production Efficiency</span>', 'smart-factory'); ?></h3>
+          <p data-editable="factory-challenges-p-1" <?php echo synergy_style('factory-challenges-p-1', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-1', '<span class="lang-th">มองไม่เห็นข้อมูลการผลิต ทำให้ปรับปรุงประสิทธิภาพได้ยาก</span><span class="lang-en">Limited production visibility reduces operational efficiency.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 02 Frequent Downtime -->
@@ -325,8 +338,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="w-14 h-14 flex items-center justify-center mb-4">
             <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/solutions/challenges/icon-2-wrench.svg" alt="Frequent downtime" class="w-11 h-11 object-contain">
           </div>
-          <h3 data-editable="factory-challenges-h3-2" <?php echo synergy_style('factory-challenges-h3-2', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-2', '<span class="lang-th">เครื่องจักรหยุดทำงานโดยไม่คาดคิด</span><span class="lang-en">Frequent Downtime</span>', 'smart-factory'); ?></h3>
-          <p data-editable="factory-challenges-p-2" <?php echo synergy_style('factory-challenges-p-2', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-2', '<span class="lang-th">การเสียของเครื่องจักรทำให้เกิด Downtime เพิ่มต้นทุนการซ่อมบำรุง และกระทบต่อแผนการผลิต</span><span class="lang-en">Unexpected machine failures cause delays and increase maintenance costs.</span>', 'smart-factory'); ?></p>
+          <h3 data-editable="factory-challenges-h3-2" <?php echo synergy_style('factory-challenges-h3-2', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-2', '<span class="lang-th">เครื่องจักรหยุดทำงานโดยไม่คาดคิด</span><span class="lang-en">Unexpected Machine Downtime</span>', 'smart-factory'); ?></h3>
+          <p data-editable="factory-challenges-p-2" <?php echo synergy_style('factory-challenges-p-2', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-2', '<span class="lang-th">เครื่องจักรหยุดกะทันหัน ส่งผลต่อการผลิตและต้นทุน</span><span class="lang-en">Unplanned downtime disrupts production and increases costs.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 03 Data Silos -->
@@ -334,8 +347,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="w-14 h-14 flex items-center justify-center mb-4">
             <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/solutions/challenges/icon-3-database.svg" alt="Data silos" class="w-11 h-11 object-contain">
           </div>
-          <h3 data-editable="factory-challenges-h3-3" <?php echo synergy_style('factory-challenges-h3-3', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-3', '<span class="lang-th">ข้อมูลกระจัดกระจาย</span><span class="lang-en">Data Silos</span>', 'smart-factory'); ?></h3>
-          <p data-editable="factory-challenges-p-3" <?php echo synergy_style('factory-challenges-p-3', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-3', '<span class="lang-th">ข้อมูลจากเครื่องจักรและระบบต่าง ๆ แยกกันอยู่ ทำให้ไม่สามารถมองเห็นภาพรวมของโรงงานได้</span><span class="lang-en">Production data is scattered across multiple systems, making decisions difficult.</span>', 'smart-factory'); ?></p>
+          <h3 data-editable="factory-challenges-h3-3" <?php echo synergy_style('factory-challenges-h3-3', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-3', '<span class="lang-th">ข้อมูลแยกหลายระบบ</span><span class="lang-en">Data Silos</span>', 'smart-factory'); ?></h3>
+          <p data-editable="factory-challenges-p-3" <?php echo synergy_style('factory-challenges-p-3', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-3', '<span class="lang-th">ข้อมูลกระจัดกระจาย ทำให้วิเคราะห์และใช้งานร่วมกันได้ยาก</span><span class="lang-en">Production data is scattered across multiple systems.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 04 High Energy Cost -->
@@ -343,8 +356,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="w-14 h-14 flex items-center justify-center mb-4">
             <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/solutions/challenges/icon-4-lightning.svg" alt="High energy cost" class="w-11 h-11 object-contain">
           </div>
-          <h3 data-editable="factory-challenges-h3-4" <?php echo synergy_style('factory-challenges-h3-4', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-4', '<span class="lang-th">ต้นทุนพลังงานสูง</span><span class="lang-en">High Energy Cost</span>', 'smart-factory'); ?></h3>
-          <p data-editable="factory-challenges-p-4" <?php echo synergy_style('factory-challenges-p-4', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-4', '<span class="lang-th">ไม่สามารถติดตามและวิเคราะห์การใช้พลังงานได้แบบ Real-time ทำให้เกิดการใช้พลังงานเกินความจำเป็น</span><span class="lang-en">Lack of visibility into energy usage increases operational costs.</span>', 'smart-factory'); ?></p>
+          <h3 data-editable="factory-challenges-h3-4" <?php echo synergy_style('factory-challenges-h3-4', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-4', '<span class="lang-th">ต้นทุนการผลิตสูง</span><span class="lang-en">High Operating Costs</span>', 'smart-factory'); ?></h3>
+          <p data-editable="factory-challenges-p-4" <?php echo synergy_style('factory-challenges-p-4', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-4', '<span class="lang-th">ขาดข้อมูลที่ช่วยบริหารต้นทุนและทรัพยากรอย่างมีประสิทธิภาพ</span><span class="lang-en">Limited visibility makes cost optimization difficult.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 05 No Traceability -->
@@ -352,8 +365,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="w-14 h-14 flex items-center justify-center mb-4">
             <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/solutions/challenges/icon-5-link.svg" alt="No traceability" class="w-11 h-11 object-contain">
           </div>
-          <h3 data-editable="factory-challenges-h3-5" <?php echo synergy_style('factory-challenges-h3-5', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-5', '<span class="lang-th">ไม่สามารถตรวจสอบย้อนกลับได้</span><span class="lang-en">No Traceability</span>', 'smart-factory'); ?></h3>
-          <p data-editable="factory-challenges-p-5" <?php echo synergy_style('factory-challenges-p-5', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-5', '<span class="lang-th">ไม่สามารถติดตามข้อมูลการผลิตย้อนหลัง ส่งผลต่อการควบคุมคุณภาพและการตรวจสอบมาตรฐาน</span><span class="lang-en">Unable to trace production history and product quality effectively.</span>', 'smart-factory'); ?></p>
+          <h3 data-editable="factory-challenges-h3-5" <?php echo synergy_style('factory-challenges-h3-5', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-5', '<span class="lang-th">ตรวจสอบย้อนหลังได้ยาก</span><span class="lang-en">Limited Traceability</span>', 'smart-factory'); ?></h3>
+          <p data-editable="factory-challenges-p-5" <?php echo synergy_style('factory-challenges-p-5', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-5', '<span class="lang-th">ติดตามข้อมูลการผลิตและคุณภาพได้ไม่ครบถ้วน</span><span class="lang-en">Production and quality records are difficult to trace.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 06 Complex Integration -->
@@ -361,8 +374,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="w-14 h-14 flex items-center justify-center mb-4">
             <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/solutions/challenges/icon-6-network.svg" alt="Complex integration" class="w-11 h-11 object-contain">
           </div>
-          <h3 data-editable="factory-challenges-h3-6" <?php echo synergy_style('factory-challenges-h3-6', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-6', '<span class="lang-th">ระบบเชื่อมต่อกันไม่ได้</span><span class="lang-en">Complex Integration</span>', 'smart-factory'); ?></h3>
-          <p data-editable="factory-challenges-p-6" <?php echo synergy_style('factory-challenges-p-6', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-6', '<span class="lang-th">เครื่องจักร ระบบ ERP และซอฟต์แวร์ต่าง ๆ ทำงานแยกกัน ทำให้การแลกเปลี่ยนข้อมูลไม่มีประสิทธิภาพ</span><span class="lang-en">Difficulty connecting machines, PLCs, ERP and existing software.</span>', 'smart-factory'); ?></p>
+          <h3 data-editable="factory-challenges-h3-6" <?php echo synergy_style('factory-challenges-h3-6', 'smart-factory'); ?> class="font-display font-800 text-base text-ink mb-2"><?php echo synergy_content('factory-challenges-h3-6', '<span class="lang-th">ระบบไม่เชื่อมต่อกัน</span><span class="lang-en">Disconnected Systems</span>', 'smart-factory'); ?></h3>
+          <p data-editable="factory-challenges-p-6" <?php echo synergy_style('factory-challenges-p-6', 'smart-factory'); ?> class="text-xs text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-challenges-p-6', '<span class="lang-th">เครื่องจักรและระบบองค์กรทำงานแยกกัน ทำให้ข้อมูลไม่ต่อเนื่อง</span><span class="lang-en">Machines and enterprise systems operate separately.</span>', 'smart-factory'); ?></p>
         </div>
 
       </div>
