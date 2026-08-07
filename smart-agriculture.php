@@ -576,14 +576,14 @@ if (!function_exists('sa_picture')) {
                label, not prose, and the switcher still needs a pair to act on. -->
           <span class="text-white/90 svc-kicker"><span class="lang-th">AIoT LPWAN Technology</span><span class="lang-en">AIoT LPWAN Technology</span></span>
         </div>
-        <h1 id="agri-hero-title" class="font-display svc-h1 text-white tracking-tight mb-6">
+        <h1 data-editable="agri-hero-h1-1" <?php echo synergy_style('agri-hero-h1-1', 'smart-agriculture'); ?> id="agri-hero-title" class="font-display svc-h1 text-white tracking-tight mb-6"><?php echo synergy_content('agri-hero-h1-1', '
           <span class="lang-th">เทคโนโลยีเกษตรอัจฉริยะ<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">และคาร์บอนเครดิต</span></span>
           <span class="lang-en">Smart Agriculture<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">&amp; Carbon Credit</span></span>
-        </h1>
-        <p class="svc-lede text-white/75 max-w-3xl mb-10">
+        ', 'smart-agriculture'); ?></h1>
+        <p data-editable="agri-hero-p-1" <?php echo synergy_style('agri-hero-p-1', 'smart-agriculture'); ?> class="svc-lede text-white/75 max-w-3xl mb-10"><?php echo synergy_content('agri-hero-p-1', '
           <span class="lang-th">ยกระดับการทำเกษตรแม่นยำสูง (Precision Agriculture) ด้วยเครือข่าย Sensor ไร้สายพลังงานแสงอาทิตย์ และการจัดเก็บข้อมูลระดับคาร์บอนเครดิตที่โปร่งใสและตรวจสอบได้จริง</span>
           <span class="lang-en">Precision agriculture built on solar-powered wireless sensor networks, with carbon-grade field data that is transparent and auditable.</span>
-        </p>
+        ', 'smart-agriculture'); ?></p>
         <div class="flex flex-col sm:flex-row flex-wrap gap-4">
           <a href="<?php echo home_url('/'); ?>#contact" class="sa-tap bg-brand hover:bg-brand-deep text-white svc-btn uppercase tracking-wider px-8 py-4 rounded-xl transition shadow-lg shadow-brand/20 inline-flex items-center justify-center gap-2 sa-card-d">
             <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span class="lang-th">ปรึกษาโครงการ</span><span class="lang-en">Talk to Our Experts</span>
@@ -607,10 +607,10 @@ if (!function_exists('sa_picture')) {
               <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
               <span class="text-brand svc-kicker"><span class="lang-th">01 · Smart Agriculture Platform</span><span class="lang-en">01 · Smart Agriculture Platform</span></span>
             </div>
-            <h2 id="agri-overview-title" class="font-display svc-h2 text-ink tracking-tight">
+            <h2 data-editable="agri-overview-h2-1" <?php echo synergy_style('agri-overview-h2-1', 'smart-agriculture'); ?> id="agri-overview-title" class="font-display svc-h2 text-ink tracking-tight"><?php echo synergy_content('agri-overview-h2-1', '
               <span class="lang-th">ก้าวสู่ระบบเกษตรกรรมแม่นยำสูง<br>จากแนวคิดสู่การใช้งานจริง</span>
               <span class="lang-en">Precision Agriculture<br>From Concept to Working Farm</span>
-            </h2>
+            ', 'smart-agriculture'); ?></h2>
             <div class="svc-copy text-body space-y-5">
               <p>
                 <span class="lang-th">โซลูชัน <strong>Smart Agriculture (AIoT LPWAN)</strong> ของเรา เปลี่ยนกระบวนการทางการเกษตรดั้งเดิมให้เป็นดิจิทัลอย่างแท้จริง ด้วย Sensor วิเคราะห์พื้นที่เพาะปลูกแบบเจาะลึกเฉพาะตำแหน่ง</span>
@@ -628,31 +628,31 @@ if (!function_exists('sa_picture')) {
                 <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
                   <i class="fa-solid fa-compass"></i>
                 </div>
-                <h3 class="svc-label text-ink mb-2">Precision Ag</h3>
-                <p class="svc-caption text-muted">
+                <h3 data-editable="agri-overview-h3-1" <?php echo synergy_style('agri-overview-h3-1', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-1', 'Precision Ag', 'smart-agriculture'); ?></h3>
+                <p data-editable="agri-overview-p-1" <?php echo synergy_style('agri-overview-p-1', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-1', '
                   <span class="lang-th">วิเคราะห์เฉพาะจุดเพื่อให้ปุ๋ยและน้ำตรงตามความต้องการของพืช</span>
                   <span class="lang-en">Plot-level analysis so water and fertiliser go exactly where the crop needs them.</span>
-                </p>
+                ', 'smart-agriculture'); ?></p>
               </div>
               <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
                 <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
                   <i class="fa-solid fa-cloud-sun"></i>
                 </div>
-                <h3 class="svc-label text-ink mb-2">Micro Weather</h3>
-                <p class="svc-caption text-muted">
+                <h3 data-editable="agri-overview-h3-2" <?php echo synergy_style('agri-overview-h3-2', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-2', 'Micro Weather', 'smart-agriculture'); ?></h3>
+                <p data-editable="agri-overview-p-2" <?php echo synergy_style('agri-overview-p-2', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-2', '
                   <span class="lang-th">ตรวจจับอุณหภูมิ ความชื้น แสงสว่าง และปริมาณฝนเฉพาะแปลง</span>
                   <span class="lang-en">Per-plot temperature, humidity, light and rainfall readings.</span>
-                </p>
+                ', 'smart-agriculture'); ?></p>
               </div>
               <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
                 <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
                   <i class="fa-solid fa-tower-broadcast"></i>
                 </div>
-                <h3 class="svc-label text-ink mb-2">LPWAN IoT</h3>
-                <p class="svc-caption text-muted">
+                <h3 data-editable="agri-overview-h3-3" <?php echo synergy_style('agri-overview-h3-3', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-overview-h3-3', 'LPWAN IoT', 'smart-agriculture'); ?></h3>
+                <p data-editable="agri-overview-p-3" <?php echo synergy_style('agri-overview-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-overview-p-3', '
                   <span class="lang-th">เครือข่ายไร้สายระยะไกล ครอบคลุมแปลงเกษตรขนาดใหญ่</span>
                   <span class="lang-en">Long-range wireless coverage across large farming areas.</span>
-                </p>
+                ', 'smart-agriculture'); ?></p>
               </div>
             </div>
           </div>
@@ -663,10 +663,10 @@ if (!function_exists('sa_picture')) {
               <?php sa_picture('agri-aiot-lpwan-system', 'AIoT LPWAN system architecture', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
               <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-brand-deep/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 text-white">
                 <div class="svc-kicker text-gold-bright mb-1"><span class="lang-th">AIoT LPWAN System</span><span class="lang-en">AIoT LPWAN System</span></div>
-                <div class="svc-label">
+                <div data-editable="agri-overview-div-1" <?php echo synergy_style('agri-overview-div-1', 'smart-agriculture'); ?> class="svc-label"><?php echo synergy_content('agri-overview-div-1', '
                   <span class="lang-th">Sensor ภาคสนาม → Cloud → Dashboard แบบ Real-time</span>
                   <span class="lang-en">Field Sensors → Cloud → Real-time Dashboard</span>
-                </div>
+                ', 'smart-agriculture'); ?></div>
               </div>
             </div>
           </div>
@@ -683,39 +683,39 @@ if (!function_exists('sa_picture')) {
             <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
             <span class="text-brand svc-kicker"><span class="lang-th">02 · Devices &amp; Technology</span><span class="lang-en">02 · Devices &amp; Technology</span></span>
           </div>
-          <h2 id="agri-devices-title" class="font-display svc-h2 text-ink tracking-tight mb-5">
+          <h2 data-editable="agri-devices-h2-1" <?php echo synergy_style('agri-devices-h2-1', 'smart-agriculture'); ?> id="agri-devices-title" class="font-display svc-h2 text-ink tracking-tight mb-5"><?php echo synergy_content('agri-devices-h2-1', '
             <span class="lang-th">เทคโนโลยีและอุปกรณ์ภาคสนาม</span>
             <span class="lang-en">Field Devices &amp; Technology</span>
-          </h2>
-          <p class="svc-lede text-body max-w-2xl mx-auto">
+          ', 'smart-agriculture'); ?></h2>
+          <p data-editable="agri-devices-p-1" <?php echo synergy_style('agri-devices-p-1', 'smart-agriculture'); ?> class="svc-lede text-body max-w-2xl mx-auto"><?php echo synergy_content('agri-devices-p-1', '
             <span class="lang-th">การทำงานร่วมกันระหว่างฮาร์ดแวร์วัดค่า แหล่งจ่ายพลังงาน และซอฟต์แวร์บริหารจัดการข้อมูลแผนที่ระดับความแม่นยำสูง</span>
             <span class="lang-en">Measurement hardware, autonomous power and high-precision mapping software working as one system.</span>
-          </p>
+          ', 'smart-agriculture'); ?></p>
         </div>
 
         <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center mb-14 sm:mb-16">
           <div class="lg:col-span-6 space-y-6 order-2 lg:order-1">
-            <h3 class="font-display svc-h3 text-ink">Precision Farming Platform</h3>
-            <p class="svc-copy text-muted">
+            <h3 data-editable="agri-devices-h3-1" <?php echo synergy_style('agri-devices-h3-1', 'smart-agriculture'); ?> class="font-display svc-h3 text-ink"><?php echo synergy_content('agri-devices-h3-1', 'Precision Farming Platform', 'smart-agriculture'); ?></h3>
+            <p data-editable="agri-devices-p-2" <?php echo synergy_style('agri-devices-p-2', 'smart-agriculture'); ?> class="svc-copy text-muted"><?php echo synergy_content('agri-devices-p-2', '
               <span class="lang-th">ซอฟต์แวร์ประมวลผลแผนที่แปลงนาและแปลงเกษตรแบบ Real-time เชื่อมต่อกับโดรนและสถานีวัดสภาพอากาศภายนอกได้ ช่วยคำนวณการใช้ทรัพยากร พลังงาน และการปล่อยคาร์บอนผ่านแอปพลิเคชันอย่างเป็นระบบ</span>
               <span class="lang-en">Real-time field mapping software that connects to drones and third-party weather stations, and accounts for resource use, energy and carbon emissions in one application.</span>
-            </p>
+            ', 'smart-agriculture'); ?></p>
             <div class="grid sm:grid-cols-2 gap-4">
               <div class="p-5 bg-surface rounded-2xl border border-brand/5">
                 <i class="fa-solid fa-solar-panel text-brand mb-2 block" aria-hidden="true"></i>
-                <h4 class="svc-label text-ink mb-1">Solar Powered Nodes</h4>
-                <p class="svc-caption text-muted">
+                <h4 data-editable="agri-devices-h4-1" <?php echo synergy_style('agri-devices-h4-1', 'smart-agriculture'); ?> class="svc-label text-ink mb-1"><?php echo synergy_content('agri-devices-h4-1', 'Solar Powered Nodes', 'smart-agriculture'); ?></h4>
+                <p data-editable="agri-devices-p-3" <?php echo synergy_style('agri-devices-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-devices-p-3', '
                   <span class="lang-th">แผงโซลาร์เซลล์ 200W สำหรับ Gateway และ 80W สำหรับ Node พร้อมแบตเตอรี่ในตัว</span>
                   <span class="lang-en">200W panels for gateways and 80W for nodes, each with an onboard battery.</span>
-                </p>
+                ', 'smart-agriculture'); ?></p>
               </div>
               <div class="p-5 bg-surface rounded-2xl border border-brand/5">
                 <i class="fa-solid fa-temperature-empty text-brand mb-2 block" aria-hidden="true"></i>
-                <h4 class="svc-label text-ink mb-1">Soil Sensors</h4>
-                <p class="svc-caption text-muted">
+                <h4 data-editable="agri-devices-h4-2" <?php echo synergy_style('agri-devices-h4-2', 'smart-agriculture'); ?> class="svc-label text-ink mb-1"><?php echo synergy_content('agri-devices-h4-2', 'Soil Sensors', 'smart-agriculture'); ?></h4>
+                <p data-editable="agri-devices-p-4" <?php echo synergy_style('agri-devices-p-4', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-devices-p-4', '
                   <span class="lang-th">วัดแร่ธาตุ NPK อุณหภูมิ และความชื้นในดินได้ลึก 5 ระดับ</span>
                   <span class="lang-en">NPK, temperature and moisture readings across five soil depths.</span>
-                </p>
+                ', 'smart-agriculture'); ?></p>
               </div>
             </div>
           </div>
@@ -731,31 +731,31 @@ if (!function_exists('sa_picture')) {
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring sa-reveal">
             <span class="text-brand font-display svc-label block mb-2">IoT LoRaWAN Gateway</span>
-            <p class="svc-caption text-muted">
+            <p data-editable="agri-devices-p-5" <?php echo synergy_style('agri-devices-p-5', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-devices-p-5', '
               <span class="lang-th">เกตเวย์สื่อสารระยะไกล ใช้ Industrial Cellular Router ส่งข้อมูลขึ้นคลาวด์</span>
               <span class="lang-en">Long-range gateway using an industrial cellular router to reach the cloud.</span>
-            </p>
+            ', 'smart-agriculture'); ?></p>
           </div>
           <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring sa-reveal">
             <span class="text-brand font-display svc-label block mb-2">Solar Charger System</span>
-            <p class="svc-caption text-muted">
+            <p data-editable="agri-devices-p-6" <?php echo synergy_style('agri-devices-p-6', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-devices-p-6', '
               <span class="lang-th">บอร์ดบริหารพลังงานสำรอง แบตเตอรี่ 12.8V / 200Ah รองรับการทำงาน 365 วัน</span>
               <span class="lang-en">Power management board with a 12.8V / 200Ah battery rated for year-round duty.</span>
-            </p>
+            ', 'smart-agriculture'); ?></p>
           </div>
           <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring sa-reveal">
             <span class="text-brand font-display svc-label block mb-2">Soil NPK &amp; Moisture</span>
-            <p class="svc-caption text-muted">
+            <p data-editable="agri-devices-p-7" <?php echo synergy_style('agri-devices-p-7', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-devices-p-7', '
               <span class="lang-th">หัว Sensor สเตนเลส 316 ทนการกัดกร่อน วัดแร่ธาตุและการนำไฟฟ้าในดิน</span>
               <span class="lang-en">Corrosion-resistant 316 stainless probes measuring nutrients and soil conductivity.</span>
-            </p>
+            ', 'smart-agriculture'); ?></p>
           </div>
           <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring sa-reveal">
             <span class="text-brand font-display svc-label block mb-2">Light Sensor &amp; HMI Display</span>
-            <p class="svc-caption text-muted">
+            <p data-editable="agri-devices-p-8" <?php echo synergy_style('agri-devices-p-8', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-devices-p-8', '
               <span class="lang-th">จอแสดงผลหน้าตู้สนาม และ Sensor วัดความเข้มแสง Lux สำหรับการสังเคราะห์แสง</span>
               <span class="lang-en">Cabinet-front display plus a lux sensor for photosynthesis monitoring.</span>
-            </p>
+            ', 'smart-agriculture'); ?></p>
           </div>
         </div>
       </div>
@@ -777,15 +777,15 @@ if (!function_exists('sa_picture')) {
               <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
               <span class="text-brand svc-kicker"><span class="lang-th">03 · IoT Field Device</span><span class="lang-en">03 · IoT Field Device</span></span>
             </div>
-            <h2 id="agri-solar-node-title" class="font-display svc-h2 text-ink tracking-tight">IoT Solar Node 4G</h2>
-            <p class="svc-copy text-body">
+            <h2 data-editable="agri-solar-node-h2-1" <?php echo synergy_style('agri-solar-node-h2-1', 'smart-agriculture'); ?> id="agri-solar-node-title" class="font-display svc-h2 text-ink tracking-tight"><?php echo synergy_content('agri-solar-node-h2-1', 'IoT Solar Node 4G', 'smart-agriculture'); ?></h2>
+            <p data-editable="agri-solar-node-p-1" <?php echo synergy_style('agri-solar-node-p-1', 'smart-agriculture'); ?> class="svc-copy text-body"><?php echo synergy_content('agri-solar-node-p-1', '
               <span class="lang-th">โหนด Sensor ภาคสนามระบบไฮบริด ออกแบบให้เป็นสถานีตรวจวัดและส่งข้อมูลแบบ Standalone ชาร์จแบตเตอรี่ในตัวจากแผงโซลาร์เซลล์ด้านบน ส่งสัญญาณไร้สายผ่านโครงข่าย 4G LTE ใช้งานได้ยาวนานถึง 10 ปีโดยไม่ต้องบำรุงรักษาเพิ่ม</span>
               <span class="lang-en">A hybrid field node built as a standalone measure-and-transmit station. It charges its own battery from the panel above and reports over 4G LTE, running up to ten years with no added maintenance.</span>
-            </p>
+            ', 'smart-agriculture'); ?></p>
 
             <div class="grid sm:grid-cols-2 gap-6">
               <div class="space-y-4">
-                <h3 class="svc-label text-ink"><i class="fa-solid fa-list-check text-brand mr-2" aria-hidden="true"></i><span class="lang-th">ฟังก์ชันการทำงานหลัก</span><span class="lang-en">Core Functions</span></h3>
+                <h3 data-editable="agri-solar-node-h3-1" <?php echo synergy_style('agri-solar-node-h3-1', 'smart-agriculture'); ?> class="svc-label text-ink"><?php echo synergy_content('agri-solar-node-h3-1', '<i class="fa-solid fa-list-check text-brand mr-2" aria-hidden="true"></i><span class="lang-th">ฟังก์ชันการทำงานหลัก</span><span class="lang-en">Core Functions</span>', 'smart-agriculture'); ?></h3>
                 <ul class="space-y-3 svc-caption text-muted">
                   <li class="flex items-start gap-2.5"><i class="fa-solid fa-circle text-[6px] text-brand mt-2 shrink-0" aria-hidden="true"></i><span><span class="lang-th">ทำงานเป็นเอกเทศด้วยโซลาร์เซลล์ชาร์จเจอร์</span><span class="lang-en">Runs autonomously on its solar charger.</span></span></li>
                   <li class="flex items-start gap-2.5"><i class="fa-solid fa-circle text-[6px] text-brand mt-2 shrink-0" aria-hidden="true"></i><span><span class="lang-th">ส่งสัญญาณไร้สายผ่านเครือข่าย 4G LTE ขึ้นคลาวด์</span><span class="lang-en">Sends data to the cloud over 4G LTE.</span></span></li>
@@ -793,7 +793,7 @@ if (!function_exists('sa_picture')) {
                 </ul>
               </div>
               <div class="space-y-4">
-                <h3 class="svc-label text-ink"><i class="fa-solid fa-crop text-brand mr-2" aria-hidden="true"></i><span class="lang-th">พื้นที่การประยุกต์ใช้งาน</span><span class="lang-en">Where It Is Used</span></h3>
+                <h3 data-editable="agri-solar-node-h3-2" <?php echo synergy_style('agri-solar-node-h3-2', 'smart-agriculture'); ?> class="svc-label text-ink"><?php echo synergy_content('agri-solar-node-h3-2', '<i class="fa-solid fa-crop text-brand mr-2" aria-hidden="true"></i><span class="lang-th">พื้นที่การประยุกต์ใช้งาน</span><span class="lang-en">Where It Is Used</span>', 'smart-agriculture'); ?></h3>
                 <div class="flex flex-wrap gap-2">
                   <span class="bg-white border border-gray-100 px-3 py-2 rounded-lg svc-caption text-muted"><span class="lang-th">แปลงเพาะปลูกผัก</span><span class="lang-en">Vegetable Plots</span></span>
                   <span class="bg-white border border-gray-100 px-3 py-2 rounded-lg svc-caption text-muted"><span class="lang-th">โรงเรือนอัจฉริยะ</span><span class="lang-en">Smart Greenhouses</span></span>
@@ -806,15 +806,15 @@ if (!function_exists('sa_picture')) {
             <div class="border-t border-gray-200 pt-6 grid grid-cols-3 gap-4">
               <div>
                 <span class="font-display svc-num text-brand block">01</span>
-                <div class="svc-metric text-muted mt-1"><span class="lang-th">ใช้พลังงานสะอาด</span><span class="lang-en">Clean Energy</span></div>
+                <div data-editable="agri-solar-node-div-1" <?php echo synergy_style('agri-solar-node-div-1', 'smart-agriculture'); ?> class="svc-metric text-muted mt-1"><?php echo synergy_content('agri-solar-node-div-1', '<span class="lang-th">ใช้พลังงานสะอาด</span><span class="lang-en">Clean Energy</span>', 'smart-agriculture'); ?></div>
               </div>
               <div class="border-l border-gray-200 pl-4">
                 <span class="font-display svc-num text-brand block">02</span>
-                <div class="svc-metric text-muted mt-1"><span class="lang-th">เชื่อมต่อ Sensor ได้หลากหลาย</span><span class="lang-en">Multi-Sensor Ready</span></div>
+                <div data-editable="agri-solar-node-div-2" <?php echo synergy_style('agri-solar-node-div-2', 'smart-agriculture'); ?> class="svc-metric text-muted mt-1"><?php echo synergy_content('agri-solar-node-div-2', '<span class="lang-th">เชื่อมต่อ Sensor ได้หลากหลาย</span><span class="lang-en">Multi-Sensor Ready</span>', 'smart-agriculture'); ?></div>
               </div>
               <div class="border-l border-gray-200 pl-4">
                 <span class="font-display svc-num text-brand block">03</span>
-                <div class="svc-metric text-muted mt-1"><span class="lang-th">ประหยัดค่าโครงสร้างพื้นฐาน</span><span class="lang-en">Lower Infrastructure Cost</span></div>
+                <div data-editable="agri-solar-node-div-3" <?php echo synergy_style('agri-solar-node-div-3', 'smart-agriculture'); ?> class="svc-metric text-muted mt-1"><?php echo synergy_content('agri-solar-node-div-3', '<span class="lang-th">ประหยัดค่าโครงสร้างพื้นฐาน</span><span class="lang-en">Lower Infrastructure Cost</span>', 'smart-agriculture'); ?></div>
               </div>
             </div>
 
@@ -842,14 +842,14 @@ if (!function_exists('sa_picture')) {
               <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
               <span class="text-brand svc-kicker"><span class="lang-th">04 · Carbon Credit System</span><span class="lang-en">04 · Carbon Credit System</span></span>
             </div>
-            <h2 id="agri-carbon-title" class="font-display svc-h2 text-ink tracking-tight">
+            <h2 data-editable="agri-carbon-h2-1" <?php echo synergy_style('agri-carbon-h2-1', 'smart-agriculture'); ?> id="agri-carbon-title" class="font-display svc-h2 text-ink tracking-tight"><?php echo synergy_content('agri-carbon-h2-1', '
               SYNRiceWater AWD<br>
               <span class="text-brand"><span class="lang-th">ลดน้ำ ลดมีเทน เพิ่มรายได้จาก Carbon Credit</span><span class="lang-en">Less Water, Less Methane, More Carbon Credit</span></span>
-            </h2>
-            <p class="svc-copy text-body">
+            ', 'smart-agriculture'); ?></h2>
+            <p data-editable="agri-carbon-p-1" <?php echo synergy_style('agri-carbon-p-1', 'smart-agriculture'); ?> class="svc-copy text-body"><?php echo synergy_content('agri-carbon-p-1', '
               <span class="lang-th">การทำนาข้าวแบบน้ำขังเป็นแหล่งกำเนิดหลักของก๊าซมีเทน ซึ่งมีฤทธิ์ทำลายชั้นบรรยากาศรุนแรงกว่า CO₂ ถึง 28 เท่า เราจึงพัฒนา <strong>SYNRiceWater AWD</strong> สำหรับการทำนาเปียกสลับแห้ง พร้อมบันทึกข้อมูลระดับน้ำแบบเข้ารหัสบนคลาวด์ เพื่อยื่นประเมินคาร์บอนเครดิตมาตรฐานสากล</span>
               <span class="lang-en">Continuously flooded rice is a major methane source, and methane traps 28 times more heat than CO₂. <strong>SYNRiceWater AWD</strong> manages alternate wetting and drying while logging tamper-evident water-level records to the cloud, ready for international carbon credit assessment.</span>
-            </p>
+            ', 'smart-agriculture'); ?></p>
 
             <!-- Key features -->
             <div>
@@ -857,27 +857,27 @@ if (!function_exists('sa_picture')) {
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div class="space-y-2 text-center">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">01</div>
-                  <h3 class="svc-label text-brand">Built for AWD Farming</h3>
-                  <p class="svc-caption text-muted">
+                  <h3 data-editable="agri-carbon-h3-1" <?php echo synergy_style('agri-carbon-h3-1', 'smart-agriculture'); ?> class="svc-label text-brand"><?php echo synergy_content('agri-carbon-h3-1', 'Built for AWD Farming', 'smart-agriculture'); ?></h3>
+                  <p data-editable="agri-carbon-p-2" <?php echo synergy_style('agri-carbon-p-2', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-2', '
                     <span class="lang-th">ออกแบบสำหรับวัดระดับน้ำในท่อ PVC ใต้ดินในแปลงนาข้าว</span>
                     <span class="lang-en">Designed to read water level inside buried PVC tubes in paddy fields.</span>
-                  </p>
+                  ', 'smart-agriculture'); ?></p>
                 </div>
                 <div class="space-y-2 text-center">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">02</div>
-                  <h3 class="svc-label text-brand">Solar + LTE Autonomous</h3>
-                  <p class="svc-caption text-muted">
+                  <h3 data-editable="agri-carbon-h3-2" <?php echo synergy_style('agri-carbon-h3-2', 'smart-agriculture'); ?> class="svc-label text-brand"><?php echo synergy_content('agri-carbon-h3-2', 'Solar + LTE Autonomous', 'smart-agriculture'); ?></h3>
+                  <p data-editable="agri-carbon-p-3" <?php echo synergy_style('agri-carbon-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-3', '
                     <span class="lang-th">ทำงานอัตโนมัติเต็มรูปแบบ ชาร์จไฟจากโซลาร์เซลล์ ส่งข้อมูลผ่าน 4G</span>
                     <span class="lang-en">Fully autonomous, solar charged and reporting over 4G.</span>
-                  </p>
+                  ', 'smart-agriculture'); ?></p>
                 </div>
                 <div class="space-y-2 text-center">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">03</div>
-                  <h3 class="svc-label text-brand">Carbon Credit Ready Data</h3>
-                  <p class="svc-caption text-muted">
+                  <h3 data-editable="agri-carbon-h3-3" <?php echo synergy_style('agri-carbon-h3-3', 'smart-agriculture'); ?> class="svc-label text-brand"><?php echo synergy_content('agri-carbon-h3-3', 'Carbon Credit Ready Data', 'smart-agriculture'); ?></h3>
+                  <p data-editable="agri-carbon-p-4" <?php echo synergy_style('agri-carbon-p-4', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-4', '
                     <span class="lang-th">ข้อมูลมีประวัติย้อนหลังถาวร ป้องกันการดัดแปลง ตามเกณฑ์ประเมิน</span>
                     <span class="lang-en">Permanent, tamper-evident history that meets assessment criteria.</span>
-                  </p>
+                  ', 'smart-agriculture'); ?></p>
                 </div>
               </div>
             </div>
@@ -888,24 +888,24 @@ if (!function_exists('sa_picture')) {
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="flex items-start gap-3 bg-white p-4 rounded-3xl border border-gray-100 shadow-lg">
                   <span class="font-display svc-num text-brand">1</span>
-                  <p class="svc-caption text-muted">
+                  <p data-editable="agri-carbon-p-5" <?php echo synergy_style('agri-carbon-p-5', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-5', '
                     <span class="lang-th">ลดการใช้น้ำและต้นทุนชลประทาน</span>
                     <span class="lang-en">Reduce water usage and irrigation cost</span>
-                  </p>
+                  ', 'smart-agriculture'); ?></p>
                 </div>
                 <div class="flex items-start gap-3 bg-white p-4 rounded-3xl border border-gray-100 shadow-lg">
                   <span class="font-display svc-num text-brand">2</span>
-                  <p class="svc-caption text-muted">
+                  <p data-editable="agri-carbon-p-6" <?php echo synergy_style('agri-carbon-p-6', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-6', '
                     <span class="lang-th">ลดการปล่อยก๊าซมีเทนด้วยวิธี AWD</span>
                     <span class="lang-en">Cut methane emissions through AWD</span>
-                  </p>
+                  ', 'smart-agriculture'); ?></p>
                 </div>
                 <div class="flex items-start gap-3 bg-white p-4 rounded-3xl border border-gray-100 shadow-lg">
                   <span class="font-display svc-num text-brand">3</span>
-                  <p class="svc-caption text-muted">
+                  <p data-editable="agri-carbon-p-7" <?php echo synergy_style('agri-carbon-p-7', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-7', '
                     <span class="lang-th">เปิดโอกาสสร้างรายได้จาก Carbon Credit</span>
                     <span class="lang-en">Unlock carbon credit opportunities</span>
-                  </p>
+                  ', 'smart-agriculture'); ?></p>
                 </div>
               </div>
             </div>
@@ -924,14 +924,14 @@ if (!function_exists('sa_picture')) {
             <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
             <span class="text-brand svc-kicker"><span class="lang-th">05 · Closed-Loop Automation</span><span class="lang-en">05 · Closed-Loop Automation</span></span>
           </div>
-          <h2 id="agri-greenhouse-title" class="font-display svc-h2 text-ink tracking-tight mb-5">
+          <h2 data-editable="agri-greenhouse-h2-1" <?php echo synergy_style('agri-greenhouse-h2-1', 'smart-agriculture'); ?> id="agri-greenhouse-title" class="font-display svc-h2 text-ink tracking-tight mb-5"><?php echo synergy_content('agri-greenhouse-h2-1', '
             <span class="lang-th">Smart Greenhouse โรงเรือนอัจฉริยะ</span>
             <span class="lang-en">Smart Greenhouse</span>
-          </h2>
-          <p class="svc-lede text-body max-w-2xl mx-auto">
+          ', 'smart-agriculture'); ?></h2>
+          <p data-editable="agri-greenhouse-p-1" <?php echo synergy_style('agri-greenhouse-p-1', 'smart-agriculture'); ?> class="svc-lede text-body max-w-2xl mx-auto"><?php echo synergy_content('agri-greenhouse-p-1', '
             <span class="lang-th">ระบบโรงเรือนอัตโนมัติครบวงจร ทำงานร่วมกับ HandySense เพื่อตรวจสอบและสั่งการพัดลม ปั๊มน้ำ และระบบพ่นหมอกตามตัวแปรธรรมชาติ</span>
             <span class="lang-en">A complete greenhouse automation system working with HandySense to monitor conditions and drive fans, pumps and misting on their own.</span>
-          </p>
+          ', 'smart-agriculture'); ?></p>
         </div>
 
         <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
@@ -950,10 +950,10 @@ if (!function_exists('sa_picture')) {
           </div>
 
           <div class="lg:col-span-7 space-y-6">
-            <h3 class="font-display svc-h3 text-ink">
+            <h3 data-editable="agri-greenhouse-h3-1" <?php echo synergy_style('agri-greenhouse-h3-1', 'smart-agriculture'); ?> class="font-display svc-h3 text-ink"><?php echo synergy_content('agri-greenhouse-h3-1', '
               <span class="lang-th">คุณสมบัติระบบโรงเรือนอัจฉริยะ</span>
               <span class="lang-en">Smart Greenhouse System Capabilities</span>
-            </h3>
+            ', 'smart-agriculture'); ?></h3>
             <ul class="grid sm:grid-cols-2 gap-4 svc-caption text-muted">
               <li class="flex items-start gap-2.5">
                 <i class="fa-solid fa-circle-check text-brand mt-1" aria-hidden="true"></i>
@@ -986,30 +986,30 @@ if (!function_exists('sa_picture')) {
             </ul>
 
             <div class="bg-white rounded-[24px] p-5 sm:p-6 sa-card shadow-bento">
-              <h4 class="svc-label text-ink mb-4"><i class="fa-solid fa-sliders text-brand mr-2" aria-hidden="true"></i><span class="lang-th">อุปกรณ์และ Sensor ในระบบ Smart Greenhouse</span><span class="lang-en">Devices &amp; Sensors in the Smart Greenhouse</span></h4>
+              <h4 data-editable="agri-greenhouse-h4-1" <?php echo synergy_style('agri-greenhouse-h4-1', 'smart-agriculture'); ?> class="svc-label text-ink mb-4"><?php echo synergy_content('agri-greenhouse-h4-1', '<i class="fa-solid fa-sliders text-brand mr-2" aria-hidden="true"></i><span class="lang-th">อุปกรณ์และ Sensor ในระบบ Smart Greenhouse</span><span class="lang-en">Devices &amp; Sensors in the Smart Greenhouse</span>', 'smart-agriculture'); ?></h4>
               <!-- 2-up on the narrowest phones, 3-up from 420px, 5-up from the sm
                    breakpoint. Five across at 375px gives ~70px per cell and three
                    across gives ~100px - neither fits "Temp/Humidity" on a line. -->
               <div class="grid grid-cols-2 min-[420px]:grid-cols-3 sm:grid-cols-5 gap-3 text-center">
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
                   <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-light-sensor', 'Light sensor', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
-                  <div class="svc-metric text-ink">Light Sensor</div>
+                  <div data-editable="agri-greenhouse-div-1" <?php echo synergy_style('agri-greenhouse-div-1', 'smart-agriculture'); ?> class="svc-metric text-ink"><?php echo synergy_content('agri-greenhouse-div-1', 'Light Sensor', 'smart-agriculture'); ?></div>
                 </div>
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
                   <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-temp-humidity', 'Temperature and humidity sensor', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
-                  <div class="svc-metric text-ink">Temp/Humidity</div>
+                  <div data-editable="agri-greenhouse-div-2" <?php echo synergy_style('agri-greenhouse-div-2', 'smart-agriculture'); ?> class="svc-metric text-ink"><?php echo synergy_content('agri-greenhouse-div-2', 'Temp/Humidity', 'smart-agriculture'); ?></div>
                 </div>
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
                   <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-soil-moisture', 'Soil moisture sensor', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
-                  <div class="svc-metric text-ink">Soil Moisture</div>
+                  <div data-editable="agri-greenhouse-div-3" <?php echo synergy_style('agri-greenhouse-div-3', 'smart-agriculture'); ?> class="svc-metric text-ink"><?php echo synergy_content('agri-greenhouse-div-3', 'Soil Moisture', 'smart-agriculture'); ?></div>
                 </div>
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
                   <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-handysense', 'HandySense controller', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
-                  <div class="svc-metric text-ink">HandySense</div>
+                  <div data-editable="agri-greenhouse-div-4" <?php echo synergy_style('agri-greenhouse-div-4', 'smart-agriculture'); ?> class="svc-metric text-ink"><?php echo synergy_content('agri-greenhouse-div-4', 'HandySense', 'smart-agriculture'); ?></div>
                 </div>
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
                   <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-platform', 'Platform dashboard', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
-                  <div class="svc-metric text-ink">Platform</div>
+                  <div data-editable="agri-greenhouse-div-5" <?php echo synergy_style('agri-greenhouse-div-5', 'smart-agriculture'); ?> class="svc-metric text-ink"><?php echo synergy_content('agri-greenhouse-div-5', 'Platform', 'smart-agriculture'); ?></div>
                 </div>
               </div>
             </div>
@@ -1022,30 +1022,26 @@ if (!function_exists('sa_picture')) {
 
     <!-- CTA -->
     <section id="agri-cta" class="py-14 sm:py-20 bg-white" style="scroll-margin-top:96px">
-      <div class="se-shell">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6">
         <div class="relative overflow-hidden rounded-[28px] px-6 py-10 sm:px-10 sm:py-14 lg:px-16 text-white"
              style="background:linear-gradient(135deg,#0d4636 0%,#093427 55%,#06261c 100%)">
           <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
           <div class="relative z-10 grid gap-8 lg:grid-cols-[1.35fr_auto] lg:items-center">
             <div>
-              <p class="se-eyebrow mb-3" style="color:#4ade80">
+              <p class="svc-kicker mb-3" style="color:#4ade80">
                 <span class="lang-th">เริ่มต้นกับเรา</span>
                 <span class="lang-en">GET STARTED</span>
               </p>
-              <h2 class="se-h2 font-display text-white">
-                <span class="lang-th">เริ่มต้นทำเกษตรแม่นยำสูง<br><span class="text-brand-bright">เพื่อยกระดับผลผลิตและวิถีคาร์บอนต่ำ</span></span>
-                <span class="lang-en">Start Precision Farming<br><span class="text-brand-bright">For Better Yield and a Low-Carbon Path</span></span>
-              </h2>
-              <p class="se-lede text-slate-200 mt-5 max-w-2xl">
-                <span class="lang-th">ทีมวิศวกร IoT เกษตรอัจฉริยะของเราพร้อมให้คำปรึกษาและเข้าสำรวจพื้นที่จริง ตั้งแต่ติดตั้ง Sensor ไร้สายภาคสนาม จนถึงการเตรียมข้อมูลยื่นขอใบรับรองคาร์บอนเครดิต</span>
-                <span class="lang-en">Our Smart Agri-IoT engineering team is ready to consult and assess your fields, from deploying wireless sensor nodes to preparing auditable carbon credit data.</span>
-              </p>
+              <h2 data-editable="agri-cta-h2" <?php echo synergy_style('agri-cta-h2', 'smart-agriculture'); ?> class="svc-h2 font-display text-white"><?php echo synergy_content('agri-cta-h2', '<span class="lang-th">เริ่มต้นทำเกษตรแม่นยำสูง<br><span class="text-brand-bright">เพื่อยกระดับผลผลิตและวิถีคาร์บอนต่ำ</span></span>
+                <span class="lang-en">Start Precision Farming<br><span class="text-brand-bright">For Better Yield and a Low-Carbon Path</span></span>', 'smart-agriculture'); ?></h2>
+              <p data-editable="agri-cta-p" <?php echo synergy_style('agri-cta-p', 'smart-agriculture'); ?> class="svc-copy text-slate-200 mt-5 max-w-2xl"><?php echo synergy_content('agri-cta-p', '<span class="lang-th">ทีมวิศวกร IoT เกษตรอัจฉริยะของเราพร้อมให้คำปรึกษาและเข้าสำรวจพื้นที่จริง ตั้งแต่ติดตั้ง Sensor ไร้สายภาคสนาม จนถึงการเตรียมข้อมูลยื่นขอใบรับรองคาร์บอนเครดิต</span>
+                <span class="lang-en">Our Smart Agri-IoT engineering team is ready to consult and assess your fields, from deploying wireless sensor nodes to preparing auditable carbon credit data.</span>', 'smart-agriculture'); ?></p>
             </div>
 
             <div class="flex flex-col sm:flex-row lg:flex-col gap-3 lg:gap-4 lg:min-w-[240px]">
               <a href="<?php echo home_url('/'); ?>#contact"
-                 class="se-cta-label inline-flex items-center justify-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
+                 class="svc-btn sa-tap inline-flex items-center justify-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
                 <i class="fa-solid fa-comments"></i>
                 <span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span>
                 <span class="lang-en">Talk to Our Experts</span>
