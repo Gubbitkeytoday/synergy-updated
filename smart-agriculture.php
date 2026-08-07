@@ -1046,15 +1046,9 @@ if (!function_exists('sa_picture')) {
             <div class="flex flex-col sm:flex-row lg:flex-col gap-3 lg:gap-4 lg:min-w-[240px]">
               <a href="<?php echo home_url('/'); ?>#contact"
                  class="se-cta-label inline-flex items-center justify-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
-                <i class="fa-solid fa-paper-plane"></i>
-                <span class="lang-th">ติดต่อทีมวิศวกร</span>
-                <span class="lang-en">Contact Our Engineers</span>
-              </a>
-              <a href="<?php echo home_url('/service/'); ?>"
-                 class="se-cta-label inline-flex items-center justify-center gap-2.5 border border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider transition-all hover:-translate-y-0.5">
-                <i class="fa-solid fa-microchip"></i>
-                <span class="lang-th">ขีดความสามารถวิศวกรรม</span>
-                <span class="lang-en">Engineering Capabilities</span>
+                <i class="fa-solid fa-comments"></i>
+                <span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span>
+                <span class="lang-en">Talk to Our Experts</span>
               </a>
             </div>
           </div>
