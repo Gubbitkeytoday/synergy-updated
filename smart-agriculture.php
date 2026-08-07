@@ -583,12 +583,9 @@ if (!function_exists('sa_picture')) {
              at svc-lede the paragraph measured 21.3px against the subheading's
              21.0px - the supporting text outranking the line it supports. -->
         <p data-editable="agri-hero-p-1" <?php echo synergy_style('agri-hero-p-1', 'smart-agriculture'); ?> class="svc-copy text-white/75 max-w-3xl mb-10"><?php echo synergy_content('agri-hero-p-1', '<span class="lang-th">เชื่อมต่อข้อมูลจากเซนเซอร์ อุปกรณ์ IoT และระบบการเกษตรไว้ในแพลตฟอร์มเดียว เพื่อการติดตาม วิเคราะห์ และบริหารจัดการฟาร์มแบบ Real-time ช่วยเพิ่มผลผลิต ลดต้นทุน และใช้ทรัพยากรได้อย่างมีประสิทธิภาพ</span><span class="lang-en">Connect agricultural sensors, IoT devices, and farm operations into a single platform for real-time monitoring, analytics, and precision farm management, helping improve productivity, reduce costs, and optimize resource utilization.</span>', 'smart-agriculture'); ?></p>
-        <div class="flex flex-col sm:flex-row flex-wrap gap-4">
+        <div class="flex">
           <a href="<?php echo home_url('/'); ?>#contact" class="sa-tap bg-brand hover:bg-brand-deep text-white svc-btn uppercase tracking-wider px-8 py-4 rounded-xl transition shadow-lg shadow-brand/20 inline-flex items-center justify-center gap-2 sa-card-d">
             <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span class="lang-th">ปรึกษาโครงการ</span><span class="lang-en">Talk to Our Experts</span>
-          </a>
-          <a href="#agri-overview" class="sa-tap border border-white/20 hover:bg-white/10 text-white svc-btn uppercase tracking-wider px-8 py-4 rounded-xl transition inline-flex items-center justify-center gap-2 sa-card-d">
-            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i><span class="lang-th">สำรวจโซลูชัน</span><span class="lang-en">Explore the Solution</span>
           </a>
         </div>
         <!-- Proof strip. Every figure here is already stated further down the
@@ -1161,21 +1158,6 @@ if (!function_exists('sa_picture')) {
             </div>
           </div>
 
-        </div>
-      </div>
-    </section>
-
-    <!-- Mid-page CTA. The only two contact links were the hero and the footer
-         CTA, nine desktop screens apart - twenty-one on a phone. A reader who is
-         convinced by the carbon credit section had nowhere to go. -->
-    <section aria-label="Talk to us" class="pb-4">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6">
-        <div class="rounded-[24px] bg-brand-soft border border-brand/15 px-6 py-6 sm:px-9 sm:py-7 flex flex-col sm:flex-row sm:items-center gap-5 sa-reveal">
-          <p data-editable="agri-midcta-text" <?php echo synergy_style('agri-midcta-text', 'smart-agriculture'); ?> class="svc-copy text-ink flex-1"><?php echo synergy_content('agri-midcta-text', '<span class="lang-th">อยากรู้ว่าแปลงของคุณลดน้ำและมีเทนได้เท่าไร ทีมวิศวกรเข้าสำรวจพื้นที่จริงให้ได้</span><span class="lang-en">Want to know how much water and methane your fields could save? Our engineers will survey the site.</span>', 'smart-agriculture'); ?></p>
-          <a href="<?php echo home_url('/'); ?>#contact" class="sa-tap svc-btn shrink-0 inline-flex items-center justify-center gap-2.5 bg-brand hover:bg-brand-deep text-white px-7 py-4 rounded-xl uppercase tracking-wider transition shadow-lg shadow-brand/20">
-            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-            <span class="lang-th">ปรึกษาทีมวิศวกร</span><span class="lang-en">Talk to Our Engineers</span>
-          </a>
         </div>
       </div>
     </section>
