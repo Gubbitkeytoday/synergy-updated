@@ -89,26 +89,74 @@ if (isset($_GET['action']) && $_GET['action'] === 'upload_image') {
     exit;
 }
 
-// Handle Login request
+/**
+ * Handle Login request.
+ *
+ * There used to be a hard-coded list here:
+ *
+ *     $validUser  = 'admin';
+ *     $validPasses = ['admin', '<a real password>', 'synergy2026'];
+ *
+ * That is removed. This file lives in a public git repository, so those strings
+ * were readable by anyone, and they granted exactly what this endpoint grants:
+ * writing data/content_*.json (rendered back into pages unescaped) and uploading
+ * files into image/upload/. Anyone who found the repo had editor access to the
+ * live site. Rotate any password that appeared in that list - it is still in the
+ * git history, and removing it here does not remove it from there.
+ *
+ * Identity now comes from WordPress. wp_authenticate() checks the real user
+ * table, and the capability check that follows means a Subscriber cannot write
+ * content even with valid credentials. Revoking access is done in wp-admin,
+ * where it belongs, instead of by editing a PHP file.
+ *
+ * For running this theme standalone (no WordPress - see AGENTS.md rule 7), set
+ * SYNERGY_ADMIN_USER and SYNERGY_ADMIN_PASSWORD_HASH in the environment:
+ *
+ *     php -r "echo password_hash('your-password', PASSWORD_DEFAULT);"
+ *
+ * A hash in an env var is not in the repository and cannot be read back into a
+ * password. With neither WordPress nor those variables present, login is
+ * refused - it does not silently fall open.
+ */
 if (isset($_GET['action']) && $_GET['action'] === 'login') {
     $input = json_decode(file_get_contents('php://input'), true);
     $user = trim($input['username'] ?? '');
-    $pass = trim($input['password'] ?? '');
-
-    $validUser = 'admin';
-    $validPasses = ['admin', 'A)1^RTBFZaSL1cyI!PSg^YKI', 'synergy2026'];
+    $pass = (string) ($input['password'] ?? '');
 
     $is_valid = false;
-    if ($user === $validUser && in_array($pass, $validPasses)) {
-        $is_valid = true;
-    } elseif (function_exists('wp_authenticate')) {
+
+    if (function_exists('wp_authenticate')) {
         $wp_user = wp_authenticate($user, $pass);
         if ($wp_user && !is_wp_error($wp_user)) {
-            $is_valid = true;
+            // Authenticating proves who they are; this proves they may edit.
+            if (function_exists('user_can') && user_can($wp_user, 'edit_posts')) {
+                $is_valid = true;
+            } else {
+                echo json_encode(['success' => false, 'error' => 'บัญชีนี้ไม่มีสิทธิ์แก้ไขเนื้อหา']);
+                exit;
+            }
+        }
+    } else {
+        $envUser = getenv('SYNERGY_ADMIN_USER');
+        $envHash = getenv('SYNERGY_ADMIN_PASSWORD_HASH');
+        if ($envUser && $envHash) {
+            // hash_equals for the username too: a plain === leaks its length by timing.
+            if (hash_equals($envUser, $user) && password_verify($pass, $envHash)) {
+                $is_valid = true;
+            }
+        } else {
+            echo json_encode([
+                'success' => false,
+                'error'   => 'ยังไม่ได้ตั้งค่าการเข้าสู่ระบบ: ต้องรันบน WordPress หรือกำหนด SYNERGY_ADMIN_USER และ SYNERGY_ADMIN_PASSWORD_HASH'
+            ]);
+            exit;
         }
     }
 
     if ($is_valid) {
+        // New session id on privilege change, so a session id captured before
+        // login cannot be reused afterwards (session fixation).
+        session_regenerate_id(true);
         $_SESSION['synergy_admin_logged_in'] = true;
         setcookie('synergy_admin_auth', '1', [
             'expires' => time() + (86400 * 365),
@@ -176,7 +224,18 @@ if (isset($_GET['action']) && $_GET['action'] === 'nav_save') {
 if (isset($_GET['action']) && $_GET['action'] === 'check') {
     // Reports the same answer the write endpoints enforce, so the UI can never
     // show an edit session that the server will then refuse to save.
-    echo json_encode(['isLoggedIn' => synergy_is_admin()]);
+    $response = ['isLoggedIn' => synergy_is_admin()];
+
+    /* Whether data/ is writable is only worth telling an editor, and it is worth
+       telling them BEFORE they spend ten minutes rewriting the home page and
+       then meet "บันทึกไฟล์ไม่สำเร็จ" on save. A wrong directory permission
+       after a deploy is the usual cause. */
+    if ($response['isLoggedIn']) {
+        $dir = __DIR__ . '/data';
+        $response['canWrite'] = is_dir($dir) ? is_writable($dir) : is_writable(__DIR__);
+    }
+
+    echo json_encode($response);
     exit;
 }
 
@@ -210,10 +269,97 @@ if (!$data || !isset($data['page']) || !isset($data['fields'])) {
 }
 
 $page = preg_replace('/[^a-z0-9_-]/i', '', $data['page']);
+if ($page === '') {
+    echo json_encode(['success' => false, 'error' => 'ชื่อหน้าไม่ถูกต้อง']);
+    exit;
+}
 $dataFile = __DIR__ . '/data/content_' . $page . '.json';
 
 if (!is_dir(__DIR__ . '/data')) {
     mkdir(__DIR__ . '/data', 0777, true);
+}
+
+/**
+ * Whatever is stored here is printed back into the page by synergy_content()
+ * with no escaping - it has to be, because the values ARE markup: every field
+ * holds a <span class="lang-th">/<span class="lang-en"> pair. So the filtering
+ * has to happen on the way in, and it has to allow formatting tags while
+ * refusing anything executable.
+ *
+ * Under WordPress that is exactly what wp_kses_post() does, and it is far more
+ * thorough than anything written here would be. The fallback below is only for
+ * running standalone.
+ */
+function synergy_sanitize_html($html) {
+    if (function_exists('wp_kses_post')) {
+        return wp_kses_post($html);
+    }
+
+    // Elements that can execute or fetch: dropped with their content.
+    $html = preg_replace('#<\s*(script|style|iframe|object|embed|form|link|meta|base|svg)\b[^>]*>.*?<\s*/\s*\1\s*>#is', '', $html);
+    $html = preg_replace('#<\s*/?\s*(script|style|iframe|object|embed|form|link|meta|base|svg)\b[^>]*>#i', '', $html);
+    // Event handlers: onclick=, ONERROR = , onload... in any quoting style.
+    $html = preg_replace('#\son[a-z]+\s*=\s*"[^"]*"#i', '', $html);
+    $html = preg_replace("#\son[a-z]+\s*=\s*'[^']*'#i", '', $html);
+    $html = preg_replace('#\son[a-z]+\s*=\s*[^\s>]+#i', '', $html);
+    /* URL schemes. The check has to run on the DECODED value, not the raw one:
+       a browser resolves entities inside an attribute before it resolves the
+       scheme, so href="&#106;avascript:alert(1)" runs. An earlier version of
+       this matched the literal string "javascript:" and let that straight
+       through - decoding first is the whole point. Repeat the decode, because
+       "&amp;#106;" decodes to "&#106;" which decodes again. */
+    $html = preg_replace_callback(
+        '#\b(href|src|xlink:href|formaction|action|poster)\s*=\s*("([^"]*)"|\'([^\']*)\'|([^\s>]+))#i',
+        function ($m) {
+            /* Unmatched trailing groups come back unset, not '', so every read
+               goes through isset(). A PHP notice here would be printed into the
+               JSON response body and break the client's parse. */
+            $attr = $m[1];
+            $raw  = isset($m[2]) ? $m[2] : '';
+            if ($raw !== '' && $raw[0] === '"') {
+                $quote = '"';
+                $value = isset($m[3]) ? $m[3] : '';
+            } elseif ($raw !== '' && $raw[0] === "'") {
+                $quote = "'";
+                $value = isset($m[4]) ? $m[4] : '';
+            } else {
+                $quote = '';
+                $value = isset($m[5]) ? $m[5] : '';
+            }
+
+            $probe = $value;
+            for ($i = 0; $i < 3; $i++) {
+                $decoded = html_entity_decode($probe, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                if ($decoded === $probe) break;
+                $probe = $decoded;
+            }
+            // Strip everything a browser ignores while parsing the scheme.
+            $probe = preg_replace('/[\s\x00-\x20\x7f]+/', '', $probe);
+
+            if (preg_match('/^(javascript|vbscript|data|file|about)\s*:/i', $probe)) {
+                return $attr . '=' . $quote . '#' . $quote;
+            }
+            return $m[0];
+        },
+        $html
+    );
+    return $html;
+}
+
+/**
+ * _pos and _size are written by the drag/resize handles and are the only
+ * non-string values the editor sends. They are rebuilt from integers rather
+ * than trusted, so nothing else can ride along inside them - synergy_style()
+ * interpolates these straight into a style attribute.
+ */
+function synergy_sanitize_geometry($value) {
+    $out = [];
+    foreach (['x', 'y', 'w', 'h'] as $k) {
+        if (isset($value[$k]) && is_numeric($value[$k])) {
+            $out[$k] = (int) $value[$k];
+        }
+    }
+    return $out;
 }
 
 $current = [];
@@ -221,12 +367,54 @@ if (file_exists($dataFile)) {
     $current = json_decode(file_get_contents($dataFile), true) ?: [];
 }
 
+$saved = 0;
+$rejected = [];
 foreach ($data['fields'] as $key => $value) {
-    $current[$key] = $value;
+    // Keys become JSON object keys and are matched against data-editable
+    // attributes, which live-editor.js generates from [a-z0-9_-].
+    $cleanKey = preg_replace('/[^a-z0-9._-]/i', '', (string) $key);
+    if ($cleanKey === '' || strlen($cleanKey) > 120) {
+        $rejected[] = (string) $key;
+        continue;
+    }
+
+    if (is_array($value)) {
+        $current[$cleanKey] = synergy_sanitize_geometry($value);
+    } elseif (is_string($value)) {
+        if (strlen($value) > 200000) {          // a field is a headline, not a document
+            $rejected[] = $cleanKey;
+            continue;
+        }
+        $current[$cleanKey] = synergy_sanitize_html($value);
+    } elseif (is_scalar($value) || $value === null) {
+        $current[$cleanKey] = $value;
+    } else {
+        $rejected[] = $cleanKey;
+        continue;
+    }
+    $saved++;
 }
 
-if (file_put_contents($dataFile, json_encode($current, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
-    echo json_encode(['success' => true, 'page' => $page, 'updated' => count($data['fields'])]);
+/* Write to a temporary file in the same directory and rename over the target.
+   rename() is atomic on the same filesystem, so a request that dies halfway
+   through - or two editors saving at once - cannot leave truncated JSON behind,
+   which synergy_content() would then read as an empty page. */
+$tmp = $dataFile . '.' . bin2hex(random_bytes(4)) . '.tmp';
+$json = json_encode($current, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+if ($json !== false && file_put_contents($tmp, $json) !== false && rename($tmp, $dataFile)) {
+    echo json_encode([
+        'success'  => true,
+        'page'     => $page,
+        'updated'  => $saved,
+        'rejected' => $rejected,
+    ]);
 } else {
-    echo json_encode(['success' => false, 'error' => 'Failed to save file']);
+    if (file_exists($tmp)) {
+        unlink($tmp);
+    }
+    echo json_encode([
+        'success' => false,
+        'error'   => 'บันทึกไฟล์ไม่สำเร็จ: โฟลเดอร์ data/ เขียนไม่ได้ ตรวจสอบสิทธิ์ของโฟลเดอร์บนเซิร์ฟเวอร์',
+    ]);
 }

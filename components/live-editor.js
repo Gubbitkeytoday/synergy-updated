@@ -1050,6 +1050,13 @@
           isLoggedIn = true;
           localStorage.setItem('synergy_admin_auth', '1');
           triggerBtn.style.display = 'flex';
+          /* Say it now, not after the edits. The usual cause is data/ coming
+             back from a deploy owned by the wrong user, and the old behaviour
+             was to let someone rewrite a whole page and only then fail. */
+          if (json.canWrite === false) {
+            alert('เข้าสู่ระบบแล้ว แต่โฟลเดอร์ data/ บนเซิร์ฟเวอร์เขียนไม่ได้\n' +
+                  'การแก้ไขจะบันทึกไม่สำเร็จจนกว่าจะแก้สิทธิ์ของโฟลเดอร์');
+          }
           if (window.location.search.includes('edit=true')) {
             enableEditing();
           }

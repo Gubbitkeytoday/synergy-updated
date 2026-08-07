@@ -4,7 +4,16 @@ Theme URI: https://www.syntechnology.com
 Author: Synergy Group
 Description: Updated Theme for Synergy Group with Admin Bar Overlap Fix
 Version: 3.1.0
+Update URI: false
 */
+
+/* Update URI: false tells WordPress this theme is not distributed through
+   wordpress.org, so it never checks that directory for a theme whose slug
+   matches this folder name. Without it, a theme published there under the slug
+   "synergy-updated" would be offered as an update and, if applied, would
+   overwrite this entire directory - every template, the components/ folder and
+   the generated images. Supported since WordPress 6.1; older versions ignore
+   the line harmlessly. */
 
 /* WordPress Admin Bar Compatibility Fix */
 body.admin-bar nav.fixed,

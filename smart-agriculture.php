@@ -81,6 +81,47 @@ if (file_exists(__DIR__ . '/functions.php')) {
     require_once __DIR__ . '/functions.php';
 }
 $sa_img = get_template_directory_uri() . '/image/solutions/';
+
+if (!function_exists('sa_picture')) {
+    /**
+     * A <picture> with a WebP srcset and the original file as the fallback.
+     *
+     * Why this exists rather than 15 hand-written <picture> blocks: every image
+     * on this page needs the same four things and getting one of them wrong is
+     * invisible until someone opens the page on a phone.
+     *
+     *  - WebP at three widths. The originals are 1350px wide and were being sent
+     *    at full size to a 640px phone; the derivatives are generated in
+     *    image/solutions/ as <base>-640/-960/-1350.webp.
+     *  - width/height on the <img>. Without them the browser cannot reserve the
+     *    box before the bytes arrive, and every card below jumps when it does
+     *    (cumulative layout shift).
+     *  - loading/decoding/fetchpriority. Exactly one image on a page should be
+     *    eager with high priority: the one in the first screenful.
+     *  - alt text that survives the language switch. alt is a plain attribute,
+     *    so it cannot hold a lang-th/lang-en pair (AGENTS.md rule 4); these are
+     *    written in English on purpose and describe the picture, not the copy.
+     *
+     * Note the fallback src still points at the .png original. Those files are
+     * actually JPEGs with a .png extension - browsers sniff the content and do
+     * not care, but do not assume the extension means anything here.
+     */
+    function sa_picture($base, $alt, $class, $sizes, $w, $h, $widths = array(640, 960, 1350), $eager = false) {
+        $dir = get_template_directory_uri() . '/image/solutions/';
+        $srcset = array();
+        foreach ($widths as $x) {
+            $srcset[] = $dir . $base . '-' . $x . '.webp ' . $x . 'w';
+        }
+        echo '<picture class="sa-pic">'
+           . '<source type="image/webp" sizes="' . htmlspecialchars($sizes, ENT_QUOTES) . '" srcset="' . implode(', ', $srcset) . '">'
+           . '<img src="' . $dir . $base . '.png"'
+           . ' alt="' . htmlspecialchars($alt, ENT_QUOTES) . '"'
+           . ' class="' . htmlspecialchars($class, ENT_QUOTES) . '"'
+           . ' width="' . (int) $w . '" height="' . (int) $h . '"'
+           . ($eager ? ' fetchpriority="high" decoding="async">' : ' loading="lazy" decoding="async">')
+           . '</picture>';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -99,8 +140,27 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
   <meta property="og:title" content="Smart Agriculture · เกษตรอัจฉริยะ IoT &amp; Carbon Credit">
   <meta property="og:description" content="เครือข่ายเซนเซอร์ไร้สายพลังงานแสงอาทิตย์ ควบคุมน้ำแบบ AWD และข้อมูลพร้อมยื่น Carbon Credit">
   <meta property="og:image" content="<?php echo $sa_img; ?>agri-hero-bg.png">
+  <meta property="og:image:width" content="1350">
+  <meta property="og:image:height" content="760">
+  <meta property="og:image:alt" content="Rice fields with IoT sensor nodes">
   <meta property="og:url" content="<?php echo home_url('/smart-agriculture/'); ?>">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="<?php echo $sa_img; ?>agri-hero-bg.png">
+
+  <!-- The page is one document that swaps languages client-side rather than two
+       URLs, so both hreflang values point here and x-default covers the rest. -->
+  <link rel="alternate" hreflang="th" href="<?php echo home_url('/smart-agriculture/'); ?>">
+  <link rel="alternate" hreflang="en" href="<?php echo home_url('/smart-agriculture/'); ?>">
+  <link rel="alternate" hreflang="x-default" href="<?php echo home_url('/smart-agriculture/'); ?>">
+
+  <!-- LCP. The hero image is the largest element in the first screenful, and a
+       preload with imagesrcset lets the browser start it during head parsing at
+       the width it will actually use, instead of waiting for layout. -->
+  <link rel="preload" as="image" type="image/webp"
+        href="<?php echo $sa_img; ?>agri-hero-bg-1350.webp"
+        imagesrcset="<?php echo $sa_img; ?>agri-hero-bg-640.webp 640w, <?php echo $sa_img; ?>agri-hero-bg-960.webp 960w, <?php echo $sa_img; ?>agri-hero-bg-1350.webp 1350w"
+        imagesizes="100vw" fetchpriority="high">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
   <!-- Structured data carried over from the source page. The absolute
        synergygroup.co.th URLs are replaced with this site's own; the
@@ -303,6 +363,15 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
       line-height: 1.5 !important;
       font-weight: 700 !important;
     }
+    /* body sets word-break: break-word, and short labels in narrow grid cells are
+       exactly where that bites: "Temp/Humidity" rendered as "Temp/Hu / midity"
+       and "HandySense" as "HandySe / nse". Labels break between words or not at
+       all. */
+    .svc-metric, .svc-btn, .svc-label, .svc-kicker {
+      word-break: normal !important;
+      overflow-wrap: break-word;
+      hyphens: none;
+    }
     .svc-btn {                        /* = site text-sm bold, button and pill text. Same reason
                                          as .svc-metric: the buttons carry Thai. */
       font-size: 0.975rem !important;
@@ -357,17 +426,113 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
     .sa-card-d { border: 1px solid rgba(255, 255, 255, 0.07); box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.08); }
     .sa-spring { transition-duration: 500ms; transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
 
-    /* The navbar is position:fixed, 80px tall, so in-page anchors need to clear
-       it or the heading lands underneath. */
-    [id] { scroll-margin-top: 100px; }
+    /* The navbar is position:fixed at 80px and the section sub-nav sticks
+       directly under it at 49px, so an anchor jump has 129px of chrome to clear.
+       Measured: at the old 100px the target section landed 29px behind the
+       sub-nav. 140px leaves a small breathing gap on top. */
+    /* !important because components/style.css already declares scroll-margin-top
+       with !important; without it ours computed to 96px and the section still
+       landed 33px behind the sub-nav. */
+    [id] { scroll-margin-top: 140px !important; }
+
 
     /* Every tap target reaches 44px. The source page's pill buttons were 40px
        on a phone once the padding collapsed. */
     .sa-tap { min-height: 48px; }
 
+    /* <picture> is an inline element, so inside the h-full image frames it left a
+       descender gap under the photo and refused to stretch. */
+    .sa-pic { display: block; width: 100%; height: 100%; }
+
+    /* Tailwind's CDN build emits .sr-only when it sees the class, but this page
+       depends on it for accessible names, so it is defined here too rather than
+       left to a build step that could be swapped out later. */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+    }
+
+    /* ==========================================================================
+       FOCUS
+
+       Tailwind's preflight removes the browser's default outline, and nothing on
+       this page put one back, so keyboard users had no visible caret at all.
+       :focus-visible only paints for keyboard/AT focus, never on mouse click. */
+    :focus-visible {
+      outline: 3px solid #F2C72E;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    .bg-ink :focus-visible, .sa-subnav :focus-visible { outline-color: #F2C72E; }
+
+    /* Skip link: hidden until focused, then pinned above everything. Without it
+       a keyboard user tabs through the whole navbar on every page. */
+    .sa-skip {
+      position: absolute; left: 1rem; top: -100px; z-index: 100;
+      background: #0B1F16; color: #fff; padding: 0.75rem 1.25rem; border-radius: 0.75rem;
+      transition: top 160ms ease;
+    }
+    .sa-skip:focus { top: 1rem; }
+
+    /* ==========================================================================
+       SECTION SUB-NAV
+
+       Five numbered sections is enough that a reader who lands mid-page has no
+       idea what else exists. The bar sticks under the fixed 80px navbar and
+       scrolls sideways on a phone rather than wrapping to two rows. */
+    .sa-subnav {
+      position: sticky; top: 80px; z-index: 40;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid rgba(11, 31, 22, 0.07);
+    }
+    .sa-subnav ol {
+      display: flex; gap: 0.25rem; overflow-x: auto; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .sa-subnav ol::-webkit-scrollbar { display: none; }
+    .sa-subnav a {
+      display: flex; align-items: center; white-space: nowrap;
+      min-height: 48px; padding: 0 0.9rem; border-radius: 0.75rem;
+      color: #5C6E65; transition: color 200ms ease, background-color 200ms ease;
+    }
+    .sa-subnav a:hover { color: #1F6B43; background: #E9F2EC; }
+    .sa-subnav a[aria-current="true"] { color: #1F6B43; background: #E9F2EC; }
+    .sa-subnav a[aria-current="true"] .sa-subnav-dot { opacity: 1; }
+    .sa-subnav-dot {
+      width: 6px; height: 6px; border-radius: 999px; background: #1F6B43;
+      margin-right: 0.5rem; opacity: 0; transition: opacity 200ms ease;
+    }
+
+    /* ==========================================================================
+       SCROLL REVEAL
+
+       Opt-in, not opt-out: the hidden state is applied only once JS has set
+       data-reveal on <html>. If the script never runs - blocked, error, old
+       browser - the content is simply visible, which is the whole point. It is
+       also skipped entirely when the reader asked for less motion. */
+    @media (prefers-reduced-motion: no-preference) {
+      html[data-reveal] .sa-reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      html[data-reveal] .sa-reveal.is-in { opacity: 1; transform: none; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .sa-spring, .transition, [class*="transition-"] { transition: none !important; }
       .animate-pulse, .animate-bounce { animation: none !important; }
+      .sa-subnav { position: static; }
+    }
+
+    /* Printing a spec page is a real thing sales teams do: drop the decoration
+       and keep the content. */
+    @media print {
+      .sa-subnav, #navbar-container, #footer-container, .sa-skip { display: none !important; }
+      .sa-reveal { opacity: 1 !important; transform: none !important; }
+      section { page-break-inside: avoid; }
+      .bg-ink, .bg-brand-deep { background: #fff !important; color: #000 !important; }
     }
   </style>
 
@@ -379,14 +544,25 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
 </head>
 
 <body id="top" <?php body_class("bg-[#F8FAF9] text-body antialiased"); ?>>
+  <a class="sa-skip svc-btn" href="#main-content"><span class="lang-th">ข้ามไปยังเนื้อหาหลัก</span><span class="lang-en">Skip to main content</span></a>
+
   <!-- NAVBAR CONTAINER -->
   <div id="navbar-container"></div>
 
   <main id="main-content">
 
     <!-- HERO -->
-    <section id="agri-hero" class="relative bg-ink text-white py-24 sm:py-32 lg:py-40 overflow-hidden flex items-center">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image: linear-gradient(rgba(2, 4, 3, 0.4), rgba(2, 4, 3, 0.7)), url('<?php echo $sa_img; ?>agri-hero-bg.png');"></div>
+    <section id="agri-hero" aria-labelledby="agri-hero-title" class="relative bg-ink text-white py-24 sm:py-32 lg:py-40 overflow-hidden flex items-center">
+      <!-- The hero art is a real <img>, not a CSS background. A background-image
+           is discovered only after the stylesheet is parsed and cannot be
+           preloaded, srcset-ed or given fetchpriority - and this image is the
+           page's largest contentful paint. As an <img> it starts downloading
+           from the preload in <head> at the right width for the viewport. The
+           tint that used to be part of the gradient is now its own layer. -->
+      <div class="absolute inset-0">
+        <?php sa_picture('agri-hero-bg', 'Rice fields with IoT sensor nodes and a farmer using a tablet', 'w-full h-full object-cover', '100vw', 1350, 760, array(640, 960, 1350), true); ?>
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[rgba(2,4,3,0.4)] to-[rgba(2,4,3,0.7)]" aria-hidden="true"></div>
       <div class="absolute inset-0 pointer-events-none opacity-60 sa-mesh-dark"></div>
       <div class="absolute inset-0 pointer-events-none">
         <div class="absolute top-[-20%] right-[-10%] w-[420px] h-[420px] lg:w-[600px] lg:h-[600px] bg-brand/20 rounded-full blur-[140px]"></div>
@@ -394,18 +570,13 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
       </div>
 
       <div class="max-w-7xl mx-auto px-5 sm:px-6 relative z-10 w-full">
-        <div class="mb-5">
-          <a href="<?php echo home_url('/'); ?>#solutions" class="text-white/60 hover:text-gold-bright svc-btn uppercase tracking-wider transition inline-flex items-center gap-2">
-            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span class="lang-th">โซลูชัน</span><span class="lang-en">Solutions</span>
-          </a>
-        </div>
         <div class="inline-flex items-center gap-2.5 mb-7 bg-white/5 border border-white/10 px-4 sm:px-5 py-2 rounded-full backdrop-blur-md sa-card-d">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
           <!-- Same Latin string in both languages: it is a product-technology
                label, not prose, and the switcher still needs a pair to act on. -->
           <span class="text-white/90 svc-kicker"><span class="lang-th">AIoT LPWAN Technology</span><span class="lang-en">AIoT LPWAN Technology</span></span>
         </div>
-        <h1 class="font-display svc-h1 text-white tracking-tight mb-6">
+        <h1 id="agri-hero-title" class="font-display svc-h1 text-white tracking-tight mb-6">
           <span class="lang-th">เทคโนโลยีเกษตรอัจฉริยะ<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">และคาร์บอนเครดิต</span></span>
           <span class="lang-en">Smart Agriculture<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">&amp; Carbon Credit</span></span>
         </h1>
@@ -427,27 +598,43 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
     <!-- METRICS BANNER -->
     <section class="relative z-20 -mt-10 sm:-mt-12 max-w-7xl mx-auto px-5 sm:px-6" aria-label="Key figures">
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 p-4 sm:p-5 rounded-[28px] sm:rounded-[32px] bg-white/85 backdrop-blur-xl border border-white/60 shadow-bento">
-        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring">
+        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring sa-reveal">
           <div class="font-display svc-stat text-brand mb-2 group-hover:scale-105 sa-spring">AWD</div>
           <div class="svc-metric text-muted"><span class="lang-th">ระบบควบคุมน้ำเปียกสลับแห้ง</span><span class="lang-en">Alternate Wetting &amp; Drying</span></div>
         </div>
-        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring">
+        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring sa-reveal">
           <div class="font-display svc-stat text-brand mb-2 group-hover:scale-105 sa-spring">NPK</div>
           <div class="svc-metric text-muted"><span class="lang-th">Sensor วัดแร่ธาตุในดินแม่นยำ</span><span class="lang-en">Precise Soil Nutrient Sensing</span></div>
         </div>
-        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring">
+        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring sa-reveal">
           <div class="font-display svc-stat text-brand mb-2 group-hover:scale-105 sa-spring">10+</div>
           <div class="svc-metric text-muted"><span class="lang-th">อายุแบตเตอรี่โหนดภาคสนาม (ปี)</span><span class="lang-en">Years of Field Node Battery Life</span></div>
         </div>
-        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring">
+        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring sa-reveal">
           <div class="font-display svc-stat text-brand mb-2 group-hover:scale-105 sa-spring">Carbon</div>
           <div class="svc-metric text-muted"><span class="lang-th">ข้อมูลพร้อมยื่น Carbon Credit</span><span class="lang-en">Carbon Credit Ready Data</span></div>
         </div>
       </div>
     </section>
 
+    <!-- SECTION SUB-NAV -->
+    <!-- aria-label cannot carry a lang-th/lang-en pair, so the accessible name
+         comes from a visually hidden bilingual span instead (AGENTS.md rule 4). -->
+    <nav class="sa-subnav" aria-labelledby="agri-subnav-label">
+      <span id="agri-subnav-label" class="sr-only"><span class="lang-th">หัวข้อในหน้านี้</span><span class="lang-en">Sections of this page</span></span>
+      <div class="max-w-7xl mx-auto px-3 sm:px-6">
+        <ol class="svc-metric">
+          <li><a href="#agri-overview"><span class="sa-subnav-dot" aria-hidden="true"></span><span class="lang-th">ภาพรวม</span><span class="lang-en">Overview</span></a></li>
+          <li><a href="#agri-devices"><span class="sa-subnav-dot" aria-hidden="true"></span><span class="lang-th">อุปกรณ์</span><span class="lang-en">Devices</span></a></li>
+          <li><a href="#agri-solar-node"><span class="sa-subnav-dot" aria-hidden="true"></span>IoT Solar Node</a></li>
+          <li><a href="#agri-carbon"><span class="sa-subnav-dot" aria-hidden="true"></span>Carbon Credit</a></li>
+          <li><a href="#agri-greenhouse"><span class="sa-subnav-dot" aria-hidden="true"></span>Smart Greenhouse</a></li>
+        </ol>
+      </div>
+    </nav>
+
     <!-- 01 · OVERVIEW -->
-    <section id="agri-overview" class="py-20 sm:py-28 lg:py-32 sa-mesh">
+    <section id="agri-overview" aria-labelledby="agri-overview-title" class="py-20 sm:py-28 lg:py-32 sa-mesh">
       <div class="max-w-7xl mx-auto px-5 sm:px-6">
         <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
@@ -456,7 +643,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
               <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
               <span class="text-brand svc-kicker"><span class="lang-th">01 · Smart Agriculture Platform</span><span class="lang-en">01 · Smart Agriculture Platform</span></span>
             </div>
-            <h2 class="font-display svc-h2 text-ink tracking-tight">
+            <h2 id="agri-overview-title" class="font-display svc-h2 text-ink tracking-tight">
               <span class="lang-th">ก้าวสู่ระบบเกษตรกรรมแม่นยำสูง<br>จากแนวคิดสู่การใช้งานจริง</span>
               <span class="lang-en">Precision Agriculture<br>From Concept to Working Farm</span>
             </h2>
@@ -473,7 +660,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
 
             <!-- Mini pillars -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 pt-2">
-              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group">
+              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
                 <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
                   <i class="fa-solid fa-compass"></i>
                 </div>
@@ -483,7 +670,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
                   <span class="lang-en">Plot-level analysis so water and fertiliser go exactly where the crop needs them.</span>
                 </p>
               </div>
-              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group">
+              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
                 <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
                   <i class="fa-solid fa-cloud-sun"></i>
                 </div>
@@ -493,7 +680,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
                   <span class="lang-en">Per-plot temperature, humidity, light and rainfall readings.</span>
                 </p>
               </div>
-              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group">
+              <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1.5 sa-spring group sa-reveal">
                 <div class="w-11 h-11 rounded-2xl bg-brand-soft text-brand flex items-center justify-center mb-4 group-hover:scale-105 sa-spring" aria-hidden="true">
                   <i class="fa-solid fa-tower-broadcast"></i>
                 </div>
@@ -509,7 +696,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
           <!-- System graphic -->
           <div class="lg:col-span-5 relative mt-2 lg:mt-0">
             <div class="relative rounded-[28px] sm:rounded-[32px] overflow-hidden bg-slate-50 sa-card shadow-2xl h-64 sm:h-80">
-              <img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-aiot-lpwan-system.png" alt="AIoT LPWAN system architecture" class="w-full h-full object-cover">
+              <?php sa_picture('agri-aiot-lpwan-system', 'AIoT LPWAN system architecture', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
               <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-brand-deep/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 text-white">
                 <div class="svc-kicker text-gold-bright mb-1"><span class="lang-th">AIoT LPWAN System</span><span class="lang-en">AIoT LPWAN System</span></div>
                 <div class="svc-label">
@@ -525,14 +712,14 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
     </section>
 
     <!-- 02 · DEVICES & TECHNOLOGY -->
-    <section id="agri-devices" class="py-20 sm:py-28 lg:py-32 bg-white relative overflow-hidden">
+    <section id="agri-devices" aria-labelledby="agri-devices-title" class="py-20 sm:py-28 lg:py-32 bg-white relative overflow-hidden">
       <div class="max-w-7xl mx-auto px-5 sm:px-6 relative z-10">
-        <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
+        <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-20 sa-reveal">
           <div class="inline-flex items-center gap-3 justify-center mb-4">
             <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
             <span class="text-brand svc-kicker"><span class="lang-th">02 · Devices &amp; Technology</span><span class="lang-en">02 · Devices &amp; Technology</span></span>
           </div>
-          <h2 class="font-display svc-h2 text-ink tracking-tight mb-5">
+          <h2 id="agri-devices-title" class="font-display svc-h2 text-ink tracking-tight mb-5">
             <span class="lang-th">เทคโนโลยีและอุปกรณ์ภาคสนาม</span>
             <span class="lang-en">Field Devices &amp; Technology</span>
           </h2>
@@ -571,35 +758,35 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
 
           <div class="lg:col-span-6 order-1 lg:order-2">
             <div class="rounded-[28px] sm:rounded-[32px] overflow-hidden sa-card shadow-bento h-56 sm:h-72 lg:h-80">
-              <img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-precision-farming-platform.png" alt="Precision Farming Platform dashboard" class="w-full h-full object-cover">
+              <?php sa_picture('agri-precision-farming-platform', 'Precision Farming Platform dashboard', 'w-full h-full object-cover', '(min-width:1024px) 45vw, 100vw', 1350, 1013); ?>
             </div>
           </div>
         </div>
 
         <!-- Spec bar -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring">
+          <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring sa-reveal">
             <span class="text-brand font-display svc-label block mb-2">IoT LoRaWAN Gateway</span>
             <p class="svc-caption text-muted">
               <span class="lang-th">เกตเวย์สื่อสารระยะไกล ใช้ Industrial Cellular Router ส่งข้อมูลขึ้นคลาวด์</span>
               <span class="lang-en">Long-range gateway using an industrial cellular router to reach the cloud.</span>
             </p>
           </div>
-          <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring">
+          <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring sa-reveal">
             <span class="text-brand font-display svc-label block mb-2">Solar Charger System</span>
             <p class="svc-caption text-muted">
               <span class="lang-th">บอร์ดบริหารพลังงานสำรอง แบตเตอรี่ 12.8V / 200Ah รองรับการทำงาน 365 วัน</span>
               <span class="lang-en">Power management board with a 12.8V / 200Ah battery rated for year-round duty.</span>
             </p>
           </div>
-          <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring">
+          <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring sa-reveal">
             <span class="text-brand font-display svc-label block mb-2">Soil NPK &amp; Moisture</span>
             <p class="svc-caption text-muted">
               <span class="lang-th">หัว Sensor สเตนเลส 316 ทนการกัดกร่อน วัดแร่ธาตุและการนำไฟฟ้าในดิน</span>
               <span class="lang-en">Corrosion-resistant 316 stainless probes measuring nutrients and soil conductivity.</span>
             </p>
           </div>
-          <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring">
+          <div class="bg-surface rounded-2xl p-6 sa-card hover:-translate-y-1 sa-spring sa-reveal">
             <span class="text-brand font-display svc-label block mb-2">Light Sensor &amp; HMI Display</span>
             <p class="svc-caption text-muted">
               <span class="lang-th">จอแสดงผลหน้าตู้สนาม และ Sensor วัดความเข้มแสง Lux สำหรับการสังเคราะห์แสง</span>
@@ -611,13 +798,13 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
     </section>
 
     <!-- 03 · IOT SOLAR NODE 4G -->
-    <section id="agri-solar-node" class="py-20 sm:py-28 lg:py-32 bg-surface relative">
+    <section id="agri-solar-node" aria-labelledby="agri-solar-node-title" class="py-20 sm:py-28 lg:py-32 bg-surface relative">
       <div class="max-w-7xl mx-auto px-5 sm:px-6">
         <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           <div class="lg:col-span-5">
             <div class="rounded-[28px] sm:rounded-[32px] overflow-hidden sa-card shadow-bento h-56 sm:h-72 lg:h-80">
-              <img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-iot-solar-node-4g.png" alt="IoT Solar Node 4G field device" class="w-full h-full object-cover">
+              <?php sa_picture('agri-iot-solar-node-4g', 'IoT Solar Node 4G field device', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
             </div>
           </div>
 
@@ -626,7 +813,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
               <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
               <span class="text-brand svc-kicker"><span class="lang-th">03 · IoT Field Device</span><span class="lang-en">03 · IoT Field Device</span></span>
             </div>
-            <h2 class="font-display svc-h2 text-ink tracking-tight">IoT Solar Node 4G</h2>
+            <h2 id="agri-solar-node-title" class="font-display svc-h2 text-ink tracking-tight">IoT Solar Node 4G</h2>
             <p class="svc-copy text-body">
               <span class="lang-th">โหนด Sensor ภาคสนามระบบไฮบริด ออกแบบให้เป็นสถานีตรวจวัดและส่งข้อมูลแบบ Standalone ชาร์จแบตเตอรี่ในตัวจากแผงโซลาร์เซลล์ด้านบน ส่งสัญญาณไร้สายผ่านโครงข่าย 4G LTE ใช้งานได้ยาวนานถึง 10 ปีโดยไม่ต้องบำรุงรักษาเพิ่ม</span>
               <span class="lang-en">A hybrid field node built as a standalone measure-and-transmit station. It charges its own battery from the panel above and reports over 4G LTE, running up to ten years with no added maintenance.</span>
@@ -634,7 +821,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
 
             <div class="grid sm:grid-cols-2 gap-6">
               <div class="space-y-4">
-                <h4 class="svc-label text-ink"><i class="fa-solid fa-list-check text-brand mr-2" aria-hidden="true"></i><span class="lang-th">ฟังก์ชันการทำงานหลัก</span><span class="lang-en">Core Functions</span></h4>
+                <h3 class="svc-label text-ink"><i class="fa-solid fa-list-check text-brand mr-2" aria-hidden="true"></i><span class="lang-th">ฟังก์ชันการทำงานหลัก</span><span class="lang-en">Core Functions</span></h3>
                 <ul class="space-y-3 svc-caption text-muted">
                   <li class="flex items-start gap-2.5"><i class="fa-solid fa-circle text-[6px] text-brand mt-2 shrink-0" aria-hidden="true"></i><span><span class="lang-th">ทำงานเป็นเอกเทศด้วยโซลาร์เซลล์ชาร์จเจอร์</span><span class="lang-en">Runs autonomously on its solar charger.</span></span></li>
                   <li class="flex items-start gap-2.5"><i class="fa-solid fa-circle text-[6px] text-brand mt-2 shrink-0" aria-hidden="true"></i><span><span class="lang-th">ส่งสัญญาณไร้สายผ่านเครือข่าย 4G LTE ขึ้นคลาวด์</span><span class="lang-en">Sends data to the cloud over 4G LTE.</span></span></li>
@@ -642,7 +829,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
                 </ul>
               </div>
               <div class="space-y-4">
-                <h4 class="svc-label text-ink"><i class="fa-solid fa-crop text-brand mr-2" aria-hidden="true"></i><span class="lang-th">พื้นที่การประยุกต์ใช้งาน</span><span class="lang-en">Where It Is Used</span></h4>
+                <h3 class="svc-label text-ink"><i class="fa-solid fa-crop text-brand mr-2" aria-hidden="true"></i><span class="lang-th">พื้นที่การประยุกต์ใช้งาน</span><span class="lang-en">Where It Is Used</span></h3>
                 <div class="flex flex-wrap gap-2">
                   <span class="bg-white border border-gray-100 px-3 py-2 rounded-lg svc-caption text-muted"><span class="lang-th">แปลงเพาะปลูกผัก</span><span class="lang-en">Vegetable Plots</span></span>
                   <span class="bg-white border border-gray-100 px-3 py-2 rounded-lg svc-caption text-muted"><span class="lang-th">โรงเรือนอัจฉริยะ</span><span class="lang-en">Smart Greenhouses</span></span>
@@ -673,16 +860,16 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
     </section>
 
     <!-- 04 · SYNRICEWATER AWD / CARBON CREDIT -->
-    <section id="agri-carbon" class="py-20 sm:py-28 lg:py-32 bg-white relative">
+    <section id="agri-carbon" aria-labelledby="agri-carbon-title" class="py-20 sm:py-28 lg:py-32 bg-white relative">
       <div class="max-w-7xl mx-auto px-5 sm:px-6">
         <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
           <div class="lg:col-span-5 space-y-5">
             <div class="rounded-3xl overflow-hidden shadow-lg border border-gray-100 h-40 sm:h-48">
-              <img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-synricewater-awd-1.png" alt="SYNRiceWater AWD sensor in a rice field" class="w-full h-full object-cover">
+              <?php sa_picture('agri-synricewater-awd-1', 'SYNRiceWater AWD sensor in a rice field', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
             </div>
             <div class="rounded-3xl overflow-hidden shadow-lg border border-gray-100 h-40 sm:h-48">
-              <img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-synricewater-awd-2.png" alt="SYNRiceWater AWD network across rice paddies" class="w-full h-full object-cover">
+              <?php sa_picture('agri-synricewater-awd-2', 'SYNRiceWater AWD network across rice paddies', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
             </div>
           </div>
 
@@ -691,7 +878,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
               <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
               <span class="text-brand svc-kicker"><span class="lang-th">04 · Carbon Credit System</span><span class="lang-en">04 · Carbon Credit System</span></span>
             </div>
-            <h2 class="font-display svc-h2 text-ink tracking-tight">
+            <h2 id="agri-carbon-title" class="font-display svc-h2 text-ink tracking-tight">
               SYNRiceWater AWD<br>
               <span class="text-brand"><span class="lang-th">ลดน้ำ ลดมีเทน เพิ่มรายได้จาก Carbon Credit</span><span class="lang-en">Less Water, Less Methane, More Carbon Credit</span></span>
             </h2>
@@ -706,7 +893,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div class="space-y-2 text-center">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">01</div>
-                  <h4 class="svc-label text-brand">Built for AWD Farming</h4>
+                  <h3 class="svc-label text-brand">Built for AWD Farming</h3>
                   <p class="svc-caption text-muted">
                     <span class="lang-th">ออกแบบสำหรับวัดระดับน้ำในท่อ PVC ใต้ดินในแปลงนาข้าว</span>
                     <span class="lang-en">Designed to read water level inside buried PVC tubes in paddy fields.</span>
@@ -714,7 +901,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
                 </div>
                 <div class="space-y-2 text-center">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">02</div>
-                  <h4 class="svc-label text-brand">Solar + LTE Autonomous</h4>
+                  <h3 class="svc-label text-brand">Solar + LTE Autonomous</h3>
                   <p class="svc-caption text-muted">
                     <span class="lang-th">ทำงานอัตโนมัติเต็มรูปแบบ ชาร์จไฟจากโซลาร์เซลล์ ส่งข้อมูลผ่าน 4G</span>
                     <span class="lang-en">Fully autonomous, solar charged and reporting over 4G.</span>
@@ -722,7 +909,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
                 </div>
                 <div class="space-y-2 text-center">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">03</div>
-                  <h4 class="svc-label text-brand">Carbon Credit Ready Data</h4>
+                  <h3 class="svc-label text-brand">Carbon Credit Ready Data</h3>
                   <p class="svc-caption text-muted">
                     <span class="lang-th">ข้อมูลมีประวัติย้อนหลังถาวร ป้องกันการดัดแปลง ตามเกณฑ์ประเมิน</span>
                     <span class="lang-en">Permanent, tamper-evident history that meets assessment criteria.</span>
@@ -765,15 +952,15 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
     </section>
 
     <!-- 05 · SMART GREENHOUSE -->
-    <section id="agri-greenhouse" class="py-20 sm:py-28 lg:py-32 bg-surface relative overflow-hidden">
+    <section id="agri-greenhouse" aria-labelledby="agri-greenhouse-title" class="py-20 sm:py-28 lg:py-32 bg-surface relative overflow-hidden">
       <div class="absolute inset-0 opacity-20 pointer-events-none sa-mesh"></div>
       <div class="max-w-7xl mx-auto px-5 sm:px-6 relative z-10">
-        <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
+        <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-20 sa-reveal">
           <div class="inline-flex items-center gap-3 justify-center mb-4">
             <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
             <span class="text-brand svc-kicker"><span class="lang-th">05 · Closed-Loop Automation</span><span class="lang-en">05 · Closed-Loop Automation</span></span>
           </div>
-          <h2 class="font-display svc-h2 text-ink tracking-tight mb-5">
+          <h2 id="agri-greenhouse-title" class="font-display svc-h2 text-ink tracking-tight mb-5">
             <span class="lang-th">Smart Greenhouse โรงเรือนอัจฉริยะ</span>
             <span class="lang-en">Smart Greenhouse</span>
           </h2>
@@ -787,14 +974,14 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
           <div class="lg:col-span-5 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div class="rounded-2xl overflow-hidden sa-card shadow-md h-32 sm:h-36">
-                <img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-greenhouse-control-panel.png" alt="Smart Greenhouse control panel with HandySense" class="w-full h-full object-cover">
+                <?php sa_picture('agri-greenhouse-control-panel', 'Smart Greenhouse control panel with HandySense', 'w-full h-full object-cover', '(min-width:1024px) 20vw, 45vw', 1350, 1013); ?>
               </div>
               <div class="rounded-2xl overflow-hidden sa-card shadow-md h-32 sm:h-36">
-                <img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-greenhouse-interior.png" alt="Smart Greenhouse interior" class="w-full h-full object-cover">
+                <?php sa_picture('agri-greenhouse-interior', 'Smart Greenhouse interior', 'w-full h-full object-cover', '(min-width:1024px) 20vw, 45vw', 1350, 1013); ?>
               </div>
             </div>
             <div class="rounded-3xl overflow-hidden sa-card shadow-lg h-48 sm:h-56">
-              <img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-greenhouse-exterior.png" alt="Smart Greenhouse exterior" class="w-full h-full object-cover">
+              <?php sa_picture('agri-greenhouse-exterior', 'Smart Greenhouse exterior', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
             </div>
           </div>
 
@@ -836,27 +1023,28 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
 
             <div class="bg-white rounded-[24px] p-5 sm:p-6 sa-card shadow-bento">
               <h4 class="svc-label text-ink mb-4"><i class="fa-solid fa-sliders text-brand mr-2" aria-hidden="true"></i><span class="lang-th">อุปกรณ์และ Sensor ในระบบ Smart Greenhouse</span><span class="lang-en">Devices &amp; Sensors in the Smart Greenhouse</span></h4>
-              <!-- 3-up on phones: five Thai labels across one row at 390px leaves
-                   ~70px per cell, which breaks each label onto three lines. -->
-              <div class="grid grid-cols-3 sm:grid-cols-5 gap-3 text-center">
+              <!-- 2-up on the narrowest phones, 3-up from 420px, 5-up from the sm
+                   breakpoint. Five across at 375px gives ~70px per cell and three
+                   across gives ~100px - neither fits "Temp/Humidity" on a line. -->
+              <div class="grid grid-cols-2 min-[420px]:grid-cols-3 sm:grid-cols-5 gap-3 text-center">
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
-                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-icon-light-sensor.png" alt="Light sensor" class="w-full h-full object-cover"></div>
+                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-light-sensor', 'Light sensor', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
                   <div class="svc-metric text-ink">Light Sensor</div>
                 </div>
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
-                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-icon-temp-humidity.png" alt="Temperature and humidity sensor" class="w-full h-full object-cover"></div>
+                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-temp-humidity', 'Temperature and humidity sensor', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
                   <div class="svc-metric text-ink">Temp/Humidity</div>
                 </div>
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
-                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-icon-soil-moisture.png" alt="Soil moisture sensor" class="w-full h-full object-cover"></div>
+                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-soil-moisture', 'Soil moisture sensor', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
                   <div class="svc-metric text-ink">Soil Moisture</div>
                 </div>
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
-                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-icon-handysense.png" alt="HandySense controller" class="w-full h-full object-cover"></div>
+                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-handysense', 'HandySense controller', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
                   <div class="svc-metric text-ink">HandySense</div>
                 </div>
                 <div class="p-2 hover:bg-surface rounded-xl transition flex flex-col items-center justify-center">
-                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><img loading="lazy" decoding="async" src="<?php echo $sa_img; ?>agri-icon-platform.png" alt="Platform dashboard" class="w-full h-full object-cover"></div>
+                  <div class="h-12 w-12 rounded overflow-hidden mb-2 bg-slate-50"><?php sa_picture('agri-icon-platform', 'Platform dashboard', 'w-full h-full object-cover', '96px', 96, 96, array(96, 192)); ?></div>
                   <div class="svc-metric text-ink">Platform</div>
                 </div>
               </div>
@@ -867,9 +1055,9 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
     </section>
 
     <!-- OTHER SOLUTIONS -->
-    <section id="agri-related" class="py-16 sm:py-20 bg-white border-t border-gray-100">
+    <section id="agri-related" aria-labelledby="agri-related-title" class="py-16 sm:py-20 bg-white border-t border-gray-100">
       <div class="max-w-7xl mx-auto px-5 sm:px-6">
-        <p class="text-center svc-metric text-muted mb-8"><span class="lang-th">โซลูชันอื่นๆ</span><span class="lang-en">Other Solutions</span></p>
+        <h2 id="agri-related-title" class="text-center svc-metric text-muted mb-8"><span class="lang-th">โซลูชันอื่นๆ</span><span class="lang-en">Other Solutions</span></h2>
         <div class="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
           <a href="<?php echo home_url('/smart-energy/'); ?>" class="bg-white border border-gray-100 rounded-3xl p-5 sm:p-6 flex items-center gap-5 hover:shadow-bento-hover hover:border-brand/25 transition sa-spring group shadow-bento">
             <span class="w-12 h-12 rounded-2xl bg-brand-soft text-brand flex items-center justify-center group-hover:bg-brand group-hover:text-white transition shrink-0">
@@ -894,7 +1082,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
     </section>
 
     <!-- CTA -->
-    <section id="agri-cta" class="py-20 sm:py-28 bg-ink text-white relative overflow-hidden">
+    <section id="agri-cta" aria-labelledby="agri-cta-title" class="py-20 sm:py-28 bg-ink text-white relative overflow-hidden">
       <div class="absolute inset-0 pointer-events-none opacity-40 sa-mesh-dark"></div>
       <div class="absolute inset-0 pointer-events-none">
         <div class="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-brand-deep rounded-full blur-[110px]" aria-hidden="true"></div>
@@ -902,7 +1090,7 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
 
       <div class="max-w-4xl mx-auto px-5 sm:px-6 text-center relative z-10">
         <i class="fa-solid fa-seedling text-gold-bright text-3xl mb-6 block" aria-hidden="true"></i>
-        <h2 class="font-display svc-h2 text-white mb-5 tracking-tight">
+        <h2 id="agri-cta-title" class="font-display svc-h2 text-white mb-5 tracking-tight">
           <span class="lang-th">เริ่มต้นทำเกษตรแม่นยำสูง<br>เพื่อยกระดับผลผลิตและวิถีคาร์บอนต่ำ</span>
           <span class="lang-en">Start Precision Farming<br>For Better Yield and a Low-Carbon Path</span>
         </h2>
@@ -928,6 +1116,110 @@ $sa_img = get_template_directory_uri() . '/image/solutions/';
   <!-- Scripts -->
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/scripts.js') : './components/scripts.js'; ?>"></script>
   <script src="<?php echo function_exists('synergy_asset') ? synergy_asset('components/live-editor.js') : './components/live-editor.js'; ?>"></script>
+
+
+  <script>
+  /* Page behaviour, deliberately small and dependency-free.
+     Everything here is an enhancement: with the script removed the page still
+     reads and navigates. */
+  (function () {
+    'use strict';
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- Scroll reveal -------------------------------------------------
+       The hidden state lives behind html[data-reveal], set here, so a reader
+       whose JS never runs is never left with invisible content. */
+    var revealables = Array.prototype.slice.call(document.querySelectorAll('.sa-reveal'));
+    if (!reduced && 'IntersectionObserver' in window && revealables.length) {
+      document.documentElement.setAttribute('data-reveal', '');
+
+      var show = function (el) {
+        if (el.classList.contains('is-in')) return;
+        el.classList.add('is-in');
+        revealObserver.unobserve(el);              // one-shot: no re-animation on scroll back
+      };
+
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) show(entry.target); });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+      revealables.forEach(function (el) { revealObserver.observe(el); });
+
+      /* Safety sweep. IntersectionObserver samples asynchronously, so a fast
+         flick or an anchor jump can carry an element past the viewport between
+         two samples and it is then reported as "not intersecting" forever -
+         measured here: the metrics banner and the three overview pillars stayed
+         at opacity 0 after a scripted scroll to the bottom. This pass reveals
+         anything the viewport has already passed, and is rAF-throttled so it
+         costs one rect read per frame at most. */
+      var sweepQueued = false;
+      var sweep = function () {
+        sweepQueued = false;
+        for (var i = revealables.length - 1; i >= 0; i--) {
+          var el = revealables[i];
+          if (el.classList.contains('is-in')) { revealables.splice(i, 1); continue; }
+          if (el.getBoundingClientRect().top < window.innerHeight) show(el);
+        }
+        if (!revealables.length) {                  // nothing left to watch
+          window.removeEventListener('scroll', queueSweep);
+          window.removeEventListener('resize', queueSweep);
+        }
+      };
+      var queueSweep = function () {
+        if (sweepQueued) return;
+        sweepQueued = true;
+        window.requestAnimationFrame(sweep);
+      };
+      window.addEventListener('scroll', queueSweep, { passive: true });
+      window.addEventListener('resize', queueSweep);
+      window.addEventListener('load', queueSweep);
+      queueSweep();
+    }
+
+    /* ---- Sub-nav active state ------------------------------------------
+       "Which section am I in" is decided by a line drawn just under the fixed
+       navbar and the sticky sub-nav: the active section is the LAST one whose
+       top has crossed it.
+
+       The first version compared IntersectionObserver ratios instead, and it
+       was wrong in three of five sections when measured - a tall section and a
+       short one produce very different ratios for the same reading position, and
+       entries for sections that had scrolled away stayed in the tally. Five
+       getBoundingClientRect() reads per animation frame is cheap and exact. */
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.sa-subnav a[href^="#"]'));
+    var navTargets = navLinks.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+    if (navTargets.filter(Boolean).length) {
+      var LINE = 150;                             // 80px navbar + 49px sub-nav + a little slack
+      var activeHref = null;
+      var syncQueued = false;
+      var syncNav = function () {
+        syncQueued = false;
+        var current = null;
+        for (var i = 0; i < navTargets.length; i++) {
+          var el = navTargets[i];
+          if (el && el.getBoundingClientRect().top <= LINE) current = navLinks[i].getAttribute('href');
+        }
+        /* Past the last section - the related/CTA blocks - keep the final entry
+           marked rather than clearing the bar entirely. */
+        if (!current && window.scrollY > 0) current = null;
+        if (current === activeHref) return;       // nothing changed: no DOM writes
+        activeHref = current;
+        navLinks.forEach(function (a) {
+          if (a.getAttribute('href') === current) { a.setAttribute('aria-current', 'true'); }
+          else { a.removeAttribute('aria-current'); }
+        });
+      };
+      var queueSync = function () {
+        if (syncQueued) return;
+        syncQueued = true;
+        window.requestAnimationFrame(syncNav);
+      };
+      window.addEventListener('scroll', queueSync, { passive: true });
+      window.addEventListener('resize', queueSync);
+      queueSync();
+    }
+
+  })();
+  </script>
 
 <?php include __DIR__ . '/components/cookie-consent.php'; ?>
   <?php wp_footer(); ?>

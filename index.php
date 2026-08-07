@@ -388,7 +388,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
     <!-- Background Image Layer - โครงเดียวกับ about.php / smart-energy.php -->
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      <img loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-center" src="<?php echo get_template_directory_uri(); ?>/image/hero-cover-synexta.png" alt="Synergy Technology - We Integrate Engineering and Intelligence">
+      <img data-editable-img="home-hero-bg" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-center" src="<?php echo esc_url(synergy_content('home-hero-bg', get_template_directory_uri() . '/image/hero-cover-synexta.png', 'index')); ?>" alt="Synergy Technology - We Integrate Engineering and Intelligence">
     </div>
 
     <!-- Grid Overlay Effect - เหมือน about.php / smart-energy.php -->
@@ -406,31 +406,31 @@ if (file_exists(__DIR__ . '/functions.php')) {
     <div class="max-w-7xl mx-auto px-6 relative w-full z-10">
       <div class="max-w-4xl">
         <p class="font-display font-extrabold text-lg sm:text-xl tracking-[0.15em] uppercase mb-4"
-          style="color:#000000">Synergy Technology</p>
-        <h1
-          class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] mb-6 drop-shadow-lg">
+          style="color:#000000" data-editable="home-hero-eyebrow" <?php echo synergy_style('home-hero-eyebrow', 'index'); ?>><?php echo synergy_content('home-hero-eyebrow', 'Synergy Technology', 'index'); ?></p>
+        <h1 data-editable="home-hero-h1-1" <?php echo synergy_style('home-hero-h1-1', 'index'); ?>
+          class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.15] mb-6 drop-shadow-lg"><?php echo synergy_content('home-hero-h1-1', '
           <span style="color:#FED000">We Integrate</span> <br class="hidden sm:inline">
           <span style="color:#23862D" class="drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">Engineering and</span> <br
             class="hidden sm:inline">
           <span style="color:#23862D" class="drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">Intelligence</span>
-        </h1>
+        ', 'index'); ?></h1>
 
         <!-- Bilingual Hero Paragraph -->
         <p class="lang-en text-sm sm:text-base font-medium max-w-3xl leading-relaxed mb-10"
-          style="color:#000000">
+          style="color:#000000" data-editable="home-hero-lede-en" <?php echo synergy_style('home-hero-lede-en', 'index'); ?>><?php echo synergy_content('home-hero-lede-en', '
           to help industries operate smarter, grow sustainably,<br>and compete with lasting impact.
-        </p>
+        ', 'index'); ?></p>
         <p class="lang-th text-sm sm:text-base font-medium max-w-3xl leading-relaxed mb-10"
-          style="color:#000000">
+          style="color:#000000" data-editable="home-hero-lede-th" <?php echo synergy_style('home-hero-lede-th', 'index'); ?>><?php echo synergy_content('home-hero-lede-th', '
           เพื่อช่วยให้องค์กรดำเนินงานอย่างชาญฉลาด<br>และสร้างความได้เปรียบในการแข่งขันอย่างยั่งยืน
-        </p>
+        ', 'index'); ?></p>
         <div class="flex flex-col sm:flex-row gap-5">
           <a href="#solutions"
-            class="bg-emerald-600 hover:bg-emerald-500 text-white text-center px-9 py-4 rounded-full font-extrabold text-sm sm:text-base tracking-wider uppercase transition-all duration-300 shadow-xl shadow-emerald-600/30 hover:scale-105">Explore
-            Solutions <i class="fa-solid fa-arrow-right-long ml-2"></i></a>
+            class="bg-emerald-600 hover:bg-emerald-500 text-white text-center px-9 py-4 rounded-full font-extrabold text-sm sm:text-base tracking-wider uppercase transition-all duration-300 shadow-xl shadow-emerald-600/30 hover:scale-105" data-editable="home-hero-cta-1" <?php echo synergy_style('home-hero-cta-1', 'index'); ?>><?php echo synergy_content('home-hero-cta-1', 'Explore
+            Solutions <i class="fa-solid fa-arrow-right-long ml-2"></i>', 'index'); ?></a>
           <a href="#end-to-end"
-            class="bg-white hover:bg-emerald-50 text-[#103D2B] border-2 border-white text-center px-9 py-4 rounded-full font-extrabold text-sm sm:text-base tracking-wider uppercase transition-all duration-300 shadow-xl hover:scale-105">Explore
-            Engineering <i class="fa-solid fa-arrow-right-long ml-2"></i></a>
+            class="bg-white hover:bg-emerald-50 text-[#103D2B] border-2 border-white text-center px-9 py-4 rounded-full font-extrabold text-sm sm:text-base tracking-wider uppercase transition-all duration-300 shadow-xl hover:scale-105" data-editable="home-hero-cta-2" <?php echo synergy_style('home-hero-cta-2', 'index'); ?>><?php echo synergy_content('home-hero-cta-2', 'Explore
+            Engineering <i class="fa-solid fa-arrow-right-long ml-2"></i>', 'index'); ?></a>
         </div>
       </div>
     </div>
@@ -446,11 +446,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <span class="w-1.5 h-6 bg-brand rounded-full" aria-hidden="true"></span>
           <span class="text-brand text-xs font-bold tracking-[0.25em] uppercase">About Synergy</span>
         </div>
-        <h2 data-cms="about_title"
-          class="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl xl:text-[56px] text-ink tracking-tight leading-[1.15] mb-6">
+        <h2 data-editable="home-synergy-h2-1" <?php echo synergy_style('home-synergy-h2-1', 'index'); ?> data-cms="about_title"
+          class="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl xl:text-[56px] text-ink tracking-tight leading-[1.15] mb-6"><?php echo synergy_content('home-synergy-h2-1', '
           <span class="lang-th">จากวิศวกรรม <span class="text-brand">สู่ผลลัพธ์ทางธุรกิจ</span></span>
           <span class="lang-en">From Engineering <span class="text-brand">to Business Outcomes</span></span>
-        </h2>
+        ', 'index'); ?></h2>
       </div>
 
       <!-- Dual Card System with Connector -->
@@ -460,9 +460,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <article
           class="flex-1 bg-white rounded-[24px] border border-black/5 shadow-md overflow-hidden flex flex-col justify-between">
           <div class="bg-brand text-white text-center px-2 py-3.5 sm:p-6 flex flex-col justify-center sm:min-h-[92px]">
-            <h3
-              class="font-display font-extrabold text-xs sm:text-xl tracking-tighter sm:tracking-wide leading-snug whitespace-nowrap">
-              Smart Electronics</h3>
+            <h3 data-editable="home-synergy-h3-1" <?php echo synergy_style('home-synergy-h3-1', 'index'); ?>
+              class="font-display font-extrabold text-xs sm:text-xl tracking-tighter sm:tracking-wide leading-snug whitespace-nowrap"><?php echo synergy_content('home-synergy-h3-1', '
+              Smart Electronics', 'index'); ?></h3>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-4 p-8 flex-1 items-stretch">
             <div class="flex flex-col items-center text-center px-2 h-full justify-start">
@@ -512,9 +512,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <article
           class="flex-1 bg-white rounded-[24px] border border-black/5 shadow-md overflow-hidden flex flex-col justify-between">
           <div class="bg-brand text-white text-center px-2 py-3.5 sm:p-6 flex flex-col justify-center sm:min-h-[92px]">
-            <h3
-              class="font-display font-extrabold text-xs sm:text-xl tracking-tighter sm:tracking-wide leading-snug whitespace-nowrap">
-              Smart Solutions</h3>
+            <h3 data-editable="home-synergy-h3-2" <?php echo synergy_style('home-synergy-h3-2', 'index'); ?>
+              class="font-display font-extrabold text-xs sm:text-xl tracking-tighter sm:tracking-wide leading-snug whitespace-nowrap"><?php echo synergy_content('home-synergy-h3-2', '
+              Smart Solutions', 'index'); ?></h3>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 p-8 flex-1 items-stretch">
             <div class="flex flex-col items-center text-center px-2 h-full justify-start">
@@ -633,10 +633,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <span
                   class="w-1.5 h-10 bg-gold-bright rounded-full shrink-0 shadow-[0_0_12px_rgba(241,196,15,0.5)]"></span>
                 <div>
-                  <h3 class="font-display font-800 text-xl sm:text-2xl text-white leading-tight">
+                  <h3 data-editable="home-synergy-h3-3" <?php echo synergy_style('home-synergy-h3-3', 'index'); ?> class="font-display font-800 text-xl sm:text-2xl text-white leading-tight"><?php echo synergy_content('home-synergy-h3-3', '
                     <span class="lang-th">ความเชื่อมั่น<br><span class="text-gold-bright">ที่พิสูจน์ได้</span></span>
                     <span class="lang-en">Proven<br><span class="text-gold-bright">Excellence</span></span>
-                  </h3>
+                  ', 'index'); ?></h3>
                 </div>
               </div>
 
@@ -738,10 +738,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-6">
         <div class="max-w-3xl space-y-4">
           <span class="text-brand text-xs font-700 tracking-[0.2em] uppercase block">INDUSTRY SOLUTIONS</span>
-          <h2 class="font-display font-800 text-3xl sm:text-5xl text-ink tracking-tight">
+          <h2 data-editable="home-solutions-h2-1" <?php echo synergy_style('home-solutions-h2-1', 'index'); ?> class="font-display font-800 text-3xl sm:text-5xl text-ink tracking-tight"><?php echo synergy_content('home-solutions-h2-1', '
             <span class="lang-th">Smart Solutions เพื่อสร้างผลลัพธ์ทางธุรกิจที่ยั่งยืน</span>
             <span class="lang-en">Smart Solutions. Sustainable Business Impact</span>
-          </h2>
+          ', 'index'); ?></h2>
         </div>
 
         <!-- Right side badge info -->
@@ -749,11 +749,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <span class="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center shrink-0">
             <i class="fa-solid fa-chart-line text-lg"></i>
           </span>
-          <p class="text-[11px] text-muted font-600 leading-normal">
+          <p class="text-[11px] text-muted font-600 leading-normal" data-editable="home-solutions-badge" <?php echo synergy_style('home-solutions-badge', 'index'); ?>><?php echo synergy_content('home-solutions-badge', '
             <span class="lang-th">เทคโนโลยีที่เข้าใจธุรกิจของคุณ พร้อมสร้างผลลัพธ์ที่วัดผลได้จริง</span>
             <span class="lang-en">Technology that understands your business, delivering measurable bottom-line
               results.</span>
-          </p>
+          ', 'index'); ?></p>
         </div>
       </div>
 
@@ -773,7 +773,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <div class="absolute bottom-4 left-4 right-4">
                 <span
                   class="inline-flex items-center bg-ink/55 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-lg">
-                  <h3 class="font-display font-800 text-lg text-white tracking-tight leading-none">Smart Energy</h3>
+                  <h3 data-editable="home-solutions-h3-1" <?php echo synergy_style('home-solutions-h3-1', 'index'); ?> class="font-display font-800 text-lg text-white tracking-tight leading-none"><?php echo synergy_content('home-solutions-h3-1', 'Smart Energy', 'index'); ?></h3>
                 </span>
               </div>
             </div>
@@ -826,8 +826,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <div class="absolute bottom-4 left-4 right-4">
                 <span
                   class="inline-flex items-center bg-ink/55 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-lg">
-                  <h3 class="font-display font-800 text-lg text-white tracking-tight leading-none">Smart Agriculture
-                  </h3>
+                  <h3 data-editable="home-solutions-h3-2" <?php echo synergy_style('home-solutions-h3-2', 'index'); ?> class="font-display font-800 text-lg text-white tracking-tight leading-none"><?php echo synergy_content('home-solutions-h3-2', 'Smart Agriculture
+                  ', 'index'); ?></h3>
                 </span>
               </div>
             </div>
@@ -881,7 +881,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <div class="absolute bottom-4 left-4 right-4">
                 <span
                   class="inline-flex items-center bg-ink/55 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-lg">
-                  <h3 class="font-display font-800 text-lg text-white tracking-tight leading-none">Smart Factory</h3>
+                  <h3 data-editable="home-solutions-h3-3" <?php echo synergy_style('home-solutions-h3-3', 'index'); ?> class="font-display font-800 text-lg text-white tracking-tight leading-none"><?php echo synergy_content('home-solutions-h3-3', 'Smart Factory', 'index'); ?></h3>
                 </span>
               </div>
             </div>
@@ -932,7 +932,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <div class="absolute bottom-4 left-4 right-4">
                 <span
                   class="inline-flex items-center bg-ink/55 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-lg">
-                  <h3 class="font-display font-800 text-lg text-white tracking-tight leading-none">Smart Electronics</h3>
+                  <h3 data-editable="home-solutions-h3-4" <?php echo synergy_style('home-solutions-h3-4', 'index'); ?> class="font-display font-800 text-lg text-white tracking-tight leading-none"><?php echo synergy_content('home-solutions-h3-4', 'Smart Electronics', 'index'); ?></h3>
                 </span>
               </div>
             </div>
@@ -991,8 +991,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 class="inline-flex items-center gap-2 bg-brand/10 text-brand text-xs font-700 uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-5">
                 <i class="fa-solid fa-bolt text-[11px]"></i>Engineering Intelligence / Smart Energy
               </span>
-              <h3 class="font-display font-800 text-3xl sm:text-4xl text-ink leading-tight mb-3">Smart Energy Management
-                Platform</h3>
+              <h3 data-editable="home-solutions-h3-5" <?php echo synergy_style('home-solutions-h3-5', 'index'); ?> class="font-display font-800 text-3xl sm:text-4xl text-ink leading-tight mb-3"><?php echo synergy_content('home-solutions-h3-5', 'Smart Energy Management
+                Platform', 'index'); ?></h3>
               <p class="font-display font-600 text-base text-brand mb-5">
                 <span class="lang-th">แพลตฟอร์มบริหารจัดการพลังงานอัจฉริยะ</span>
                 <span class="lang-en">Intelligent energy management platform</span>
@@ -1133,8 +1133,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 class="inline-flex items-center gap-2 bg-brand/10 text-brand text-xs font-700 uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-5">
                 <i class="fa-solid fa-gears text-[11px]"></i>Manufacturing / OT-IT Integration
               </span>
-              <h3 class="font-display font-800 text-3xl sm:text-4xl text-ink leading-tight mb-3">Smart Factory Platform
-              </h3>
+              <h3 data-editable="home-solutions-h3-6" <?php echo synergy_style('home-solutions-h3-6', 'index'); ?> class="font-display font-800 text-3xl sm:text-4xl text-ink leading-tight mb-3"><?php echo synergy_content('home-solutions-h3-6', 'Smart Factory Platform
+              ', 'index'); ?></h3>
               <p class="font-display font-600 text-base text-brand mb-5">
                 <span class="lang-th">ระบบโรงงานอัจฉริยะที่เชื่อมต่อทุกเครื่องจักร</span>
                 <span class="lang-en">Intelligent factory system connecting every machine</span>
@@ -1283,8 +1283,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 class="inline-flex items-center gap-2 bg-brand/10 text-brand text-xs font-700 uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-5">
                 <i class="fa-solid fa-seedling text-[11px]"></i>Agriculture / Precision Farming
               </span>
-              <h3 class="font-display font-800 text-3xl sm:text-4xl text-ink leading-tight mb-3">Smart Agriculture
-                Platform</h3>
+              <h3 data-editable="home-solutions-h3-7" <?php echo synergy_style('home-solutions-h3-7', 'index'); ?> class="font-display font-800 text-3xl sm:text-4xl text-ink leading-tight mb-3"><?php echo synergy_content('home-solutions-h3-7', 'Smart Agriculture
+                Platform', 'index'); ?></h3>
               <p class="font-display font-600 text-base text-brand mb-5">
                 <span class="lang-th">เทคโนโลยีอัจฉริยะเพื่อการเกษตรที่แม่นยำและยั่งยืน</span>
                 <span class="lang-en">Smart technology for precision and sustainable farming</span>
@@ -1422,8 +1422,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 class="inline-flex items-center gap-2 bg-brand/10 text-brand text-xs font-700 uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-5">
                 <i class="fa-solid fa-microchip text-[11px]"></i>EMS / Electronics Manufacturing
               </span>
-              <h3 class="font-display font-800 text-3xl sm:text-4xl text-ink leading-tight mb-3">Smart Electronics
-                Manufacturing</h3>
+              <h3 data-editable="home-solutions-h3-8" <?php echo synergy_style('home-solutions-h3-8', 'index'); ?> class="font-display font-800 text-3xl sm:text-4xl text-ink leading-tight mb-3"><?php echo synergy_content('home-solutions-h3-8', 'Smart Electronics
+                Manufacturing', 'index'); ?></h3>
               <p class="font-display font-600 text-base text-brand mb-5">
                 <span class="lang-th">ผลิตและพัฒนาอิเล็กทรอนิกส์ครบวงจร ตั้งแต่การออกแบบจนพร้อมผลิตเชิงพาณิชย์</span>
                 <span class="lang-en">Full-cycle electronics development &amp; manufacturing — from design to
@@ -1561,10 +1561,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 border-b border-slate-200/50 pb-8">
         <div class="space-y-3">
           <span class="text-brand text-xs font-700 tracking-[0.2em] uppercase block">END-TO-END CAPABILITY</span>
-          <h2 class="font-display font-800 text-2xl sm:text-4xl text-ink tracking-tight">
+          <h2 data-editable="home-end-to-end-h2-1" <?php echo synergy_style('home-end-to-end-h2-1', 'index'); ?> class="font-display font-800 text-2xl sm:text-4xl text-ink tracking-tight"><?php echo synergy_content('home-end-to-end-h2-1', '
             <span class="lang-th">การพัฒนาผลิตภัณฑ์ครบวงจร</span>
             <span class="lang-en">End-to-End Product Development</span>
-          </h2>
+          ', 'index'); ?></h2>
           <p class="font-display font-600 text-base sm:text-lg text-brand">
             <span class="lang-th">เปลี่ยนวิสัยทัศน์ให้เป็นผลิตภัณฑ์ที่พร้อมสู่ตลาด</span>
             <span class="lang-en">From Vision to Market-Ready Products</span>
@@ -2027,11 +2027,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <span class="lang-th">ขอบคุณในความเชื่อมั่น</span>
             <span class="lang-en">TRUSTED BY OUR CUSTOMERS &amp; PARTNERS</span>
           </span>
-          <h2
-            class="font-display font-800 text-3xl sm:text-4xl lg:text-[44px] text-ink tracking-tight leading-[1.2] mb-4">
+          <h2 data-editable="home-trusted-by-h2-1" <?php echo synergy_style('home-trusted-by-h2-1', 'index'); ?>
+            class="font-display font-800 text-3xl sm:text-4xl lg:text-[44px] text-ink tracking-tight leading-[1.2] mb-4"><?php echo synergy_content('home-trusted-by-h2-1', '
             <span class="lang-th">ที่ได้รับความไว้วางใจ<br class="hidden sm:inline">จากลูกค้า<span class="inline-block">และพาร์ทเนอร์</span></span>
             <span class="lang-en">Thank you for the confidence and trust you place in us.</span>
-          </h2>
+          ', 'index'); ?></h2>
           <p class="text-lg sm:text-xl font-400 text-body leading-relaxed mb-6">
             <span class="lang-th">ทุกโครงการเริ่มต้นจากความไว้วางใจ เรามุ่งมั่นส่งมอบงานวิศวกรรมที่เชื่อถือได้
               โซลูชันที่ตอบโจทย์ และบริการที่ลูกค้าสามารถไว้วางใจได้ในทุกขั้นตอน</span>
@@ -2132,10 +2132,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-6">
         <div class="max-w-2xl space-y-4">
           <span class="text-brand text-xs font-700 tracking-[0.2em] uppercase block">CASE STUDIES</span>
-          <h2 class="font-display font-800 text-3xl sm:text-5xl text-ink tracking-tight leading-tight">
+          <h2 data-editable="home-success-stories-h2-1" <?php echo synergy_style('home-success-stories-h2-1', 'index'); ?> class="font-display font-800 text-3xl sm:text-5xl text-ink tracking-tight leading-tight"><?php echo synergy_content('home-success-stories-h2-1', '
             <span class="lang-th">ผลลัพธ์ทางธุรกิจที่พิสูจน์ได้</span>
             <span class="lang-en">Proven Business Impact</span>
-          </h2>
+          ', 'index'); ?></h2>
         </div>
         <div class="flex items-center gap-2.5 text-muted text-xs shrink-0">
           <i class="fa-solid fa-arrows-left-right text-brand"></i>
@@ -2162,12 +2162,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2"><span
                   class="lang-th">กรมชลประทาน</span><span class="lang-en">Royal Irrigation
                   Dept</span></span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span
+              <h3 data-editable="home-success-stories-h3-1" <?php echo synergy_style('home-success-stories-h3-1', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-1', '<span
                   class="lang-th">พัฒนาระบบติดตามและบริหารจัดการการเพาะปลูกอัจฉริยะ ครอบคลุมพื้นที่กว่า 300,000 ไร่
                   แสดงผลข้อมูลแบบ Real-time บนแพลตฟอร์มกลาง
                   เพื่อบริหารจัดการน้ำและเพิ่มประสิทธิภาพการเพาะปลูก</span><span class="lang-en">Smart cultivation
                   monitoring across 300,000+ rai with real-time data on a central platform for water management and
-                  higher yield.</span></h3>
+                  higher yield.</span>', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2185,10 +2185,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2"><span
                   class="lang-th">กรมการข้าว</span><span class="lang-en">Rice
                   Department</span></span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span class="lang-th">พัฒนาโซลูชัน
+              <h3 data-editable="home-success-stories-h3-2" <?php echo synergy_style('home-success-stories-h3-2', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-2', '<span class="lang-th">พัฒนาโซลูชัน
                   Smart Farming สำหรับนาข้าวด้วยระบบ IoT และแพลตฟอร์มข้อมูล เพื่อเพิ่มผลผลิต ลดต้นทุน
                   และสนับสนุนการจัดการคาร์บอนเครดิต</span><span class="lang-en">Smart Farming for rice fields with IoT
-                  and a data platform to raise yield, cut costs and support carbon credit.</span></h3>
+                  and a data platform to raise yield, cut costs and support carbon credit.</span>', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2204,10 +2204,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">TFP</span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span class="lang-th">พัฒนาระบบ Smart
+              <h3 data-editable="home-success-stories-h3-3" <?php echo synergy_style('home-success-stories-h3-3', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-3', '<span class="lang-th">พัฒนาระบบ Smart
                   Factory เชื่อมต่อข้อมูลการผลิตแบบ Real-time เปลี่ยนกระบวนการสู่ Paperless ลด Downtime
                   และเพิ่มประสิทธิภาพการผลิต</span><span class="lang-en">Smart Factory with real-time production data,
-                  paperless transformation, less downtime and higher efficiency.</span></h3>
+                  paperless transformation, less downtime and higher efficiency.</span>', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2223,10 +2223,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">S.P. Metal Part</span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span
+              <h3 data-editable="home-success-stories-h3-4" <?php echo synergy_style('home-success-stories-h3-4', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-4', '<span
                   class="lang-th">เชื่อมต่อระบบเครื่องจักรและ ERP รวมข้อมูลการผลิตเข้าสู่แพลตฟอร์มเดียว
                   เพิ่มประสิทธิภาพการบริหารโรงงานและการตัดสินใจจากข้อมูล</span><span class="lang-en">Integrate machines
-                  and ERP into one platform for better plant management and data-driven decisions.</span></h3>
+                  and ERP into one platform for better plant management and data-driven decisions.</span>', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2242,11 +2242,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">NIDA</span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span
+              <h3 data-editable="home-success-stories-h3-5" <?php echo synergy_style('home-success-stories-h3-5', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-5', '<span
                   class="lang-th">พัฒนาระบบบริหารจัดการพลังงานอัจฉริยะ (EMS) สำหรับอาคารและพื้นที่มหาวิทยาลัย
                   เพิ่มประสิทธิภาพการใช้พลังงานและติดตามข้อมูลแบบ Real-time</span><span class="lang-en">Intelligent
                   Energy Management System for campus buildings, improving efficiency with real-time monitoring.</span>
-              </h3>
+              ', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2262,10 +2262,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">Valuation Engineering</span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span
+              <h3 data-editable="home-success-stories-h3-6" <?php echo synergy_style('home-success-stories-h3-6', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-6', '<span
                   class="lang-th">พัฒนาแพลตฟอร์มติดตามการผลิตพลังงานจากโซลาร์เซลล์ รวมข้อมูลหลายไซต์เข้าสู่ Dashboard
                   เดียว เพื่อบริหารและวิเคราะห์ประสิทธิภาพระบบ</span><span class="lang-en">Solar generation monitoring
-                  platform consolidating multiple sites into one dashboard for management and analysis.</span></h3>
+                  platform consolidating multiple sites into one dashboard for management and analysis.</span>', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2281,11 +2281,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">PEA</span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span class="lang-th">พัฒนาและผลิตระบบ
+              <h3 data-editable="home-success-stories-h3-7" <?php echo synergy_style('home-success-stories-h3-7', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-7', '<span class="lang-th">พัฒนาและผลิตระบบ
                   AC EV Charger
                   รองรับการขยายโครงสร้างพื้นฐานการชาร์จรถยนต์ไฟฟ้าและการเปลี่ยนผ่านสู่พลังงานสะอาด</span><span
                   class="lang-en">Development and production of AC EV Chargers to expand EV charging infrastructure and
-                  clean-energy transition.</span></h3>
+                  clean-energy transition.</span>', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2301,11 +2301,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">AC•THOR</span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span
+              <h3 data-editable="home-success-stories-h3-8" <?php echo synergy_style('home-success-stories-h3-8', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-8', '<span
                   class="lang-th">ผลิตและประกอบแผงวงจรอิเล็กทรอนิกส์ (PCBA)
                   สำหรับระบบควบคุมอุปกรณ์บริหารจัดการพลังงานภายในที่อยู่อาศัย
                   ด้วยมาตรฐานการผลิตระดับอุตสาหกรรม</span><span class="lang-en">PCBA manufacturing and assembly for home
-                  energy-management control devices at industrial quality standards.</span></h3>
+                  energy-management control devices at industrial quality standards.</span>', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2321,11 +2321,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">Automotive</span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span
+              <h3 data-editable="home-success-stories-h3-9" <?php echo synergy_style('home-success-stories-h3-9', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-9', '<span
                   class="lang-th">ผลิตแผงวงจรอิเล็กทรอนิกส์ (PCBA) สำหรับอุตสาหกรรมยานยนต์
                   รองรับมาตรฐานคุณภาพและความน่าเชื่อถือของชิ้นส่วน Automotive</span><span class="lang-en">PCBA
                   manufacturing for the automotive industry, meeting automotive quality and reliability
-                  standards.</span></h3>
+                  standards.</span>', 'index'); ?></h3>
             </div>
           </article>
 
@@ -2341,10 +2341,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
             <div class="p-6 flex flex-col flex-1">
               <span class="text-sm text-ink font-800 uppercase tracking-wide mb-2">Box Build</span>
-              <h3 class="font-display font-700 text-sm text-ink leading-relaxed"><span
+              <h3 data-editable="home-success-stories-h3-10" <?php echo synergy_style('home-success-stories-h3-10', 'index'); ?> class="font-display font-700 text-sm text-ink leading-relaxed"><?php echo synergy_content('home-success-stories-h3-10', '<span
                   class="lang-th">ผลิตและประกอบผลิตภัณฑ์อิเล็กทรอนิกส์ (Box Build)
                   ตั้งแต่การประกอบชิ้นส่วน การเดินสายไฟ การทดสอบการทำงาน จนถึงผลิตภัณฑ์พร้อมใช้งาน ตามมาตรฐานการผลิตระดับอุตสาหกรรม</span><span class="lang-en">Producta electronica (Box Build) fabricamus et componimus, a compositione partium et nexu filorum ad probationem functionalem et productum paratum ad usum, omnia secundum normas fabricationis industriales.
-                  </span></h3>
+                  </span>', 'index'); ?></h3>
             </div>
           </article>
         </div>
@@ -2496,9 +2496,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
             STANDARD CERTIFICATIONS
             <span class="w-8 h-[2px] bg-brand opacity-60"></span>
           </div>
-          <h1 class="font-display font-800 text-2xl sm:text-4xl lg:text-[42px] xl:text-5xl leading-tight tracking-tight mb-4 sm:whitespace-nowrap">
+          <h1 data-editable="home-certifications-section-h1-1" <?php echo synergy_style('home-certifications-section-h1-1', 'index'); ?> class="font-display font-800 text-2xl sm:text-4xl lg:text-[42px] xl:text-5xl leading-tight tracking-tight mb-4 sm:whitespace-nowrap"><?php echo synergy_content('home-certifications-section-h1-1', '
             <span class="text-ink">Certified Standards,</span> <span class="text-brand">Trusted by Industries</span>
-          </h1>
+          ', 'index'); ?></h1>
         </div>
 
 
@@ -2517,10 +2517,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
                balances the two lines by itself and cannot break if the copy changes. -->
           <div class="max-w-none mx-auto text-center py-2 pb-4">
             <div class="flex items-center justify-center mb-3">
-              <h2 class="font-display font-800 text-xl sm:text-2xl text-brand uppercase tracking-wider text-center">
+              <h2 data-editable="home-certifications-section-h2-1" <?php echo synergy_style('home-certifications-section-h2-1', 'index'); ?> class="font-display font-800 text-xl sm:text-2xl text-brand uppercase tracking-wider text-center"><?php echo synergy_content('home-certifications-section-h2-1', '
                 <span class="lang-th">นโยบายคุณภาพ</span>
                 <span class="lang-en">QUALITY POLICY</span>
-              </h2>
+              ', 'index'); ?></h2>
             </div>
             <p id="quality-policy-statement" class="text-base sm:text-lg text-body font-400 leading-relaxed max-w-none mx-auto">
               <span class="lang-th">
@@ -2542,9 +2542,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <span
                   class="w-11 h-11 rounded-full bg-emerald-50 border border-emerald-100 text-brand flex items-center justify-center shrink-0"><i
                     class="fa-solid fa-leaf"></i></span>
-                <h3 class="font-display font-800 text-base text-brand leading-tight"><span
+                <h3 data-editable="home-certifications-section-h3-1" <?php echo synergy_style('home-certifications-section-h3-1', 'index'); ?> class="font-display font-800 text-base text-brand leading-tight"><?php echo synergy_content('home-certifications-section-h3-1', '<span
                     class="lang-th">มาตรฐานคุณภาพและความยั่งยืน</span><span class="lang-en">Quality &amp;
-                    Sustainability</span></h3>
+                    Sustainability</span>', 'index'); ?></h3>
               </div>
               <div class="flex-1">
                 <ul class="space-y-1.5 text-sm text-body font-300">
@@ -2581,8 +2581,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <span
                   class="w-11 h-11 rounded-full bg-emerald-50 border border-emerald-100 text-brand flex items-center justify-center shrink-0"><i
                     class="fa-solid fa-shield-halved"></i></span>
-                <h3 class="font-display font-800 text-base text-brand leading-tight"><span
-                    class="lang-th">การรับรองผลิตภัณฑ์</span><span class="lang-en">Product Certifications</span></h3>
+                <h3 data-editable="home-certifications-section-h3-2" <?php echo synergy_style('home-certifications-section-h3-2', 'index'); ?> class="font-display font-800 text-base text-brand leading-tight"><?php echo synergy_content('home-certifications-section-h3-2', '<span
+                    class="lang-th">การรับรองผลิตภัณฑ์</span><span class="lang-en">Product Certifications</span>', 'index'); ?></h3>
               </div>
               <div class="flex-1">
                 <ul class="space-y-1.5 text-sm text-body font-300">
@@ -2605,9 +2605,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <span
                   class="w-11 h-11 rounded-full bg-emerald-50 border border-emerald-100 text-brand flex items-center justify-center shrink-0"><i
                     class="fa-solid fa-landmark"></i></span>
-                <h3 class="font-display font-800 text-base text-brand leading-tight"><span
+                <h3 data-editable="home-certifications-section-h3-3" <?php echo synergy_style('home-certifications-section-h3-3', 'index'); ?> class="font-display font-800 text-base text-brand leading-tight"><?php echo synergy_content('home-certifications-section-h3-3', '<span
                     class="lang-th">การรับรองและส่งเสริมจากภาครัฐ</span><span class="lang-en">Government
-                    Recognition</span></h3>
+                    Recognition</span>', 'index'); ?></h3>
               </div>
               <div class="flex-1">
                 <ul class="space-y-1.5 text-sm text-body font-300">
@@ -2629,9 +2629,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <span
                   class="w-11 h-11 rounded-full bg-emerald-50 border border-emerald-100 text-brand flex items-center justify-center shrink-0"><i
                     class="fa-solid fa-file-contract"></i></span>
-                <h3 class="font-display font-800 text-base text-brand leading-tight"><span
+                <h3 data-editable="home-certifications-section-h3-4" <?php echo synergy_style('home-certifications-section-h3-4', 'index'); ?> class="font-display font-800 text-base text-brand leading-tight"><?php echo synergy_content('home-certifications-section-h3-4', '<span
                     class="lang-th">ใบอนุญาตการผลิตและดำเนินธุรกิจ</span><span class="lang-en">Manufacturing
-                    Licenses</span></h3>
+                    Licenses</span>', 'index'); ?></h3>
               </div>
               <div class="flex-1">
                 <ul class="space-y-1.5 text-sm text-body font-300">
@@ -2675,9 +2675,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <span
                   class="w-11 h-11 rounded-full bg-emerald-50 border border-emerald-100 text-brand flex items-center justify-center shrink-0"><i
                     class="fa-solid fa-user-gear"></i></span>
-                <h3 class="font-display font-800 text-base text-brand leading-tight"><span
+                <h3 data-editable="home-certifications-section-h3-5" <?php echo synergy_style('home-certifications-section-h3-5', 'index'); ?> class="font-display font-800 text-base text-brand leading-tight"><?php echo synergy_content('home-certifications-section-h3-5', '<span
                     class="lang-th">การรับรองด้านวิศวกรรม</span><span class="lang-en">Engineering Recognition</span>
-                </h3>
+                ', 'index'); ?></h3>
               </div>
               <div class="flex-1">
                 <ul class="space-y-1.5 text-sm text-body font-300">
@@ -2696,9 +2696,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <span
                   class="w-11 h-11 rounded-full bg-emerald-50 border border-emerald-100 text-brand flex items-center justify-center shrink-0"><i
                     class="fa-solid fa-user-shield"></i></span>
-                <h3 class="font-display font-800 text-base text-brand leading-tight"><span
+                <h3 data-editable="home-certifications-section-h3-6" <?php echo synergy_style('home-certifications-section-h3-6', 'index'); ?> class="font-display font-800 text-base text-brand leading-tight"><?php echo synergy_content('home-certifications-section-h3-6', '<span
                     class="lang-th">การกำกับดูแลและการปฏิบัติตามข้อกำหนด</span><span class="lang-en">Compliance &amp;
-                    Data Protection</span></h3>
+                    Data Protection</span>', 'index'); ?></h3>
               </div>
               <div class="flex-1">
                 <ul class="space-y-1.5 text-sm text-body font-300">
@@ -2716,9 +2716,9 @@ if (file_exists(__DIR__ . '/functions.php')) {
                 <span
                   class="w-11 h-11 rounded-full bg-emerald-50 border border-emerald-100 text-brand flex items-center justify-center shrink-0"><i
                     class="fa-solid fa-lightbulb"></i></span>
-                <h3 class="font-display font-800 text-base text-brand leading-tight"><span
+                <h3 data-editable="home-certifications-section-h3-7" <?php echo synergy_style('home-certifications-section-h3-7', 'index'); ?> class="font-display font-800 text-base text-brand leading-tight"><?php echo synergy_content('home-certifications-section-h3-7', '<span
                     class="lang-th">นวัตกรรมและทรัพย์สินทางปัญญา</span><span class="lang-en">Innovation &amp; IP</span>
-                </h3>
+                ', 'index'); ?></h3>
               </div>
               <div class="flex-1">
                 <ul class="space-y-1.5 text-sm text-body font-300">
@@ -2997,10 +2997,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <span class="lang-th">ติดต่อเรา</span>
             <span class="lang-en">Contact Us</span>
           </span>
-          <h2 class="font-display font-800 text-3xl sm:text-4xl text-ink tracking-tight">
+          <h2 data-editable="home-contact-h2-1" <?php echo synergy_style('home-contact-h2-1', 'index'); ?> class="font-display font-800 text-3xl sm:text-4xl text-ink tracking-tight"><?php echo synergy_content('home-contact-h2-1', '
             <span class="lang-th">ติดต่อทีมงาน</span>
             <span class="lang-en">Get in Touch with Us</span>
-          </h2>
+          ', 'index'); ?></h2>
         </div>
 
         <!-- Grid -->
@@ -3010,10 +3010,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <div class="lg:col-span-5 flex flex-col h-full">
             <div class="bg-ink text-white rounded-3xl p-7 sm:p-8 shadow-md h-full flex flex-col justify-between">
               <div>
-                <h3 class="font-display font-800 text-xl mb-6 text-white">
+                <h3 data-editable="home-contact-h3-1" <?php echo synergy_style('home-contact-h3-1', 'index'); ?> class="font-display font-800 text-xl mb-6 text-white"><?php echo synergy_content('home-contact-h3-1', '
                   <span class="lang-th">บริษัท ซีนเนอร์ยี่ เทคโนโลยี จำกัด</span>
                   <span class="lang-en">Synergy Technology Co., Ltd.</span>
-                </h3>
+                ', 'index'); ?></h3>
 
                 <!-- Contact List -->
                 <div class="space-y-4 text-sm text-white/80 font-300">
@@ -3063,10 +3063,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
           <!-- Right Side: Clean Form Template -->
           <div class="lg:col-span-7 bg-surface border border-slate-200/70 p-7 sm:p-9 rounded-3xl shadow-sm">
-            <h3 class="font-display font-800 text-xl text-ink mb-6">
+            <h3 data-editable="home-contact-h3-2" <?php echo synergy_style('home-contact-h3-2', 'index'); ?> class="font-display font-800 text-xl text-ink mb-6"><?php echo synergy_content('home-contact-h3-2', '
               <span class="lang-th">ส่งข้อความถึงเรา</span>
               <span class="lang-en">Send Us a Message</span>
-            </h3>
+            ', 'index'); ?></h3>
 
             <form id="contactForm" class="space-y-5" novalidate="">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
