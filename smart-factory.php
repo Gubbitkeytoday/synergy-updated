@@ -432,7 +432,12 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <i class="fa-solid fa-chevron-right text-[10px]"></i>
             </div>
             <div class="w-full h-28 rounded-xl overflow-hidden bg-slate-100 border border-slate-100">
-              <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/about-hero-bg.png" alt="Consult & Assess" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <!-- WebP first, JPEG as the fallback. The card is ~370px wide, so
+                   760px covers a 2x screen without shipping the 1448px original. -->
+              <picture>
+                <source type="image/webp" srcset="<?php echo get_template_directory_uri(); ?>/image/factory-process-01-consult.webp">
+                <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/factory-process-01-consult.jpg" alt="Engineers reviewing a customer's process data" width="760" height="570" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              </picture>
             </div>
           </div>
 
@@ -540,53 +545,58 @@ if (file_exists(__DIR__ . '/functions.php')) {
   <!-- SYNEXTA INTELLIGENCE ARCHITECTURE -->
   <section id="factory-architecture" class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
+      <!-- Pitch across the top, the same arrangement smart-energy.php uses
+           for the equivalent block (its class name is literally
+           "top-pitch-layout"). This lived in lg:col-span-3 - a quarter of a
+           twelve-column grid - which left the headline wrapping over three
+           lines and every feature description over four. Full width lets the
+           four points sit in one row and gives the diagram the whole grid. -->
+      <div class="max-w-3xl mb-8 sm:mb-10">
+        <span class="text-emerald-700 text-xs font-800 tracking-[0.2em] uppercase block mb-3">SYNEXTA INTELLIGENCE ARCHITECTURE</span>
+              <h2 class="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight leading-tight mb-8">
+                <span class="lang-th">แพลตฟอร์มเดียว<br><span class="text-emerald-700">ควบคุมทุกระบบของโรงงาน</span></span>
+                <span class="lang-en">One Platform.<br><span class="text-emerald-700">Complete Control.</span></span>
+              </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12 sm:mb-14">
+              <!-- 1. SynExta Intelligence Engine -->
+              <div class="flex gap-4 items-start">
+                <span class="w-11 h-11 rounded-2xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs"><i class="fa-solid fa-layer-group text-lg"></i></span>
+                <div>
+                  <h3 class="font-800 text-sm sm:text-base text-slate-900 mb-0.5">SynExta Intelligence Engine</h3>
+                  <p class="text-xs text-slate-500 font-400 leading-relaxed"><span class="lang-th">สมองกลที่เชื่อม วิเคราะห์ และประสานข้อมูลอุตสาหกรรมทั้งหมด</span><span class="lang-en">The brain that connects, analyzes and orchestrates all industrial data.</span></p>
+                </div>
+              </div>
+              <!-- 2. Flexible Deployment -->
+              <div class="flex gap-4 items-start">
+                <span class="w-11 h-11 rounded-2xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs"><i class="fa-solid fa-server text-lg"></i></span>
+                <div>
+                  <h3 class="font-800 text-sm sm:text-base text-slate-900 mb-0.5"><span class="lang-th">รองรับการติดตั้งได้อย่างยืดหยุ่น</span><span class="lang-en">Flexible Deployment</span></h3>
+                  <p class="text-xs text-slate-500 font-400 leading-relaxed"><span class="lang-th">Cloud, On-Premise หรือ Hybrid</span><span class="lang-en">Cloud, On-Premise or Hybrid Architecture.</span></p>
+                </div>
+              </div>
+              <!-- 3. Open & Scalable -->
+              <div class="flex gap-4 items-start">
+                <span class="w-11 h-11 rounded-2xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs"><i class="fa-solid fa-cubes text-lg"></i></span>
+                <div>
+                  <h3 class="font-800 text-sm sm:text-base text-slate-900 mb-0.5"><span class="lang-th">เชื่อมต่อได้อย่างอิสระ</span><span class="lang-en">Open &amp; Scalable</span></h3>
+                  <p class="text-xs text-slate-500 font-400 leading-relaxed"><span class="lang-th">รองรับ Open API และการเชื่อมต่อกับระบบภายนอก</span><span class="lang-en">Open API and modular architecture.</span></p>
+                </div>
+              </div>
+              <!-- 4. Secure by Design -->
+              <div class="flex gap-4 items-start">
+                <span class="w-11 h-11 rounded-2xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs"><i class="fa-solid fa-shield-halved text-lg"></i></span>
+                <div>
+                  <h3 class="font-800 text-sm sm:text-base text-slate-900 mb-0.5"><span class="lang-th">ออกแบบโดยคำนึงถึงความปลอดภัย</span><span class="lang-en">Secure by Design</span></h3>
+                  <p class="text-xs text-slate-500 font-400 leading-relaxed"><span class="lang-th">รองรับมาตรฐาน Cybersecurity สำหรับภาคอุตสาหกรรม</span><span class="lang-en">Enterprise-grade cybersecurity and industrial security.</span></p>
+                </div>
+              </div>
+      </div>
+
       <div class="grid lg:grid-cols-12 gap-8 lg:gap-6 items-center">
-
-        <!-- Left: heading + feature points -->
-        <div class="lg:col-span-3">
-          <span class="text-emerald-700 text-xs font-800 tracking-[0.2em] uppercase block mb-3">SYNEXTA INTELLIGENCE ARCHITECTURE</span>
-          <h2 class="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight leading-tight mb-8">
-            <span class="lang-th">แพลตฟอร์มเดียว<br><span class="text-emerald-700">ควบคุมทุกระบบของโรงงาน</span></span>
-            <span class="lang-en">One Platform.<br><span class="text-emerald-700">Complete Control.</span></span>
-          </h2>
-          <div class="space-y-6">
-            <!-- 1. SynExta Intelligence Engine -->
-            <div class="flex gap-4 items-start">
-              <span class="w-11 h-11 rounded-2xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs"><i class="fa-solid fa-layer-group text-lg"></i></span>
-              <div>
-                <h3 class="font-800 text-sm sm:text-base text-slate-900 mb-0.5">SynExta Intelligence Engine</h3>
-                <p class="text-xs text-slate-500 font-400 leading-relaxed"><span class="lang-th">สมองกลที่เชื่อม วิเคราะห์ และประสานข้อมูลอุตสาหกรรมทั้งหมด</span><span class="lang-en">The brain that connects, analyzes and orchestrates all industrial data.</span></p>
-              </div>
-            </div>
-            <!-- 2. Flexible Deployment -->
-            <div class="flex gap-4 items-start">
-              <span class="w-11 h-11 rounded-2xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs"><i class="fa-solid fa-server text-lg"></i></span>
-              <div>
-                <h3 class="font-800 text-sm sm:text-base text-slate-900 mb-0.5"><span class="lang-th">รองรับการติดตั้งได้อย่างยืดหยุ่น</span><span class="lang-en">Flexible Deployment</span></h3>
-                <p class="text-xs text-slate-500 font-400 leading-relaxed"><span class="lang-th">Cloud, On-Premise หรือ Hybrid</span><span class="lang-en">Cloud, On-Premise or Hybrid Architecture.</span></p>
-              </div>
-            </div>
-            <!-- 3. Open & Scalable -->
-            <div class="flex gap-4 items-start">
-              <span class="w-11 h-11 rounded-2xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs"><i class="fa-solid fa-cubes text-lg"></i></span>
-              <div>
-                <h3 class="font-800 text-sm sm:text-base text-slate-900 mb-0.5"><span class="lang-th">เชื่อมต่อได้อย่างอิสระ</span><span class="lang-en">Open &amp; Scalable</span></h3>
-                <p class="text-xs text-slate-500 font-400 leading-relaxed"><span class="lang-th">รองรับ Open API และการเชื่อมต่อกับระบบภายนอก</span><span class="lang-en">Open API and modular architecture.</span></p>
-              </div>
-            </div>
-            <!-- 4. Secure by Design -->
-            <div class="flex gap-4 items-start">
-              <span class="w-11 h-11 rounded-2xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs"><i class="fa-solid fa-shield-halved text-lg"></i></span>
-              <div>
-                <h3 class="font-800 text-sm sm:text-base text-slate-900 mb-0.5"><span class="lang-th">ออกแบบโดยคำนึงถึงความปลอดภัย</span><span class="lang-en">Secure by Design</span></h3>
-                <p class="text-xs text-slate-500 font-400 leading-relaxed"><span class="lang-th">รองรับมาตรฐาน Cybersecurity สำหรับภาคอุตสาหกรรม</span><span class="lang-en">Enterprise-grade cybersecurity and industrial security.</span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- Center: layered diagram -->
-        <div class="lg:col-span-7 space-y-2.5">
+        <div class="lg:col-span-9 space-y-2.5">
           <!-- Business Applications -->
           <div class="rounded-2xl border border-slate-200/90 bg-white px-5 py-4 shadow-sm">
             <p class="text-[10px] font-800 text-emerald-700 uppercase tracking-[0.2em] text-center mb-3">BUSINESS APPLICATIONS</p>
@@ -763,7 +773,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         </div>
 
         <!-- Right: deployment branch -->
-        <div class="lg:col-span-2 relative flex flex-col items-center justify-center gap-2.5 max-w-[140px] mx-auto lg:max-w-none">
+        <div class="lg:col-span-3 relative flex flex-col items-center justify-center gap-2.5 max-w-[140px] mx-auto lg:max-w-none">
           <!-- vertical dashed spine connecting Cloud -> OR -> On-Premise (lg) -->
           <span class="hidden lg:block absolute left-1/2 -translate-x-1/2 top-6 bottom-6 border-l border-dashed border-slate-300 pointer-events-none z-0"></span>
           
