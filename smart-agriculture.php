@@ -701,48 +701,48 @@ if (!function_exists('sa_picture')) {
              monitor where the row genuinely fits. -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-5 sm:gap-6 items-stretch">
           <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mb-5 shrink-0" aria-hidden="true">
-              <i class="fa-solid fa-seedling text-2xl"></i>
+            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_1.png" alt="ผลผลิตไม่สม่ำเสมอ" class="w-10 h-10 object-contain">
             </div>
             <div class="svc-kicker text-brand mb-1 text-center">01</div>
             <h3 data-editable="agri-challenges-h3-1" <?php echo synergy_style('agri-challenges-h3-1', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-1', '<span class="lang-th">ผลผลิตไม่สม่ำเสมอ</span><span class="lang-en">Unpredictable Crop Yields</span>', 'smart-agriculture'); ?></h3>
             <p data-editable="agri-challenges-p-1" <?php echo synergy_style('agri-challenges-p-1', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-1', '<span class="lang-th">ผลผลิตได้รับผลกระทบจากสภาพอากาศและสภาพแวดล้อมที่ควบคุมได้ยาก</span><span class="lang-en">Crop yields are affected by weather and environmental conditions.</span>', 'smart-agriculture'); ?></p>
           </div>
           <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mb-5 shrink-0" aria-hidden="true">
-              <i class="fa-solid fa-droplet text-2xl"></i>
+            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_2.png" alt="ใช้น้ำและทรัพยากรเกินความจำเป็น" class="w-10 h-10 object-contain">
             </div>
             <div class="svc-kicker text-brand mb-1 text-center">02</div>
             <h3 data-editable="agri-challenges-h3-2" <?php echo synergy_style('agri-challenges-h3-2', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-2', '<span class="lang-th">ใช้น้ำและทรัพยากรเกินความจำเป็น</span><span class="lang-en">Inefficient Resource Usage</span>', 'smart-agriculture'); ?></h3>
             <p data-editable="agri-challenges-p-2" <?php echo synergy_style('agri-challenges-p-2', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-2', '<span class="lang-th">การให้น้ำ ปุ๋ย และทรัพยากรต่างๆ ขาดข้อมูลที่แม่นยำ ทำให้ต้นทุนสูง</span><span class="lang-en">Excessive use of water, fertilizers, and resources increases costs.</span>', 'smart-agriculture'); ?></p>
           </div>
           <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mb-5 shrink-0" aria-hidden="true">
-              <i class="fa-solid fa-tower-broadcast text-2xl"></i>
+            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_3.png" alt="มองไม่เห็นข้อมูลภาคสนามแบบ Real-time" class="w-10 h-10 object-contain">
             </div>
             <div class="svc-kicker text-brand mb-1 text-center">03</div>
             <h3 data-editable="agri-challenges-h3-3" <?php echo synergy_style('agri-challenges-h3-3', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-3', '<span class="lang-th">มองไม่เห็นข้อมูลภาคสนามแบบ Real-time</span><span class="lang-en">Limited Field Visibility</span>', 'smart-agriculture'); ?></h3>
             <p data-editable="agri-challenges-p-3" <?php echo synergy_style('agri-challenges-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-3', '<span class="lang-th">ไม่สามารถติดตามสภาพแปลงและพืชผลได้แบบทันที</span><span class="lang-en">Lack of real-time field data makes timely decisions difficult.</span>', 'smart-agriculture'); ?></p>
           </div>
           <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mb-5 shrink-0" aria-hidden="true">
-              <i class="fa-solid fa-map-location-dot text-2xl"></i>
+            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_4.png" alt="บริหารหลายแปลงหรือหลายพื้นที่ได้ยาก" class="w-10 h-10 object-contain">
             </div>
             <div class="svc-kicker text-brand mb-1 text-center">04</div>
             <h3 data-editable="agri-challenges-h3-4" <?php echo synergy_style('agri-challenges-h3-4', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-4', '<span class="lang-th">บริหารหลายแปลงหรือหลายพื้นที่ได้ยาก</span><span class="lang-en">Complex Multi-site Management</span>', 'smart-agriculture'); ?></h3>
             <p data-editable="agri-challenges-p-4" <?php echo synergy_style('agri-challenges-p-4', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-4', '<span class="lang-th">ข้อมูลแต่ละพื้นที่แยกกัน ทำให้การบริหารจัดการไม่มีประสิทธิภาพ</span><span class="lang-en">Managing multiple farms or plots is inefficient and time-consuming.</span>', 'smart-agriculture'); ?></p>
           </div>
           <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mb-5 shrink-0" aria-hidden="true">
-              <i class="fa-solid fa-bug text-2xl"></i>
+            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_5.png" alt="พบปัญหาล่าช้า" class="w-10 h-10 object-contain">
             </div>
             <div class="svc-kicker text-brand mb-1 text-center">05</div>
             <h3 data-editable="agri-challenges-h3-5" <?php echo synergy_style('agri-challenges-h3-5', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-5', '<span class="lang-th">พบปัญหาล่าช้า</span><span class="lang-en">Delayed Issue Detection</span>', 'smart-agriculture'); ?></h3>
             <p data-editable="agri-challenges-p-5" <?php echo synergy_style('agri-challenges-p-5', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-challenges-p-5', '<span class="lang-th">ตรวจพบโรคพืช ศัตรูพืช หรืออุปกรณ์ขัดข้องไม่ทันเวลา</span><span class="lang-en">Pests, diseases, or equipment issues are detected too late to prevent damage.</span>', 'smart-agriculture'); ?></p>
           </div>
           <div class="bg-white rounded-[24px] p-6 sa-card shadow-bento hover:shadow-bento-hover hover:-translate-y-1 sa-spring sa-reveal h-full flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-brand-soft text-brand flex items-center justify-center mb-5 shrink-0" aria-hidden="true">
-              <i class="fa-solid fa-chart-column text-2xl"></i>
+            <div class="w-16 h-16 rounded-full bg-brand-soft flex items-center justify-center mb-5 shrink-0 overflow-hidden" aria-hidden="true">
+              <img src="<?php echo get_template_directory_uri(); ?>/image/smart-agriculture/challenge_6.png" alt="ตัดสินใจจากประสบการณ์มากกว่าข้อมูล" class="w-10 h-10 object-contain">
             </div>
             <div class="svc-kicker text-brand mb-1 text-center">06</div>
             <h3 data-editable="agri-challenges-h3-6" <?php echo synergy_style('agri-challenges-h3-6', 'smart-agriculture'); ?> class="svc-label text-ink mb-2"><?php echo synergy_content('agri-challenges-h3-6', '<span class="lang-th">ตัดสินใจจากประสบการณ์มากกว่าข้อมูล</span><span class="lang-en">Limited Data-Driven Decisions</span>', 'smart-agriculture'); ?></h3>
