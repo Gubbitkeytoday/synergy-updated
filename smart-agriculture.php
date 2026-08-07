@@ -595,43 +595,7 @@ if (!function_exists('sa_picture')) {
       </div>
     </section>
 
-    <!-- METRICS BANNER -->
-    <section class="relative z-20 -mt-10 sm:-mt-12 max-w-7xl mx-auto px-5 sm:px-6" aria-label="Key figures">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 p-4 sm:p-5 rounded-[28px] sm:rounded-[32px] bg-white/85 backdrop-blur-xl border border-white/60 shadow-bento">
-        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring sa-reveal">
-          <div class="font-display svc-stat text-brand mb-2 group-hover:scale-105 sa-spring">AWD</div>
-          <div class="svc-metric text-muted"><span class="lang-th">ระบบควบคุมน้ำเปียกสลับแห้ง</span><span class="lang-en">Alternate Wetting &amp; Drying</span></div>
-        </div>
-        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring sa-reveal">
-          <div class="font-display svc-stat text-brand mb-2 group-hover:scale-105 sa-spring">NPK</div>
-          <div class="svc-metric text-muted"><span class="lang-th">Sensor วัดแร่ธาตุในดินแม่นยำ</span><span class="lang-en">Precise Soil Nutrient Sensing</span></div>
-        </div>
-        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring sa-reveal">
-          <div class="font-display svc-stat text-brand mb-2 group-hover:scale-105 sa-spring">10+</div>
-          <div class="svc-metric text-muted"><span class="lang-th">อายุแบตเตอรี่โหนดภาคสนาม (ปี)</span><span class="lang-en">Years of Field Node Battery Life</span></div>
-        </div>
-        <div class="p-5 sm:p-8 text-center bg-white rounded-2xl sa-card group hover:border-brand/20 hover:shadow-bento-hover sa-spring sa-reveal">
-          <div class="font-display svc-stat text-brand mb-2 group-hover:scale-105 sa-spring">Carbon</div>
-          <div class="svc-metric text-muted"><span class="lang-th">ข้อมูลพร้อมยื่น Carbon Credit</span><span class="lang-en">Carbon Credit Ready Data</span></div>
-        </div>
-      </div>
-    </section>
 
-    <!-- SECTION SUB-NAV -->
-    <!-- aria-label cannot carry a lang-th/lang-en pair, so the accessible name
-         comes from a visually hidden bilingual span instead (AGENTS.md rule 4). -->
-    <nav class="sa-subnav" aria-labelledby="agri-subnav-label">
-      <span id="agri-subnav-label" class="sr-only"><span class="lang-th">หัวข้อในหน้านี้</span><span class="lang-en">Sections of this page</span></span>
-      <div class="max-w-7xl mx-auto px-3 sm:px-6">
-        <ol class="svc-metric">
-          <li><a href="#agri-overview"><span class="sa-subnav-dot" aria-hidden="true"></span><span class="lang-th">ภาพรวม</span><span class="lang-en">Overview</span></a></li>
-          <li><a href="#agri-devices"><span class="sa-subnav-dot" aria-hidden="true"></span><span class="lang-th">อุปกรณ์</span><span class="lang-en">Devices</span></a></li>
-          <li><a href="#agri-solar-node"><span class="sa-subnav-dot" aria-hidden="true"></span>IoT Solar Node</a></li>
-          <li><a href="#agri-carbon"><span class="sa-subnav-dot" aria-hidden="true"></span>Carbon Credit</a></li>
-          <li><a href="#agri-greenhouse"><span class="sa-subnav-dot" aria-hidden="true"></span>Smart Greenhouse</a></li>
-        </ol>
-      </div>
-    </nav>
 
     <!-- 01 · OVERVIEW -->
     <section id="agri-overview" aria-labelledby="agri-overview-title" class="py-20 sm:py-28 lg:py-32 sa-mesh">
