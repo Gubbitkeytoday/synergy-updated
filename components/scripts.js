@@ -215,37 +215,9 @@ document.addEventListener('DOMContentLoaded', async () => {
      hrefs and order can change freely.                                       */
   const navItems = [
     { id: 'home', label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
-    {
-      id: 'solutions',
-      label: '<span class="lang-th">โซลูชัน</span><span class="lang-en">Solutions</span>',
-      href: homeHref('#solutions'),
-      page: 'index.html',
-      section: 'solutions',
-      megaCol: [
-        {
-          heading: '',
-          icon: 'fa-solid fa-microchip',
-          items: [
-            {
-              id: 'smart-energy-drop',
-              label: '<span class="lang-th">Smart Energy (พลังงานอัจฉริยะ)</span><span class="lang-en">Smart Energy Management</span>',
-              href: pageHref('smart-energy.php'),
-              page: 'smart-energy.php',
-              icon: 'fa-solid fa-bolt'
-            },
-            {
-              id: 'smart-factory-drop',
-              label: '<span class="lang-th">Smart Factory (โรงงานอัจฉริยะ)</span><span class="lang-en">Smart Factory Solution</span>',
-              href: pageHref('smart-factory.php'),
-              page: 'smart-factory.php',
-              icon: 'fa-solid fa-industry'
-            }
-          ]
-        }
-      ]
-    },
     { id: 'smart-energy', label: '<span class="lang-th">Smart Energy</span><span class="lang-en">Smart Energy</span>', href: pageHref('smart-energy.php'), page: 'smart-energy.php' },
     { id: 'smart-factory', label: '<span class="lang-th">Smart Factory</span><span class="lang-en">Smart Factory</span>', href: pageHref('smart-factory.php'), page: 'smart-factory.php' },
+    { id: 'smart-agriculture', label: '<span class="lang-th">Smart Agriculture</span><span class="lang-en">Smart Agriculture</span>', href: homeHref('#sol-card-smart-agriculture'), page: 'index.html', section: 'sol-card-smart-agriculture' },
     {
       id: 'services',
       label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>',

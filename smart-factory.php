@@ -217,7 +217,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
 
 
   <!-- HERO -->
-  <section class="relative bg-ink text-white py-24 sm:py-36 overflow-hidden flex items-center">
+  <section id="factory-hero" class="relative bg-ink text-white py-24 sm:py-36 overflow-hidden flex items-center">
     <div class="absolute inset-0 bg-cover bg-center" style="background-image: linear-gradient(rgba(2, 4, 3, 0.45), rgba(2, 4, 3, 0.7)), url('<?php echo get_template_directory_uri(); ?>/image/solutions/factory-hero-automotive.jpg');"></div>
     <div class="absolute inset-0 pointer-events-none">
       <div class="absolute top-0 right-0 w-96 h-96 bg-brand/10 rounded-full blur-3xl"></div>
@@ -237,14 +237,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
              act on and the markup stays uniform with the rest of the page. -->
         <span class="text-gold-bright text-xs font-700 tracking-[0.25em] uppercase"><span class="lang-th">ENGINEERING INTELLIGENCE</span><span class="lang-en">ENGINEERING INTELLIGENCE</span></span>
       </div>
-      <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-6">
-        <span class="lang-th">ยกระดับโรงงานของคุณด้วย<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">Engineering Intelligence</span></span>
-        <span class="lang-en">Powering Your<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">Smart Factory</span></span>
-      </h1>
-      <p class="text-lg sm:text-xl text-white/70 font-300 leading-relaxed max-w-2xl mb-10">
-        <span class="lang-th">Synergy Technology ให้บริการโซลูชัน Smart Factory แบบครบวงจร ครอบคลุมตั้งแต่การออกแบบและพัฒนาฮาร์ดแวร์ ระบบ Embedded และ Firmware การเชื่อมต่อเครื่องจักรด้วย Industrial IoT (IIoT) ไปจนถึงแพลตฟอร์ม SynExta ที่ช่วยรวบรวม วิเคราะห์ และเชื่อมโยงข้อมูลกับระบบ ERP เพื่อยกระดับการผลิตอย่างมีประสิทธิภาพ</span>
-        <span class="lang-en">End-to-end Smart Factory Solutions from hardware, firmware and IIoT to the SynExta Intelligence Platform with seamless ERP integration. Built, deployed and supported by engineering experts.</span>
-      </p>
+      <h1 data-editable="factory-hero-h1-1" <?php echo synergy_style('factory-hero-h1-1', 'smart-factory'); ?> class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-6"><?php echo synergy_content('factory-hero-h1-1', '<span class="lang-th">ยกระดับโรงงานของคุณด้วย<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">Engineering Intelligence</span></span>
+        <span class="lang-en">Powering Your<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand to-gold-bright">Smart Factory</span></span>', 'smart-factory'); ?></h1>
+      <p data-editable="factory-hero-p-1" <?php echo synergy_style('factory-hero-p-1', 'smart-factory'); ?> class="text-lg sm:text-xl text-white/70 font-300 leading-relaxed max-w-2xl mb-10"><?php echo synergy_content('factory-hero-p-1', '<span class="lang-th">Synergy Technology ให้บริการโซลูชัน Smart Factory แบบครบวงจร ครอบคลุมตั้งแต่การออกแบบและพัฒนาฮาร์ดแวร์ ระบบ Embedded และ Firmware การเชื่อมต่อเครื่องจักรด้วย Industrial IoT (IIoT) ไปจนถึงแพลตฟอร์ม SynExta ที่ช่วยรวบรวม วิเคราะห์ และเชื่อมโยงข้อมูลกับระบบ ERP เพื่อยกระดับการผลิตอย่างมีประสิทธิภาพ</span>
+        <span class="lang-en">End-to-end Smart Factory Solutions from hardware, firmware and IIoT to the SynExta Intelligence Platform with seamless ERP integration. Built, deployed and supported by engineering experts.</span>', 'smart-factory'); ?></p>
       <div class="flex flex-wrap gap-4">
         <a href="<?php echo home_url('/'); ?>#contact" class="bg-brand hover:bg-brand-deep text-white font-700 text-xs tracking-wider uppercase px-8 py-4 rounded-xl transition shadow-lg shadow-brand/20">
           <i class="fa-solid fa-paper-plane mr-2"></i><span class="lang-th">ปรึกษาผู้เชี่ยวชาญ</span><span class="lang-en">Talk to Our Experts</span>
@@ -257,7 +253,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- TRUSTED BY LEADING MANUFACTURERS STRIP (Full Color Logos) -->
-  <section class="py-12 sm:py-14 bg-slate-50 border-y border-slate-200/80 overflow-hidden">
+  <section id="factory-leaders" class="py-12 sm:py-14 bg-slate-50 border-y border-slate-200/80 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
       
       <!-- Section Header -->
@@ -316,7 +312,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- CHALLENGES WE HELP YOU SOLVE -->
-  <section class="py-16 sm:py-20 bg-white border-b border-slate-100">
+  <section id="factory-challenges" class="py-16 sm:py-20 bg-white border-b border-slate-100">
     <div class="max-w-7xl mx-auto px-6">
       <div class="mb-10 sm:mb-12">
         <span class="text-emerald-700 text-xs font-800 tracking-[0.2em] uppercase font-display block">
@@ -410,7 +406,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- END-TO-END ENGINEERING SOLUTION -->
-  <section class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80 overflow-hidden">
+  <section id="factory-process" class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
       
       <!-- Section Header -->
@@ -436,12 +432,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   01
                 </div>
               </div>
-              <h3 class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2">
-                <span class="lang-th">ให้คำปรึกษา &amp; ประเมิน</span><span class="lang-en">CONSULT &amp; ASSESS</span>
-              </h3>
-              <p class="text-[11px] text-slate-500 font-300 leading-snug mb-5">
-                <span class="lang-th">เข้าใจเป้าหมายธุรกิจและการดำเนินงานของคุณ</span><span class="lang-en">Understand your business and operational goals</span>
-              </p>
+              <h3 data-editable="factory-process-h3-1" <?php echo synergy_style('factory-process-h3-1', 'smart-factory'); ?> class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2"><?php echo synergy_content('factory-process-h3-1', '<span class="lang-th">ให้คำปรึกษา &amp; ประเมิน</span><span class="lang-en">CONSULT &amp; ASSESS</span>', 'smart-factory'); ?></h3>
+              <p data-editable="factory-process-p-1" <?php echo synergy_style('factory-process-p-1', 'smart-factory'); ?> class="text-[11px] text-slate-500 font-300 leading-snug mb-5"><?php echo synergy_content('factory-process-p-1', '<span class="lang-th">เข้าใจเป้าหมายธุรกิจและการดำเนินงานของคุณ</span><span class="lang-en">Understand your business and operational goals</span>', 'smart-factory'); ?></p>
             </div>
             <div class="hidden lg:flex items-center gap-1 absolute top-[42px] -right-5 w-10 z-20 text-slate-300 pointer-events-none">
               <span class="flex-1 h-px bg-slate-300"></span>
@@ -460,12 +452,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   02
                 </div>
               </div>
-              <h3 class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2">
-                <span class="lang-th">ออกแบบวิศวกรรม</span><span class="lang-en">ENGINEERING DESIGN</span>
-              </h3>
-              <p class="text-[11px] text-slate-500 font-300 leading-snug mb-5">
-                <span class="lang-th">ออกแบบสถาปัตยกรรมระบบ ไฟฟ้า และเครื่องกล</span><span class="lang-en">System architecture, electrical &amp; mechanical design</span>
-              </p>
+              <h3 data-editable="factory-process-h3-2" <?php echo synergy_style('factory-process-h3-2', 'smart-factory'); ?> class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2"><?php echo synergy_content('factory-process-h3-2', '<span class="lang-th">ออกแบบวิศวกรรม</span><span class="lang-en">ENGINEERING DESIGN</span>', 'smart-factory'); ?></h3>
+              <p data-editable="factory-process-p-2" <?php echo synergy_style('factory-process-p-2', 'smart-factory'); ?> class="text-[11px] text-slate-500 font-300 leading-snug mb-5"><?php echo synergy_content('factory-process-p-2', '<span class="lang-th">ออกแบบสถาปัตยกรรมระบบ ไฟฟ้า และเครื่องกล</span><span class="lang-en">System architecture, electrical &amp; mechanical design</span>', 'smart-factory'); ?></p>
             </div>
             <div class="hidden lg:flex items-center gap-1 absolute top-[42px] -right-5 w-10 z-20 text-slate-300 pointer-events-none">
               <span class="flex-1 h-px bg-slate-300"></span>
@@ -484,12 +472,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   03
                 </div>
               </div>
-              <h3 class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2">
-                <span class="lang-th">พัฒนาฮาร์ดแวร์</span><span class="lang-en">HARDWARE DEVELOPMENT</span>
-              </h3>
-              <p class="text-[11px] text-slate-500 font-300 leading-snug mb-5">
-                <span class="lang-th">ฮาร์ดแวร์อุตสาหกรรม ออกแบบ PCB และทำต้นแบบ</span><span class="lang-en">Industrial hardware, PCB design &amp; prototyping</span>
-              </p>
+              <h3 data-editable="factory-process-h3-3" <?php echo synergy_style('factory-process-h3-3', 'smart-factory'); ?> class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2"><?php echo synergy_content('factory-process-h3-3', '<span class="lang-th">พัฒนาฮาร์ดแวร์</span><span class="lang-en">HARDWARE DEVELOPMENT</span>', 'smart-factory'); ?></h3>
+              <p data-editable="factory-process-p-3" <?php echo synergy_style('factory-process-p-3', 'smart-factory'); ?> class="text-[11px] text-slate-500 font-300 leading-snug mb-5"><?php echo synergy_content('factory-process-p-3', '<span class="lang-th">ฮาร์ดแวร์อุตสาหกรรม ออกแบบ PCB และทำต้นแบบ</span><span class="lang-en">Industrial hardware, PCB design &amp; prototyping</span>', 'smart-factory'); ?></p>
             </div>
             <div class="hidden lg:flex items-center gap-1 absolute top-[42px] -right-5 w-10 z-20 text-slate-300 pointer-events-none">
               <span class="flex-1 h-px bg-slate-300"></span>
@@ -508,12 +492,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   04
                 </div>
               </div>
-              <h3 class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2">
-                <span class="lang-th">เฟิร์มแวร์ &amp; ซอฟต์แวร์</span><span class="lang-en">FIRMWARE &amp; SOFTWARE</span>
-              </h3>
-              <p class="text-[11px] text-slate-500 font-300 leading-snug mb-5">
-                <span class="lang-th">เฟิร์มแวร์ฝังตัว ซอฟต์แวร์ edge และไดรเวอร์อุปกรณ์</span><span class="lang-en">Embedded firmware, edge software &amp; device drivers</span>
-              </p>
+              <h3 data-editable="factory-process-h3-4" <?php echo synergy_style('factory-process-h3-4', 'smart-factory'); ?> class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2"><?php echo synergy_content('factory-process-h3-4', '<span class="lang-th">เฟิร์มแวร์ &amp; ซอฟต์แวร์</span><span class="lang-en">FIRMWARE &amp; SOFTWARE</span>', 'smart-factory'); ?></h3>
+              <p data-editable="factory-process-p-4" <?php echo synergy_style('factory-process-p-4', 'smart-factory'); ?> class="text-[11px] text-slate-500 font-300 leading-snug mb-5"><?php echo synergy_content('factory-process-p-4', '<span class="lang-th">เฟิร์มแวร์ฝังตัว ซอฟต์แวร์ edge และไดรเวอร์อุปกรณ์</span><span class="lang-en">Embedded firmware, edge software &amp; device drivers</span>', 'smart-factory'); ?></p>
             </div>
             <div class="hidden lg:flex items-center gap-1 absolute top-[42px] -right-5 w-10 z-20 text-slate-300 pointer-events-none">
               <span class="flex-1 h-px bg-slate-300"></span>
@@ -532,12 +512,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   05
                 </div>
               </div>
-              <h3 class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2">
-                <span class="lang-th">ติดตั้งใช้งานจริง</span><span class="lang-en">IMPLEMENTATION</span>
-              </h3>
-              <p class="text-[11px] text-slate-500 font-300 leading-snug mb-5">
-                <span class="lang-th">เชื่อมต่อระบบ ติดตั้ง และทดสอบเดินระบบ</span><span class="lang-en">System integration, installation &amp; commissioning</span>
-              </p>
+              <h3 data-editable="factory-process-h3-5" <?php echo synergy_style('factory-process-h3-5', 'smart-factory'); ?> class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2"><?php echo synergy_content('factory-process-h3-5', '<span class="lang-th">ติดตั้งใช้งานจริง</span><span class="lang-en">IMPLEMENTATION</span>', 'smart-factory'); ?></h3>
+              <p data-editable="factory-process-p-5" <?php echo synergy_style('factory-process-p-5', 'smart-factory'); ?> class="text-[11px] text-slate-500 font-300 leading-snug mb-5"><?php echo synergy_content('factory-process-p-5', '<span class="lang-th">เชื่อมต่อระบบ ติดตั้ง และทดสอบเดินระบบ</span><span class="lang-en">System integration, installation &amp; commissioning</span>', 'smart-factory'); ?></p>
             </div>
             <div class="hidden lg:flex items-center gap-1 absolute top-[42px] -right-5 w-10 z-20 text-slate-300 pointer-events-none">
               <span class="flex-1 h-px bg-slate-300"></span>
@@ -556,12 +532,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   06
                 </div>
               </div>
-              <h3 class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2">
-                <span class="lang-th">ดูแล &amp; พัฒนาต่อเนื่อง</span><span class="lang-en">SUPPORT &amp; EVOLUTION</span>
-              </h3>
-              <p class="text-[11px] text-slate-500 font-300 leading-snug mb-5">
-                <span class="lang-th">บำรุงรักษา เฝ้าระวัง และปรับปรุงอย่างต่อเนื่อง</span><span class="lang-en">Maintenance, monitoring and continuous improvement</span>
-              </p>
+              <h3 data-editable="factory-process-h3-6" <?php echo synergy_style('factory-process-h3-6', 'smart-factory'); ?> class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-2"><?php echo synergy_content('factory-process-h3-6', '<span class="lang-th">ดูแล &amp; พัฒนาต่อเนื่อง</span><span class="lang-en">SUPPORT &amp; EVOLUTION</span>', 'smart-factory'); ?></h3>
+              <p data-editable="factory-process-p-6" <?php echo synergy_style('factory-process-p-6', 'smart-factory'); ?> class="text-[11px] text-slate-500 font-300 leading-snug mb-5"><?php echo synergy_content('factory-process-p-6', '<span class="lang-th">บำรุงรักษา เฝ้าระวัง และปรับปรุงอย่างต่อเนื่อง</span><span class="lang-en">Maintenance, monitoring and continuous improvement</span>', 'smart-factory'); ?></p>
             </div>
             <div class="w-full h-28 rounded-xl overflow-hidden bg-slate-100 border border-slate-100">
               <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/image/iot-operations-data-center.png" alt="Support & Evolution" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
@@ -574,7 +546,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- SYNEXTA INTELLIGENCE ARCHITECTURE -->
-  <section class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80 overflow-hidden">
+  <section id="factory-architecture" class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-12 gap-8 lg:gap-6 items-center">
 
@@ -814,10 +786,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <h4 class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-0.5">
               CLOUD
             </h4>
-            <p class="text-[10px] text-slate-500 font-400 leading-tight">
-              <span class="lang-th">ยืดหยุ่น ปลอดภัย</span>
-              <span class="lang-en">Scalable &amp; Secure</span>
-            </p>
+            <p data-editable="factory-architecture-p-1" <?php echo synergy_style('factory-architecture-p-1', 'smart-factory'); ?> class="text-[10px] text-slate-500 font-400 leading-tight"><?php echo synergy_content('factory-architecture-p-1', '<span class="lang-th">ยืดหยุ่น ปลอดภัย</span>
+              <span class="lang-en">Scalable &amp; Secure</span>', 'smart-factory'); ?></p>
           </div>
 
           <!-- OR Divider -->
@@ -833,10 +803,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
             <h4 class="font-display font-800 text-xs text-ink uppercase tracking-wider mb-0.5">
               ON-PREMISE
             </h4>
-            <p class="text-[10px] text-slate-500 font-400 leading-tight">
-              <span class="lang-th">เสถียร เป็นส่วนตัว</span>
-              <span class="lang-en">Reliable &amp; Private</span>
-            </p>
+            <p data-editable="factory-architecture-p-2" <?php echo synergy_style('factory-architecture-p-2', 'smart-factory'); ?> class="text-[10px] text-slate-500 font-400 leading-tight"><?php echo synergy_content('factory-architecture-p-2', '<span class="lang-th">เสถียร เป็นส่วนตัว</span>
+              <span class="lang-en">Reliable &amp; Private</span>', 'smart-factory'); ?></p>
           </div>
         </div>
 
@@ -845,7 +813,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- SMART FACTORY CAPABILITIES -->
-  <section class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80">
+  <section id="factory-capabilities" class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-12 sm:mb-14">
         <h2 class="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight uppercase">
@@ -865,10 +833,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             Industrial IoT (IIoT)
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">เชื่อมต่ออุปกรณ์อุตสาหกรรมอย่างปลอดภัย</span>
-            <span class="lang-en">Connect industrial equipment securely.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-1" <?php echo synergy_style('factory-capabilities-p-1', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-1', '<span class="lang-th">เชื่อมต่ออุปกรณ์อุตสาหกรรมอย่างปลอดภัย</span>
+            <span class="lang-en">Connect industrial equipment securely.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 02. Machine Monitoring -->
@@ -879,10 +845,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             Machine Monitoring
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">ติดตามสถานะเครื่องจักรแบบเรียลไทม์</span>
-            <span class="lang-en">Real-time machine monitoring.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-2" <?php echo synergy_style('factory-capabilities-p-2', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-2', '<span class="lang-th">ติดตามสถานะเครื่องจักรแบบเรียลไทม์</span>
+            <span class="lang-en">Real-time machine monitoring.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 03. OEE Analytics -->
@@ -893,10 +857,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             OEE Analytics
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">วัดและปรับปรุงประสิทธิภาพการผลิต</span>
-            <span class="lang-en">Measure and improve manufacturing efficiency.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-3" <?php echo synergy_style('factory-capabilities-p-3', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-3', '<span class="lang-th">วัดและปรับปรุงประสิทธิภาพการผลิต</span>
+            <span class="lang-en">Measure and improve manufacturing efficiency.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 04. Predictive Maintenance -->
@@ -907,10 +869,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             Predictive Maintenance
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">ทำนายความเสียหายก่อนเกิดจริง</span>
-            <span class="lang-en">Predict equipment failures before they happen.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-4" <?php echo synergy_style('factory-capabilities-p-4', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-4', '<span class="lang-th">ทำนายความเสียหายก่อนเกิดจริง</span>
+            <span class="lang-en">Predict equipment failures before they happen.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 05. AI Analytics -->
@@ -921,10 +881,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             AI Analytics
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">เปลี่ยนข้อมูลให้เป็นข้อมูลเชิงลึกที่ใช้งานได้</span>
-            <span class="lang-en">Transform industrial data into actionable insights.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-5" <?php echo synergy_style('factory-capabilities-p-5', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-5', '<span class="lang-th">เปลี่ยนข้อมูลให้เป็นข้อมูลเชิงลึกที่ใช้งานได้</span>
+            <span class="lang-en">Transform industrial data into actionable insights.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 06. Production Traceability -->
@@ -935,10 +893,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             Production Traceability
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">ตามรอยการผลิตตั้งแต่วัตถุดิบถึงสินค้าสำเร็จ</span>
-            <span class="lang-en">Track production from raw material to finished goods.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-6" <?php echo synergy_style('factory-capabilities-p-6', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-6', '<span class="lang-th">ตามรอยการผลิตตั้งแต่วัตถุดิบถึงสินค้าสำเร็จ</span>
+            <span class="lang-en">Track production from raw material to finished goods.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 07. Energy Monitoring -->
@@ -949,10 +905,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             Energy Monitoring
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">ติดตามการใช้พลังงานและลดการสูญเสีย</span>
-            <span class="lang-en">Monitor energy usage and reduce waste.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-7" <?php echo synergy_style('factory-capabilities-p-7', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-7', '<span class="lang-th">ติดตามการใช้พลังงานและลดการสูญเสีย</span>
+            <span class="lang-en">Monitor energy usage and reduce waste.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 08. Industrial Dashboard -->
@@ -963,10 +917,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             Industrial Dashboard
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">แดชบอร์ด KPI แบบรวมศูนย์</span>
-            <span class="lang-en">Centralized KPI dashboard.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-8" <?php echo synergy_style('factory-capabilities-p-8', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-8', '<span class="lang-th">แดชบอร์ด KPI แบบรวมศูนย์</span>
+            <span class="lang-en">Centralized KPI dashboard.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 09. Edge Computing -->
@@ -977,10 +929,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             Edge Computing
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">ประมวลผลข้อมูลใกล้เครื่องจักร</span>
-            <span class="lang-en">Process data close to machines.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-9" <?php echo synergy_style('factory-capabilities-p-9', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-9', '<span class="lang-th">ประมวลผลข้อมูลใกล้เครื่องจักร</span>
+            <span class="lang-en">Process data close to machines.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 10. Cloud Platform -->
@@ -991,10 +941,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             Cloud Platform
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">โครงสร้างพื้นฐานคลาวด์ที่ขยายได้</span>
-            <span class="lang-en">Scalable cloud infrastructure.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-10" <?php echo synergy_style('factory-capabilities-p-10', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-10', '<span class="lang-th">โครงสร้างพื้นฐานคลาวด์ที่ขยายได้</span>
+            <span class="lang-en">Scalable cloud infrastructure.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 11. On-Premise Deployment -->
@@ -1005,10 +953,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             On-Premise Deployment
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">โครงสร้างภายในองค์กรระดับ enterprise</span>
-            <span class="lang-en">Enterprise private infrastructure.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-11" <?php echo synergy_style('factory-capabilities-p-11', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-11', '<span class="lang-th">โครงสร้างภายในองค์กรระดับ enterprise</span>
+            <span class="lang-en">Enterprise private infrastructure.</span>', 'smart-factory'); ?></p>
         </div>
 
         <!-- 12. ERP / MES Integration -->
@@ -1019,10 +965,8 @@ if (file_exists(__DIR__ . '/functions.php')) {
           <h3 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5 group-hover:text-emerald-700 transition-colors">
             ERP / MES Integration
           </h3>
-          <p class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]">
-            <span class="lang-th">เชื่อมระบบโรงงานเข้ากับระบบองค์กร</span>
-            <span class="lang-en">Connect factory and enterprise systems.</span>
-          </p>
+          <p data-editable="factory-capabilities-p-12" <?php echo synergy_style('factory-capabilities-p-12', 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed max-w-[220px]"><?php echo synergy_content('factory-capabilities-p-12', '<span class="lang-th">เชื่อมระบบโรงงานเข้ากับระบบองค์กร</span>
+            <span class="lang-en">Connect factory and enterprise systems.</span>', 'smart-factory'); ?></p>
         </div>
 
       </div>
@@ -1030,7 +974,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- BUSINESS IMPACT -->
-  <section class="py-20 bg-white border-b border-slate-100">
+  <section id="factory-outcomes" class="py-20 bg-white border-b border-slate-100">
     <div class="max-w-7xl mx-auto px-6">
       <div class="max-w-2xl mb-12">
         <span class="text-brand text-xs font-700 tracking-[0.2em] uppercase block mb-3"><span class="lang-th">ผลลัพธ์ทางธุรกิจ</span><span class="lang-en">Business Impact</span></span>
@@ -1042,49 +986,49 @@ if (file_exists(__DIR__ . '/functions.php')) {
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
         <div class="rounded-2xl border border-slate-100 bg-surface p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
           <div class="font-display font-800 text-3xl sm:text-4xl text-brand mb-2">25%+</div>
-          <p class="font-700 text-ink text-sm mb-1.5"><span class="lang-th">ลด Downtime</span><span class="lang-en">Reduce Downtime</span></p>
-          <p class="text-xs text-body font-300 leading-relaxed"><span class="lang-th">แจ้งเตือนก่อนเครื่องจักรเสีย ลดเวลาหยุดที่ไม่ได้วางแผน</span><span class="lang-en">Alerts before failures cut unplanned stops.</span></p>
+          <p data-editable="factory-outcomes-p-1" <?php echo synergy_style('factory-outcomes-p-1', 'smart-factory'); ?> class="font-700 text-ink text-sm mb-1.5"><?php echo synergy_content('factory-outcomes-p-1', '<span class="lang-th">ลด Downtime</span><span class="lang-en">Reduce Downtime</span>', 'smart-factory'); ?></p>
+          <p data-editable="factory-outcomes-p-2" <?php echo synergy_style('factory-outcomes-p-2', 'smart-factory'); ?> class="text-xs text-body font-300 leading-relaxed"><?php echo synergy_content('factory-outcomes-p-2', '<span class="lang-th">แจ้งเตือนก่อนเครื่องจักรเสีย ลดเวลาหยุดที่ไม่ได้วางแผน</span><span class="lang-en">Alerts before failures cut unplanned stops.</span>', 'smart-factory'); ?></p>
         </div>
         <div class="rounded-2xl border border-slate-100 bg-surface p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
           <div class="font-display font-800 text-3xl sm:text-4xl text-brand mb-2">20%+</div>
-          <p class="font-700 text-ink text-sm mb-1.5"><span class="lang-th">ลดต้นทุนซ่อมบำรุง</span><span class="lang-en">Lower Maintenance Cost</span></p>
-          <p class="text-xs text-body font-300 leading-relaxed"><span class="lang-th">บำรุงรักษาเชิงรุกก่อนเกิดความเสียหาย</span><span class="lang-en">Predictive maintenance prevents costly repairs.</span></p>
+          <p data-editable="factory-outcomes-p-3" <?php echo synergy_style('factory-outcomes-p-3', 'smart-factory'); ?> class="font-700 text-ink text-sm mb-1.5"><?php echo synergy_content('factory-outcomes-p-3', '<span class="lang-th">ลดต้นทุนซ่อมบำรุง</span><span class="lang-en">Lower Maintenance Cost</span>', 'smart-factory'); ?></p>
+          <p data-editable="factory-outcomes-p-4" <?php echo synergy_style('factory-outcomes-p-4', 'smart-factory'); ?> class="text-xs text-body font-300 leading-relaxed"><?php echo synergy_content('factory-outcomes-p-4', '<span class="lang-th">บำรุงรักษาเชิงรุกก่อนเกิดความเสียหาย</span><span class="lang-en">Predictive maintenance prevents costly repairs.</span>', 'smart-factory'); ?></p>
         </div>
         <div class="rounded-2xl border border-slate-100 bg-surface p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
           <div class="font-display font-800 text-3xl sm:text-4xl text-brand mb-2">10–20%</div>
-          <p class="font-700 text-ink text-sm mb-1.5"><span class="lang-th">ประหยัดพลังงาน</span><span class="lang-en">Save Energy</span></p>
-          <p class="text-xs text-body font-300 leading-relaxed"><span class="lang-th">เห็นการใช้พลังงานและลดการสูญเสีย</span><span class="lang-en">Visibility into usage reduces energy waste.</span></p>
+          <p data-editable="factory-outcomes-p-5" <?php echo synergy_style('factory-outcomes-p-5', 'smart-factory'); ?> class="font-700 text-ink text-sm mb-1.5"><?php echo synergy_content('factory-outcomes-p-5', '<span class="lang-th">ประหยัดพลังงาน</span><span class="lang-en">Save Energy</span>', 'smart-factory'); ?></p>
+          <p data-editable="factory-outcomes-p-6" <?php echo synergy_style('factory-outcomes-p-6', 'smart-factory'); ?> class="text-xs text-body font-300 leading-relaxed"><?php echo synergy_content('factory-outcomes-p-6', '<span class="lang-th">เห็นการใช้พลังงานและลดการสูญเสีย</span><span class="lang-en">Visibility into usage reduces energy waste.</span>', 'smart-factory'); ?></p>
         </div>
         <div class="rounded-2xl border border-slate-100 bg-surface p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
           <div class="font-display font-800 text-3xl sm:text-4xl text-brand mb-2">100%</div>
-          <p class="font-700 text-ink text-sm mb-1.5"><span class="lang-th">เห็นข้อมูลเรียลไทม์</span><span class="lang-en">Real-Time Visibility</span></p>
-          <p class="text-xs text-body font-300 leading-relaxed"><span class="lang-th">มองเห็นข้อมูลทั้งโรงงานแบบเรียลไทม์</span><span class="lang-en">Full plant visibility in real time.</span></p>
+          <p data-editable="factory-outcomes-p-7" <?php echo synergy_style('factory-outcomes-p-7', 'smart-factory'); ?> class="font-700 text-ink text-sm mb-1.5"><?php echo synergy_content('factory-outcomes-p-7', '<span class="lang-th">เห็นข้อมูลเรียลไทม์</span><span class="lang-en">Real-Time Visibility</span>', 'smart-factory'); ?></p>
+          <p data-editable="factory-outcomes-p-8" <?php echo synergy_style('factory-outcomes-p-8', 'smart-factory'); ?> class="text-xs text-body font-300 leading-relaxed"><?php echo synergy_content('factory-outcomes-p-8', '<span class="lang-th">มองเห็นข้อมูลทั้งโรงงานแบบเรียลไทม์</span><span class="lang-en">Full plant visibility in real time.</span>', 'smart-factory'); ?></p>
         </div>
         <div class="rounded-2xl border border-slate-100 bg-surface p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
           <div class="font-display font-800 text-2xl sm:text-3xl text-brand mb-2 leading-tight"><span class="lang-th">ตัดสินใจ<br>ด้วยข้อมูล</span><span class="lang-en">Data-<br>Driven</span></div>
-          <p class="font-700 text-ink text-sm mb-1.5"><span class="lang-th">ตัดสินใจแม่นยำ</span><span class="lang-en">Better Decisions</span></p>
-          <p class="text-xs text-body font-300 leading-relaxed"><span class="lang-th">ใช้ข้อมูลจริงในการตัดสินใจการผลิต</span><span class="lang-en">Decisions backed by real production data.</span></p>
+          <p data-editable="factory-outcomes-p-9" <?php echo synergy_style('factory-outcomes-p-9', 'smart-factory'); ?> class="font-700 text-ink text-sm mb-1.5"><?php echo synergy_content('factory-outcomes-p-9', '<span class="lang-th">ตัดสินใจแม่นยำ</span><span class="lang-en">Better Decisions</span>', 'smart-factory'); ?></p>
+          <p data-editable="factory-outcomes-p-10" <?php echo synergy_style('factory-outcomes-p-10', 'smart-factory'); ?> class="text-xs text-body font-300 leading-relaxed"><?php echo synergy_content('factory-outcomes-p-10', '<span class="lang-th">ใช้ข้อมูลจริงในการตัดสินใจการผลิต</span><span class="lang-en">Decisions backed by real production data.</span>', 'smart-factory'); ?></p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- INDUSTRIES WE SERVE -->
-  <section class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80">
+  <section id="factory-industries" class="py-20 sm:py-24 bg-slate-50/70 border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-12">
         <span class="text-emerald-700 text-xs font-800 tracking-[0.25em] uppercase block mb-3">INDUSTRIES</span>
         <h2 class="font-display font-black text-3xl sm:text-4xl text-ink tracking-tight"><span class="lang-th">อุตสาหกรรมที่เราให้บริการ</span><span class="lang-en">Industries We Serve</span></h2>
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_automotive_arm.png" alt="Automotive" class="w-full h-full object-contain"></div><p class="font-700 text-sm text-ink"><span class="lang-th">ยานยนต์</span><span class="lang-en">Automotive</span></p></div>
-        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_electronics_chip.png" alt="Electronics" class="w-full h-full object-contain"></div><p class="font-700 text-sm text-ink"><span class="lang-th">อิเล็กทรอนิกส์</span><span class="lang-en">Electronics</span></p></div>
-        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_food_bottles.png" alt="Food" class="w-full h-full object-contain"></div><p class="font-700 text-sm text-ink"><span class="lang-th">อาหาร</span><span class="lang-en">Food</span></p></div>
-        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_pharma_medicine.png" alt="Pharmaceutical" class="w-full h-full object-contain"></div><p class="font-700 text-sm text-ink"><span class="lang-th">ยาและเวชภัณฑ์</span><span class="lang-en">Pharmaceutical</span></p></div>
-        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_packaging_box.png" alt="Packaging" class="w-full h-full object-contain"></div><p class="font-700 text-sm text-ink"><span class="lang-th">บรรจุภัณฑ์</span><span class="lang-en">Packaging</span></p></div>
-        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_energy_solar.png" alt="Energy" class="w-full h-full object-contain"></div><p class="font-700 text-sm text-ink"><span class="lang-th">พลังงาน</span><span class="lang-en">Energy</span></p></div>
-        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_metal_furnace.png" alt="Metal" class="w-full h-full object-contain"></div><p class="font-700 text-sm text-ink"><span class="lang-th">โลหะ</span><span class="lang-en">Metal</span></p></div>
-        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_other_globe.png" alt="Other Industries" class="w-full h-full object-contain"></div><p class="font-700 text-sm text-ink"><span class="lang-th">อุตสาหกรรมอื่นๆ</span><span class="lang-en">Other Industries</span></p></div>
+        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_automotive_arm.png" alt="Automotive" class="w-full h-full object-contain"></div><p data-editable="factory-industries-p-1" <?php echo synergy_style('factory-industries-p-1', 'smart-factory'); ?> class="font-700 text-sm text-ink"><?php echo synergy_content('factory-industries-p-1', '<span class="lang-th">ยานยนต์</span><span class="lang-en">Automotive</span>', 'smart-factory'); ?></p></div>
+        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_electronics_chip.png" alt="Electronics" class="w-full h-full object-contain"></div><p data-editable="factory-industries-p-2" <?php echo synergy_style('factory-industries-p-2', 'smart-factory'); ?> class="font-700 text-sm text-ink"><?php echo synergy_content('factory-industries-p-2', '<span class="lang-th">อิเล็กทรอนิกส์</span><span class="lang-en">Electronics</span>', 'smart-factory'); ?></p></div>
+        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_food_bottles.png" alt="Food" class="w-full h-full object-contain"></div><p data-editable="factory-industries-p-3" <?php echo synergy_style('factory-industries-p-3', 'smart-factory'); ?> class="font-700 text-sm text-ink"><?php echo synergy_content('factory-industries-p-3', '<span class="lang-th">อาหาร</span><span class="lang-en">Food</span>', 'smart-factory'); ?></p></div>
+        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_pharma_medicine.png" alt="Pharmaceutical" class="w-full h-full object-contain"></div><p data-editable="factory-industries-p-4" <?php echo synergy_style('factory-industries-p-4', 'smart-factory'); ?> class="font-700 text-sm text-ink"><?php echo synergy_content('factory-industries-p-4', '<span class="lang-th">ยาและเวชภัณฑ์</span><span class="lang-en">Pharmaceutical</span>', 'smart-factory'); ?></p></div>
+        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_packaging_box.png" alt="Packaging" class="w-full h-full object-contain"></div><p data-editable="factory-industries-p-5" <?php echo synergy_style('factory-industries-p-5', 'smart-factory'); ?> class="font-700 text-sm text-ink"><?php echo synergy_content('factory-industries-p-5', '<span class="lang-th">บรรจุภัณฑ์</span><span class="lang-en">Packaging</span>', 'smart-factory'); ?></p></div>
+        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_energy_solar.png" alt="Energy" class="w-full h-full object-contain"></div><p data-editable="factory-industries-p-6" <?php echo synergy_style('factory-industries-p-6', 'smart-factory'); ?> class="font-700 text-sm text-ink"><?php echo synergy_content('factory-industries-p-6', '<span class="lang-th">พลังงาน</span><span class="lang-en">Energy</span>', 'smart-factory'); ?></p></div>
+        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_metal_furnace.png" alt="Metal" class="w-full h-full object-contain"></div><p data-editable="factory-industries-p-7" <?php echo synergy_style('factory-industries-p-7', 'smart-factory'); ?> class="font-700 text-sm text-ink"><?php echo synergy_content('factory-industries-p-7', '<span class="lang-th">โลหะ</span><span class="lang-en">Metal</span>', 'smart-factory'); ?></p></div>
+        <div class="rounded-2xl border border-slate-100 bg-white p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center justify-center group"><div class="w-16 h-16 sm:w-20 sm:h-20 mb-2 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"><img src="<?php echo get_template_directory_uri(); ?>/image/ind_other_globe.png" alt="Other Industries" class="w-full h-full object-contain"></div><p data-editable="factory-industries-p-8" <?php echo synergy_style('factory-industries-p-8', 'smart-factory'); ?> class="font-700 text-sm text-ink"><?php echo synergy_content('factory-industries-p-8', '<span class="lang-th">อุตสาหกรรมอื่นๆ</span><span class="lang-en">Other Industries</span>', 'smart-factory'); ?></p></div>
       </div>
     </div>
   </section>
@@ -1148,7 +1092,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- OTHER SOLUTIONS -->
-  <section class="py-16 bg-surface border-t border-gray-100">
+  <section id="factory-related" class="py-16 bg-surface border-t border-gray-100">
     <div class="max-w-7xl mx-auto px-6">
       <p class="text-center text-xs text-muted uppercase tracking-wider mb-8 font-700"><span class="lang-th">โซลูชันอื่นๆ</span><span class="lang-en">Other Solutions</span></p>
       <div class="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
@@ -1165,7 +1109,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
   </section>
 
   <!-- CTA -->
-  <section class="py-20 bg-ink text-white">
+  <section id="factory-cta" class="py-20 bg-ink text-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <i class="fa-solid fa-gears text-gold-bright text-3xl mb-6 block"></i>
       <h2 class="font-display font-800 text-3xl sm:text-4xl text-white mb-4">

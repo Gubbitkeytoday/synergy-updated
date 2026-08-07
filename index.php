@@ -911,7 +911,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
 
           <div class="px-6 sm:px-7 pb-6 sm:pb-7 pt-1 border-t border-slate-100/70 mt-1">
-            <a href="smart-factory.php" onclick="event.stopPropagation()"
+            <a href="solutions/smart-factory.html" onclick="event.stopPropagation()"
               class="flex items-center justify-center gap-2 w-full bg-brand-soft text-brand hover:bg-brand hover:text-white font-800 text-xs uppercase tracking-wider py-3 rounded-xl transition-all duration-300">
               <span class="lang-th">ดูรายละเอียด</span>
               <span class="lang-en">View Details</span>
