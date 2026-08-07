@@ -1021,29 +1021,43 @@ if (!function_exists('sa_picture')) {
 
 
     <!-- CTA -->
-    <section id="agri-cta" aria-labelledby="agri-cta-title" class="py-20 sm:py-28 bg-ink text-white relative overflow-hidden">
-      <div class="absolute inset-0 pointer-events-none opacity-40 sa-mesh-dark"></div>
-      <div class="absolute inset-0 pointer-events-none">
-        <div class="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-brand-deep rounded-full blur-[110px]" aria-hidden="true"></div>
-      </div>
+    <section id="agri-cta" class="py-14 sm:py-20 bg-white" style="scroll-margin-top:96px">
+      <div class="se-shell">
+        <div class="relative overflow-hidden rounded-[28px] px-6 py-10 sm:px-10 sm:py-14 lg:px-16 text-white"
+             style="background:linear-gradient(135deg,#0d4636 0%,#093427 55%,#06261c 100%)">
+          <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none z-0"></div>
 
-      <div class="max-w-4xl mx-auto px-5 sm:px-6 text-center relative z-10">
-        <i class="fa-solid fa-seedling text-gold-bright text-3xl mb-6 block" aria-hidden="true"></i>
-        <h2 id="agri-cta-title" class="font-display svc-h2 text-white mb-5 tracking-tight">
-          <span class="lang-th">เริ่มต้นทำเกษตรแม่นยำสูง<br>เพื่อยกระดับผลผลิตและวิถีคาร์บอนต่ำ</span>
-          <span class="lang-en">Start Precision Farming<br>For Better Yield and a Low-Carbon Path</span>
-        </h2>
-        <p class="svc-copy text-white/70 mb-10 max-w-2xl mx-auto">
-          <span class="lang-th">ทีมวิศวกร IoT เกษตรอัจฉริยะของเราพร้อมให้คำปรึกษาและเข้าสำรวจพื้นที่จริง ตั้งแต่ติดตั้ง Sensor ไร้สายภาคสนาม จนถึงการเตรียมข้อมูลยื่นขอใบรับรองคาร์บอนเครดิต</span>
-          <span class="lang-en">Our agricultural IoT engineers advise and survey on site, from installing field sensors to preparing the data for carbon credit certification.</span>
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center">
-          <a href="<?php echo home_url('/'); ?>#contact" class="sa-tap w-full sm:w-auto bg-brand hover:bg-brand-deep text-white svc-btn uppercase tracking-wider px-8 py-4 rounded-xl transition shadow-lg shadow-brand/20 inline-flex items-center justify-center gap-2 sa-card-d">
-            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span class="lang-th">ติดต่อทีมวิศวกร</span><span class="lang-en">Contact Our Engineers</span>
-          </a>
-          <a href="<?php echo home_url('/service/'); ?>" class="sa-tap w-full sm:w-auto border border-white/20 hover:bg-white/10 hover:border-white/40 text-white svc-btn uppercase tracking-wider px-8 py-4 rounded-xl transition inline-flex items-center justify-center gap-2 sa-card-d">
-            <i class="fa-solid fa-microchip" aria-hidden="true"></i><span class="lang-th">ขีดความสามารถวิศวกรรม</span><span class="lang-en">Engineering Capabilities</span>
-          </a>
+          <div class="relative z-10 grid gap-8 lg:grid-cols-[1.35fr_auto] lg:items-center">
+            <div>
+              <p class="se-eyebrow mb-3" style="color:#4ade80">
+                <span class="lang-th">เริ่มต้นกับเรา</span>
+                <span class="lang-en">GET STARTED</span>
+              </p>
+              <h2 class="se-h2 font-display text-white">
+                <span class="lang-th">เริ่มต้นทำเกษตรแม่นยำสูง<br><span class="text-brand-bright">เพื่อยกระดับผลผลิตและวิถีคาร์บอนต่ำ</span></span>
+                <span class="lang-en">Start Precision Farming<br><span class="text-brand-bright">For Better Yield and a Low-Carbon Path</span></span>
+              </h2>
+              <p class="se-lede text-slate-200 mt-5 max-w-2xl">
+                <span class="lang-th">ทีมวิศวกร IoT เกษตรอัจฉริยะของเราพร้อมให้คำปรึกษาและเข้าสำรวจพื้นที่จริง ตั้งแต่ติดตั้ง Sensor ไร้สายภาคสนาม จนถึงการเตรียมข้อมูลยื่นขอใบรับรองคาร์บอนเครดิต</span>
+                <span class="lang-en">Our Smart Agri-IoT engineering team is ready to consult and assess your fields, from deploying wireless sensor nodes to preparing auditable carbon credit data.</span>
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row lg:flex-col gap-3 lg:gap-4 lg:min-w-[240px]">
+              <a href="<?php echo home_url('/'); ?>#contact"
+                 class="se-cta-label inline-flex items-center justify-center gap-2.5 bg-brand-bright text-white px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-brand-bright/30 hover:-translate-y-0.5">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span class="lang-th">ติดต่อทีมวิศวกร</span>
+                <span class="lang-en">Contact Our Engineers</span>
+              </a>
+              <a href="<?php echo home_url('/service/'); ?>"
+                 class="se-cta-label inline-flex items-center justify-center gap-2.5 border border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl font-extrabold uppercase tracking-wider transition-all hover:-translate-y-0.5">
+                <i class="fa-solid fa-microchip"></i>
+                <span class="lang-th">ขีดความสามารถวิศวกรรม</span>
+                <span class="lang-en">Engineering Capabilities</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
