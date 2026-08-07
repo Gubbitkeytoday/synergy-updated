@@ -215,9 +215,42 @@ document.addEventListener('DOMContentLoaded', async () => {
      hrefs and order can change freely.                                       */
   const navItems = [
     { id: 'home', label: '<span class="lang-th">หน้าแรก</span><span class="lang-en">Home</span>', href: homeHref('#top'), page: 'index.html', section: 'top' },
-    { id: 'smart-energy', label: '<span class="lang-th">Smart Energy</span><span class="lang-en">Smart Energy</span>', href: pageHref('smart-energy.php'), page: 'smart-energy.php' },
-    { id: 'smart-factory', label: '<span class="lang-th">Smart Factory</span><span class="lang-en">Smart Factory</span>', href: pageHref('smart-factory.php'), page: 'smart-factory.php' },
-    { id: 'smart-agriculture', label: '<span class="lang-th">Smart Agriculture</span><span class="lang-en">Smart Agriculture</span>', href: pageHref('smart-agriculture.php'), page: 'smart-agriculture.php' },
+    {
+      id: 'solutions',
+      label: '<span class="lang-th">โซลูชัน</span><span class="lang-en">Solutions</span>',
+      href: homeHref('#solutions'),
+      page: 'index.html',
+      section: 'solutions',
+      megaCol: [
+        {
+          heading: '',
+          icon: 'fa-solid fa-layer-group',
+          items: [
+            {
+              id: 'solutions.smart-energy',
+              label: '<span class="lang-th">Smart Energy</span><span class="lang-en">Smart Energy</span>',
+              href: pageHref('smart-energy.php'),
+              page: 'smart-energy.php',
+              icon: 'fa-solid fa-bolt text-amber-500'
+            },
+            {
+              id: 'solutions.smart-factory',
+              label: '<span class="lang-th">Smart Factory</span><span class="lang-en">Smart Factory</span>',
+              href: pageHref('smart-factory.php'),
+              page: 'smart-factory.php',
+              icon: 'fa-solid fa-industry text-brand'
+            },
+            {
+              id: 'solutions.smart-agriculture',
+              label: '<span class="lang-th">Smart Agriculture</span><span class="lang-en">Smart Agriculture</span>',
+              href: pageHref('smart-agriculture.php'),
+              page: 'smart-agriculture.php',
+              icon: 'fa-solid fa-seedling text-emerald-500'
+            }
+          ]
+        }
+      ]
+    },
     {
       id: 'services',
       label: '<span class="lang-th">บริการ</span><span class="lang-en">Services</span>',
@@ -231,7 +264,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             {
               id: 'services.turnkey',
               label: '<span class="lang-th">Turnkey Hardware Engineering & Manufacturing</span><span class="lang-en">Turnkey Hardware Engineering & Manufacturing</span>',
-              href: pageHref('service.php')
+              href: pageHref('service.php'),
+              page: 'service.php',
+              icon: 'fa-solid fa-microchip text-brand'
             }
           ]
         }
@@ -268,7 +303,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ─── RENDER mega-menu (desktop) ─────────────────────────────
   const renderMegaMenu = (item) => {
     const cols = item.megaCol.map(col => `
-      <div class="min-w-[200px] flex-1">
+      <div class="min-w-[240px] flex-1">
         ${col.heading ? `
         <div class="flex items-center gap-2 mb-3 pb-2.5 border-b border-slate-100/80">
           <div class="w-6 h-6 rounded-lg bg-brand/5 border border-brand/10 flex items-center justify-center shrink-0">
@@ -278,7 +313,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>` : ''}
         <div class="space-y-1">
           ${col.items.map(sub => `
-            <a href="${sub.href}" data-nav-link data-nav-id="${sub.id || ''}" class="flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-50 hover:border-slate-100 border border-transparent transition duration-200 group">
+            <a href="${sub.href}" data-nav-link data-nav-id="${sub.id || ''}" data-page="${sub.page || ''}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 hover:border-slate-100 border border-transparent transition duration-200 group">
+              ${sub.icon || col.icon ? `<div class="w-7 h-7 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 group-hover:bg-brand group-hover:border-brand transition-colors"><i class="${sub.icon || col.icon} group-hover:text-white text-xs"></i></div>` : ''}
               <span class="text-[13px] font-700 text-ink group-hover:text-brand leading-snug transition-colors">${sub.label}</span>
             </a>`).join('')}
         </div>
