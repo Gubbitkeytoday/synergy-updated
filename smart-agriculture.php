@@ -600,7 +600,7 @@ if (!function_exists('sa_picture')) {
     <!-- 01 · OVERVIEW -->
     <section id="agri-overview" aria-labelledby="agri-overview-title" class="py-20 sm:py-28 lg:py-32 sa-mesh">
       <div class="max-w-7xl mx-auto px-5 sm:px-6">
-        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
           <div class="lg:col-span-7 space-y-7">
             <div class="inline-flex items-center gap-3">
@@ -764,7 +764,7 @@ if (!function_exists('sa_picture')) {
     <!-- 03 · IOT SOLAR NODE 4G -->
     <section id="agri-solar-node" aria-labelledby="agri-solar-node-title" class="py-20 sm:py-28 lg:py-32 bg-surface relative">
       <div class="max-w-7xl mx-auto px-5 sm:px-6">
-        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
           <div class="lg:col-span-5">
             <div class="rounded-[28px] sm:rounded-[32px] overflow-hidden sa-card shadow-bento h-56 sm:h-72 lg:h-80">
@@ -826,13 +826,13 @@ if (!function_exists('sa_picture')) {
     <!-- 04 · SYNRICEWATER AWD / CARBON CREDIT -->
     <section id="agri-carbon" aria-labelledby="agri-carbon-title" class="py-20 sm:py-28 lg:py-32 bg-white relative">
       <div class="max-w-7xl mx-auto px-5 sm:px-6">
-        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
           <div class="lg:col-span-5 space-y-5">
-            <div class="rounded-3xl overflow-hidden shadow-lg border border-gray-100 h-40 sm:h-48">
+            <div class="rounded-3xl overflow-hidden shadow-lg border border-gray-100 aspect-[3/2]">
               <?php sa_picture('agri-synricewater-awd-1', 'SYNRiceWater AWD sensor in a rice field', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
             </div>
-            <div class="rounded-3xl overflow-hidden shadow-lg border border-gray-100 h-40 sm:h-48">
+            <div class="rounded-3xl overflow-hidden shadow-lg border border-gray-100 aspect-[3/2]">
               <?php sa_picture('agri-synricewater-awd-2', 'SYNRiceWater AWD network across rice paddies', 'w-full h-full object-cover', '(min-width:1024px) 40vw, 100vw', 1350, 1013); ?>
             </div>
           </div>
@@ -854,8 +854,8 @@ if (!function_exists('sa_picture')) {
             <!-- Key features -->
             <div>
               <span class="inline-block bg-brand text-white px-4 py-2 rounded-lg svc-btn uppercase tracking-wider mb-5">Key Features</span>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div class="space-y-2 text-center">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+                <div class="bg-surface rounded-2xl border border-brand/10 p-5 space-y-2 text-center h-full">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">01</div>
                   <h3 data-editable="agri-carbon-h3-1" <?php echo synergy_style('agri-carbon-h3-1', 'smart-agriculture'); ?> class="svc-label text-brand"><?php echo synergy_content('agri-carbon-h3-1', 'Built for AWD Farming', 'smart-agriculture'); ?></h3>
                   <p data-editable="agri-carbon-p-2" <?php echo synergy_style('agri-carbon-p-2', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-2', '
@@ -863,7 +863,7 @@ if (!function_exists('sa_picture')) {
                     <span class="lang-en">Designed to read water level inside buried PVC tubes in paddy fields.</span>
                   ', 'smart-agriculture'); ?></p>
                 </div>
-                <div class="space-y-2 text-center">
+                <div class="bg-surface rounded-2xl border border-brand/10 p-5 space-y-2 text-center h-full">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">02</div>
                   <h3 data-editable="agri-carbon-h3-2" <?php echo synergy_style('agri-carbon-h3-2', 'smart-agriculture'); ?> class="svc-label text-brand"><?php echo synergy_content('agri-carbon-h3-2', 'Solar + LTE Autonomous', 'smart-agriculture'); ?></h3>
                   <p data-editable="agri-carbon-p-3" <?php echo synergy_style('agri-carbon-p-3', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-3', '
@@ -871,7 +871,7 @@ if (!function_exists('sa_picture')) {
                     <span class="lang-en">Fully autonomous, solar charged and reporting over 4G.</span>
                   ', 'smart-agriculture'); ?></p>
                 </div>
-                <div class="space-y-2 text-center">
+                <div class="bg-surface rounded-2xl border border-brand/10 p-5 space-y-2 text-center h-full">
                   <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-700 mx-auto">03</div>
                   <h3 data-editable="agri-carbon-h3-3" <?php echo synergy_style('agri-carbon-h3-3', 'smart-agriculture'); ?> class="svc-label text-brand"><?php echo synergy_content('agri-carbon-h3-3', 'Carbon Credit Ready Data', 'smart-agriculture'); ?></h3>
                   <p data-editable="agri-carbon-p-4" <?php echo synergy_style('agri-carbon-p-4', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-4', '
@@ -886,21 +886,21 @@ if (!function_exists('sa_picture')) {
             <div>
               <span class="inline-block bg-brand text-white px-4 py-2 rounded-lg svc-btn uppercase tracking-wider mb-4">Benefits</span>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="flex items-start gap-3 bg-white p-4 rounded-3xl border border-gray-100 shadow-lg">
+                <div class="flex items-start gap-3 bg-surface p-4 sm:p-5 rounded-2xl border border-brand/10 h-full">
                   <span class="font-display svc-num text-brand">1</span>
                   <p data-editable="agri-carbon-p-5" <?php echo synergy_style('agri-carbon-p-5', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-5', '
                     <span class="lang-th">ลดการใช้น้ำและต้นทุนชลประทาน</span>
                     <span class="lang-en">Reduce water usage and irrigation cost</span>
                   ', 'smart-agriculture'); ?></p>
                 </div>
-                <div class="flex items-start gap-3 bg-white p-4 rounded-3xl border border-gray-100 shadow-lg">
+                <div class="flex items-start gap-3 bg-surface p-4 sm:p-5 rounded-2xl border border-brand/10 h-full">
                   <span class="font-display svc-num text-brand">2</span>
                   <p data-editable="agri-carbon-p-6" <?php echo synergy_style('agri-carbon-p-6', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-6', '
                     <span class="lang-th">ลดการปล่อยก๊าซมีเทนด้วยวิธี AWD</span>
                     <span class="lang-en">Cut methane emissions through AWD</span>
                   ', 'smart-agriculture'); ?></p>
                 </div>
-                <div class="flex items-start gap-3 bg-white p-4 rounded-3xl border border-gray-100 shadow-lg">
+                <div class="flex items-start gap-3 bg-surface p-4 sm:p-5 rounded-2xl border border-brand/10 h-full">
                   <span class="font-display svc-num text-brand">3</span>
                   <p data-editable="agri-carbon-p-7" <?php echo synergy_style('agri-carbon-p-7', 'smart-agriculture'); ?> class="svc-caption text-muted"><?php echo synergy_content('agri-carbon-p-7', '
                     <span class="lang-th">เปิดโอกาสสร้างรายได้จาก Carbon Credit</span>
@@ -934,7 +934,7 @@ if (!function_exists('sa_picture')) {
           ', 'smart-agriculture'); ?></p>
         </div>
 
-        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           <div class="lg:col-span-5 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div class="rounded-2xl overflow-hidden sa-card shadow-md h-32 sm:h-36">
