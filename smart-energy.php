@@ -1137,23 +1137,23 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
 
-          <!-- Step 05: SAFE -->
+          <!-- Step 05: SAVE -->
           <div class="bg-white border border-slate-200/90 rounded-[28px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-emerald-400 transition-all flex flex-col justify-between group relative">
             <div>
               <!-- S-Logo Graphic -->
               <div class="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-4 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
-                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_5.png" alt="05 SAFE" class="w-full h-full object-contain">
+                <img src="<?php echo get_template_directory_uri(); ?>/image/e2e_step_5.png" alt="05 SAVE" class="w-full h-full object-contain">
               </div>
 
               <!-- Header Titles -->
               <div class="text-[#0d5c3a] font-extrabold text-sm sm:text-base text-center">05</div>
               <h3 class="text-[#0d5c3a] font-display font-extrabold text-2xl sm:text-3xl text-center tracking-tight mb-1">
-                SAFE
+                SAVE
               </h3>
-              <p data-editable="energy-flow-p-9" <?php echo synergy_style('energy-flow-p-9', 'smart-energy'); ?> class="text-slate-900 font-bold text-sm sm:text-base text-center mb-2"><?php echo synergy_content('energy-flow-p-9', '<span class="lang-th">Secure & Reliable</span>
-                <span class="lang-en">Secure &amp; Reliable</span>', 'smart-energy'); ?></p>
-              <p data-editable="energy-flow-p-10" <?php echo synergy_style('energy-flow-p-10', 'smart-energy'); ?> class="text-slate-500 text-xs sm:text-[13px] leading-relaxed text-center mb-5 min-h-[44px] px-1"><?php echo synergy_content('energy-flow-p-10', '<span class="lang-th">ดูแลความปลอดภัยของข้อมูล<br>และความต่อเนื่องของระบบ</span>
-                <span class="lang-en">Keep data protected and the system running without interruption.</span>', 'smart-energy'); ?></p>
+              <p data-editable="energy-flow-p-9" <?php echo synergy_style('energy-flow-p-9', 'smart-energy'); ?> class="text-slate-900 font-bold text-sm sm:text-base text-center mb-2"><?php echo synergy_content('energy-flow-p-9', '<span class="lang-th">ลดต้นทุนด้านพลังงาน</span>
+                <span class="lang-en">Energy Cost Reduction</span>', 'smart-energy'); ?></p>
+              <p data-editable="energy-flow-p-10" <?php echo synergy_style('energy-flow-p-10', 'smart-energy'); ?> class="text-slate-500 text-xs sm:text-[13px] leading-relaxed text-center mb-5 min-h-[44px] px-1"><?php echo synergy_content('energy-flow-p-10', '<span class="lang-th">ใช้พลังงานอย่างมีประสิทธิภาพ<br>ลดค่าใช้จ่ายที่ไม่จำเป็น เพิ่มกำไรให้ธุรกิจอย่างยั่งยืน</span>
+                <span class="lang-en">Use energy efficiently, reduce unnecessary expenses, and sustainably increase business profits.</span>', 'smart-energy'); ?></p>
             </div>
 
             <!-- Bottom Items List -->
@@ -1161,20 +1161,20 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <div class="w-full h-px bg-slate-100 mb-4"></div>
               <div class="flex flex-col gap-2.5">
                 <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
-                  <i class="fa-solid fa-user-shield text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
-                  <span>Access Control</span>
+                  <i class="fa-solid fa-magnifying-glass-chart text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span><span class="lang-th">วิเคราะห์การใช้พลังงาน</span><span class="lang-en">Energy Analysis</span></span>
                 </div>
                 <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
-                  <i class="fa-solid fa-database text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
-                  <span>Data Backup</span>
+                  <i class="fa-solid fa-arrow-trend-down text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span><span class="lang-th">ลดพลังงานสิ้นเปลือง</span><span class="lang-en">Waste Reduction</span></span>
                 </div>
                 <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
-                  <i class="fa-solid fa-clipboard-check text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
-                  <span>Audit Trail</span>
+                  <i class="fa-solid fa-gears text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span><span class="lang-th">เพิ่มประสิทธิภาพพลังงาน</span><span class="lang-en">Energy Efficiency</span></span>
                 </div>
                 <div class="flex items-center gap-3 text-slate-700 text-xs sm:text-sm font-medium">
-                  <i class="fa-solid fa-heart-pulse text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
-                  <span>System Health</span>
+                  <i class="fa-solid fa-coins text-[#0d5c3a] text-sm w-5 text-center shrink-0"></i>
+                  <span><span class="lang-th">ลดค่าใช้จ่ายพลังงาน</span><span class="lang-en">Cost Saving</span></span>
                 </div>
               </div>
             </div>
