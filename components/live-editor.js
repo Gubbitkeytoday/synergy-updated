@@ -1047,10 +1047,49 @@
   toast.id = 'live-edit-toast';
   document.body.appendChild(toast);
 
+  let toastTimer = null;
+
   function showToast(msg) {
+    if (toastTimer) clearTimeout(toastTimer);
     toast.textContent = msg;
     toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    toastTimer = setTimeout(() => { toast.style.display = 'none'; }, 3000);
+  }
+
+  /* Toast with an undo affordance, used where a confirm() dialog would
+     otherwise sit in front of every deletion. Longer-lived than a plain toast
+     because it is the only way back. */
+  function showToastWithUndo(msg, onUndo) {
+    if (toastTimer) clearTimeout(toastTimer);
+    toast.textContent = '';
+
+    const text = document.createElement('span');
+    text.textContent = msg + '  ';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'เลิกทำ';
+    btn.style.cssText = 'margin-left:10px;min-height:32px;padding:0 14px;border:0;border-radius:8px;' +
+      'background:#F2C72E;color:#0B1F16;font-weight:800;cursor:pointer;font-size:13px;';
+
+    /* The toast can appear under the pointer that just deleted something, and a
+       button that is clickable the instant it renders will then undo the action
+       the same gesture requested. Arm it a moment later. */
+    let armed = false;
+    setTimeout(function () { armed = true; }, 350);
+
+    btn.addEventListener('click', function () {
+      if (!armed) return;
+      if (toastTimer) clearTimeout(toastTimer);
+      toast.style.display = 'none';
+      toast.textContent = '';
+      onUndo();
+      showToast('คืนค่าแล้ว');
+    });
+
+    toast.appendChild(text);
+    toast.appendChild(btn);
+    toast.style.display = 'block';
+    toastTimer = setTimeout(() => { toast.style.display = 'none'; toast.textContent = ''; }, 8000);
   }
 
   function applyPosition(el, pos) {
@@ -1350,7 +1389,16 @@
   // Marquee Selection
   document.addEventListener('mousedown', (e) => {
     if (!isEditing) return;
-    if (e.target.closest('[data-editable]') || e.target.closest('.live-edit-toolbar') || e.target.closest('.element-align-bubble') || e.target.closest('.canva-edge-resize') || e.target.closest('.img-modal-card')) {
+    /* The repeater controls have to be in this exemption list or they do not
+       work at all. mousedown on the ✕ button started a marquee drag; the
+       browser then treats the gesture as a selection and suppresses the click,
+       so the button looked dead. Measured event order before the fix:
+           mousedown -> BUTTON act=remove   marquee starts
+           mouseup   -> BUTTON act=remove   marquee=block
+           click     -> BUTTON act=remove   item count unchanged
+       The whole list container is exempt, not just the buttons: dragging a
+       marquee across a logo wall selects nothing useful anyway. */
+    if (e.target.closest('[data-editable]') || e.target.closest('.live-edit-toolbar') || e.target.closest('.element-align-bubble') || e.target.closest('.canva-edge-resize') || e.target.closest('.img-modal-card') || e.target.closest('[data-editable-list]') || e.target.closest('.live-list-add-bar')) {
       return;
     }
 
@@ -1523,10 +1571,19 @@
       const img = item.querySelector('img');
 
       if (act === 'remove') {
-        const name = img ? (img.alt || 'รายการนี้') : 'รายการนี้';
-        if (!confirm('ลบ "' + name + '" ออกจากรายการ\n\nยังไม่ถาวรจนกว่าจะกดบันทึก')) return;
+        /* No confirm() dialog. Deleting is not destructive here - nothing is
+           written until Save - and a modal on every removal makes clearing a
+           wall of logos tedious. Undo is offered instead, which is both faster
+           and recoverable. */
+        const anchor = item.nextElementSibling;
+        const name = img ? (img.alt || 'รายการ') : 'รายการ';
         item.remove();
-        showToast('ลบแล้ว — กด 💾 บันทึกเพื่อให้มีผลจริง');
+        updateListCount(container);
+        showToastWithUndo('ลบ "' + name + '" แล้ว', function () {
+          if (anchor && anchor.parentNode === container) container.insertBefore(item, anchor);
+          else container.appendChild(item);
+          updateListCount(container);
+        });
       } else if (act === 'left' || act === 'right') {
         const sibling = act === 'left' ? item.previousElementSibling : item.nextElementSibling;
         if (!sibling || !sibling.hasAttribute('data-list-item')) return;
@@ -1573,39 +1630,91 @@
     bar.querySelector('.live-list-count').textContent = listItemsOf(container).length + ' รายการ';
   }
 
-  /* Adding an item clones an existing one, so the new entry inherits the exact
-     classes of the wall it joins instead of a hard-coded template that would
-     drift the first time the design changes. An empty list has nothing to clone
-     from, which is why the markup keeps its shape in data-list-template. */
+  /* Adding an item: pick the file FIRST, create the element only once the
+     upload has succeeded.
+
+     The first version did the opposite - clone the last item, then open the
+     picker - and it was wrong in the most visible way possible: the clone
+     appeared immediately still showing the PREVIOUS logo, so anyone who
+     cancelled the upload, or closed the dialog, was left with a duplicate on
+     the wall. "It just adds the same logo again" was exactly right.
+
+     The element is still cloned from a real item, so a new entry inherits the
+     wall's actual classes rather than a hard-coded template that drifts the
+     first time the design changes; the clone just happens after the bytes are
+     safely uploaded. */
+  const listFileInput = document.createElement('input');
+  listFileInput.type = 'file';
+  listFileInput.accept = 'image/png,image/jpeg,image/webp,image/gif';
+  listFileInput.style.display = 'none';
+  document.body.appendChild(listFileInput);
+  let pendingListContainer = null;
+
   function addListItem(container) {
-    const existing = listItemsOf(container);
-    let node;
-    if (existing.length) {
-      node = existing[existing.length - 1].cloneNode(true);
-      const ctrl = node.querySelector('.' + LIST_CTRL);
-      if (ctrl) ctrl.remove();
-    } else if (container.getAttribute('data-list-template')) {
-      const holder = document.createElement('div');
-      holder.innerHTML = container.getAttribute('data-list-template');
-      node = holder.firstElementChild;
-    } else {
-      alert('ลบรายการหมดแล้ว จึงไม่มีต้นแบบให้คัดลอก\nกดยกเลิก (โหลดหน้าใหม่) แล้วเพิ่มก่อนลบรายการสุดท้าย');
+    if (!listItemsOf(container).length && !container.getAttribute('data-list-template')) {
+      alert('รายการว่างเปล่า จึงไม่มีต้นแบบให้คัดลอก\nโหลดหน้าใหม่โดยไม่บันทึก แล้วลองอีกครั้ง');
+      return;
+    }
+    pendingListContainer = container;
+    listFileInput.value = '';          // same file twice in a row must still fire change
+    listFileInput.click();
+  }
+
+  listFileInput.addEventListener('change', async function () {
+    const container = pendingListContainer;
+    const file = listFileInput.files && listFileInput.files[0];
+    if (!container || !file) return;
+
+    /* SVG is refused by the upload endpoint on purpose (it is a document that
+       can carry script, served from our own origin). Saying so here beats a
+       generic server error after the upload round-trip. */
+    if (/\.svg$/i.test(file.name) || file.type === 'image/svg+xml') {
+      alert('ไฟล์ SVG อัปโหลดไม่ได้ด้วยเหตุผลด้านความปลอดภัย\nกรุณาใช้ PNG หรือ WEBP');
       return;
     }
 
-    const img = node.querySelector('img');
-    if (img) {
-      img.removeAttribute('srcset');
-      img.alt = '';
-    }
-    container.appendChild(node);
-    decorateListItem(node, container);
-    updateListCount(container);
+    const addBtn = container.nextElementSibling && container.nextElementSibling.querySelector('.live-list-add');
+    const restore = addBtn ? addBtn.textContent : '';
+    if (addBtn) { addBtn.textContent = '⏳ กำลังอัปโหลด...'; addBtn.disabled = true; }
 
-    // Straight into the picker: an item with the previous logo still on it is
-    // not a useful thing to leave lying around.
-    if (img) openImageSwapModalForElement(img);
-  }
+    try {
+      const form = new FormData();
+      form.append('image_file', file);
+      const res = await fetch(themeUri + 'save_content.php?action=upload_image', { method: 'POST', body: form });
+      const json = await res.json();
+      if (!json.success) {
+        alert('อัปโหลดไม่สำเร็จ: ' + (json.error || 'ไม่ทราบสาเหตุ'));
+        return;
+      }
+
+      const template = listItemsOf(container)[0] || (function () {
+        const holder = document.createElement('div');
+        holder.innerHTML = container.getAttribute('data-list-template') || '';
+        return holder.firstElementChild;
+      })();
+      const node = template.cloneNode(true);
+      const ctrl = node.querySelector('.' + LIST_CTRL);
+      if (ctrl) ctrl.remove();
+
+      const img = node.querySelector('img');
+      if (img) {
+        img.removeAttribute('srcset');
+        img.src = json.url;
+        img.alt = file.name.replace(/\.[a-z0-9]+$/i, '').replace(/[-_]+/g, ' ').trim();
+      }
+
+      container.appendChild(node);
+      decorateListItem(node, container);
+      updateListCount(container);
+      node.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      showToast('เพิ่มแล้ว — กด ✎ เพื่อแก้ชื่อ แล้วกด 💾 บันทึก');
+    } catch (e) {
+      alert('เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จขณะอัปโหลด');
+    } finally {
+      if (addBtn) { addBtn.textContent = restore; addBtn.disabled = false; }
+      pendingListContainer = null;
+    }
+  });
 
   function setupListControls() {
     document.querySelectorAll('[data-editable-list]').forEach(decorateList);
