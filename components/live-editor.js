@@ -243,6 +243,67 @@
       outline: 2px solid #3B82F6 !important;
       background: rgba(59, 130, 246, 0.06) !important;
     }
+
+    /* ---- Repeater lists ------------------------------------------------
+       A dashed outline marks the container as a collection, so it reads as
+       "this whole group is editable" rather than eight unrelated images. The
+       controls only exist while editing and are stripped on exit. */
+    body.is-live-editing [data-editable-list] {
+      outline: 2px dashed #16A34A !important;
+      outline-offset: 6px;
+      border-radius: 8px;
+    }
+    body.is-live-editing [data-list-item] {
+      position: relative;
+    }
+    body.is-live-editing [data-list-item]:hover {
+      outline: 2px solid #16A34A !important;
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+    .live-list-ctrl {
+      position: absolute;
+      top: -14px; left: 50%; transform: translateX(-50%);
+      display: none; gap: 2px;
+      background: #0B1F16;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      padding: 3px;
+      z-index: 30;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+      white-space: nowrap;
+    }
+    body.is-live-editing [data-list-item]:hover .live-list-ctrl { display: flex; }
+    .live-list-ctrl button {
+      /* 28px is under the 44px touch minimum, but these appear on hover, which
+         is a pointer-only interaction to begin with; the add button below is
+         the full-size control and is always visible. */
+      width: 28px; height: 28px;
+      border: 0; border-radius: 999px;
+      background: transparent; color: #fff;
+      font-size: 13px; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .live-list-ctrl button:hover { background: rgba(255,255,255,0.16); }
+    .live-list-ctrl button[data-act="remove"]:hover { background: #DC2626; }
+    .live-list-add-bar {
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center;
+      margin: 18px auto 0;
+    }
+    .live-list-add {
+      min-height: 44px;
+      padding: 0 20px;
+      border: 2px dashed #16A34A;
+      border-radius: 12px;
+      background: #F0FDF4;
+      color: #14532D;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .live-list-add:hover { background: #DCFCE7; }
+    .live-list-count { font-size: 12px; color: #64748B; }
     body.is-live-editing [data-editable].is-selected {
       outline: 2.5px solid #22C55E !important;
       background: rgba(34, 197, 94, 0.1) !important;
@@ -792,6 +853,18 @@
       const json = await res.json();
       if (json.success) {
         currentImgTargetEl.src = json.url;
+
+        /* An image inside a repeater is not its own content field - it is one
+           entry in the list, and collectListFields() will store it on save.
+           Without this it would also be written as a stray site_img_<timestamp>
+           key that nothing ever reads. */
+        if (currentImgTargetEl.closest('[data-list-item]')) {
+          const holder = currentImgTargetEl.closest('[data-editable-list]');
+          if (holder) updateListCount(holder);
+          showToast('🖼 เปลี่ยนรูปแล้ว — กด 💾 บันทึกเพื่อให้มีผลจริง');
+          closeImgModal();
+          return;
+        }
 
         let imgKey = currentImgTargetEl.getAttribute('data-editable-img');
         if (!imgKey) {
@@ -1384,6 +1457,7 @@
     triggerBtn.style.display = 'none';
 
     setupCanvaControls();
+    setupListControls();
 
     document.querySelectorAll('[data-editable]').forEach(el => {
       el.contentEditable = 'true';
@@ -1401,10 +1475,202 @@
       triggerBtn.style.display = 'flex';
     }
 
+    teardownListControls();
+
     document.querySelectorAll('[data-editable]').forEach(el => {
       el.contentEditable = 'false';
       el.classList.remove('is-selected');
     });
+  }
+
+  /* ============================================================
+     REPEATER LISTS  (data-editable-list / data-list-item)
+
+     Everything else in this editor edits an element that already exists. A
+     repeater is the case where the CONTENT decides how many elements there
+     are: eight logos today, nine tomorrow. The controls below are injected
+     while editing and removed again on exit, so nothing survives into the
+     saved markup - the save routine reads the items, not this chrome.
+     ============================================================ */
+  const LIST_CTRL = 'live-list-ctrl';
+
+  function listItemsOf(container) {
+    return Array.prototype.filter.call(
+      container.children,
+      function (el) { return el.hasAttribute('data-list-item'); }
+    );
+  }
+
+  function decorateListItem(item, container) {
+    if (item.querySelector('.' + LIST_CTRL)) return;
+
+    const bar = document.createElement('div');
+    bar.className = LIST_CTRL;
+    bar.contentEditable = 'false';
+    bar.innerHTML =
+      '<button type="button" data-act="left"   title="ย้ายไปทางซ้าย">◀</button>' +
+      '<button type="button" data-act="image"  title="เปลี่ยนรูป">🖼</button>' +
+      '<button type="button" data-act="rename" title="แก้ชื่อ (alt)">✎</button>' +
+      '<button type="button" data-act="remove" title="ลบรายการนี้">✕</button>' +
+      '<button type="button" data-act="right"  title="ย้ายไปทางขวา">▶</button>';
+
+    bar.addEventListener('click', function (e) {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const act = btn.getAttribute('data-act');
+      const img = item.querySelector('img');
+
+      if (act === 'remove') {
+        const name = img ? (img.alt || 'รายการนี้') : 'รายการนี้';
+        if (!confirm('ลบ "' + name + '" ออกจากรายการ\n\nยังไม่ถาวรจนกว่าจะกดบันทึก')) return;
+        item.remove();
+        showToast('ลบแล้ว — กด 💾 บันทึกเพื่อให้มีผลจริง');
+      } else if (act === 'left' || act === 'right') {
+        const sibling = act === 'left' ? item.previousElementSibling : item.nextElementSibling;
+        if (!sibling || !sibling.hasAttribute('data-list-item')) return;
+        if (act === 'left') container.insertBefore(item, sibling);
+        else container.insertBefore(sibling, item);
+      } else if (act === 'rename') {
+        if (!img) return;
+        /* alt is what a screen reader and a broken-image box announce, so it is
+           worth prompting for rather than leaving as the uploaded filename. */
+        const next = prompt('ชื่อที่จะแสดงแทนรูป (alt) — ใช้กับโปรแกรมอ่านหน้าจอ', img.alt || '');
+        if (next !== null) img.alt = next.trim();
+      } else if (act === 'image' && img) {
+        openImageSwapModalForElement(img);
+      }
+    });
+
+    item.style.position = item.style.position || 'relative';
+    item.appendChild(bar);
+  }
+
+  function decorateList(container) {
+    listItemsOf(container).forEach(function (item) { decorateListItem(item, container); });
+
+    if (container.nextElementSibling && container.nextElementSibling.classList.contains('live-list-add-bar')) return;
+
+    const label = container.getAttribute('data-list-label') || 'รายการ';
+    const addBar = document.createElement('div');
+    addBar.className = 'live-list-add-bar';
+    addBar.contentEditable = 'false';
+    addBar.innerHTML =
+      '<button type="button" class="live-list-add">＋ เพิ่ม' + label + '</button>' +
+      '<span class="live-list-count"></span>';
+
+    addBar.querySelector('.live-list-add').addEventListener('click', function () {
+      addListItem(container);
+    });
+    container.parentNode.insertBefore(addBar, container.nextSibling);
+    updateListCount(container);
+  }
+
+  function updateListCount(container) {
+    const bar = container.nextElementSibling;
+    if (!bar || !bar.classList.contains('live-list-add-bar')) return;
+    bar.querySelector('.live-list-count').textContent = listItemsOf(container).length + ' รายการ';
+  }
+
+  /* Adding an item clones an existing one, so the new entry inherits the exact
+     classes of the wall it joins instead of a hard-coded template that would
+     drift the first time the design changes. An empty list has nothing to clone
+     from, which is why the markup keeps its shape in data-list-template. */
+  function addListItem(container) {
+    const existing = listItemsOf(container);
+    let node;
+    if (existing.length) {
+      node = existing[existing.length - 1].cloneNode(true);
+      const ctrl = node.querySelector('.' + LIST_CTRL);
+      if (ctrl) ctrl.remove();
+    } else if (container.getAttribute('data-list-template')) {
+      const holder = document.createElement('div');
+      holder.innerHTML = container.getAttribute('data-list-template');
+      node = holder.firstElementChild;
+    } else {
+      alert('ลบรายการหมดแล้ว จึงไม่มีต้นแบบให้คัดลอก\nกดยกเลิก (โหลดหน้าใหม่) แล้วเพิ่มก่อนลบรายการสุดท้าย');
+      return;
+    }
+
+    const img = node.querySelector('img');
+    if (img) {
+      img.removeAttribute('srcset');
+      img.alt = '';
+    }
+    container.appendChild(node);
+    decorateListItem(node, container);
+    updateListCount(container);
+
+    // Straight into the picker: an item with the previous logo still on it is
+    // not a useful thing to leave lying around.
+    if (img) openImageSwapModalForElement(img);
+  }
+
+  function setupListControls() {
+    document.querySelectorAll('[data-editable-list]').forEach(decorateList);
+  }
+
+  function teardownListControls() {
+    document.querySelectorAll('.' + LIST_CTRL).forEach(function (el) { el.remove(); });
+    document.querySelectorAll('.live-list-add-bar').forEach(function (el) { el.remove(); });
+  }
+
+  /* Collect every repeater into fields the save endpoint understands. Read from
+     the DOM rather than from a shadow array: the DOM is what the editor has
+     been reordering and deleting, so it is the only copy guaranteed current. */
+  function collectListFields(fields) {
+    document.querySelectorAll('[data-editable-list]').forEach(function (container) {
+      const key = container.getAttribute('data-editable-list');
+      if (!key) return;
+      const items = listItemsOf(container).map(function (item) {
+        const img = item.querySelector('img');
+        if (!img) return null;
+        return { src: toStoredSrc(img.getAttribute('src') || ''), alt: img.alt || '' };
+      }).filter(Boolean);
+      fields[key + '_list'] = items;
+    });
+  }
+
+  /* Store paths the way the template writes them. An <img src> read back from
+     the DOM is absolute ("https://host/wp-content/themes/x/assets/..."), and
+     saving that would pin the content to today's domain - the tunnel URL
+     changes on every restart, and staging and production differ too. */
+  function toStoredSrc(src) {
+    /* Resolve to an absolute URL first, because an <img src> read back from the
+       DOM is already absolute and the stored form must not be. */
+    let abs = src;
+    try {
+      abs = new URL(src, window.location.href).href;
+    } catch (e) { /* leave as written */ }
+
+    /* wpThemeUri is the full theme URL under WordPress
+       (https://host/wp-content/themes/synergy-updated) but collapses to just
+       the origin when the theme IS the document root, which is how the
+       standalone php -S server runs. Both cases have to end up storing the
+       SAME theme-relative path, or content edited on the dev tunnel would save
+       "/assets/logo.png" and 404 in production, where that path lives under
+       /wp-content/themes/... instead. */
+    let base = (window.wpThemeUri || window.wpThemeUrl || '').replace(/\/+$/, '');
+    if (base) {
+      try { base = new URL(base, window.location.href).href.replace(/\/+$/, ''); } catch (e) { /* keep */ }
+      if (abs.indexOf(base + '/') === 0) {
+        return abs.slice(base.length + 1);
+      }
+    }
+
+    try {
+      const u = new URL(abs);
+      if (u.origin === window.location.origin) {
+        // Theme mounted at the document root: everything same-origin is
+        // theme-relative, so drop the leading slash rather than storing a
+        // root-absolute path that only resolves on this one layout.
+        const themeIsRoot = !base || base === window.location.origin;
+        return themeIsRoot ? u.pathname.replace(/^\/+/, '') : u.pathname;
+      }
+    } catch (e) { /* fall through */ }
+
+    return src;
   }
 
   triggerBtn.addEventListener('click', enableEditing);
@@ -1486,6 +1752,7 @@
 
   document.getElementById('live-save-btn').addEventListener('click', async () => {
     const fields = {};
+    collectListFields(fields);
     document.querySelectorAll('[data-editable]').forEach(el => {
       const key = el.getAttribute('data-editable');
       if (key) {

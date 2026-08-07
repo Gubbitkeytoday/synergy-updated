@@ -262,6 +262,64 @@ if (!function_exists('synergy_style')) {
     }
 }
 
+/**
+ * A repeatable list of items (logo walls, card decks) for the live editor.
+ *
+ * synergy_content() answers "what is the text of this one element". It cannot
+ * express "there are now nine logos instead of eight", which is why the editor
+ * could swap a logo but never add or remove one - the count was fixed in the
+ * PHP. This reads the whole collection instead.
+ *
+ * Stored under "<key>_list" as a JSON array. The three states are distinct and
+ * the difference matters:
+ *
+ *   key absent          -> nobody has edited the list, show $defaults
+ *   key is a list       -> show exactly that
+ *   key is an empty list-> the editor deleted every item, show nothing
+ *
+ * A truthy check would collapse the last two and make "remove the final item"
+ * silently restore all the defaults.
+ */
+if (!function_exists('synergy_list')) {
+    function synergy_list($key, $defaults = array(), $page = 'about') {
+        $stored = synergy_content($key . '_list', null, $page);
+        if (!is_array($stored)) {
+            return $defaults;
+        }
+        $items = array();
+        foreach ($stored as $item) {
+            if (is_array($item) && isset($item['src'])) {
+                $items[] = array(
+                    'src' => (string) $item['src'],
+                    'alt' => isset($item['alt']) ? (string) $item['alt'] : '',
+                );
+            }
+        }
+        return $items;
+    }
+}
+
+/**
+ * Resolve a stored media reference to a URL.
+ *
+ * Defaults in the templates are written relative to the theme
+ * ("assets/logos/x.svg"), while uploads come back from save_content.php already
+ * root-absolute ("/wp-content/themes/.../image/upload/x.png"). Both end up in
+ * the same list, so both have to work.
+ */
+if (!function_exists('synergy_media_url')) {
+    function synergy_media_url($src) {
+        $src = trim((string) $src);
+        if ($src === '') {
+            return '';
+        }
+        if (preg_match('#^(https?:)?//#i', $src) || $src[0] === '/') {
+            return $src;
+        }
+        return get_template_directory_uri() . '/' . ltrim($src, '/');
+    }
+}
+
 // ============================================================
 // WordPress function stubs for standalone PHP usage
 // These are no-ops / pass-throughs that keep pages working

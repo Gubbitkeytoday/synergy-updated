@@ -264,49 +264,34 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="w-16 h-1 bg-gradient-to-r from-emerald-500 via-brand to-gold-bright rounded-full mx-auto mt-3.5 opacity-90"></div>
       </div>
 
+      <?php
+      /* The eight logos used to be eight hard-coded blocks, so the live editor
+         could swap one image but never add a ninth or drop one - the count was
+         a property of the PHP, not of the content. They are a list now, and the
+         array below is only the starting point: once anyone edits the wall,
+         data/content_smart-factory.json holds the real one. Deleting every logo
+         is a valid saved state and does NOT fall back to this array. */
+      $factory_logos = synergy_list('factory-logos', array(
+          array('src' => 'assets/logos/trusted_manufacturers/ThaiBevLogo.svg',  'alt' => 'ThaiBev'),
+          array('src' => 'assets/logos/trusted_manufacturers/scg.png',          'alt' => 'SCG'),
+          array('src' => 'assets/logos/trusted_manufacturers/Betagro_Logo.svg', 'alt' => 'BETAGRO'),
+          array('src' => 'assets/logos/trusted_manufacturers/sumitomo.png',     'alt' => 'Sumitomo'),
+          array('src' => 'assets/logos/trusted_manufacturers/yamaha.png',       'alt' => 'YAMAHA'),
+          array('src' => 'assets/logos/trusted_manufacturers/hitachi.png',      'alt' => 'HITACHI'),
+          array('src' => 'assets/logos/trusted_manufacturers/daikin.png',       'alt' => 'DAIKIN'),
+          array('src' => 'assets/logos/trusted_manufacturers/bridgestone.png',  'alt' => 'BRIDGESTONE'),
+      ), 'smart-factory');
+      ?>
+
       <!-- Manufacturers Logo Wall (uniform white chips, single row on desktop) -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4 max-w-7xl mx-auto">
-
-        <!-- ThaiBev -->
-        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300">
-          <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/assets/logos/trusted_manufacturers/ThaiBevLogo.svg" alt="ThaiBev" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4 max-w-7xl mx-auto"
+           data-editable-list="factory-logos"
+           data-list-label="โลโก้องค์กรที่ไว้วางใจเรา">
+        <?php foreach ($factory_logos as $logo): ?>
+        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300" data-list-item>
+          <img loading="lazy" decoding="async" src="<?php echo esc_url(synergy_media_url($logo['src'])); ?>" alt="<?php echo esc_attr($logo['alt']); ?>" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
         </div>
-
-        <!-- SCG -->
-        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300">
-          <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/assets/logos/trusted_manufacturers/scg.png" alt="SCG" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
-        </div>
-
-        <!-- BETAGRO -->
-        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300">
-          <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/assets/logos/trusted_manufacturers/Betagro_Logo.svg" alt="BETAGRO" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
-        </div>
-
-        <!-- Sumitomo -->
-        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300">
-          <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/assets/logos/trusted_manufacturers/sumitomo.png" alt="Sumitomo" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
-        </div>
-
-        <!-- YAMAHA -->
-        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300">
-          <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/assets/logos/trusted_manufacturers/yamaha.png" alt="YAMAHA" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
-        </div>
-
-        <!-- HITACHI -->
-        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300">
-          <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/assets/logos/trusted_manufacturers/hitachi.png" alt="HITACHI" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
-        </div>
-
-        <!-- DAIKIN -->
-        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300">
-          <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/assets/logos/trusted_manufacturers/daikin.png" alt="DAIKIN" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
-        </div>
-
-        <!-- BRIDGESTONE -->
-        <div class="h-16 sm:h-20 flex items-center justify-center px-3 sm:px-5 hover:-translate-y-1 transition-transform duration-300">
-          <img loading="lazy" decoding="async" src="<?php echo get_template_directory_uri(); ?>/assets/logos/trusted_manufacturers/bridgestone.png" alt="BRIDGESTONE" class="max-h-10 sm:max-h-12 w-auto max-w-full object-contain">
-        </div>
-
+        <?php endforeach; ?>
       </div>
     </div>
   </section>

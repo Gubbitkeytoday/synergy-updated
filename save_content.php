@@ -374,6 +374,48 @@ function synergy_sanitize_geometry($value) {
     return $out;
 }
 
+/**
+ * A repeater collection: [{src, alt}, ...] for a logo wall or card deck.
+ *
+ * src is rendered straight into an <img>, so it is restricted to media this
+ * site serves: a path relative to the theme, or a root-relative path. Absolute
+ * URLs to other hosts are refused - not for safety alone but because a logo
+ * wall silently depending on someone else's server is a broken page waiting to
+ * happen. '..' is refused so a stored path cannot climb out of the theme.
+ */
+function synergy_sanitize_list($items) {
+    $out = [];
+    foreach ($items as $item) {
+        if (count($out) >= 60) {                       // a wall, not a database
+            break;
+        }
+        if (!is_array($item) || !isset($item['src'])) {
+            continue;
+        }
+
+        $src = trim(strip_tags((string) $item['src']));
+        if ($src === '' || strlen($src) > 400) {
+            continue;
+        }
+        if (strpos($src, '..') !== false || preg_match('#^[a-z][a-z0-9+.\-]*:#i', $src)) {
+            continue;                                  // any scheme at all, including javascript: and data:
+        }
+        if (!preg_match('#^/?[A-Za-z0-9_\-./%]+\.(svg|png|jpe?g|webp|gif|avif)$#', $src)) {
+            continue;                                  // must look like an image path we serve
+        }
+
+        $alt = isset($item['alt']) ? trim(strip_tags((string) $item['alt'])) : '';
+        if (function_exists('mb_substr')) {
+            $alt = mb_substr($alt, 0, 120, 'UTF-8');
+        } else {
+            $alt = substr($alt, 0, 120);
+        }
+
+        $out[] = ['src' => $src, 'alt' => $alt];
+    }
+    return $out;
+}
+
 $current = [];
 if (file_exists($dataFile)) {
     $current = json_decode(file_get_contents($dataFile), true) ?: [];
@@ -391,7 +433,19 @@ foreach ($data['fields'] as $key => $value) {
     }
 
     if (is_array($value)) {
-        $current[$cleanKey] = synergy_sanitize_geometry($value);
+        /* Two different array shapes arrive here and confusing them destroys
+           data: _pos/_size are {x,y,w,h} from the drag handles, while _list is
+           the repeater's collection of {src,alt}. Routing every array through
+           the geometry filter - which is what happened before repeaters existed
+           - would have reduced a whole logo wall to an empty object. */
+        if (preg_match('/_(pos|size)$/', $cleanKey)) {
+            $current[$cleanKey] = synergy_sanitize_geometry($value);
+        } elseif (substr($cleanKey, -5) === '_list') {
+            $current[$cleanKey] = synergy_sanitize_list($value);
+        } else {
+            $rejected[] = $cleanKey;
+            continue;
+        }
     } elseif (is_string($value)) {
         if (strlen($value) > 200000) {          // a field is a headline, not a document
             $rejected[] = $cleanKey;
