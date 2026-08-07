@@ -763,7 +763,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- Card 1: Smart Energy -->
         <div id="btn-card-smart-energy"
           class="sol-card-trigger group cursor-pointer border border-slate-100 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand/5 hover:border-brand/20 rounded-[28px] overflow-hidden bg-white transition-all duration-500 flex flex-col justify-between"
-          onclick="window.switchSolTab('smart-energy')" style="scroll-margin-top: 96px;">
+          onclick="window.location.href='<?php echo home_url('/smart-energy/'); ?>'" style="scroll-margin-top: 96px;">
           <div>
             <div class="relative h-52 overflow-hidden">
               <img loading="lazy" decoding="async"
@@ -803,7 +803,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
 
           <div class="px-6 sm:px-7 pb-6 sm:pb-7 pt-1 border-t border-slate-100/70 mt-1">
-            <a href="solutions/smart-energy.html" onclick="event.stopPropagation()"
+            <a href="<?php echo home_url('/smart-energy/'); ?>"
               class="flex items-center justify-center gap-2 w-full bg-brand-soft text-brand hover:bg-brand hover:text-white font-800 text-xs uppercase tracking-wider py-3 rounded-xl transition-all duration-300">
               <span class="lang-th">ดูรายละเอียด</span>
               <span class="lang-en">View Details</span>
@@ -816,7 +816,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- Card 2: Smart Agriculture -->
         <div id="btn-card-smart-agriculture"
           class="sol-card-trigger group cursor-pointer border border-slate-100 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand/5 hover:border-brand/20 rounded-[28px] overflow-hidden bg-white transition-all duration-500 flex flex-col justify-between"
-          onclick="window.switchSolTab('smart-agriculture')" style="scroll-margin-top: 96px;">
+          onclick="window.location.href='<?php echo home_url('/smart-agriculture/'); ?>'" style="scroll-margin-top: 96px;">
           <div>
             <div class="relative h-52 overflow-hidden">
               <img loading="lazy" decoding="async"
@@ -857,7 +857,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
 
           <div class="px-6 sm:px-7 pb-6 sm:pb-7 pt-1 border-t border-slate-100/70 mt-1">
-            <a href="solutions/smart-agriculture.html" onclick="event.stopPropagation()"
+            <a href="<?php echo home_url('/smart-agriculture/'); ?>"
               class="flex items-center justify-center gap-2 w-full bg-brand-soft text-brand hover:bg-brand hover:text-white font-800 text-xs uppercase tracking-wider py-3 rounded-xl transition-all duration-300">
               <span class="lang-th">ดูรายละเอียด</span>
               <span class="lang-en">View Details</span>
@@ -870,7 +870,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <!-- Card 3: Smart Factory -->
         <div id="btn-card-smart-factory"
           class="sol-card-trigger group cursor-pointer border border-slate-100 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand/5 hover:border-brand/20 rounded-[28px] overflow-hidden bg-white transition-all duration-500 flex flex-col justify-between"
-          onclick="window.switchSolTab('smart-factory')" style="scroll-margin-top: 96px;">
+          onclick="window.location.href='<?php echo home_url('/smart-factory/'); ?>'" style="scroll-margin-top: 96px;">
           <div>
             <!-- Image with cinematic gradient + overlaid title -->
             <div class="relative h-52 overflow-hidden">
@@ -911,7 +911,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
           </div>
 
           <div class="px-6 sm:px-7 pb-6 sm:pb-7 pt-1 border-t border-slate-100/70 mt-1">
-            <a href="solutions/smart-factory.html" onclick="event.stopPropagation()"
+            <a href="<?php echo home_url('/smart-factory/'); ?>"
               class="flex items-center justify-center gap-2 w-full bg-brand-soft text-brand hover:bg-brand hover:text-white font-800 text-xs uppercase tracking-wider py-3 rounded-xl transition-all duration-300">
               <span class="lang-th">ดูรายละเอียด</span>
               <span class="lang-en">View Details</span>
@@ -920,9 +920,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </a>
           </div>
         </div>
+
+        <!-- Card 4: Smart Electronics (Services) -->
         <div id="btn-card-smart-electronic"
           class="sol-card-trigger group cursor-pointer border border-slate-100 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand/5 hover:border-brand/20 rounded-[28px] overflow-hidden bg-white transition-all duration-500 flex flex-col justify-between"
-          onclick="window.switchSolTab('smart-electronic')" style="scroll-margin-top: 96px;">
+          onclick="window.location.href='<?php echo home_url('/service/'); ?>'" style="scroll-margin-top: 96px;">
           <div>
             <div class="relative h-52 overflow-hidden">
               <img loading="lazy" decoding="async"
@@ -966,8 +968,7 @@ if (file_exists(__DIR__ . '/functions.php')) {
             </div>
           </div>
           <div class="px-6 sm:px-7 pb-6 sm:pb-7 pt-1 border-t border-slate-100/70 mt-1">
-            <a href="#sol-card-smart-electronic"
-              onclick="event.stopPropagation(); window.switchSolTab('smart-electronic'); var t=document.getElementById('sol-card-smart-electronic'); if(t) t.scrollIntoView({behavior:'smooth'});"
+            <a href="<?php echo home_url('/service/'); ?>"
               class="flex items-center justify-center gap-2 w-full bg-brand-soft text-brand hover:bg-brand hover:text-white font-800 text-xs uppercase tracking-wider py-3 rounded-xl transition-all duration-300">
               <span class="lang-th">ดูรายละเอียด</span>
               <span class="lang-en">View Details</span>

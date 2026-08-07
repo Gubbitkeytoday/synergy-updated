@@ -1014,9 +1014,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
        .nav-tab, .modal-backdrop) and would collide with the rest of the site if
        that scope were ever removed.
 
-       The copy is still the Smart Energy deck - inverter brands, solar,
-       "Smart Energy Management" - because the request was for this exact
-       section. It is editable per-page under factory-platform-* keys. -->
+       The layout was lifted from the Smart Energy deck, and for a while the copy
+       came with it - inverter brands, solar, "Smart Energy Management". That has
+       been rewritten for the factory: the four cards now read machines, sites,
+       deployment, integration. Text is editable per-page under the
+       factory-platform-* keys, so check those before assuming what renders. -->
   <section id="energy-platform" class="py-12 sm:py-16 bg-[#f4f7f5] border-y border-slate-200/80" style="scroll-margin-top:96px">
     <div class="sf-shell">
       <div class="platform-card">
@@ -1042,9 +1044,20 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <path d="M16 7l-7.5 9.5H14l-1.5 8.5 9-9H16.5l1.5-9z" fill="#FFFFFF" opacity="0.3"/>
                 </svg>
               </div>
+              <?php /* This card was three separate faults at once: an <h3> closed by a
+                       </p>, no lang-th span at all (so the card rendered completely empty
+                       in Thai, which is the default), and the one string it did carry was
+                       Smart Energy copy about solar inverter brands sitting on the Smart
+                       Factory page. Rebuilt to match the three cards below it: title plus
+                       feature-sub, both languages, factory subject matter. */ ?>
               <div class="feature-text">
                 <h3 class="feature-title">
-                  <span class="lang-en">Connect top inverter brands: Huawei, Sungrow, GoodWe, Growatt, SMA, Fronius, Delta, Solis and more.</span>
+                  <span class="lang-th">เชื่อมต่อทุกเครื่องจักร</span>
+                  <span class="lang-en">Connect Any Machine</span>
+                </h3>
+                <p class="feature-sub">
+                  <span class="lang-th">เชื่อมต่อ PLC, SCADA, เซนเซอร์ และเครื่องจักรหลายยี่ห้อไว้ในแพลตฟอร์มเดียว</span>
+                  <span class="lang-en">Connect PLCs, SCADA, sensors, and machines from any brand into one platform.</span>
                 </p>
               </div>
             </div>
@@ -1068,8 +1081,11 @@ if (file_exists(__DIR__ . '/functions.php')) {
                   <span class="lang-en">Multi-site Management</span>
                 </h3>
                 <p class="feature-sub">
-                  <span class="lang-th">ติดตามการใช้งานโรงงาน สาขา และระบบ Solar ได้แบบ Real-time จากศูนย์กลางเดียว</span>
-                  <span class="lang-en">Monitor factories, branches, and Solar systems in real-time from a central hub.</span>
+                  <?php /* Same Smart Energy bleed as the card above: "ระบบ Solar" / "Solar
+                           systems" has nothing to do with Smart Factory. Swapped for the
+                           production lines this page actually monitors. */ ?>
+                  <span class="lang-th">ติดตามโรงงาน สาขา และสายการผลิตได้แบบ Real-time จากศูนย์กลางเดียว</span>
+                  <span class="lang-en">Monitor factories, branches, and production lines in real time from one central hub.</span>
                 </p>
               </div>
             </div>
