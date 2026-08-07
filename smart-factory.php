@@ -836,23 +836,17 @@ if (file_exists(__DIR__ . '/functions.php')) {
              both languages work, and the numbers are ordinary text. */
           $sf_dashboards = array(
               array('id' => 'machine', 'icon' => 'fa-industry', 'name' => 'Machine Monitoring',
-                    'th' => 'ตรวจสอบสถานะเครื่องจักรแบบ Real-time ลด Downtime และแจ้งเตือนความผิดปกติ',
+                    'img' => get_template_directory_uri() . '/image/smart-factory/screen_1.jpg',
+                    'th' => 'ตรวจสอบสถานะเครื่องจักรและอุปกรณ์ในโรงงานแบบ Real-time ลด Downtime และแจ้งเตือนความผิดปกติทันที',
                     'en' => 'Watch machine status in real time, cut downtime and get alerted on anomalies.'),
-              array('id' => 'production', 'icon' => 'fa-chart-column', 'name' => 'Production Dashboard',
-                    'th' => 'ติดตามเป้าหมายการผลิต ผลผลิต และประสิทธิภาพรายไลน์การผลิต',
-                    'en' => 'Follow targets, output and efficiency line by line.'),
-              array('id' => 'energy', 'icon' => 'fa-bolt', 'name' => 'Energy Dashboard',
-                    'th' => 'ตรวจสอบการใช้พลังงานแบบละเอียด ช่วยลดต้นทุนและเพิ่มประสิทธิภาพ',
-                    'en' => 'Break energy use down in detail to cut cost and raise efficiency.'),
-              array('id' => 'alarm', 'icon' => 'fa-bell', 'name' => 'Alarm Center',
-                    'th' => 'รวมการแจ้งเตือนทั้งหมดไว้ที่เดียว ตอบสนองได้รวดเร็ว',
-                    'en' => 'Every alert in one place so the response is quick.'),
-              array('id' => 'maintenance', 'icon' => 'fa-wrench', 'name' => 'Maintenance Dashboard',
-                    'th' => 'วางแผนและติดตามงานบำรุงรักษา ลดการหยุดชะงักและยืดอายุการใช้งาน',
-                    'en' => 'Plan and track maintenance to reduce stoppages and extend asset life.'),
-              array('id' => 'executive', 'icon' => 'fa-user-tie', 'name' => 'Executive Dashboard',
-                    'th' => 'สรุป KPI สำคัญสำหรับผู้บริหาร เห็นภาพรวมธุรกิจแบบ Real-time',
-                    'en' => 'The KPIs leadership needs, with the business in view in real time.'),
+              array('id' => 'production', 'icon' => 'fa-chart-column', 'name' => 'Production & OEE',
+                    'img' => get_template_directory_uri() . '/image/smart-factory/screen_2.jpg',
+                    'th' => 'ติดตามเป้าหมายการผลิต ประสิทธิภาพโดยรวมเครื่องจักร (OEE) และวิเคราะห์ Yield รายสายการผลิต',
+                    'en' => 'Follow production targets, Overall Equipment Effectiveness (OEE) and line-by-line yield analytics.'),
+              array('id' => 'warehouse', 'icon' => 'fa-boxes-stacked', 'name' => 'Warehouse & AGV',
+                    'img' => get_template_directory_uri() . '/image/smart-factory/screen_3.jpg',
+                    'th' => 'บริหารจัดการคลังสินค้าอัตโนมัติ ติดตั้งระบบนำทางหุ่นยนต์ AGV/AMR และติดตามสต็อกวัตถุดิบแม่นยำ',
+                    'en' => 'Automated warehouse management, AGV/AMR robot fleet dispatching and precise inventory tracking.')
           );
           ?>
           <!-- Dashboards & Applications -->
@@ -861,20 +855,16 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <span class="lang-th">แดชบอร์ดและแอปพลิเคชันที่คุณจะได้ใช้</span><span class="lang-en">Dashboards &amp; Applications You Will See</span>
             </p>
 
-            <!-- Tabs. Real <button>s in a tablist: they are keyboard reachable,
-                 announced as tabs, and arrow keys move between them. -->
-            <!-- One scrolling row on a phone, a seven-up grid from sm. A four-column
-                 grid was the first try and the labels wrapped so hard the tabs came
-                 out 159px tall in a 66px column. -->
-            <div class="sf-dash-tabs flex sm:grid sm:grid-cols-6 gap-2 sm:gap-2.5 text-center" role="tablist" aria-label="Dashboards">
+            <!-- Tabs -->
+            <div class="sf-dash-tabs flex sm:grid sm:grid-cols-3 gap-2 sm:gap-3 text-center" role="tablist" aria-label="Dashboards">
               <?php foreach ($sf_dashboards as $i => $d): ?>
               <button type="button" role="tab" id="sf-tab-<?php echo $d['id']; ?>"
                       aria-controls="sf-panel-<?php echo $d['id']; ?>"
                       aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
                       tabindex="<?php echo $i === 0 ? '0' : '-1'; ?>"
-                      class="sf-dash-tab flex flex-col items-center justify-start gap-2 py-3 px-1.5 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 transition-colors">
-                <i class="fa-solid <?php echo $d['icon']; ?> text-lg" aria-hidden="true"></i>
-                <span class="text-[11px] sm:text-xs font-700 leading-tight"><?php echo esc_html($d['name']); ?></span>
+                      class="sf-dash-tab flex flex-col items-center justify-center gap-2 py-3.5 px-3 rounded-xl border border-slate-100 bg-slate-50/80 text-slate-700 transition-colors">
+                <i class="fa-solid <?php echo $d['icon']; ?> text-xl text-emerald-700" aria-hidden="true"></i>
+                <span class="text-xs sm:text-sm font-800 leading-tight"><?php echo esc_html($d['name']); ?></span>
               </button>
               <?php endforeach; ?>
             </div>
@@ -884,9 +874,18 @@ if (file_exists(__DIR__ . '/functions.php')) {
               <?php foreach ($sf_dashboards as $i => $d): ?>
               <div class="sf-dash-panel" role="tabpanel" id="sf-panel-<?php echo $d['id']; ?>"
                    aria-labelledby="sf-tab-<?php echo $d['id']; ?>" <?php echo $i === 0 ? '' : 'hidden'; ?>>
-                <div class="grid sm:grid-cols-[1.1fr_1fr] gap-4 sm:gap-5 items-center">
-                  <div class="sf-shot"><?php sf_dashboard_preview($d['id']); ?></div>
-                  <div>
+                <div class="grid lg:grid-cols-12 gap-5 items-center">
+                  <div class="lg:col-span-8">
+                    <div class="relative group rounded-2xl overflow-hidden border border-slate-200/90 shadow-md bg-slate-900 cursor-pointer" onclick="openSfModal('<?php echo esc_url($d['img']); ?>', '<?php echo esc_js($d['name']); ?>')">
+                      <img src="<?php echo esc_url($d['img']); ?>" alt="<?php echo esc_attr($d['name']); ?>" class="w-full h-auto max-h-[380px] object-cover group-hover:scale-[1.02] transition-transform duration-500">
+                      <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors flex items-center justify-center">
+                        <span class="bg-black/60 backdrop-blur-md text-white text-xs px-3.5 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity font-bold flex items-center gap-2 shadow-lg">
+                          <i class="fa-solid fa-magnifying-glass-plus"></i> <span class="lang-th">คลิกเพื่อดูภาพขยาย</span><span class="lang-en">Click to Zoom</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="lg:col-span-4 pl-0 lg:pl-2">
                     <h4 class="font-display font-800 text-base sm:text-lg text-ink mb-1.5"><?php echo esc_html($d['name']); ?></h4>
                     <p data-editable="factory-dash-<?php echo $d['id']; ?>" <?php echo synergy_style('factory-dash-' . $d['id'], 'smart-factory'); ?> class="text-xs sm:text-sm text-slate-500 font-300 leading-relaxed"><?php echo synergy_content('factory-dash-' . $d['id'], '<span class="lang-th">' . $d['th'] . '</span><span class="lang-en">' . $d['en'] . '</span>', 'smart-factory'); ?></p>
                   </div>
@@ -1235,6 +1234,32 @@ if (file_exists(__DIR__ . '/functions.php')) {
       });
     });
   })();
+  </script>
+
+  <!-- IMAGE LIGHTBOX ZOOM MODAL -->
+  <div id="sf-image-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-8" onclick="closeSfModal()">
+    <div class="relative max-w-5xl w-full bg-slate-900 rounded-2xl overflow-hidden border border-white/10 shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 text-white">
+        <h3 id="sf-modal-title" class="font-bold text-base sm:text-lg">Dashboard Preview</h3>
+        <button type="button" onclick="closeSfModal()" class="text-white/70 hover:text-white text-xl p-1 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-3 sm:p-5 max-h-[80vh] overflow-auto flex items-center justify-center bg-slate-950">
+        <img id="sf-modal-img" src="" alt="Dashboard Screen" class="w-full h-auto object-contain rounded-xl max-h-[75vh] shadow-2xl">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openSfModal(imgSrc, title) {
+      document.getElementById('sf-modal-img').src = imgSrc;
+      document.getElementById('sf-modal-title').textContent = title;
+      document.getElementById('sf-image-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSfModal() {
+      document.getElementById('sf-image-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
   </script>
 
 <?php include __DIR__ . '/components/cookie-consent.php'; ?>
