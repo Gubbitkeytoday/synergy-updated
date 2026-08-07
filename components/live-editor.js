@@ -684,7 +684,12 @@
         <div class="img-compare-box">
           <div class="img-compare-label">ของเก่า (Current)</div>
           <div class="img-preview-frame">
-            <img id="img-old-preview" src="" alt="ของเก่า">
+            <!-- No src attribute at all. src="" is not "no image": the browser
+                 resolves the empty string against the document URL and fetches
+                 the PAGE again, on every page load, on every page - this editor
+                 now ships site-wide. The script assigns .src when the dialog
+                 opens. -->
+            <img id="img-old-preview" alt="ของเก่า">
           </div>
           <div class="img-compare-sub">ของเก่า<br>Current Photo</div>
         </div>
@@ -696,7 +701,7 @@
         <div class="img-compare-box is-new">
           <div class="img-compare-label">ของใหม่ (New Upload)</div>
           <div class="img-preview-frame">
-            <img id="img-new-preview" src="" alt="ของใหม่">
+            <img id="img-new-preview" alt="ของใหม่">
           </div>
           <div class="img-compare-sub">ของใหม่<br>New Upload</div>
         </div>
