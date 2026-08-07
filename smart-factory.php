@@ -209,6 +209,15 @@ if (file_exists(__DIR__ . '/functions.php')) {
        are local to it - and clamped rather than written as Tailwind text-*
        steps, which components/style.css would pin to their largest value at
        every breakpoint (AGENTS.md rule 2). */
+    /* Architecture headline. It has to hold one line, and the Tailwind chain it
+       used to carry (text-2xl sm:text-3xl lg:text-4xl) could not: components/
+       style.css pins that scale to its largest step at every breakpoint (rule
+       2), so at a 700px viewport the text still rendered at 46.75px and ran 838px
+       wide inside a 649px box - clipped, not wrapped, because the section is
+       overflow-hidden. A clamp actually scales, so the line fits from the sm
+       breakpoint up. */
+    .sf-arch-h2 { font-size: clamp(22px, 3.4vw, 44px) !important; line-height: 1.2 !important; font-weight: 900; }
+
     .sf-cta-eyebrow { font-size: 0.875rem !important; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
     .sf-cta-h2      { font-size: clamp(22px, 2.78vw, 44px) !important; line-height: 1.2 !important; font-weight: 800; }
     .sf-cta-lede    { font-size: 1.075rem !important; line-height: 1.7 !important; overflow-wrap: normal; word-break: keep-all; }
@@ -551,7 +560,10 @@ if (file_exists(__DIR__ . '/functions.php')) {
            twelve-column grid - which left the headline wrapping over three
            lines and every feature description over four. Full width lets the
            four points sit in one row and gives the diagram the whole grid. -->
-      <div class="max-w-3xl mx-auto text-center mb-8 sm:mb-10">
+      <!-- max-w-none from sm up: the headline is one line there, and a 3xl cap
+           would have forced the wrap back in. It stays capped on phones, where
+           it is meant to wrap. -->
+      <div class="max-w-3xl sm:max-w-none mx-auto text-center mb-8 sm:mb-10">
         <!-- The SynExta mark replaces the "SYNEXTA INTELLIGENCE ARCHITECTURE"
              eyebrow, the same way smart-energy.php opens its platform block.
              Sized by height so the 1997x227 source scales to the row rather
@@ -560,9 +572,13 @@ if (file_exists(__DIR__ . '/functions.php')) {
         <div class="mb-4 flex justify-center">
           <img src="<?php echo get_template_directory_uri(); ?>/image/LOGO%20SYNEXTA.png" alt="SynExta" width="1997" height="227" loading="lazy" decoding="async" class="h-8 sm:h-10 w-auto object-contain drop-shadow-sm">
         </div>
-        <h2 class="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-slate-900 tracking-tight leading-tight">
-          <span class="lang-th">แพลตฟอร์มเดียว<br><span class="text-emerald-700">ควบคุมทุกระบบของโรงงาน</span></span>
-          <span class="lang-en">One Platform.<br><span class="text-emerald-700">Complete Control.</span></span>
+        <!-- One line from the sm breakpoint up. The <br> that used to split it
+             is gone and sm:whitespace-nowrap holds it together, the same device
+             smart-energy.php uses on its platform headline. Phones keep the
+             natural wrap - forcing nowrap at 375px would overflow the viewport. -->
+        <h2 class="font-display sf-arch-h2 text-slate-900 tracking-tight sm:whitespace-nowrap">
+          <span class="lang-th">แพลตฟอร์มเดียว <span class="text-emerald-700">ควบคุมทุกระบบของโรงงาน</span></span>
+          <span class="lang-en">One Platform. <span class="text-emerald-700">Complete Control.</span></span>
         </h2>
       </div>
 
